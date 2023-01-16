@@ -15,12 +15,12 @@
   <tr align = "center">
     <td><a href="https://github.com/Remalia/Hashi/commits?author=IlangoRemi"><img src="https://avatars.githubusercontent.com/u/45428394?v=4" width="175px;" alt=""/><br /><sub><b>Remi Ilango</b></sub></a><br /></td>
     <td><a href="https://github.com/Remalia/Hashi/commits?author=Remalia"><img src="https://avatars.githubusercontent.com/u/97773415?v=4" width="175px;" alt=""/><br /><sub><b>Allan Jarrier</b></sub></a><br /></td>
-    <td><a href="https://github.com/Remalia/Hashi/commits"><img src="https://www.pngall.com/wp-content/uploads/2/Question-Mark-PNG.png" width="175px;" alt=""/><br /><sub><b>Alex Choux</b></sub></a><br /></td>
+    <td><a href="https://github.com/Remalia/Hashi/commits?author=Heimeroux"><img src="https://avatars.githubusercontent.com/u/97943588?v=4" width="175px;" alt=""/><br /><sub><b>Alex Choux</b></sub></a><br /></td>
 
     
   </tr>
   <tr>
-    <td><a href="https://github.com/Remalia/Hashi/commits"><img src="https://www.pngall.com/wp-content/uploads/2/Question-Mark-PNG.png" width="175px;" alt=""/><br /><sub><b>Anna Beranger</b></sub></a><br /></td>
+    <td><a href="https://github.com/Remalia/Hashi/commits?author=aberanger"><img src="https://avatars.githubusercontent.com/u/72624798?v=4" width="175px;" alt=""/><br /><sub><b>Anna Beranger</b></sub></a><br /></td>
     <td><a href="https://github.com/Remalia/Hashi/commits?author=ArthurBlr"><img src="https://avatars.githubusercontent.com/u/97943017?v=4" width="175px;" alt=""/><br /><sub><b>Arthur Boullier</b></sub></a><br /></td>
     <td><a href="https://github.com/Remalia/Hashi/commits?author=Alexis-42"><img src="https://avatars.githubusercontent.com/u/97942917?v=4" width="175px;" alt=""/><br /><sub><b>Alexis Guimbert</b></sub></a><br /></td>
   </tr>
