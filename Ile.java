@@ -9,14 +9,18 @@ public class Ile {
     Color couleur; /** couleur actuelle de l'île */
     boolean estSelect; /** statut de sélection de l'île */
     
-    Ile(int id, int num, int abs, int ord){
-        this.id = id;
-        this.num = num; // verif si 1 =< num >= 8
-        this.abs = abs;
-        this.ord = ord;
-        this.nbPonts = 0; /** à la création il n'y a pas de ponts */
-        this.couleur = new Color(100, 0, 0); /** couleur initiale */
-        this.estSelect = false; /** île non selectionée à la création */
+    Ile(int id, int num, int abs, int ord) throws Exception{
+        if(num >= 1 && num <= 8){
+            this.id = id;
+            this.num = num;
+            this.abs = abs;
+            this.ord = ord;
+            this.nbPonts = 0; /** à la création il n'y a pas de ponts */
+            this.couleur = new Color(100, 0, 0); /** couleur initiale */
+            this.estSelect = false; /** île non selectionée à la création */
+        } else{
+            throw new Exception("Création d'île impossible, numéro incorrect");
+        }
     }
 
     /**
@@ -144,22 +148,18 @@ public class Ile {
     }
 
     public static void main(String[] args){
-        Ile ileTest = new Ile(1, 7, 4, 2);
-        System.out.println(ileTest.toString());
         try {
+            Ile ileTest = new Ile(1, 5, 4, 2);
+            System.out.println(ileTest.toString());
+            ileTest.ajouterPont();
+            ileTest.ajouterPont();
+            System.out.println(ileTest.toString());
             ileTest.supprimer2Ponts();
-        } catch (Exception e) {
+            System.out.println(ileTest.toString());
+        } catch(Exception e){
             e.printStackTrace();
         }
-        ileTest.ajouterPont();
-        ileTest.ajouterPont();
-        System.out.println(ileTest.toString());
-        try {
-            ileTest.supprimer2Ponts();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(ileTest.toString());
+        
     }
 
 }
