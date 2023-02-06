@@ -20,8 +20,29 @@ public class Ile {
     }
 
     //boolean equals()
-    // void ajouterPont()
-    // void supprimer2Ponts()
+
+    /**
+    * Incrémente de 1 le nombre de ponts attachés à l'île
+    *
+    */
+    void ajouterPont(){
+        this.nbPonts += 1;
+    }
+
+    /**
+    * Décrémente de 2 le nombre de ponts attachés à l'île
+    *
+    */
+    void supprimer2Ponts() throws Exception{
+        if(this.nbPonts >= 2){
+            this.nbPonts -= 2;
+        }
+        else{
+            throw new Exception("Suppression de ponts impossible");
+        }
+    }
+
+
 
     /**
     * Retourne l'identifiant de l'île
@@ -122,11 +143,26 @@ public class Ile {
             s += "sélectionnée\n";
         else 
             s += "non sélectionnée\n";
+        s += "nombre de ponts : " + this.nbPonts;
         return s;
     }
 
     public static void main(String[] args){
         Ile ileTest = new Ile(1, 7, 4, 2);
+        System.out.println(ileTest.toString());
+        try {
+            ileTest.supprimer2Ponts();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ileTest.ajouterPont();
+        ileTest.ajouterPont();
+        System.out.println(ileTest.toString());
+        try {
+            ileTest.supprimer2Ponts();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println(ileTest.toString());
     }
 
