@@ -1,15 +1,15 @@
 import java.awt.Color;
 
 public class Ile {
-    int id; /** identifiant de l'île */
-    int num; /** numéro associé à l'île */
-    int nbPonts; /** nombre de ponts rattaché à l'île */
-    int abs; /** abscisse de l'île */
-    int ord; /** ordonnée de l'île */
-    Color couleur; /** couleur actuelle de l'île */
-    boolean estSelect; /** statut de sélection de l'île */
+    private int id; /** identifiant de l'île */
+    private int num; /** numéro associé à l'île */
+    private int nbPonts; /** nombre de ponts rattaché à l'île */
+    private int abs; /** abscisse de l'île */
+    private int ord; /** ordonnée de l'île */
+    private Color couleur; /** couleur actuelle de l'île */
+    private boolean estSelect; /** statut de sélection de l'île */
     
-    Ile(int id, int num, int abs, int ord) throws Exception{
+    public Ile(int id, int num, int abs, int ord) throws Exception{
         if(num >= 1 && num <= 8){
             this.id = id;
             this.num = num;
@@ -27,7 +27,7 @@ public class Ile {
     * Incrémente de 1 le nombre de ponts attachés à l'île
     *
     */
-    void ajouterPont(){
+    public void ajouterPont(){
         this.nbPonts += 1;
     }
 
@@ -35,7 +35,7 @@ public class Ile {
     * Décrémente de 2 le nombre de ponts attachés à l'île
     *
     */
-    void supprimer2Ponts() throws Exception{
+    public void supprimer2Ponts() throws Exception{
         if(this.nbPonts >= 2){
             this.nbPonts -= 2;
         }
@@ -49,7 +49,7 @@ public class Ile {
     *
     * @return l'identifiant de l'île
     */
-    int getId(){
+    public int getId(){
         return this.id;
     }
 
@@ -58,7 +58,7 @@ public class Ile {
     *
     * @return le numéro de l'île
     */
-    int getNum(){
+    public int getNum(){
         return this.num;
     }
 
@@ -67,7 +67,7 @@ public class Ile {
     *
     * @return l'abscisse de l'île
     */
-    int getAbs(){
+    public int getAbs(){
         return this.abs;
     }
 
@@ -76,7 +76,7 @@ public class Ile {
     *
     * @return l'ordonnée de l'île
     */
-    int getOrd(){
+    public int getOrd(){
         return this.ord;
     }
 
@@ -85,7 +85,7 @@ public class Ile {
     *
     * @return le nombre de ponts attachés à l'île
     */
-    int getNbPonts(){
+    public int getNbPonts(){
         return this.nbPonts;
     }
 
@@ -94,7 +94,7 @@ public class Ile {
     *
     * @return la couleur de l'île
     */
-    Color getCouleur(){
+    public Color getCouleur(){
         return this.couleur;
     }
 
@@ -103,7 +103,7 @@ public class Ile {
     *
     * @return true si l'île est sélectionnée, false sinon
     */
-    boolean getEstSelect(){
+    public boolean getEstSelect(){
         return this.estSelect;
     }
 
@@ -112,7 +112,7 @@ public class Ile {
     *
     * @param  nb  le nombre de ponts attachés à l'île
     */
-    void setNbPonts(int nb){
+    public void setNbPonts(int nb){
         this.nbPonts = nb;
     }
 
@@ -121,7 +121,7 @@ public class Ile {
     *
     * @param  c  la couleur à affecter
     */
-    void setCouleur(Color c){
+    public void setCouleur(Color c){
         this.couleur = c;
     }
 
@@ -130,7 +130,7 @@ public class Ile {
     *
     * @param  s  true si l'île est sélectionnée, false sinon
     */
-    void setEstSelect(boolean s){
+    public void setEstSelect(boolean s){
         this.estSelect = s;
     }
 
@@ -156,6 +156,9 @@ public class Ile {
             System.out.println(ileTest.toString());
             ileTest.supprimer2Ponts();
             System.out.println(ileTest.toString());
+            System.out.println(ileTest.getClass());
+            if(ileTest.getClass() == Ile.class) 
+                System.out.println("bjr");
         } catch(Exception e){
             e.printStackTrace();
         }
