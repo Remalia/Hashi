@@ -1,5 +1,7 @@
 
 /**
+ * Classe d'éxecution du jeu Hashi
+ * <a  href=https://github.com/Remalia/Hashi>voir Github</a>
  * 
  * @author Ilango Remi
  * @author Jarrier Allan
