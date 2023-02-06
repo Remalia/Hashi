@@ -19,8 +19,6 @@ public class Ile {
         this.estSelect = false; /** île non selectionée à la création */
     }
 
-    //boolean equals()
-
     /**
     * Incrémente de 1 le nombre de ponts attachés à l'île
     *
@@ -41,8 +39,6 @@ public class Ile {
             throw new Exception("Suppression de ponts impossible");
         }
     }
-
-
 
     /**
     * Retourne l'identifiant de l'île
