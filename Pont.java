@@ -1,9 +1,14 @@
 import java.awt.Color;
 
+
 public class Pont {
     private Ile ile1;
     private Ile ile2;
     private Color couleur;
+    private int nombrePont;
+
+    
+
 
 
     /**
@@ -17,6 +22,7 @@ public class Pont {
         this.ile1.ajouterPont();
         this.ile2.ajouterPont();
         this.couleur = c;
+        this.nombrePont = 0;
     }
 
     /**
@@ -46,5 +52,12 @@ public class Pont {
      */
     public void setCouleur(Color couleur) {
         this.couleur = couleur;
+    }
+
+    /**
+     * @return si 1 ce pont est simple et 2 si il est double 
+     */
+    public int getNombrePont(){
+        return this.nombrePont;
     }
 }
