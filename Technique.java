@@ -19,6 +19,7 @@ public class Technique{
         Méthode qui regarde si une île a seulement un voisin
         Retourne un boolean
         Vrai si une île a seulement un voisin non lié déjà
+        Lorsqu'on vérifie si une île a un seul voisin, on vérifie qu'il n'y a pas de ponts déjà construit sur la direction qu'on teste qui ne part pas du pont
     */
     boolean unVoisin(Grille uneGrille)
     {
@@ -80,9 +81,29 @@ public class Technique{
             case HAUT:
                 for(int y  = yIle - 1; y >= 0; y--)
                 {
+                    /** Si on trouve une île on retourne true */
                     if(matriceGrille[xIle][y].getClass() == Ile.class)
                     {
+                        /** 
+                            Il faut vérifier si l'île trouvée est pleine
+                            Si c'est le cas on retourne faux
+                            On considère que "le côté est bloqué"
+                        */
+                        if(((Ile) matriceGrille[xIle][y]).estComplete())
+                        {
+                            return(false);
+                        }
+                        /** Si l'île peut encore accepter un pont on retourne vrai*/
                         return(true);
+                    }
+                    /** 
+                        Si au contraire on trouve un pont
+                        On considère que "le côté est bloqué" puisqu'il est déjà occupé
+                    */
+
+                    if(matriceGrille[xIle][y].getClass() == Pont.class)
+                    {
+                        return(false);
                     }
                 }
                 break;
@@ -92,7 +113,15 @@ public class Technique{
                 {
                     if(matriceGrille[x][yIle].getClass() == Ile.class)
                     {
+                        if(((Ile) matriceGrille[x][yIle]).estComplete())
+                        {
+                            return(false);
+                        }
                         return(true);
+                    }
+                    if(matriceGrille[x][yIle].getClass() == Pont.class)
+                    {
+                        return(false);
                     }
                 }
                 break;
@@ -102,7 +131,15 @@ public class Technique{
                 {
                     if(matriceGrille[xIle][y].getClass() == Ile.class)
                     {
+                        if(((Ile) matriceGrille[xIle][y]).estComplete())
+                        {
+                            return(false);
+                        }
                         return(true);
+                    }
+                    if(matriceGrille[xIle][y].getClass() == Pont.class)
+                    {
+                        return(false);
                     }
                 }
                 break;
@@ -112,7 +149,14 @@ public class Technique{
                 {
                     if(matriceGrille[x][yIle].getClass() == Ile.class)
                     {
+                        if(((Ile) matriceGrille[x][yIle]).estComplete()){
+                            return(false);
+                        }
                         return(true);
+                    }
+                    if(matriceGrille[x][yIle].getClass() == Pont.class)
+                    {
+                        return(false);
                     }
                 }
                 break;
