@@ -30,9 +30,17 @@ public class Technique{
         */
         for(Object obj: uneGrille.matriceGrille)
         {
-            if(obj.getClass() == Ile.class){
-                if(nbVoisins((Ile) obj, uneGrille) == 1){
-                    return(true);
+            /** 
+                Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
+                Si une île est complète on ne la prend pas en compte
+            */
+            if(obj.getClass() == Ile.class)
+            {
+                if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+                {
+                    if(nbVoisins((Ile) obj, uneGrille) == 1){
+                        return(true);
+                    }
                 }
             }
         }
@@ -75,6 +83,11 @@ public class Technique{
         On retourne vrai si lors du parcours une île est trouvée
     */
     boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+        /**
+            On récupère l'île d'origine
+        */
+        Ile ileOrigine = (Ile)matriceGrille[xIle][yIle];
+        
         /** On fait une disjonction de cas selon la direction */
         switch(direction)
         {
@@ -97,12 +110,16 @@ public class Technique{
                         return(true);
                     }
                     /** 
-                        Si au contraire on trouve un pont
-                        On considère que "le côté est bloqué" puisqu'il est déjà occupé
+                        Si au contraire il y a un pont on regarde si le pont est accueili par l'île d'origine
                     */
 
                     if(matriceGrille[xIle][y].getClass() == Pont.class)
                     {
+                        /** On doit regarder si une des deux îles du pont est la même que celle d'origine */
+
+                        if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
                         return(false);
                     }
                 }
@@ -121,8 +138,10 @@ public class Technique{
                     }
                     if(matriceGrille[x][yIle].getClass() == Pont.class)
                     {
-                        return(false);
-                    }
+                        if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
+                        return(false);                    }
                 }
                 break;
             
@@ -139,6 +158,9 @@ public class Technique{
                     }
                     if(matriceGrille[xIle][y].getClass() == Pont.class)
                     {
+                        if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
                         return(false);
                     }
                 }
@@ -156,6 +178,9 @@ public class Technique{
                     }
                     if(matriceGrille[x][yIle].getClass() == Pont.class)
                     {
+                        if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
                         return(false);
                     }
                 }
