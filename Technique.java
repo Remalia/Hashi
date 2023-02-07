@@ -1,17 +1,19 @@
+import java.util.ArrayList;
+
 public class Technique{
     
     /**
         Constantes static qui indiquent le sens de parcours de la grille
     */
-    private static int HAUT = 0;
-    private static int GAUCHE = 1;
-    private static int BAS = 2;
-    private static int DROITE = 3;
+    private static final int HAUT = 0;
+    private static final int GAUCHE = 1;
+    private static final int BAS = 2;
+    private static final int DROITE = 3;
 
     /** 
         Liste des directions
     */
-    private static int listeDirections = [this.HAUT, this.GAUCHE, this.BAS, this.DROITE];
+    private static int [] listeDirections = {HAUT, GAUCHE, BAS, DROITE};
 
     /**
         Méthode qui regarde si une île a seulement un voisin
@@ -27,8 +29,8 @@ public class Technique{
         */
         for(Object obj: uneGrille.matriceGrille)
         {
-            if(obj.getClass() == "Ile"){
-                if(nbVoisins(obj, uneGrille) == 1){
+            if(obj.getClass() == Ile.class){
+                if(nbVoisins((Ile) obj, uneGrille) == 1){
                     return(true);
                 }
             }
@@ -71,23 +73,48 @@ public class Technique{
         On passe la taille de la grille en paramètres
         On retourne vrai si lors du parcours une île est trouvée
     */
-    boolean parcoursGrille(int xIle, int yIle, int direction, int taille, ArrayList<Object> matriceGrille){
+    boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+        /** On fait une disjonction de cas selon la direction */
         switch(direction)
         {
-            case this.HAUT:
-                for(int y  = yIle; y >= 0; y--)
+            case HAUT:
+                for(int y  = yIle - 1; y >= 0; y--)
                 {
-                    if(matriceGrille(xIle));
+                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    {
+                        return(true);
+                    }
                 }
                 break;
             
-            case this.GAUCHE:
+            case GAUCHE:
+                for(int x = xIle - 1; x >= 0; x--)
+                {
+                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    {
+                        return(true);
+                    }
+                }
                 break;
             
-            case this.BAS:
+            case BAS:
+                for(int y = yIle + 1; y <= taille; y++)
+                {
+                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    {
+                        return(true);
+                    }
+                }
                 break;
             
-            case this.DROITE:
+            case DROITE:
+                for(int x = xIle + 1; x <= taille; x++)
+                {
+                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    {
+                        return(true);
+                    }
+                }
                 break;
         }
 
