@@ -15,6 +15,8 @@ public class Grille {
     Grille(int[][] init){
         /** remplissage de la grille temporaire pour les tests */
         try{
+            this.pileSvg = new Stack<Pont>();
+            this.pileRecup = new Stack<Pont>();
             matriceGrille = new Object[10][10]; 
             int i, j;
             /** initialisation de la grille en dur TEMPORAIRE*/
@@ -53,6 +55,31 @@ public class Grille {
                     matriceGrille[i][ile2.getOrd()] = pont; 
             }
         }
+        this.pileSvg.push(pont);
+    }
+
+    public void retirerPont(Pont pont){
+        int i;
+        Ile ile1 = pont.getIle1();
+        Ile ile2 = pont.getIle2();
+        if(ile1.getAbs() == ile2.getAbs()){
+            if(ile1.getOrd() < ile2.getOrd()){
+                for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
+                    matriceGrille[ile1.getAbs()][i] = -1;
+            }else{
+                for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
+                    matriceGrille[ile1.getAbs()][i] = -1; 
+            }
+        } else if(ile1.getOrd() == ile2.getOrd()){
+            if(ile1.getAbs() < ile2.getAbs()){
+                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
+                    matriceGrille[i][ile2.getOrd()] = -1;
+            }else{
+                for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
+                    matriceGrille[i][ile2.getOrd()] = -1; 
+            }
+        }
+        this.pileSvg.push(pont);
     }
 
     public String toString(){
@@ -71,6 +98,10 @@ public class Grille {
             s += "\n";
         }
         return s;
+    }
+
+    public int getTaille(){
+        return 10;
     }
     
 
