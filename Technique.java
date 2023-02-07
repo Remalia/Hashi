@@ -77,7 +77,7 @@ public class Technique{
             case this.HAUT:
                 for(int y  = yIle; y >= 0; y--)
                 {
-                    if(matriceGrille(xIle))
+                    if(matriceGrille(xIle));
                 }
                 break;
             
