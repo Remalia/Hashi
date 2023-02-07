@@ -24,6 +24,15 @@ public class Ile {
     }
 
     /**
+    * Vérifie si l'île est complète
+    *
+    * @return true si l'île est complète, sinon false
+    */
+    public boolean estComplete(){
+        return (this.num == this.nbPonts);
+    }
+
+    /**
     * Incrémente de 1 le nombre de ponts attachés à l'île
     *
     */
