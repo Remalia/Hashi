@@ -3,13 +3,18 @@
  */
 public class Chronometre {
 
-    private long tempsDepart=0;
-    private long tempsFin=0;
-    private long pauseDepart=0;
-    private long pauseFin=0;
-    private long duree=0;
+    private long tempsDepart;
+    private long tempsFin;
+    private long pauseDepart;
+    private long pauseFin;
+    private long duree;
 
     Chronometre(){
+        this.tempsDepart = 0;
+        this.tempsFin = 0;
+        this.pauseDepart = 0;
+        this.pauseFin = 0;
+        this.duree = 0;
     }
 
     /**
