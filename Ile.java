@@ -24,6 +24,15 @@ public class Ile {
     }
 
     /**
+    * Vérifie si l'île en paramètre est la même île
+    *
+    * @return true si l'île est la même, sinon false
+    */
+    public boolean equals(Ile ile){
+        return ((this.abs == ile.abs) && (this.ord == ile.ord));
+    }
+
+    /**
     * Vérifie si l'île est complète
     *
     * @return true si l'île est complète, sinon false
@@ -169,6 +178,7 @@ public class Ile {
             System.out.println(ileTest.getClass());
             if(ileTest.getClass() == Ile.class) 
                 System.out.println("bjr");
+            System.out.println(ileTest.equals(ileTest));
         } catch(Exception e){
             e.printStackTrace();
         }
