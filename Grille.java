@@ -39,18 +39,18 @@ public class Grille {
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
                 for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
-                    matriceGrille[ile1.getAbs()][i] = new Pont(ile1, ile2, c);
+                    matriceGrille[ile1.getAbs()][i] = pont;
             }else{
                 for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
-                    matriceGrille[ile1.getAbs()][i] = new Pont(ile1, ile2, c); 
+                    matriceGrille[ile1.getAbs()][i] = pont; 
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
                 for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
-                    matriceGrille[i][ile2.getOrd()] = new Pont(ile1, ile2, c);
+                    matriceGrille[i][ile2.getOrd()] = pont;
             }else{
                 for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
-                    matriceGrille[i][ile2.getOrd()] = new Pont(ile1, ile2, c); 
+                    matriceGrille[i][ile2.getOrd()] = pont; 
             }
         }
     }
@@ -60,13 +60,13 @@ public class Grille {
         String s = "";
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
-                if(matriceGrille[i][j].getClass() == Ile.class)
+                if(matriceGrille[i][j] instanceof  Ile)
                     s += ((Ile)matriceGrille[i][j]).getNum() + " ";
                 /** un même pont dans plusieurs cases de la matrice?? */
                 else if(matriceGrille[i][j].getClass() == Pont.class)
                     s += "- ";
                 else
-                    s += "  ";
+                    s += ". ";
             }
             s += "\n";
         }
@@ -102,7 +102,13 @@ public class Grille {
             {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
 
         };
-        Grille grilleTest = new Grille(init1);
+        Grille grilleTest = new Grille(init2);
+        Color c = new Color(0, 0, 255);
+        try {
+            grilleTest.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println(grilleTest.toString());
         
     }
