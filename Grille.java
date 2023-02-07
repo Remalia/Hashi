@@ -3,30 +3,55 @@ import java.util.*;
 import java.awt.Color;
 
 public class Grille {
+
+    Color c = new Color(0, 0, 255);
+
     Stack<Pont> pileSvg;
     Stack<Pont> pileRecup;
     Object[][] matriceGrille;
     boolean modeHyp;
     int difficulte;
 
-    Grille(){
+    Grille(int[][] init){
         /** remplissage de la grille temporaire pour les tests */
         try{
-            matriceGrille = new Object[10][10];
+            matriceGrille = new Object[10][10]; 
             int i, j;
+            /** initialisation de la grille en dur TEMPORAIRE*/
             for(i = 0; i < 10; i++){
                 for(j = 0; j < 10; j++){
-                    matriceGrille[i][j] = new Object();
+                    if(init[i][j] < 0)
+                        matriceGrille[i][j] = new Object();
+                    else if(init[i][j] > 0){
+                        /** init contient les numéros des îles */
+                        matriceGrille[i][j] = new Ile(1, init[i][j], i, j, c);
+                    }
                 }
-            }
-            Ile ile1 = new Ile(1, 5, 4, 2);
-            Ile ile2 = new Ile(2, 6, 2, 2);
-            Pont pont1 = new Pont(ile1, ile2, new Color(100, 0, 0));
-            matriceGrille[ile1.getAbs()][ile1.getOrd()] = ile1;
-            matriceGrille[ile2.getAbs()][ile2.getOrd()] = ile2;
-            matriceGrille[3][2] = pont1;
+            }   
         } catch(Exception e){
             e.printStackTrace();
+        }
+    }
+
+    public void ajouterPont(Ile ile1, Ile ile2){
+        int i;
+        Pont pont = new Pont(ile1, ile2, c);
+        if(ile1.getAbs() == ile2.getAbs()){
+            if(ile1.getOrd() < ile2.getOrd()){
+                for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
+                    matriceGrille[ile1.getAbs()][i] = new Pont(ile1, ile2, c);
+            }else{
+                for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
+                    matriceGrille[ile1.getAbs()][i] = new Pont(ile1, ile2, c); 
+            }
+        } else if(ile1.getOrd() == ile2.getOrd()){
+            if(ile1.getAbs() < ile2.getAbs()){
+                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
+                    matriceGrille[i][ile2.getOrd()] = new Pont(ile1, ile2, c);
+            }else{
+                for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
+                    matriceGrille[i][ile2.getOrd()] = new Pont(ile1, ile2, c); 
+            }
         }
     }
 
@@ -36,11 +61,12 @@ public class Grille {
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
                 if(matriceGrille[i][j].getClass() == Ile.class)
-                    s += "I ";
+                    s += ((Ile)matriceGrille[i][j]).getNum() + " ";
+                /** un même pont dans plusieurs cases de la matrice?? */
                 else if(matriceGrille[i][j].getClass() == Pont.class)
-                    s += "P ";
+                    s += "- ";
                 else
-                    s += "X ";
+                    s += "  ";
             }
             s += "\n";
         }
@@ -50,7 +76,33 @@ public class Grille {
 
     public static void main(String[] args){
         
-        Grille grilleTest = new Grille();
+        int[][] init1 = {
+            {3, -1, 2, -1, 2, -1, -1, -1, -1, 4},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {4, -1, -1, -1, -1, -1, 2, -1, -1, 4},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {4, -1, 2, -1, 2, -1, 7, -1, 2, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, 1, -1, 1, -1, 4, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, 2, -1, 5, -1, 6, -1, 2, -1},
+            {2, -1, -1, -1, -1, -1, -1, -1, -1, 3}
+
+        };
+        int[][] init2 = {
+            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
+
+        };
+        Grille grilleTest = new Grille(init1);
         System.out.println(grilleTest.toString());
         
     }

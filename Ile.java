@@ -9,14 +9,14 @@ public class Ile {
     private Color couleur; /** couleur actuelle de l'île */
     private boolean estSelect; /** statut de sélection de l'île */
     
-    public Ile(int id, int num, int abs, int ord) throws Exception{
+    public Ile(int id, int num, int abs, int ord, Color c) throws Exception{
         if(num >= 1 && num <= 8){
             this.id = id;
             this.num = num;
             this.abs = abs;
             this.ord = ord;
             this.nbPonts = 0; /** à la création il n'y a pas de ponts */
-            this.couleur = new Color(100, 0, 0); /** couleur initiale */
+            this.couleur = c; /** couleur initiale */
             this.estSelect = false; /** île non selectionée à la création */
         } else{
             throw new Exception("Création d'île impossible, numéro incorrect");
@@ -158,7 +158,8 @@ public class Ile {
 
     public static void main(String[] args){
         try {
-            Ile ileTest = new Ile(1, 5, 4, 2);
+            Color c = new Color(100, 0, 0);
+            Ile ileTest = new Ile(1, 5, 4, 2, c);
             System.out.println(ileTest.toString());
             ileTest.ajouterPont();
             ileTest.ajouterPont();
