@@ -1,0 +1,5 @@
+|type: fichierScore
+|nb: 2
+|scores:
+    |score1: JPL | 1:20 | -120
+    |score2: JAC | 0:25 | 62
