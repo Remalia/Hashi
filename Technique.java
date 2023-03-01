@@ -201,19 +201,26 @@ public class Technique{
             On parcourt la liste des objets de la matrice de la grille
             Quand on trouve une île qui n'a qu'un voisin on change sa couleur
         */
-        /** 
-            Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
-            Si une île est complète on ne la prend pas en compte
-        */
-        if(obj.getClass() == Ile.class)
+        for(Object obj: uneGrille.matriceGrille)
         {
-            if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+            /** 
+                Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
+                Si une île est complète on ne la prend pas en compte
+            */
+            if(obj.getClass() == Ile.class)
             {
-                if(nbVoisins((Ile) obj, uneGrille) == 1){
-                    return((Ile)obj);
+                if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+                {
+                    if(nbVoisins((Ile) obj, uneGrille) == 1){
+                        return((Ile)obj);
+                    }
                 }
             }
         }
+        /**
+            N'arrive jamais car on vérifie qu'il y a au moins une île à un seul voisin libre sur la grille avant d'appeler cette méthode 
+        */
+        return(null);
     }
 
 
@@ -260,17 +267,21 @@ public class Technique{
     {
         ArrayList<Ile> listeIlesVois = new ArrayList<Ile>();
 
+        int xIle = ileOrigine.getAbs();
+        int yIle = ileOrigine.getOrd();
+        int tailleGrille = uneGrille.getTaille();
+
         /** 
             On parcourt les 4 directions pour récupérer les îles valables
         */
         for(int direction: listeDirections)
         {
-            if(parcoursGrille(ileOrigine.getAbs(), ileOrigine.getOrd(), direction, uneGrille.getTaille(), uneGrille.matriceGrille))
+            if(parcoursGrille(xIle, yIle, direction, tailleGrille, uneGrille.matriceGrille))
             {
                 /**
                     Si dans une direction il y a une île on récupère l'île de la direction parcourue
                 */
-                listeIlesVois.add(  );
+                listeIlesVois.add( recupIleGrille(xIle, yIle, direction, tailleGrille, uneGrille.matriceGrille) );
             }
         }
 
