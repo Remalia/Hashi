@@ -9,7 +9,11 @@ public class Chronometre {
     private long pauseFin;
     private long duree;
 
-    Chronometre(){
+    /*
+     * Constructeur de chronomètre
+     * Initialise les temps à 0
+     */
+    public Chronometre(){
         this.tempsDepart = 0;
         this.tempsFin = 0;
         this.pauseDepart = 0;

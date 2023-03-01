@@ -12,7 +12,11 @@ public class Grille {
     boolean modeHyp;
     int difficulte;
 
-    Grille(int[][] init){
+    /*
+     * Constructeur de la grille
+     * @param init la grille initiale
+     */
+    public Grille(int[][] init){
         /** remplissage de la grille temporaire pour les tests */
         try{
             this.pileSvg = new Stack<Pont>();
@@ -35,6 +39,12 @@ public class Grille {
         }
     }
 
+    /*
+     * Ajoute un pont à la grille
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
+     * @return void
+     */
     public void ajouterPont(Ile ile1, Ile ile2){
         int i;
         Pont pont = new Pont(ile1, ile2, c);
@@ -57,7 +67,12 @@ public class Grille {
         }
         this.pileSvg.push(pont);
     }
-
+    /*
+     * Retire un pont de la grille
+     * @param pont le pont à retirer
+     * @return void
+     * 
+     */
     public void retirerPont(Pont pont){
         int i;
         Ile ile1 = pont.getIle1();
@@ -82,6 +97,10 @@ public class Grille {
         this.pileSvg.push(pont);
     }
 
+    /*
+     * Retourne la pile des ponts sauvegardés
+     * @return la pile des ponts sauvegardés
+     */
     public String toString(){
         int i, j;
         String s = "";
@@ -100,6 +119,10 @@ public class Grille {
         return s;
     }
 
+    /*
+     * Retourne la pile des ponts sauvegardés
+     * @return la pile des ponts sauvegardés
+     */
     public int getTaille(){
         return 10;
     }
