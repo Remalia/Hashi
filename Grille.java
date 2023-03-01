@@ -7,7 +7,7 @@ public class Grille {
 
     Stack<Pont> pileSvg;
     Stack<Pont> pileRecup;
-    Object[][] matriceGrille;
+    private Object[][] matriceGrille;
     boolean modeHyp;
     int difficulte;
 
@@ -46,12 +46,20 @@ public class Grille {
      */
     public void ajouterPont(Ile ile1, Ile ile2){
         int i;
-        Object pont = verifCreationPont(ile1, ile2).getClass() ;
+        Object objet = verifCreationPont(ile1, ile2).getClass() ;
+        Pont pont;
         //Si il y'a une autre île entre les deux îles données on ne fait rien
-        if(pont == Ile.class) return;
+        if(objet == Ile.class) return;
 
         //si pont traitement 
-        if((pont = verifCreationPont(ile1, ile2).getClass()) == Pont.class){
+        if((objet = verifCreationPont(ile1, ile2).getClass()) == Pont.class){
+            // si le pont existant est simple
+            pont = (Pont)objet;
+            if(pont.getNombrePont() == 1){
+                pont.ajoutNombrePont();
+            }
+            // sinon on le supprime
+            retirerPont(pont);
             
         }else{
             //sinon le créer
@@ -170,6 +178,14 @@ public class Grille {
      */
     public int getTaille(){
         return 10;
+    }
+
+    /**
+     * Retourne la matrice de la grille
+     * @return la matrice de la grille
+     */
+    public Object[][] getMatriceGrille(){
+        return matriceGrille;
     }
     
 
