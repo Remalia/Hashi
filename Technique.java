@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Technique{
     
     /**
@@ -19,21 +21,51 @@ public class Technique{
         Vrai si une île a seulement un voisin non lié déjà
         Lorsqu'on vérifie si une île a un seul voisin, on vérifie qu'il n'y a pas de ponts déjà construit sur la direction qu'on teste qui ne part pas du pont
     */
-    boolean unVoisin(Grille uneGrille)
+    static boolean unVoisin(Grille uneGrille)
     {
-        
+        Object[][] matrice = uneGrille.getMatriceGrille();
+        Object obj;
         /**
             On parcourt la grille  
             Si l'object parcouru est une île alors on regarde son nombre de voisins
         */
-        for(Object obj: uneGrille.matriceGrille)
+        /*for(Object obj: matrice)
         {
+            for(Object obj2: obj)
+            {
+                System.out.prinltn("test");
+            }
+        }*/
+
+        for(int i = 0; i < uneGrille.getTaille(); i++)
+        {
+            for(int j = 0; j < uneGrille.getTaille(); j++)
+            {
+                obj = matrice[i][j];
+                if(obj.getClass() == Ile.class)
+                {
+                    System.out.println("Il y a une île, i/j : "+i+"/"+j);
+                    if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+                    {
+                        if(nbVoisins((Ile) obj, uneGrille) == 1){
+                            return(true);
+                        }
+                    }
+                }
+                else{
+                    System.out.println("Pas une île i/j : "+i+"/"+j);
+                }
+            }
+            System.out.println("\n");
+        }
+        //{
             /** 
                 Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
                 Si une île est complète on ne la prend pas en compte
             */
-            if(obj.getClass() == Ile.class)
+          /*  if(obj.getClass() == Ile.class)
             {
+                System.out.println("\n\n\nIl y a une île");
                 if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
                 {
                     if(nbVoisins((Ile) obj, uneGrille) == 1){
@@ -41,7 +73,10 @@ public class Technique{
                     }
                 }
             }
-        }
+            else{
+                System.out.println("Pas une île");
+            }
+        }*/
 
         return(false);
     }
@@ -49,7 +84,7 @@ public class Technique{
     /**
         Méthode qui retourne le nombre d'îles auxquelles une île peut se connecter
     */
-    int nbVoisins(Ile uneIle, Grille uneGrille)
+    static int nbVoisins(Ile uneIle, Grille uneGrille)
     {
         /** Compteur du nombre d'îles voisines */
         int nbIlesVois = 0;
@@ -64,7 +99,7 @@ public class Technique{
         // à modifier avec un for each ==> liste avec les 4 directions
         for(int direction: listeDirections)
         {
-            if(parcoursGrille(uneIle.getAbs(), uneIle.getOrd(), direction, uneGrille.getTaille(), uneGrille.matriceGrille)) 
+            if(parcoursGrille(uneIle.getAbs(), uneIle.getOrd(), direction, uneGrille.getTaille(), uneGrille.getMatriceGrille())) 
                 nbIlesVois++;
         }
 
@@ -80,7 +115,7 @@ public class Technique{
         On passe la taille de la grille en paramètres
         On retourne vrai si lors du parcours une île est trouvée
     */
-    boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+    static boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
         /**
             On récupère l'île d'origine
         */
@@ -145,7 +180,7 @@ public class Technique{
                 break;
             
             case BAS:
-                for(int y = yIle + 1; y <= taille; y++)
+                for(int y = yIle + 1; y < taille; y++)
                 {
                     if(matriceGrille[xIle][y].getClass() == Ile.class)
                     {
@@ -166,7 +201,7 @@ public class Technique{
                 break;
             
             case DROITE:
-                for(int x = xIle + 1; x <= taille; x++)
+                for(int x = xIle + 1; x < taille; x++)
                 {
                     if(matriceGrille[x][yIle].getClass() == Ile.class)
                     {
@@ -193,13 +228,13 @@ public class Technique{
     /**
         Méthode qui retourne une île qui n'a qu'un voisin
     */
-    Ile ileUnVoisin(Grille uneGrille)
+    static Ile ileUnVoisin(Grille uneGrille)
     {
         /**
             On parcourt la liste des objets de la matrice de la grille
             Quand on trouve une île qui n'a qu'un voisin on change sa couleur
         */
-        for(Object obj: uneGrille.matriceGrille)
+        for(Object obj: uneGrille.getMatriceGrille())
         {
             /** 
                 Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
@@ -228,13 +263,13 @@ public class Technique{
             --> Vrai si une île existe dans cette configuration
             --> Faux sinon
     */
-    boolean ileDeuxVoisinsDontUnUn(Grille uneGrille)
+    static boolean ileDeuxVoisinsDontUnUn(Grille uneGrille)
     {
         /**
             On parcourt la grille  
             Si l'object parcouru est une île alors on regarde son nombre de voisins
         */
-        for(Object obj: uneGrille.matriceGrille)
+        for(Object obj: uneGrille.getMatriceGrille())
         {
             /** 
                 Si l'île est complète on ne la considère pas
@@ -261,7 +296,7 @@ public class Technique{
     /**
         Méthode qui récupèrent la liste des îles voisines d'une île
     */
-    ArrayList<Ile> listeIlesVoisines(Ile ileOrigine, Grille uneGrille)
+    static ArrayList<Ile> listeIlesVoisines(Ile ileOrigine, Grille uneGrille)
     {
         ArrayList<Ile> listeIlesVois = new ArrayList<Ile>();
 
@@ -274,12 +309,12 @@ public class Technique{
         */
         for(int direction: listeDirections)
         {
-            if(parcoursGrille(xIle, yIle, direction, tailleGrille, uneGrille.matriceGrille))
+            if(parcoursGrille(xIle, yIle, direction, tailleGrille, uneGrille.getMatriceGrille()))
             {
                 /**
                     Si dans une direction il y a une île on récupère l'île de la direction parcourue
                 */
-                listeIlesVois.add( recupIleGrille(xIle, yIle, direction, tailleGrille, uneGrille.matriceGrille) );
+                listeIlesVois.add( recupIleGrille(xIle, yIle, direction, tailleGrille, uneGrille.getMatriceGrille()) );
             }
         }
 
@@ -298,7 +333,7 @@ public class Technique{
         On passe la taille de la grille en paramètres
         On retourne une île si elle est trouvée
     */
-    Ile recupIleGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+    static Ile recupIleGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
         /**
             On récupère l'île d'origine
         */
@@ -354,5 +389,52 @@ public class Technique{
         }
 
         return(null);
+    }
+
+    public static void main(String[] args){
+        
+        int[][] init1 = {
+            {2, -1, 2, -1, 2, -1, -1, -1, -1, 4},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {4, -1, -1, -1, -1, -1, 2, -1, -1, 4},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {4, -1, 2, -1, 2, -1, 7, -1, 2, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, 1, -1, 1, -1, 4, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, 2, -1, 5, -1, 6, -1, 2, -1},
+            {2, -1, -1, -1, -1, -1, -1, -1, -1, 3}
+
+        };
+        int[][] init2 = {
+            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
+
+        };
+        Grille grilleTest = new Grille(init2);
+        /*Color c = new Color(0, 0, 255);
+        try {
+            grilleTest.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        System.out.println(grilleTest.toString());
+        if(Technique.unVoisin(grilleTest))
+        {
+            System.out.println("Il y a bien une île qui a un seul voisin");
+        }
+        else
+        {
+            System.out.println("Il n'y a pas une île qui a un seul voisin");
+        }
+        
     }
 }
