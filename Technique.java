@@ -28,9 +28,17 @@ public class Technique{
         */
         for(Object obj: uneGrille.matriceGrille)
         {
-            if(obj.getClass() == Ile.class){
-                if(nbVoisins((Ile) obj, uneGrille) == 1){
-                    return(true);
+            /** 
+                Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
+                Si une île est complète on ne la prend pas en compte
+            */
+            if(obj.getClass() == Ile.class)
+            {
+                if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+                {
+                    if(nbVoisins((Ile) obj, uneGrille) == 1){
+                        return(true);
+                    }
                 }
             }
         }
@@ -73,6 +81,11 @@ public class Technique{
         On retourne vrai si lors du parcours une île est trouvée
     */
     boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+        /**
+            On récupère l'île d'origine
+        */
+        Ile ileOrigine = (Ile)matriceGrille[xIle][yIle];
+        
         /** On fait une disjonction de cas selon la direction */
         switch(direction)
         {
@@ -95,12 +108,16 @@ public class Technique{
                         return(true);
                     }
                     /** 
-                        Si au contraire on trouve un pont
-                        On considère que "le côté est bloqué" puisqu'il est déjà occupé
+                        Si au contraire il y a un pont on regarde si le pont est accueili par l'île d'origine
                     */
 
                     if(matriceGrille[xIle][y].getClass() == Pont.class)
                     {
+                        /** On doit regarder si une des deux îles du pont est la même que celle d'origine */
+
+                        if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
                         return(false);
                     }
                 }
@@ -119,7 +136,10 @@ public class Technique{
                     }
                     if(matriceGrille[x][yIle].getClass() == Pont.class)
                     {
-                        return(false);
+                        if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
+                        return(false);                    
                     }
                 }
                 break;
@@ -137,6 +157,9 @@ public class Technique{
                     }
                     if(matriceGrille[xIle][y].getClass() == Pont.class)
                     {
+                        if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
                         return(false);
                     }
                 }
@@ -154,6 +177,9 @@ public class Technique{
                     }
                     if(matriceGrille[x][yIle].getClass() == Pont.class)
                     {
+                        if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
+                            return(true);
+                        }
                         return(false);
                     }
                 }
@@ -161,5 +187,172 @@ public class Technique{
         }
 
         return(false);
+    }
+
+
+    /**
+        Méthode qui retourne une île qui n'a qu'un voisin
+    */
+    Ile ileUnVoisin(Grille uneGrille)
+    {
+        /**
+            On parcourt la liste des objets de la matrice de la grille
+            Quand on trouve une île qui n'a qu'un voisin on change sa couleur
+        */
+        for(Object obj: uneGrille.matriceGrille)
+        {
+            /** 
+                Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
+                Si une île est complète on ne la prend pas en compte
+            */
+            if(obj.getClass() == Ile.class)
+            {
+                if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+                {
+                    if(nbVoisins((Ile) obj, uneGrille) == 1){
+                        return((Ile)obj);
+                    }
+                }
+            }
+        }
+        /**
+            N'arrive jamais car on vérifie qu'il y a au moins une île à un seul voisin libre sur la grille avant d'appeler cette méthode 
+        */
+        return(null);
+    }
+
+
+    /**
+        Méthode qui cherche si une île a deux îles voisines dont une île qui n'acceuille qu'un seul pont au maximum
+        Retourne un booléen
+            --> Vrai si une île existe dans cette configuration
+            --> Faux sinon
+    */
+    boolean ileDeuxVoisinsDontUnUn(Grille uneGrille)
+    {
+        /**
+            On parcourt la grille  
+            Si l'object parcouru est une île alors on regarde son nombre de voisins
+        */
+        for(Object obj: uneGrille.matriceGrille)
+        {
+            /** 
+                Si l'île est complète on ne la considère pas
+            */
+            if(obj.getClass() == Ile.class)
+            {
+                if( !((Ile)obj).estComplete() )
+                {
+                    /** Si l'île a 2 voisins on regarde si une des deux îles accueille au maximum un pont */
+                    if(nbVoisins((Ile) obj, uneGrille) == 2){
+                        //return(true);
+                        /**
+                            On doit regarder si un des deux voisins accueille au maximum un pont
+                        */
+
+                    }
+                }
+            }
+        }
+
+        return(false);
+    }
+
+    /**
+        Méthode qui récupèrent la liste des îles voisines d'une île
+    */
+    ArrayList<Ile> listeIlesVoisines(Ile ileOrigine, Grille uneGrille)
+    {
+        ArrayList<Ile> listeIlesVois = new ArrayList<Ile>();
+
+        int xIle = ileOrigine.getAbs();
+        int yIle = ileOrigine.getOrd();
+        int tailleGrille = uneGrille.getTaille();
+
+        /** 
+            On parcourt les 4 directions pour récupérer les îles valables
+        */
+        for(int direction: listeDirections)
+        {
+            if(parcoursGrille(xIle, yIle, direction, tailleGrille, uneGrille.matriceGrille))
+            {
+                /**
+                    Si dans une direction il y a une île on récupère l'île de la direction parcourue
+                */
+                listeIlesVois.add( recupIleGrille(xIle, yIle, direction, tailleGrille, uneGrille.matriceGrille) );
+            }
+        }
+
+        return(listeIlesVois);
+    }
+
+    /**
+        Méthode qui retourne une île
+        On parcourt une grille dans une direction et on retourne une île si on en trouve une valable
+    */
+    /** 
+        Méthode qui parcourt la grille en fonction d'une direction
+        On passe la grille en paramètres
+        On passe les coordonnées de l'île d'origine en paramètres
+        On passe la direction en paramètres
+        On passe la taille de la grille en paramètres
+        On retourne une île si elle est trouvée
+    */
+    Ile recupIleGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+        /**
+            On récupère l'île d'origine
+        */
+        Ile ileOrigine = (Ile)matriceGrille[xIle][yIle];
+        
+        /** On fait une disjonction de cas selon la direction */
+        switch(direction)
+        {
+            case HAUT:
+                for(int y  = yIle - 1; y >= 0; y--)
+                {
+                    /** 
+                        On ne parcourt une direction que si on est sûr d'obtenir une île valable à un moment donné
+                        Par conséquent il n'y a pas de vérification à réaliser 
+                        On retourne simplement l'île que l'on trouve en premier
+                    */
+                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    {
+                        return((Ile)matriceGrille[xIle][y]);
+                    }
+                }
+                break;
+            
+            case GAUCHE:
+                for(int x = xIle - 1; x >= 0; x--)
+                {
+                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    {
+                        return((Ile)matriceGrille[x][yIle]);
+                    }
+                }
+                break;
+            
+            case BAS:
+                for(int y = yIle + 1; y <= taille; y++)
+                {
+                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    {
+                        return((Ile)matriceGrille[xIle][y]);
+                    }
+                }
+                break;
+            
+            case DROITE:
+                for(int x = xIle + 1; x <= taille; x++)
+                {
+                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    {
+                        return((Ile)matriceGrille[x][yIle]);
+                    }
+                }
+                break;
+        }
+
+        return(null);
     }
 }
