@@ -14,15 +14,28 @@ public class Pont {
     /**
      * @param i1 première île
      * @param i2 deuxième île
-     * @param c couleur du pont
      */
-    public Pont(Ile i1,Ile i2,Color c){
+    public Pont(Ile i1,Ile i2){
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont();
         this.ile2.ajouterPont();
-        this.couleur = c;
+        this.couleur = new Color(0, 0, 255);
         this.nombrePont = 1;
+    }
+
+    /**
+     * @param i1 première île
+     * @param i2 deuxième île
+     * @param nbPonts nombre de ponts
+     */
+    public Pont(Ile i1,Ile i2,int nbPonts){
+        this.ile1 = i1;
+        this.ile2 = i2;
+        this.ile1.ajouterPont();
+        this.ile2.ajouterPont();
+        this.couleur = new Color(0, 0, 255);
+        this.nombrePont = nbPonts;
     }
 
     /**
