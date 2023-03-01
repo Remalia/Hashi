@@ -11,7 +11,7 @@ public class Grille {
     boolean modeHyp;
     int difficulte;
 
-    /*
+    /**
      * Constructeur de la grille
      * @param init la grille initiale
      */
@@ -38,7 +38,7 @@ public class Grille {
         }
     }
 
-    /*
+    /** 
      * Ajoute un pont à la grille
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
@@ -46,9 +46,18 @@ public class Grille {
      */
     public void ajouterPont(Ile ile1, Ile ile2){
         int i;
-        Pont pont = new Pont(ile1, ile2, c);
-        //On ne peut pas créer de pont entre ces îles
-        if(!verifCreationPont(ile1, ile2)) return;
+        Object pont = verifCreationPont(ile1, ile2).getClass() ;
+        //Si il y'a une autre île entre les deux îles données on ne fait rien
+        if(pont == Ile.class) return;
+
+        //si pont traitement 
+        if((pont = verifCreationPont(ile1, ile2).getClass()) == Pont.class){
+            
+        }else{
+            //sinon le créer
+            pont = new Pont(ile1, ile2, c);
+        }
+
         //Si on peut onvérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
@@ -68,39 +77,39 @@ public class Grille {
             }
         }
         //On ajoute le pont à la liste des ponts créés
-        this.pileSvg.push(pont);
+        this.pileSvg.push((Pont)pont);
     }
 
-    /*
+    /**
      * Vérifie si la création d'un pont est possible
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
      * @return true si le pont peut être créé, false sinon
      */
-    private boolean verifCreationPont(Ile ile1, Ile ile2){
+    public Object verifCreationPont(Ile ile1, Ile ile2){
         int i;
         // si pont vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
                 for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
-                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class)return false;
+                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class)return matriceGrille[ile1.getAbs()][i];
             }else{
                 for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
-                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return false; 
+                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
                 for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
-                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return false; 
+                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
             }else{
                 for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
-                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return false; 
+                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
             }
         }
-        return true;
+        return null;
     }
     
-    /*
+    /**
      * Retire un pont de la grille
      * @param pont le pont à retirer
      * @return void
@@ -130,7 +139,7 @@ public class Grille {
         this.pileSvg.push(pont);
     }
 
-    /*
+    /**
      * Retourne la pile des ponts sauvegardés
      * @return la pile des ponts sauvegardés
      */
@@ -141,8 +150,12 @@ public class Grille {
             for(j = 0; j < 10; j++){
                 if(matriceGrille[i][j] instanceof  Ile)
                     s += ((Ile)matriceGrille[i][j]).getNum() + " ";
-                else if(matriceGrille[i][j].getClass() == Pont.class)
-                    s += "= ";
+                else if(matriceGrille[i][j].getClass() == Pont.class){
+                    if(((Pont) matriceGrille[i][j]).getNombrePont() == 1)
+                        s += "- ";
+                    else 
+                        s += "= ";
+                }
                 else
                     s += ". ";
             }
@@ -151,7 +164,7 @@ public class Grille {
         return s;
     }
 
-    /*
+    /**
      * Retourne la pile des ponts sauvegardés
      * @return la pile des ponts sauvegardés
      */
@@ -193,7 +206,6 @@ public class Grille {
         Color c = new Color(0, 0, 255);
         try {
             grilleTest.ajouterPont(new Ile(1,2,4,0,c), new Ile(2,2,4,10,c));
-            grilleTest.ajouterPont(new Ile(1,2,0,5,c), new Ile(2,2,10,5,c));
         } catch (Exception e) {
             e.printStackTrace();
         }

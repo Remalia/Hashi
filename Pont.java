@@ -22,7 +22,7 @@ public class Pont {
         this.ile1.ajouterPont();
         this.ile2.ajouterPont();
         this.couleur = c;
-        this.nombrePont = 0;
+        this.nombrePont = 1;
     }
 
     /**
@@ -60,4 +60,16 @@ public class Pont {
     public int getNombrePont(){
         return this.nombrePont;
     }
+
+    /**
+     * Incrémente le nombre de pont et le remet à 0 si il y a déjà 2 ponts
+     */
+    public void ajoutNombrePont(){
+        // si le pont est simple on le passe en double
+        if(++this.nombrePont == 2){
+            // si le pont est double on le supprime
+            this.nombrePont = 0;
+        }
+    }
+
 }
