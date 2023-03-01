@@ -39,6 +39,6 @@ public class Classement {
      * @throws FileNotFoundException Fichier Introuvable
      */
     public static void main(String[] args) throws FileNotFoundException {
-        Classement tester = new Classement("Scores\\NiveauTest.txt");
+        //Classement tester = new Classement("Scores\\NiveauTest.txt");
     }
 }

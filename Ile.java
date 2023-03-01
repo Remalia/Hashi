@@ -25,7 +25,6 @@ public class Ile {
 
     /**
     * Vérifie si l'île en paramètre est la même île
-    *
     * @return true si l'île est la même, sinon false
     */
     public boolean equals(Ile ile){

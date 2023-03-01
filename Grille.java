@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 import java.awt.Color;
 
@@ -48,6 +47,9 @@ public class Grille {
     public void ajouterPont(Ile ile1, Ile ile2){
         int i;
         Pont pont = new Pont(ile1, ile2, c);
+        //On ne peut pas créer de pont entre ces îles
+        if(!verifCreationPont(ile1, ile2)) return;
+        //Si on peut onvérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
                 for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
@@ -62,11 +64,42 @@ public class Grille {
                     matriceGrille[i][ile2.getOrd()] = pont;
             }else{
                 for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
-                    matriceGrille[i][ile2.getOrd()] = pont; 
+                    matriceGrille[i][ile2.getOrd()] = pont;
             }
         }
+        //On ajoute le pont à la liste des ponts créés
         this.pileSvg.push(pont);
     }
+
+    /*
+     * Vérifie si la création d'un pont est possible
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
+     * @return true si le pont peut être créé, false sinon
+     */
+    private boolean verifCreationPont(Ile ile1, Ile ile2){
+        int i;
+        // si pont vertical
+        if(ile1.getAbs() == ile2.getAbs()){
+            if(ile1.getOrd() < ile2.getOrd()){
+                for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
+                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class)return false;
+            }else{
+                for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
+                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return false; 
+            }
+        } else if(ile1.getOrd() == ile2.getOrd()){
+            if(ile1.getAbs() < ile2.getAbs()){
+                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
+                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return false; 
+            }else{
+                for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
+                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return false; 
+            }
+        }
+        return true;
+    }
+    
     /*
      * Retire un pont de la grille
      * @param pont le pont à retirer
@@ -108,9 +141,8 @@ public class Grille {
             for(j = 0; j < 10; j++){
                 if(matriceGrille[i][j] instanceof  Ile)
                     s += ((Ile)matriceGrille[i][j]).getNum() + " ";
-                /** un même pont dans plusieurs cases de la matrice?? */
                 else if(matriceGrille[i][j].getClass() == Pont.class)
-                    s += "- ";
+                    s += "= ";
                 else
                     s += ". ";
             }
@@ -129,7 +161,7 @@ public class Grille {
     
 
     public static void main(String[] args){
-        
+        /* 
         int[][] init1 = {
             {3, -1, 2, -1, 2, -1, -1, -1, -1, 4},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -143,23 +175,25 @@ public class Grille {
             {2, -1, -1, -1, -1, -1, -1, -1, -1, 3}
 
         };
+        */
         int[][] init2 = {
+            {2, -1, -1, -1, -1, 2, -1, -1, -1, 2},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {2, -1, -1, -1, -1, -1, -1, -1, -1, 2},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
+            {2, -1, -1, -1, -1, 2, -1, -1, -1, 2}
 
         };
         Grille grilleTest = new Grille(init2);
         Color c = new Color(0, 0, 255);
         try {
-            grilleTest.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c));
+            grilleTest.ajouterPont(new Ile(1,2,4,0,c), new Ile(2,2,4,10,c));
+            grilleTest.ajouterPont(new Ile(1,2,0,5,c), new Ile(2,2,10,5,c));
         } catch (Exception e) {
             e.printStackTrace();
         }
