@@ -7,8 +7,11 @@ public class Fonctionnalite{
    } 
 
    /**
-   * Fonction
-   */
+    * 
+    * @param grille
+    * 
+    * Fonction
+    */
    public void undo(Grille grille){
       Pont pont = grille.pileSvg.pop();
       grille.retirerPont(pont);
@@ -16,6 +19,8 @@ public class Fonctionnalite{
    }
 
    /**
+    * 
+    * @param grille
     * 
     */
    public void redo(Grille grille){
@@ -33,12 +38,16 @@ public class Fonctionnalite{
 
    /**
     * 
+    * @param grille
+    * 
     */
    public void donnerTechnique(Grille grille){
 
    }
 
    /**
+    * 
+    * @param grille
     * 
     */
    public void hypothese(Grille grille){
