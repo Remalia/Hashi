@@ -38,6 +38,9 @@ public class Grille {
         }
     }
 
+    // potentiels voisins dans creation ile
+    // chnager verif ponts
+
     /** 
      * Ajoute un pont à la grille
      * @param ile1 l'île de départ du pont
@@ -46,24 +49,31 @@ public class Grille {
      */
     public void ajouterPont(Ile ile1, Ile ile2){
         int i;
-        Object objet = verifCreationPont(ile1, ile2).getClass() ;
+        Object objet = verifCreationPont(ile1, ile2);
         Pont pont;
-        //Si il y'a une autre île entre les deux îles données on ne fait rien
-        if(objet == Ile.class) return;
 
+        //Si il y'a une autre île entre les deux îles données on ne fait rien
+        if(objet != null && objet.getClass() == Ile.class){
+            return;
+        }
+        
         //si pont traitement 
-        if((objet = verifCreationPont(ile1, ile2).getClass()) == Pont.class){
+        if(objet != null && (objet.getClass() == Pont.class)){
             // si le pont existant est simple
             pont = (Pont)objet;
             if(pont.getNombrePont() == 1){
                 pont.ajoutNombrePont();
+                // sinon on le supprime
+            }else{
+                retirerPont(pont);
+                return;
             }
-            // sinon on le supprime
-            retirerPont(pont);
+            
             
         }else{
             //sinon le créer
             pont = new Pont(ile1, ile2, c);
+            System.out.println("Création d'un pont");
         }
 
         //Si on peut onvérifie si le pont est horizontal ou vertical
@@ -100,20 +110,23 @@ public class Grille {
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
                 for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
-                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class)return matriceGrille[ile1.getAbs()][i];
+                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i];
+                    
             }else{
                 for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
                     if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
-                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
-                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
+                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++){
+                    if(matriceGrille[ile1.getOrd()][i].getClass() != Object.class) return matriceGrille[ile1.getOrd()][i]; 
+                }
             }else{
                 for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
-                if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
+                if(matriceGrille[ile1.getOrd()][i].getClass() != Object.class) return matriceGrille[ile1.getOrd()][i]; 
             }
         }
+        System.out.println("pont possible à créé");
         return null;
     }
     
@@ -137,8 +150,9 @@ public class Grille {
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
-                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++)
+                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++){
                     matriceGrille[i][ile2.getOrd()] = -1;
+                }
             }else{
                 for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
                     matriceGrille[i][ile2.getOrd()] = -1; 
@@ -160,9 +174,9 @@ public class Grille {
                     s += ((Ile)matriceGrille[i][j]).getNum() + " ";
                 else if(matriceGrille[i][j].getClass() == Pont.class){
                     if(((Pont) matriceGrille[i][j]).getNombrePont() == 1)
-                        s += "- ";
+                        s += "─ ";
                     else 
-                        s += "= ";
+                        s += "═ ";
                 }
                 else
                     s += ". ";
@@ -190,38 +204,34 @@ public class Grille {
     
 
     public static void main(String[] args){
-        /* 
-        int[][] init1 = {
-            {3, -1, 2, -1, 2, -1, -1, -1, -1, 4},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {4, -1, -1, -1, -1, -1, 2, -1, -1, 4},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {4, -1, 2, -1, 2, -1, 7, -1, 2, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, 1, -1, 1, -1, 4, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, 2, -1, 5, -1, 6, -1, 2, -1},
-            {2, -1, -1, -1, -1, -1, -1, -1, -1, 3}
+
+        int[][] init = {
+        //    0   1  2   3   4   5   6   7  8   9
+            { 2, -1,-1, -1, -1,  2, -1, -1, -1,  2}, // 0
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 1
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 2
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 3
+            { 2,-1, -1, -1, -1, -1, -1, -1, -1,  2}, // 4
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 5
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 6
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 7
+            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 8 
+            { 2,-1, -1, -1, -1,  2, -1, -1, -1,  2}  // 9
 
         };
-        */
-        int[][] init2 = {
-            {2, -1, -1, -1, -1, 2, -1, -1, -1, 2},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {2, -1, -1, -1, -1, 2, -1, -1, -1, 2}
-
-        };
-        Grille grilleTest = new Grille(init2);
+        Grille grilleTest = new Grille(init);
         Color c = new Color(0, 0, 255);
+        
         try {
-            grilleTest.ajouterPont(new Ile(1,2,4,0,c), new Ile(2,2,4,10,c));
+            Ile ile1 = new Ile(1,2,4,0,c);
+            Ile ile2 = new Ile(2,2,4,10,c);
+            Ile ile3 = new Ile(3,2,0,5,c);
+            Ile ile4 = new Ile(4,2,10,5,c);
+            grilleTest.ajouterPont(ile3,ile4);
+            grilleTest.ajouterPont(ile3,ile4);
+            grilleTest.ajouterPont(ile3,ile4);
+            grilleTest.ajouterPont(ile1,ile2);
+            //grilleTest.ajouterPont(ile1,ile2);
         } catch (Exception e) {
             e.printStackTrace();
         }
