@@ -51,7 +51,7 @@
       </ImageView>
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_mode">
          <image>
-            <Image url="@background/back.png" />
+            <Image url="@background/retour.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0">

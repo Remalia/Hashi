@@ -40,7 +40,7 @@
       </Text>
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_menu_p">
          <image>
-            <Image url="@background/back.png" />
+            <Image url="@background/retour.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="56.0" layoutY="710.0" onMouseClicked="#credits">

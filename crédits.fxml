@@ -22,7 +22,7 @@
       </ImageView>
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_menu_p">
          <image>
-            <Image url="@background/back.png" />
+            <Image url="@background/retour.png" />
          </image>
       </ImageView>
       <VBox layoutX="213.0" layoutY="249.0" minHeight="339.0" minWidth="564.0">

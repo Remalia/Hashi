@@ -69,6 +69,16 @@ public class MainSceneController{
 	}
 	
 	/**
+     * method to switch to the parameters
+     * @param event : the event that triggers the switch
+     * @throws IOException
+     */
+	@FXML
+	public void switchparam(ActionEvent event) throws IOException{
+		scene("parametre.fxml",event);
+	}
+	
+	/**
 	 * method to switch to the tutorial scene
 	 * @param event : the event that triggers the switch
 	 * @throws IOException
