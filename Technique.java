@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Technique{
     
-    private String nom;
+    private String description;
     private Ile ileCour;
 
     /**
@@ -21,13 +21,13 @@ public class Technique{
 
     Technique()
     {
-        this.nom = "";
+        this.description = "";
         this.ileCour = null;
     }
 
-    void setNom(String nom)
+    void setDescription(String description)
     {
-        this.nom = nom;
+        this.description = description;
     }
 
     void setIleCour(Ile ile)
@@ -35,9 +35,9 @@ public class Technique{
         this.ileCour = ile;
     }
 
-    String getNom()
+    String getDescription()
     {
-        return(this.nom);
+        return(this.description);
     }
 
     Ile getIleCour()
@@ -529,7 +529,7 @@ public class Technique{
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        System.out.println(grilleTest.toString());
+        /*System.out.println(grilleTest.toString());
         if(Technique.unVoisin(grilleTest))
         {
             System.out.println("Il y a bien une île qui a un seul voisin");
@@ -537,7 +537,13 @@ public class Technique{
         else
         {
             System.out.println("Il n'y a pas une île qui a un seul voisin");
-        }
-        
+        }*/
+
+        Technique t = new Technique();
+
+        System.out.println("description avant modif : "+t.getDescription());
+        t.setDescription("123 test");
+        System.out.println("description après modif : "+t.getDescription());
+        //System.out.println(t.getIleCour().toString());
     }
 }
