@@ -446,52 +446,70 @@ public class Technique{
         return(voisins);
     }
 
+    /**
+        Méthode qui retourne une technique applicable sur la grille
+        Si aucune technique n'est applicable alors on retourne une technique qui indique que la grille actuelle ne permet pas d"appliquer de techniques
+    */
+    
     Technique trouverTechniqueGrille(Grille uneGrille)
     {
         ArrayList<Ile> voisins = new ArrayList<Ile>();
         Object[][] matrice = uneGrille.getMatriceGrille();
         Object obj;
 
-        Technique t = new Technique();
+        //Technique t = new Technique();
+        
         /**
-            On parcourt la grille  
-            Si l'object parcouru est une île alors on regarde son nombre de voisins
-        */
-        /*for(Object obj: matrice)
-        {
-            for(Object obj2: obj)
-            {
-                System.out.prinltn("test");
-            }
-        }*/
+            On parcourt toutes les cases de la grille une à une
 
+        */
         for(int i = 0; i < uneGrille.getTaille(); i++)
         {
             for(int j = 0; j < uneGrille.getTaille(); j++)
             {
-                voisins = trouverVoisins(i, j, uneGrille);
-
-                switch(voisins.size())
+                
+                obj = matrice[i][j];
+                /** 
+                    On vérifie que la case courrante du parcours est une île avant d'effectuer une recherche à partir des coordonnées de celle-ci
+                */
+                if(obj.getClass() == Ile.class)
                 {
-                    case 1:
-                        //t = Technique.unVoisin();
-                        break;
-                    case 2:
-                        //t = Technique.deuxVoisins();
-                        break;
-                    case 3:
-                        //t = Technique.troisVoisins();
-                        break;
-                    case 4:
-                        //t = Technique.quatreVoisins();
-                        break;
-                    default:
-                        //t = Technique.aucuneTechnique();
+                    /**
+                        On vérifie que l'île peut encore accepter au moins un pont sinon on considère l'île comme complète
+                        On ne réalise pas de recherche à partir de celle-ci
+                    */
+                    if(!((Ile)obj).estComplete())
+                    {
+                        voisins = trouverVoisins(i, j, uneGrille);
+
+                        switch(voisins.size())
+                        {
+                            case 1:
+                                //return(Technique.unVoisin(voisins));
+                                
+                            case 2:
+                                //return(Technique.deuxVoisins(voisins));
+                                
+                            case 3:
+                                //return(Technique.troisVoisins(voisins));
+                                
+                            case 4:
+                                //return(Technique.quatreVoisins(voisins));
+                            default:
+                        }
+                    }
                 }
             }
         }
+        /**
+            Si aucune technique n'a été détectée sur l'ensemble de la grille
+            On retourne une technique indiquant que la grille actuelle ne permet pas d'appliquer une quelconque technique
+        */
 
-        return(t);
+        //return(Technique.aucuneTechnique());
+
+        //temporaire pour l'instant
+        return(null);
     }
 
     public static void main(String[] args){
