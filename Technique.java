@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class Technique{
     
+    private String nom;
+    private Ile ileCour;
+
     /**
         Constantes static qui indiquent le sens de parcours de la grille
     */
@@ -14,6 +17,33 @@ public class Technique{
         Liste des directions
     */
     private static int [] listeDirections = {HAUT, GAUCHE, BAS, DROITE};
+
+
+    Technique()
+    {
+        this.nom = "";
+        this.ileCour = null;
+    }
+
+    void setNom(String nom)
+    {
+        this.nom = nom;
+    }
+
+    void setIleCour(Ile ile)
+    {
+        this.ileCour = ile;
+    }
+
+    String getNom()
+    {
+        return(this.nom);
+    }
+
+    Ile getIleCour()
+    {
+        return(this.ileCour);
+    }
 
     /**
         Méthode qui regarde si une île a seulement un voisin
@@ -389,6 +419,79 @@ public class Technique{
         }
 
         return(null);
+    }
+
+    /**
+        Méthode qui cherche les îles voisines auxquelles une île peut se connecter
+    */
+    ArrayList<Ile> trouverVoisins(int abs, int ord, Grille uneGrille)
+    {
+        ArrayList<Ile> voisins = new ArrayList<Ile>();
+        int tailleGrille = uneGrille.getTaille();
+
+        /** 
+            On parcourt les 4 directions pour récupérer les îles valables
+        */
+        for(int direction: listeDirections)
+        {
+            if(parcoursGrille(abs, ord, direction, tailleGrille, uneGrille.getMatriceGrille()))
+            {
+                /**
+                    Si dans une direction il y a une île on récupère l'île de la direction parcourue
+                */
+                voisins.add( recupIleGrille(abs, ord, direction, tailleGrille, uneGrille.getMatriceGrille()) );
+            }
+        }
+
+        return(voisins);
+    }
+
+    Technique trouverTechniqueGrille(Grille uneGrille)
+    {
+        ArrayList<Ile> voisins = new ArrayList<Ile>();
+        Object[][] matrice = uneGrille.getMatriceGrille();
+        Object obj;
+
+        Technique t = new Technique();
+        /**
+            On parcourt la grille  
+            Si l'object parcouru est une île alors on regarde son nombre de voisins
+        */
+        /*for(Object obj: matrice)
+        {
+            for(Object obj2: obj)
+            {
+                System.out.prinltn("test");
+            }
+        }*/
+
+        for(int i = 0; i < uneGrille.getTaille(); i++)
+        {
+            for(int j = 0; j < uneGrille.getTaille(); j++)
+            {
+                voisins = trouverVoisins(i, j, uneGrille);
+
+                switch(voisins.size())
+                {
+                    case 1:
+                        //t = Technique.unVoisin();
+                        break;
+                    case 2:
+                        //t = Technique.deuxVoisins();
+                        break;
+                    case 3:
+                        //t = Technique.troisVoisins();
+                        break;
+                    case 4:
+                        //t = Technique.quatreVoisins();
+                        break;
+                    default:
+                        //t = Technique.aucuneTechnique();
+                }
+            }
+        }
+
+        return(t);
     }
 
     public static void main(String[] args){
