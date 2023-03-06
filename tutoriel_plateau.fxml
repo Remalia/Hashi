@@ -1,39 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainSceneController">
    <children>
-      <GridPane layoutX="300.0" layoutY="300.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="400.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="110.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="110.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Techniques" GridPane.rowIndex="1">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Comment jouer ?">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Button>
-         </children>
-      </GridPane>
-      <Text fill="WHITE" layoutX="191.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel" textAlignment="CENTER" wrappingWidth="618.36572265625">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="450.0" layoutX="47.0" layoutY="196.0" stroke="BLACK" strokeType="INSIDE" width="302.0" />
+      <Text fill="WHITE" layoutX="191.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel" textAlignment="CENTER" wrappingWidth="618.36572265625">
          <font>
             <Font size="68.0" />
          </font>
@@ -48,10 +28,75 @@
             <Image url="@background/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0">
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0" onMouseClicked="#switchparam">
          <image>
             <Image url="@background/reglage.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="arrow2" fitHeight="68.0" fitWidth="68.0" layoutX="654.0" layoutY="334.0" visible="false">
+         <image>
+            <Image url="@../../../../Téléchargements/arrow.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="pane" layoutX="401.0" layoutY="208.0" prefHeight="458.0" prefWidth="506.0">
+         <children>
+            <Circle fx:id="circle1" fill="WHITE" layoutX="120.0" layoutY="86.0" onMouseClicked="#clic" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="circle2" fill="WHITE" layoutX="354.0" layoutY="86.0" onMouseClicked="#clic" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
+            <Line fx:id="line" endX="57.0" layoutX="263.0" layoutY="93.0" startX="-109.0" visible="false" />
+            <Text layoutX="111.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <Text layoutX="345.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="arrow" fitHeight="68.0" fitWidth="68.0" layoutX="10.0" layoutY="117.0">
+               <image>
+                  <Image url="@../../../../Téléchargements/arrow.png" />
+               </image>
+            </ImageView>
+            <Line fx:id="lineR1" endX="-12.0" endY="25.0" layoutX="154.0" layoutY="36.0" startX="-54.0" startY="75.0" visible="false" />
+            <Line fx:id="lineR2" endX="-12.0" endY="25.0" layoutX="387.0" layoutY="35.0" startX="-54.0" startY="75.0" visible="false" />
+            <ImageView fx:id="arrow2" fitHeight="68.0" fitWidth="68.0" layoutX="253.0" layoutY="120.0" visible="false">
+               <image>
+                  <Image url="@../../../../Téléchargements/arrow.png" />
+               </image>
+            </ImageView>
+            <Circle fx:id="circle4" fill="WHITE" layoutX="354.0" layoutY="229.0" onMouseClicked="#clic2" radius="34.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+            <Text fx:id="txtR2" layoutX="345.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" visible="false">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="arrow3" fitHeight="68.0" fitWidth="68.0" layoutX="18.0" layoutY="268.0" visible="false">
+               <image>
+                  <Image url="@../../../../Téléchargements/arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="arrow4" fitHeight="68.0" fitWidth="68.0" layoutX="253.0" layoutY="275.0" visible="false">
+               <image>
+                  <Image url="@../../../../Téléchargements/arrow.png" />
+               </image>
+            </ImageView>
+            <Line fx:id="lineR3" endX="-12.0" endY="25.0" layoutX="154.0" layoutY="184.0" startX="-54.0" startY="75.0" visible="false" />
+            <Line fx:id="lineR4" endX="-12.0" endY="25.0" layoutX="387.0" layoutY="179.0" startX="-54.0" startY="75.0" visible="false" />
+            <Line fx:id="line1" endX="57.0" layoutX="263.0" layoutY="216.0" startX="-119.0" visible="false" />
+            <Line fx:id="line2" endX="57.0" layoutX="263.0" layoutY="245.0" startX="-109.0" visible="false" />
+            <Circle fx:id="circle3" fill="WHITE" layoutX="120.0" layoutY="234.0" onMouseClicked="#clic2" radius="34.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+            <Text fx:id="txtR1" layoutX="111.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" visible="false">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Text fx:id="text" layoutX="56.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="284.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
