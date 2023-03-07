@@ -73,7 +73,7 @@ public class Technique{
     {
         for(Ile i: voisins)
         {
-            if(uneGrille.verifCreationPont(ileOrigine, i) == null)
+            if(uneGrille.verifCreationPont(ileOrigine, i) != null)
             {
                 return(false);
             }
@@ -129,7 +129,7 @@ public class Technique{
         Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
         Retourne une technique appliquable sur cette liste d'îles
     */
-    static Technique deuxVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins)
+    static Technique deuxVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
     {
         Technique t = new Technique();
 
@@ -139,6 +139,14 @@ public class Technique{
 
         Ile premVois = voisins.get(0);
         Ile scdVois = voisins.get(1);
+
+        /**
+            On vérifie en premier lieu que toutes les îles de la liste sont accessibles à partir de l'île d'origine
+        */
+        if(!ilesAccessibles(ileOrigine, voisins, uneGrille))
+        {
+            return(null);
+        }
 
         /**
             On vérifie pour chaque cas si la technique est appliquable
@@ -152,7 +160,7 @@ public class Technique{
                     -> S'il y a une île qui ne peut créer au maximum qu'un pont, on crée un pont avec l'autre île
 
                 - 2 ponts peuvent être créés:
-                    -> S'il y a une île qui admet 1 pont au maximum on crée un pont avec chaque île
+                    -> S'il y a une île qui admet 1 pont au maximum on crée un pont avec chaque île si l'île qui admet un pont au maximum n'a qu'un voisin
                     -> S'il y a une île qui admet 2 ponts au maximum on crée un pont avec l'autre île
                 - 3 ponts peuvent être créés
                     -> Un pont au moins peut être créé avec chaque voisin
@@ -163,13 +171,48 @@ public class Technique{
         switch(ileOrigine.getNum())
         {
             case 1:
-
+                if( (premVois.getNum() == 1 && !premVois.estComplete() && Technique.ajoutPontSimple(scdVois)) || (scdVois.getNum() == 1 && !scdVois.estComplete() && Technique.ajoutPontSimple(premVois)) )
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui ne peut créer qu'un pont au maximum. Cependant un de ses voisins ne peut accepter qu'un pont, il faut donc la relier à l'autre île par un pont simple.");
+                    return t;
+                }
                 break;
             case 2:
+                if( (premVois.getNum() == 1 && Technique.nbVoisins(premVois, uneGrille) == 1) || (scdVois.getNum() == 1 && Technique.nbVoisins(scdVois, uneGrille) == 1) )
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins (qui a pour unique voisin l'île en question) ne peut accepter qu'un pont au maximum, il faut donc relier l'île aux 2 autres îles par un pont simple");
+                    return t;
+                }
+                else if( (premVois.getNum() == 2 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) ) || (scdVois.getNum() == 2 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(premVois)))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins ne peut accepter que deux ponts au maximum, il faut donc relier l'île à l'autre île par un pont simple");
+                    return t;
+                }
+                else if( (premVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(premVois)) )
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins ne peut accepter qu'un pont au maximum, il faut donc relier l'île à l'autre île par un pont simple");
+                    return t;
+                }
                 break;
             case 3:
+                if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer trois ponts au maximum. Il faut donc relier cette île à ses 2 voisines par des ponts simples.");
+                    return t;
+                }
                 break;
             case 4:
+                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer quatre ponts au maximum. Il faut donc relier cette île à ses 2 voisines par des ponts double.");
+                    return t;
+                }
                 break;
         }
 
