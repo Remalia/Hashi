@@ -16,7 +16,6 @@ public class Grille {
 
     /**
      * Constructeur de la grille
-     * @param init la grille initiale
      */
     public Grille(){
         this.pileSvg = new Stack<Pont>();
@@ -47,9 +46,7 @@ public class Grille {
 
     /**
      * Méthode d'ajout d'une nouvelle ile
-     * @param num le numéro de l'île
-     * @param abs l'abscisse de l'île
-     * @param ord l'ordonnée de l'île
+     * @param ile L'ile a ajouter
      */
     void ajouterIle(Ile ile){
         int abs = ile.getAbs();
@@ -303,6 +300,11 @@ public class Grille {
         return matriceGrille;
     }
 
+    /**
+     * Récupère la grille et l'initialise terminer
+     * @param file le fichier où l'on trouve la grille
+     * @throws FileNotFoundException Fichier non trouvé
+     */
     public void getGrilleFromYAML(File file) throws FileNotFoundException {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierNiveau")){
