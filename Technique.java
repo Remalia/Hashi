@@ -47,6 +47,33 @@ public class Technique{
     }
 
     /**
+        Méthode qui indique si une île peut accepter un pont simple
+        Vrai si c'est le cas, faux sino,
+    */
+
+    static boolean ajoutPontSimple(Ile ile)
+    {
+        return(ile.getNum() > ile.getNbPonts());
+    }
+
+    /** 
+        Méthode qui indique si une île peut accepter un pont double
+        Vrai si c'est le cas, faux sinon
+    */
+    static boolean ajoutPontDouble(Ile ile)
+    {
+        return( (ile.getNum() - ile.getNbPonts()) >= 2);
+    }
+
+    /** 
+        Méthode qui retourne si toutes les îles de la liste sont accessibles à partir de l'île d'origine
+    */
+    static boolean ilesAccessibles(Ile ileOrigine, ArrayList<Ile> voisins)
+    {
+        return(false);
+    }
+
+    /**
         Méthode qui vérifie si entre une île et son unique voisin on peut créer un pont 
     */
     static boolean unVoisinRejoignable(Ile ileOrigine, Ile ileDestination, Grille uneGrille)
@@ -128,6 +155,7 @@ public class Technique{
         switch(ileOrigine.getNum())
         {
             case 1:
+
                 break;
             case 2:
                 break;
