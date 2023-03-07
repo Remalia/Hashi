@@ -67,10 +67,18 @@ public class Technique{
 
     /** 
         Méthode qui retourne si toutes les îles de la liste sont accessibles à partir de l'île d'origine
+        On ne vérifie pas si elles sont complètes, on vérifie seulement s'il existe un pont entre les 2
     */
-    static boolean ilesAccessibles(Ile ileOrigine, ArrayList<Ile> voisins)
+    static boolean ilesAccessibles(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
     {
-        return(false);
+        for(Ile i: voisins)
+        {
+            if(uneGrille.verifCreationPont(ileOrigine, i) == null)
+            {
+                return(false);
+            }
+        }
+        return(true);
     }
 
     /**
@@ -82,7 +90,7 @@ public class Technique{
             On vérifie juste que l'île d'arrivée est libre et qu'il n'y a pas de ponts entre les 2 îles
         */
 
-        return( !ileDestination.estComplete() /*&& uneGrille.verifCreationPont(ileOrigine, ileDestination)*/);
+        return( !ileDestination.estComplete() && uneGrille.verifCreationPont(ileOrigine, ileDestination) == null);
     }
 
     /**
