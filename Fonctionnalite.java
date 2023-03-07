@@ -24,7 +24,7 @@ public class Fonctionnalite{
     */
    public void redo(Grille grille){
       Pont pont = grille.pileSvg.push(grille.pileRecup.pop());
-      grille.ajouterPont(pont.getIle1(), pont.getIle2());
+      grille.ajouterPont(pont.getIle1(), pont.getIle2(),pont.getNombrePont());
       grille.pileSvg.push(pont);
    }
 
@@ -71,7 +71,7 @@ public class Fonctionnalite{
       Fonctionnalite fonc = new Fonctionnalite();
       Color c = new Color(0, 0, 255);
       try {
-         grille.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c));
+         grille.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c),1);
       } catch (Exception e) {
          e.printStackTrace();
       }

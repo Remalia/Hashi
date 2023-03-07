@@ -85,4 +85,11 @@ public class Pont extends Element{
         }
     }
 
+    /**
+     * @param nombrePont nombre de ponts
+     */
+    public void setNombrePont(int nombrePont) {
+        this.nombrePont = nombrePont;
+    }
+
 }

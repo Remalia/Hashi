@@ -7,7 +7,7 @@ public class Grille {
 
     Stack<Pont> pileSvg;
     Stack<Pont> pileRecup;
-    private Object[][] matriceGrille;
+    private Element[][] matriceGrille;
     boolean modeHyp;
     int difficulte;
 
@@ -20,22 +20,87 @@ public class Grille {
         try{
             this.pileSvg = new Stack<Pont>();
             this.pileRecup = new Stack<Pont>();
-            matriceGrille = new Object[10][10]; 
+            matriceGrille = new Element[10][10]; 
             int i, j;
             /** initialisation de la grille en dur TEMPORAIRE*/
             for(i = 0; i < 10; i++){
                 for(j = 0; j < 10; j++){
-                    if(init[i][j] < 0)
-                        matriceGrille[i][j] = new Object();
-                    else if(init[i][j] > 0){
-                        /** init contient les numéros des îles */
-                        matriceGrille[i][j] = new Ile(1, init[i][j], i, j, c);
-                    }
+                    matriceGrille[i][j] = new Element();
                 }
             }   
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Méthode d'ajout d'une nouvelle ile
+     * @param num le numéro de l'île
+     * @param abs l'abscisse de l'île
+     * @param ord l'ordonnée de l'île
+     */
+    void ajouterIle(Ile ile){
+        int abs = ile.getAbs();
+        int ord = ile.getOrd();
+        int num = ile.getNum();
+        if(matriceGrille[abs][ord] instanceof Ile){
+            //Cas ou on veut ajouter une ile sur une ile donc fichier corrompu
+            return;
+        }
+        try {
+            Ile ileTemp = new Ile(1, num, abs, ord, c);
+            //Cas ou on veut ajouter une ile sur une intersection donc on crée 4 nouveaux ponts
+            if(matriceGrille[abs][ord] instanceof Intersection){
+                Pont temp = ((Intersection) matriceGrille[abs][ord]).getPont1();
+                new Pont(temp.getIle1(),ileTemp,0);
+                new Pont(ileTemp,temp.getIle2(),0);
+                temp = ((Intersection) matriceGrille[abs][ord]).getPont2();
+                new Pont(temp.getIle1(),ileTemp,0);
+                new Pont(ileTemp,temp.getIle2(),0);
+            }
+            //Cas ou on veut ajouter une ile sur un pont déja existant
+            else if(matriceGrille[abs][ord] instanceof Pont){
+                Pont temp = (Pont) matriceGrille[abs][ord];
+                new Pont(temp.getIle1(),ileTemp,0);
+                new Pont(ileTemp,temp.getIle2(),0);
+            }
+            //Cas ou on créer un pont dans le vide
+            else{
+                matriceGrille[abs][ord] = ileTemp;
+                int i;
+                //On vérifie si il y a des îles à proximité et qu'on peut créer des ponts vides
+                for(i=abs+1;i<10;i++){
+                    if(matriceGrille[i][ord] instanceof Ile){
+                        //new Pont((Ile)matriceGrille[i][ord],(Ile)matriceGrille[abs][ord],0);
+                        System.out.println("pont vide");
+                        ajouterPont(ile, (Ile) matriceGrille[i][ord], 0);
+                    }
+                }
+                for(i=abs-1;i>0;i--){
+                    if(matriceGrille[i][ord] instanceof Ile){
+                        System.out.println("pont vide");
+                        ajouterPont(ile, (Ile) matriceGrille[i][ord], 0);
+                    }
+                }
+                for(i=ord+1;i<10;i++){
+                    if(matriceGrille[abs][i] instanceof Ile){
+                        System.out.println("pont vide");
+                        ajouterPont(ile,(Ile) matriceGrille[abs][i], 0);
+                    }
+                }
+                for(i=ord-1;i>0;i--){
+                    if(matriceGrille[abs][i] instanceof Ile){
+                        System.out.println("pont vide");
+                        ajouterPont(ile,(Ile) matriceGrille[abs][i], 0);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Impossible de créer l'île
+            e.printStackTrace();
+            
+        }
+        
     }
 
     // potentiels voisins dans creation ile
@@ -47,36 +112,29 @@ public class Grille {
      * @param ile2 l'île d'arrivée du pont
      * @return void
      */
-    public void ajouterPont(Ile ile1, Ile ile2){
+    public void ajouterPont(Ile ile1, Ile ile2,int nbPonts){
         int i;
-        Object objet = verifCreationPont(ile1, ile2);
+            
         Pont pont;
 
-        //Si il y'a une autre île entre les deux îles données on ne fait rien
-        if(objet != null && objet.getClass() == Ile.class){
+        Element elem = verifCreationPont(ile1, ile2);
+        
+        //Si il y'a une autre île ou un pont entre les deux îles données on ne fait rien
+        if(elem != null || elem instanceof Ile){
             return;
         }
         
         //si pont traitement 
-        if(objet != null && (objet.getClass() == Pont.class)){
-            // si le pont existant est simple
-            pont = (Pont)objet;
-            if(pont.getNombrePont() == 1){
-                pont.ajoutNombrePont();
-                // sinon on le supprime
-            }else{
-                retirerPont(pont);
-                return;
-            }
-            
+        if(elem != null && (elem instanceof Pont)){
+            pont = ((Pont)elem);
+            pont.ajoutNombrePont();
             
         }else{
             //sinon le créer
-            pont = new Pont(ile1, ile2, 1);
+            pont = new Pont(ile1, ile2, nbPonts);
             System.out.println("Création d'un pont");
         }
-
-        //Si on peut onvérifie si le pont est horizontal ou vertical
+        //Si on peut on vérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
                 for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
@@ -95,38 +153,53 @@ public class Grille {
             }
         }
         //On ajoute le pont à la liste des ponts créés
-        this.pileSvg.push((Pont)pont);
+        this.pileSvg.push(pont);
     }
+
+    
 
     /**
      * Vérifie si la création d'un pont est possible
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
-     * @return true si le pont peut être créé, false sinon
+     * @return Element si trouvé sur le chemin ( possiblement Ile, Pont, Intersection) sinon null
      */
-    public Object verifCreationPont(Ile ile1, Ile ile2){
+    public Element verifCreationPont(Ile ile1, Ile ile2){
         int i;
         // si pont vertical
         if(ile1.getAbs() == ile2.getAbs()){
-            if(ile1.getOrd() < ile2.getOrd()){
-                for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++)
-                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i];
-                    
-            }else{
-                for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++)
-                    if(matriceGrille[ile1.getAbs()][i].getClass() != Object.class) return matriceGrille[ile1.getAbs()][i]; 
-            }
-        } else if(ile1.getOrd() == ile2.getOrd()){
-            if(ile1.getAbs() < ile2.getAbs()){
-                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++){
-                    if(matriceGrille[ile1.getOrd()][i].getClass() != Object.class) return matriceGrille[ile1.getOrd()][i]; 
+            if(ile1.getOrd() < ile2.getOrd()){ // si ile1 est en haut
+                for(i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++){
+                    if(matriceGrille[ile1.getAbs()][i] != null)
+                        if(matriceGrille[ile1.getAbs()][i] instanceof Intersection  ){
+                        }else{
+                            
+                        }
+                        return matriceGrille[ile1.getAbs()][i];
                 }
-            }else{
-                for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++)
-                if(matriceGrille[ile1.getOrd()][i].getClass() != Object.class) return matriceGrille[ile1.getOrd()][i]; 
+                    
+            }else{ // si ile2 est en haut
+                for(i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++){
+                    if(matriceGrille[ile1.getAbs()][i] != null) 
+                        return matriceGrille[ile1.getAbs()][i]; 
+                }
             }
-        }
-        System.out.println("pont possible à créé");
+        // si horizontal
+        } else if(ile1.getOrd() == ile2.getOrd()){
+            if(ile1.getAbs() < ile2.getAbs()){ //  si ile1 est à gauche
+                for(i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++){
+                    if(matriceGrille[ile1.getOrd()][i] != null) 
+                        return matriceGrille[ile1.getOrd()][i]; 
+                }
+
+            }else{ // si ile2 est à gauche
+                for(i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++){
+                    if(matriceGrille[ile1.getOrd()][i] != null) 
+                        return matriceGrille[ile1.getOrd()][i]; 
+                }
+            }
+        } // traitement si null
+        System.out.println("pont possible à créer");
         return null;
     }
     
@@ -137,6 +210,9 @@ public class Grille {
      * 
      */
     public void retirerPont(Pont pont){
+        pont.setNombrePont(0);
+        this.pileSvg.push(pont);
+        /* 
         int i;
         Ile ile1 = pont.getIle1();
         Ile ile2 = pont.getIle2();
@@ -158,9 +234,10 @@ public class Grille {
                     matriceGrille[i][ile2.getOrd()] = -1; 
             }
         }
-        this.pileSvg.push(pont);
+        */
     }
 
+    
     /**
      * Retourne la pile des ponts sauvegardés
      * @return la pile des ponts sauvegardés
@@ -172,8 +249,12 @@ public class Grille {
             for(j = 0; j < 10; j++){
                 if(matriceGrille[i][j] instanceof  Ile)
                     s += ((Ile)matriceGrille[i][j]).getNum() + " ";
-                else if(matriceGrille[i][j].getClass() == Pont.class){
-                    if(((Pont) matriceGrille[i][j]).getNombrePont() == 1)
+                else if(matriceGrille[i][j] instanceof Pont){
+                    if(((Pont) matriceGrille[i][j]).getNombrePont() == 0){
+                        System.out.println("pont vide trouvé");
+                        s += "│ ";
+                    }                
+                    else if(((Pont) matriceGrille[i][j]).getNombrePont() == 1)
                         s += "─ ";
                     else 
                         s += "═ ";
@@ -224,13 +305,17 @@ public class Grille {
         
         try {
             Ile ile1 = new Ile(1,2,4,0,c);
-            Ile ile2 = new Ile(2,2,4,10,c);
+            Ile ile2 = new Ile(2,2,4,9,c);
             Ile ile3 = new Ile(3,2,0,5,c);
-            Ile ile4 = new Ile(4,2,10,5,c);
-            grilleTest.ajouterPont(ile3,ile4);
-            grilleTest.ajouterPont(ile3,ile4);
-            grilleTest.ajouterPont(ile3,ile4);
-            grilleTest.ajouterPont(ile1,ile2);
+            Ile ile4 = new Ile(4,2,9,5,c);
+            grilleTest.ajouterIle(ile1);
+            grilleTest.ajouterIle(ile2);
+            grilleTest.ajouterIle(ile3);
+            grilleTest.ajouterIle(ile4);
+            grilleTest.ajouterPont(ile3,ile4,1);
+            //grilleTest.ajouterPont(ile3,ile4);
+            //grilleTest.ajouterPont(ile3,ile4);
+            grilleTest.ajouterPont(ile1,ile2,1);
             //grilleTest.ajouterPont(ile1,ile2);
         } catch (Exception e) {
             e.printStackTrace();
