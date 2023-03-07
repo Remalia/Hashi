@@ -1,5 +1,7 @@
+import java.io.*;
 import java.util.*;
 import java.awt.Color;
+import java.util.regex.*;
 
 public class Grille {
 
@@ -8,6 +10,7 @@ public class Grille {
     Stack<Pont> pileSvg;
     Stack<Pont> pileRecup;
     private Element[][] matriceGrille;
+    private ArrayList<Ile> listIle;
     boolean modeHyp;
     int difficulte;
 
@@ -15,21 +18,30 @@ public class Grille {
      * Constructeur de la grille
      * @param init la grille initiale
      */
+    public Grille(){
+        this.pileSvg = new Stack<Pont>();
+        this.pileRecup = new Stack<Pont>();
+        this.listIle = new ArrayList<>();
+        matriceGrille = new Element[10][10];
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++){
+                matriceGrille[i][j] = new Element();
+            }
+    }
+
     public Grille(int[][] init){
-        /** remplissage de la grille temporaire pour les tests */
-        try{
-            this.pileSvg = new Stack<Pont>();
-            this.pileRecup = new Stack<Pont>();
-            matriceGrille = new Element[10][10]; 
-            int i, j;
-            /** initialisation de la grille en dur TEMPORAIRE*/
-            for(i = 0; i < 10; i++){
-                for(j = 0; j < 10; j++){
-                    matriceGrille[i][j] = new Element();
-                }
-            }   
-        } catch(Exception e){
-            e.printStackTrace();
+        // remplissage de la grille temporaire pour les tests */
+        this.pileSvg = new Stack<Pont>();
+        this.pileRecup = new Stack<Pont>();
+        this.listIle = new ArrayList<>();
+        matriceGrille = new Element[10][10];
+        int i, j;
+        // initialisation de la grille en dur TEMPORAIRE*/
+        for(i = 0; i < 10; i++){
+            for(j = 0; j < 10; j++){
+                matriceGrille[i][j] = new Element();
+                //TODO init en dur
+            }
         }
     }
 
@@ -239,8 +251,6 @@ public class Grille {
     /**
      * Retire un pont de la grille
      * @param pont le pont à retirer
-     * @return void
-     * 
      */
     public void retirerPont(Pont pont){
         pont.setNombrePont(0);
@@ -289,12 +299,68 @@ public class Grille {
      * Retourne la matrice de la grille
      * @return la matrice de la grille
      */
-    public Object[][] getMatriceGrille(){
+    public Element[][] getMatriceGrille(){
         return matriceGrille;
     }
-    
 
-    public static void main(String[] args){
+    public void getGrilleFromYAML(File file) throws FileNotFoundException {
+        HashMap<String,String> balises = Parser.getAllBalise(file);
+        if (balises.get("type").equals("fichierNiveau")){
+            difficulte = Integer.parseInt(balises.get("difficulte"));
+            balises.forEach((key, val) -> {
+                if (key.matches("ile[0-9]+")){
+                    int id = obtainsIdElement(key);
+                    int abs = Integer.parseInt(val.substring(0,val.indexOf("|")-1));
+                    int ord = Integer.parseInt(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
+                    int num = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
+                    Ile ile = new Ile(id,num,abs,ord);
+                    matriceGrille[ord][abs] = ile;
+                    listIle.add(ile);
+                }
+            });
+            balises.forEach((key, val) -> {
+                if (key.matches("pont[0-9]+")){
+                    Ile ile1 = null;
+                    Ile ile2 = null;
+                    int idIle1 = obtainsIdElement(val.substring(0,val.indexOf("|")-1));
+                    int idIle2 = obtainsIdElement(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
+                    int nbPont = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
+                    for (Ile ile : listIle) {
+                        if (ile.getId() == idIle1)
+                            ile1 = ile;
+                        if (ile.getId() == idIle2)
+                            ile2 = ile;
+                    }
+                    //TODO Vérifier et changer l'ajout de pont
+                    this.ajouterPont(ile1,ile2,nbPont);
+                }
+            });
+        }
+
+
+    }
+
+    /**
+     * Récupère l'id d'une clé
+     * @param key la clé string
+     * @return -1 si il n'y a pas d'id sinon l'id
+     */
+    private int obtainsIdElement(String key){
+        int result = -1;
+        Pattern p = Pattern.compile("[0-9]+");
+        Matcher m = p.matcher(key);
+        while(m.find()){
+            result = Integer.parseInt(m.group(0));
+        }
+        return result;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Grille grilleTest = new Grille();
+        grilleTest.getGrilleFromYAML(new File("Niveau\\NiveauTest.yaml"));
+        System.out.println(grilleTest);
+    }
+    public static void main2(String[] args){
 
         int[][] init = {
         //    0   1  2   3   4   5   6   7  8   9

@@ -1,26 +1,34 @@
 import java.awt.Color;
 
 public class Ile extends Element{
-    private int id; /** identifiant de l'île */
-    private int num; /** numéro associé à l'île */
+    private final int id; /** identifiant de l'île */
+    private final int num; /** numéro associé à l'île */
     private int nbPonts; /** nombre de ponts rattaché à l'île */
-    private int abs; /** abscisse de l'île */
-    private int ord; /** ordonnée de l'île */
+    private final int abs; /** abscisse de l'île */
+    private final int ord; /** ordonnée de l'île */
     private boolean estSelect; /** statut de sélection de l'île */
     
-    public Ile(int id, int num, int abs, int ord, Color c) throws Exception{
+    public Ile(int id, int num, int abs, int ord, Color c){
         super(c);
-        if(num >= 1 && num <= 8){
-            this.id = id;
-            this.num = num;
-            this.abs = abs;
-            this.ord = ord;
-            this.nbPonts = 0; /** à la création il n'y a pas de ponts */
-            this.estSelect = false; /** île non selectionée à la création */
-        } else{
-            throw new Exception("Création d'île impossible, numéro incorrect");
-        }
+        this.id = id;
+        this.num = num;
+        this.abs = abs;
+        this.ord = ord;
+        this.nbPonts = 0; // à la création il n'y a pas de ponts
+        this.estSelect = false; // île non selectionée à la création
     }
+
+    public Ile(int id, int num, int abs,int ord){
+        super();
+        this.id = id;
+        this.num = num;
+        this.abs = abs;
+        this.ord = ord;
+        this.nbPonts = 0; // à la création il n'y a pas de ponts
+        this.estSelect = false; // île non selectionée à la création
+    }
+
+
 
     /**
     * Vérifie si l'île en paramètre est la même île
@@ -32,7 +40,6 @@ public class Ile extends Element{
 
     /**
     * Vérifie si l'île est complète
-    *
     * @return true si l'île est complète, sinon false
     */
     public boolean estComplete(){
@@ -41,7 +48,6 @@ public class Ile extends Element{
 
     /**
     * Incrémente de 1 le nombre de ponts attachés à l'île
-    *
     */
     public void ajouterPont(){
         this.nbPonts += 1;
@@ -49,7 +55,6 @@ public class Ile extends Element{
 
     /**
     * Décrémente de 2 le nombre de ponts attachés à l'île
-    *
     */
     public void supprimer2Ponts() throws Exception{
         if(this.nbPonts >= 2){
@@ -62,7 +67,6 @@ public class Ile extends Element{
 
     /**
     * Retourne l'identifiant de l'île
-    *
     * @return l'identifiant de l'île
     */
     public int getId(){
@@ -71,7 +75,6 @@ public class Ile extends Element{
 
     /**
     * Retourne le numéro de l'île
-    *
     * @return le numéro de l'île
     */
     public int getNum(){
@@ -80,7 +83,6 @@ public class Ile extends Element{
 
     /**
     * Retourne l'abscisse de l'île
-    *
     * @return l'abscisse de l'île
     */
     public int getAbs(){
@@ -89,7 +91,6 @@ public class Ile extends Element{
 
     /**
     * Retourne l'ordonnée de l'île
-    *
     * @return l'ordonnée de l'île
     */
     public int getOrd(){
@@ -98,7 +99,6 @@ public class Ile extends Element{
 
     /**
     * Retourne le nombre de ponts attachés à l'île
-    *
     * @return le nombre de ponts attachés à l'île
     */
     public int getNbPonts(){
@@ -109,7 +109,6 @@ public class Ile extends Element{
 
     /**
     * Retourne si l'île est sélectionnée
-    *
     * @return true si l'île est sélectionnée, false sinon
     */
     public boolean getEstSelect(){
@@ -118,7 +117,6 @@ public class Ile extends Element{
 
     /**
     * Affecte un entier correspondant au nombre de ponts attachés à l'île
-    *
     * @param  nb  le nombre de ponts attachés à l'île
     */
     public void setNbPonts(int nb){
@@ -129,7 +127,6 @@ public class Ile extends Element{
 
     /**
     * Met à jour le statut sélectionné ou non sélectionné de l'île
-    *
     * @param  s  true si l'île est sélectionnée, false sinon
     */
     public void setEstSelect(boolean s){
