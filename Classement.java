@@ -16,7 +16,7 @@ public class Classement {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierScore"))
             balises.forEach((key, val) -> {
-                if (key.contains("score")){
+                if (key.matches("|score[0-9]")){
                     scores.add(new Score(Integer.parseInt(val.substring(val.lastIndexOf("|")+2)),val.substring(0,val.indexOf("|")-1),val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1)));
                 }
             });
