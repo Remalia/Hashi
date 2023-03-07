@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Technique{
     
@@ -19,10 +20,10 @@ public class Technique{
     private static int [] listeDirections = {HAUT, GAUCHE, BAS, DROITE};
 
 
-    Technique()
+    Technique() // Peut-être créer un autre constructeur qui permettrait d'ajouter une description et une île cour
     {
-        this.description = "";
-        this.ileCour = null;
+        this.setDescription("");
+        this.setIleCour(null);
     }
 
     void setDescription(String description)
@@ -43,6 +44,136 @@ public class Technique{
     Ile getIleCour()
     {
         return(this.ileCour);
+    }
+
+    /**
+        Méthode qui indique si une île peut accepter un pont simple
+        Vrai si c'est le cas, faux sino,
+    */
+
+    static boolean ajoutPontSimple(Ile ile)
+    {
+        return(ile.getNum() > ile.getNbPonts());
+    }
+
+    /** 
+        Méthode qui indique si une île peut accepter un pont double
+        Vrai si c'est le cas, faux sinon
+    */
+    static boolean ajoutPontDouble(Ile ile)
+    {
+        return( (ile.getNum() - ile.getNbPonts()) >= 2);
+    }
+
+    /** 
+        Méthode qui retourne si toutes les îles de la liste sont accessibles à partir de l'île d'origine
+        On ne vérifie pas si elles sont complètes, on vérifie seulement s'il existe un pont entre les 2
+    */
+    static boolean ilesAccessibles(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
+    {
+        for(Ile i: voisins)
+        {
+            if(uneGrille.verifCreationPont(ileOrigine, i) == null)
+            {
+                return(false);
+            }
+        }
+        return(true);
+    }
+
+    /**
+        Méthode qui vérifie si entre une île et son unique voisin on peut créer un pont 
+    */
+    static boolean unVoisinRejoignable(Ile ileOrigine, Ile ileDestination, Grille uneGrille)
+    {
+        /**
+            On vérifie juste que l'île d'arrivée est libre et qu'il n'y a pas de ponts entre les 2 îles
+        */
+
+        return( !ileDestination.estComplete() && uneGrille.verifCreationPont(ileOrigine, ileDestination) == null);
+    }
+
+    /**
+        Méthode qui retourne une Technique
+        Prend en paramètres une liste d'îles composée d'une seule île car il n'y a qu'un seul voisin 
+        Prend en paramètres l'île d'origine
+        Effectue des vérifications sur cette liste d'îles
+        Retourne une technique appliquable sur cette liste d'îles
+    */
+    static Technique unVoisinBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
+    {
+        Technique t = new Technique();
+
+        /**
+            On récupère l'unique île voisine de la liste
+        */
+        Ile premVois = voisins.get(0);
+
+        /**
+            On vérifie juste que l'île d'arrivée est libre et qu'il n'y a pas de ponts entre les 2 îles
+        */
+        if(Technique.unVoisinRejoignable(ileOrigine, premVois, uneGrille))
+        {
+            t.setDescription("Il y a une île qui n'a qu'un seul voisin, vous devriez les rejoindre !");
+            t.setIleCour(ileOrigine);
+            return(t);
+        }
+
+        return(null); 
+    }
+
+    /**
+        Méthode qui retourne une Technique
+        Prend en paramètres une liste d'îles composée de deux îles car il y a 2 îles voisines
+        Prend en paramètres l'île d'origine
+        Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
+        Retourne une technique appliquable sur cette liste d'îles
+    */
+    static Technique deuxVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins)
+    {
+        Technique t = new Technique();
+
+        /**
+            On récupère les îles voisines
+        */
+
+        Ile premVois = voisins.get(0);
+        Ile scdVois = voisins.get(1);
+
+        /**
+            On vérifie pour chaque cas si la technique est appliquable
+            Dès que l'on trouve une technique appliquable on arrête
+        */
+
+        /**
+            On va procéder par disjonction de cas en fonction du nombre de ponts que peut créer l'îles
+            Il y a plusieurs cas possibles:
+                - 1 pont peut être créé
+                    -> S'il y a une île qui ne peut créer au maximum qu'un pont, on crée un pont avec l'autre île
+
+                - 2 ponts peuvent être créés:
+                    -> S'il y a une île qui admet 1 pont au maximum on crée un pont avec chaque île
+                    -> S'il y a une île qui admet 2 ponts au maximum on crée un pont avec l'autre île
+                - 3 ponts peuvent être créés
+                    -> Un pont au moins peut être créé avec chaque voisin
+                - 4 ponts peuvent être créés
+                    -> Deux ponts peuvent être créés avec chaque voisin
+        */
+
+        switch(ileOrigine.getNum())
+        {
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+
+        return(null);
     }
 
     /**
@@ -161,14 +292,13 @@ public class Technique{
                     if(matriceGrille[xIle][y].getClass() == Ile.class)
                     {
                         /** 
-                            Il faut vérifier si l'île trouvée est pleine
-                            Si c'est le cas on retourne faux
-                            On considère que "le côté est bloqué"
+                            Il ne faut pas vérifier maintenant si l'île trouvée est pleine
+                            On le vérifiera plus tard 
                         */
-                        if(((Ile) matriceGrille[xIle][y]).estComplete())
+                        /*if(((Ile) matriceGrille[xIle][y]).estComplete())
                         {
                             return(false);
-                        }
+                        }*/
                         /** Si l'île peut encore accepter un pont on retourne vrai*/
                         return(true);
                     }
@@ -176,15 +306,15 @@ public class Technique{
                         Si au contraire il y a un pont on regarde si le pont est accueili par l'île d'origine
                     */
 
-                    if(matriceGrille[xIle][y].getClass() == Pont.class)
+                    /*if(matriceGrille[xIle][y].getClass() == Pont.class)
                     {
-                        /** On doit regarder si une des deux îles du pont est la même que celle d'origine */
+                        //On doit regarder si une des deux îles du pont est la même que celle d'origine  
 
                         if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);
-                    }
+                    }*/
                 }
                 break;
             
@@ -193,19 +323,19 @@ public class Technique{
                 {
                     if(matriceGrille[x][yIle].getClass() == Ile.class)
                     {
-                        if(((Ile) matriceGrille[x][yIle]).estComplete())
+                        /*if(((Ile) matriceGrille[x][yIle]).estComplete())
                         {
                             return(false);
-                        }
+                        }*/
                         return(true);
-                    }
+                    }/*
                     if(matriceGrille[x][yIle].getClass() == Pont.class)
                     {
                         if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);                    
-                    }
+                    }*/
                 }
                 break;
             
@@ -214,19 +344,20 @@ public class Technique{
                 {
                     if(matriceGrille[xIle][y].getClass() == Ile.class)
                     {
+                        /*
                         if(((Ile) matriceGrille[xIle][y]).estComplete())
                         {
                             return(false);
-                        }
+                        }*/
                         return(true);
-                    }
+                    }/*
                     if(matriceGrille[xIle][y].getClass() == Pont.class)
                     {
                         if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);
-                    }
+                    }*/
                 }
                 break;
             
@@ -234,19 +365,19 @@ public class Technique{
                 for(int x = xIle + 1; x < taille; x++)
                 {
                     if(matriceGrille[x][yIle].getClass() == Ile.class)
-                    {
+                    {/*
                         if(((Ile) matriceGrille[x][yIle]).estComplete()){
                             return(false);
-                        }
+                        }*/
                         return(true);
-                    }
+                    }/*
                     if(matriceGrille[x][yIle].getClass() == Pont.class)
                     {
                         if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);
-                    }
+                    }*/
                 }
                 break;
         }
@@ -448,7 +579,7 @@ public class Technique{
 
     /**
         Méthode qui retourne une technique applicable sur la grille
-        Si aucune technique n'est applicable alors on retourne une technique qui indique que la grille actuelle ne permet pas d"appliquer de techniques
+        Si aucune technique n'est applicable alors on retourne une technique qui indique que la grille actuelle ne permet pas d'appliquer de techniques
     */
     
     Technique trouverTechniqueGrille(Grille uneGrille)
@@ -457,7 +588,7 @@ public class Technique{
         Object[][] matrice = uneGrille.getMatriceGrille();
         Object obj;
 
-        //Technique t = new Technique();
+        Technique t = new Technique();
         
         /**
             On parcourt toutes les cases de la grille une à une
@@ -485,7 +616,18 @@ public class Technique{
                         switch(voisins.size())
                         {
                             case 1:
-                                //return(Technique.unVoisin(voisins));
+                                // on retourne la technique seulement si elle existe, on ne retourne pas une technique null
+
+                                /*
+                                t = Technique.unVoisinBis((Ile)obj, voisins, uneGrille);
+                                if(t != null)
+                                {
+                                    return(t);
+                                }
+                                break;
+
+
+
 
                                 /**
                                 
@@ -534,6 +676,8 @@ public class Technique{
 
     public static void main(String[] args){
         
+        Color c = new Color(0,0,255);
+
         int[][] init1 = {
             {2, -1, 2, -1, 2, -1, -1, -1, -1, 4},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -548,7 +692,7 @@ public class Technique{
 
         };
         int[][] init2 = {
-            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2},
+            {2, -1, -1, -1, 2, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -556,7 +700,7 @@ public class Technique{
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, 2, -1, -1, -1, -1, -1},
             {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
 
         };
@@ -567,7 +711,19 @@ public class Technique{
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        /*System.out.println(grilleTest.toString());
+        System.out.println(grilleTest.toString());
+        /*
+        try{
+            Ile ile1 = new Ile(1,2,0,3,c);
+            Ile ile2 = new Ile(2,2,0,9,c);
+            Ile ile3 = new Ile(3,2,8,3,c);
+            grilleTest.ajouterPont(ile1,ile2);
+            grilleTest.ajouterPont(ile1,ile3);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(grilleTest.toString());*/
         if(Technique.unVoisin(grilleTest))
         {
             System.out.println("Il y a bien une île qui a un seul voisin");
@@ -575,7 +731,7 @@ public class Technique{
         else
         {
             System.out.println("Il n'y a pas une île qui a un seul voisin");
-        }*/
+        }
 
         Technique t = new Technique();
 
