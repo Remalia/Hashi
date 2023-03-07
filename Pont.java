@@ -1,7 +1,7 @@
 import java.awt.Color;
 
 
-public class Pont {
+public class Pont extends Element{
     private Ile ile1;
     private Ile ile2;
     private Color couleur;
@@ -16,11 +16,11 @@ public class Pont {
      * @param i2 deuxième île
      */
     public Pont(Ile i1,Ile i2){
+        super();
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont();
         this.ile2.ajouterPont();
-        this.couleur = new Color(0, 0, 255);
         this.nombrePont = 1;
     }
 

@@ -1,22 +1,21 @@
 import java.awt.Color;
 
-public class Ile {
+public class Ile extends Element{
     private int id; /** identifiant de l'île */
     private int num; /** numéro associé à l'île */
     private int nbPonts; /** nombre de ponts rattaché à l'île */
     private int abs; /** abscisse de l'île */
     private int ord; /** ordonnée de l'île */
-    private Color couleur; /** couleur actuelle de l'île */
     private boolean estSelect; /** statut de sélection de l'île */
     
     public Ile(int id, int num, int abs, int ord, Color c) throws Exception{
+        super(c);
         if(num >= 1 && num <= 8){
             this.id = id;
             this.num = num;
             this.abs = abs;
             this.ord = ord;
             this.nbPonts = 0; /** à la création il n'y a pas de ponts */
-            this.couleur = c; /** couleur initiale */
             this.estSelect = false; /** île non selectionée à la création */
         } else{
             throw new Exception("Création d'île impossible, numéro incorrect");
@@ -106,14 +105,7 @@ public class Ile {
         return this.nbPonts;
     }
 
-    /**
-    * Retourne la couleur de l'île
-    *
-    * @return la couleur de l'île
-    */
-    public Color getCouleur(){
-        return this.couleur;
-    }
+
 
     /**
     * Retourne si l'île est sélectionnée
@@ -133,14 +125,7 @@ public class Ile {
         this.nbPonts = nb;
     }
 
-    /**
-    * Affecte une couleur à l'île
-    *
-    * @param  c  la couleur à affecter
-    */
-    public void setCouleur(Color c){
-        this.couleur = c;
-    }
+    
 
     /**
     * Met à jour le statut sélectionné ou non sélectionné de l'île
@@ -155,7 +140,7 @@ public class Ile {
         String s = "Ile" + this.id + "\n";
         s += "numéro : " + this.num + "\n";
         s += "(" + this.abs + "," + this.ord + ")\n";
-        s += this.couleur.toString() + "\n";
+        s += this.getCouleur().toString() + "\n";
         if(this.estSelect)
             s += "sélectionnée\n";
         else 

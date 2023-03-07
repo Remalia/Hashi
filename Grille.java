@@ -72,7 +72,7 @@ public class Grille {
             
         }else{
             //sinon le créer
-            pont = new Pont(ile1, ile2, c);
+            pont = new Pont(ile1, ile2, 1);
             System.out.println("Création d'un pont");
         }
 
