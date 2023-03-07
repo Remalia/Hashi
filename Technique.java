@@ -486,6 +486,26 @@ public class Technique{
                         {
                             case 1:
                                 //return(Technique.unVoisin(voisins));
+
+                                /**
+                                
+                                
+                                
+                                    On parcourt la grille jusqu'à trouver une île où une bordure
+                                    On ne prend plus en compte la présence de ponts 
+                                    Les vérifications entre l'île et ses voisines seront faites après
+                                    Le but est de na pas fausser le "début" de la technique
+
+                                    Par exemple: 
+                                    si une île a au début de la partie 3 voisines atteignables mais qu'à cause des ponts créés par le joueur elle n'en ai plus qu'une
+                                    on ne va pas détecter qu'elle n'a qu'une seule voisine quand on cherchera les techniques appliquables à cette île car ça serait très probablement inadaptée
+                                
+                                
+                                 */
+
+
+
+
                                 
                             case 2:
                                 //return(Technique.deuxVoisins(voisins));
