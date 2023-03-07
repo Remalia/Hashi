@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class Technique{
     
+    private String description;
+    private Ile ileCour;
+
     /**
         Constantes static qui indiquent le sens de parcours de la grille
     */
@@ -14,6 +17,33 @@ public class Technique{
         Liste des directions
     */
     private static int [] listeDirections = {HAUT, GAUCHE, BAS, DROITE};
+
+
+    Technique()
+    {
+        this.description = "";
+        this.ileCour = null;
+    }
+
+    void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    void setIleCour(Ile ile)
+    {
+        this.ileCour = ile;
+    }
+
+    String getDescription()
+    {
+        return(this.description);
+    }
+
+    Ile getIleCour()
+    {
+        return(this.ileCour);
+    }
 
     /**
         Méthode qui regarde si une île a seulement un voisin
@@ -391,6 +421,117 @@ public class Technique{
         return(null);
     }
 
+    /**
+        Méthode qui cherche les îles voisines auxquelles une île peut se connecter
+    */
+    ArrayList<Ile> trouverVoisins(int abs, int ord, Grille uneGrille)
+    {
+        ArrayList<Ile> voisins = new ArrayList<Ile>();
+        int tailleGrille = uneGrille.getTaille();
+
+        /** 
+            On parcourt les 4 directions pour récupérer les îles valables
+        */
+        for(int direction: listeDirections)
+        {
+            if(parcoursGrille(abs, ord, direction, tailleGrille, uneGrille.getMatriceGrille()))
+            {
+                /**
+                    Si dans une direction il y a une île on récupère l'île de la direction parcourue
+                */
+                voisins.add( recupIleGrille(abs, ord, direction, tailleGrille, uneGrille.getMatriceGrille()) );
+            }
+        }
+
+        return(voisins);
+    }
+
+    /**
+        Méthode qui retourne une technique applicable sur la grille
+        Si aucune technique n'est applicable alors on retourne une technique qui indique que la grille actuelle ne permet pas d"appliquer de techniques
+    */
+    
+    Technique trouverTechniqueGrille(Grille uneGrille)
+    {
+        ArrayList<Ile> voisins = new ArrayList<Ile>();
+        Object[][] matrice = uneGrille.getMatriceGrille();
+        Object obj;
+
+        //Technique t = new Technique();
+        
+        /**
+            On parcourt toutes les cases de la grille une à une
+
+        */
+        for(int i = 0; i < uneGrille.getTaille(); i++)
+        {
+            for(int j = 0; j < uneGrille.getTaille(); j++)
+            {
+                
+                obj = matrice[i][j];
+                /** 
+                    On vérifie que la case courrante du parcours est une île avant d'effectuer une recherche à partir des coordonnées de celle-ci
+                */
+                if(obj.getClass() == Ile.class)
+                {
+                    /**
+                        On vérifie que l'île peut encore accepter au moins un pont sinon on considère l'île comme complète
+                        On ne réalise pas de recherche à partir de celle-ci
+                    */
+                    if(!((Ile)obj).estComplete())
+                    {
+                        voisins = trouverVoisins(i, j, uneGrille);
+
+                        switch(voisins.size())
+                        {
+                            case 1:
+                                //return(Technique.unVoisin(voisins));
+
+                                /**
+                                
+                                
+                                
+                                    On parcourt la grille jusqu'à trouver une île où une bordure
+                                    On ne prend plus en compte la présence de ponts 
+                                    Les vérifications entre l'île et ses voisines seront faites après
+                                    Le but est de na pas fausser le "début" de la technique
+
+                                    Par exemple: 
+                                    si une île a au début de la partie 3 voisines atteignables mais qu'à cause des ponts créés par le joueur elle n'en ai plus qu'une
+                                    on ne va pas détecter qu'elle n'a qu'une seule voisine quand on cherchera les techniques appliquables à cette île car ça serait très probablement inadaptée
+                                
+                                
+                                 */
+
+
+
+
+                                
+                            case 2:
+                                //return(Technique.deuxVoisins(voisins));
+                                
+                            case 3:
+                                //return(Technique.troisVoisins(voisins));
+                                
+                            case 4:
+                                //return(Technique.quatreVoisins(voisins));
+                            default:
+                        }
+                    }
+                }
+            }
+        }
+        /**
+            Si aucune technique n'a été détectée sur l'ensemble de la grille
+            On retourne une technique indiquant que la grille actuelle ne permet pas d'appliquer une quelconque technique
+        */
+
+        //return(Technique.aucuneTechnique());
+
+        //temporaire pour l'instant
+        return(null);
+    }
+
     public static void main(String[] args){
         
         int[][] init1 = {
@@ -426,7 +567,7 @@ public class Technique{
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        System.out.println(grilleTest.toString());
+        /*System.out.println(grilleTest.toString());
         if(Technique.unVoisin(grilleTest))
         {
             System.out.println("Il y a bien une île qui a un seul voisin");
@@ -434,7 +575,13 @@ public class Technique{
         else
         {
             System.out.println("Il n'y a pas une île qui a un seul voisin");
-        }
-        
+        }*/
+
+        Technique t = new Technique();
+
+        System.out.println("description avant modif : "+t.getDescription());
+        t.setDescription("123 test");
+        System.out.println("description après modif : "+t.getDescription());
+        //System.out.println(t.getIleCour().toString());
     }
 }
