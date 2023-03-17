@@ -279,7 +279,7 @@ public class Technique{
                 if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois))
                 {
                     t.setIleCour(ileOrigine);
-                    t.setDescription("Il y a une ile qui a exaactement trois voisins qui peut doit créer six ponts. L'île doit donc se relier à chaque île par un double pont.");
+                    t.setDescription("Il y a une ile qui a exactement trois voisins qui peut doit créer six ponts. L'île doit donc se relier à chaque île par un double pont.");
                     return t;
                 }
                 break;
@@ -305,6 +305,9 @@ public class Technique{
 
         /**
             Il y a cas possibles:
+                - 7 ponts => un pont simple avec chaque
+                - 7 ponts dont un voisin avec un => un pont simple avec le un + pont double avec les autres
+                - 8 ponts => pont double avec chaque voisin
         */
 
         /**
@@ -326,7 +329,31 @@ public class Technique{
 
         switch(ileOrigine.getNum())
         {
-
+            case 7:
+                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois)) || (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(qtrmVois)) || (qtrmVois.getNum() == 1 && Technique.ajoutPontSimple(qtrmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(qtrmVois)))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 7 ponts. Un de ses voisins ne doit créer qu'un pont au maximum. L'île doit donc rejoindre la dernière via un pont simple et les autres via des ponts double.");
+                    return t;
+                }
+                else
+                {
+                    if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontSimple(qtrmVois))
+                    {
+                        t.setIleCour(ileOrigine);
+                        t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 7 ponts. Elle doit donc rejoindre les autres îles via au moins un pont simple.");
+                        return t;
+                    }
+                }
+                break;
+            case 8:
+                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 8 ponts. Elle doit donc rejoindre les autres îles via des double ponts.");
+                    return t;
+                }
+                break;
         }
 
         return null;
