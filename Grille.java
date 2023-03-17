@@ -51,6 +51,7 @@ public class Grille {
     void ajouterIle(Ile ile){
         int abs = ile.getAbs();
         int ord = ile.getOrd();
+        listIle.add(ile);
         if(matriceGrille[abs][ord] instanceof Ile){
             //Cas ou on veut ajouter une ile sur une ile donc fichier corrompu
             System.out.println("Erreur fichier corrompu");
@@ -165,6 +166,9 @@ public class Grille {
         //Si il n'existe pas de pont on en créé un
         if(pont == null){
             pont = new Pont(ile1,ile2,nbPonts);
+        }else{
+            pont.setNombrePont(nbPonts);
+            return;
         }
         //Si on peut on vérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
@@ -188,6 +192,7 @@ public class Grille {
         //On ajoute le pont à la liste des ponts créés
         this.pileSvg.push(pont);
     }
+
 
     
     /**
@@ -261,9 +266,8 @@ public class Grille {
                     int abs = Integer.parseInt(val.substring(0,val.indexOf("|")-1));
                     int ord = Integer.parseInt(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
                     int num = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
-                    Ile ile = new Ile(id,num,abs,ord);
-                    matriceGrille[ord][abs] = ile;
-                    listIle.add(ile);
+                    Ile ile = new Ile(id,num,ord,abs);
+                    ajouterIle(ile);
                 }
             });
             balises.forEach((key, val) -> {
@@ -303,12 +307,12 @@ public class Grille {
         return result;
     }
 
-    public static void main2(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
         Grille grilleTest = new Grille();
-        grilleTest.getGrilleFromYAML(new File("Niveau\\NiveauTest.yaml"));
+        grilleTest.getGrilleFromYAML(new File("Niveau/NiveauTest.yaml"));
         System.out.println(grilleTest);
     }
-    public static void main(String[] args){
+    public static void main2(String[] args){
 
         int[][] init = {
         //    0   1  2   3   4   5   6   7  8   9
