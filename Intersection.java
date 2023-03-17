@@ -48,6 +48,23 @@ public class Intersection extends Element {
             return pont1.getNombrePont() == 0;
         }
     }
+    /**
+     * @param ile1 une ile de l'intersection
+     * @param ile2 une ile de l'intersection
+     * @return true si le pont p de l'intersection peut etre decrementé
+     */
+    public Pont getPont(Ile ile1, Ile ile2){
+        // si on est sur le pont 1
+        if(ile1 == pont1.getIle1() && ile2 == pont1.getIle2() || ile1 == pont1.getIle2() && ile2 == pont1.getIle1()){
+            return this.pont1;
+        // si on est sur le pont 2
+        }else if(ile1 == pont2.getIle1() && ile2 == pont2.getIle2() || ile1 == pont2.getIle2() && ile2 == pont2.getIle1()){
+                return this.pont2;
+        }
+        System.out.println("une des iles donnée n'est pas dans l'intersection");
+        return null;
+    }
+
 
     public Boolean estIncrementable(Ile ile1, Ile ile2){
         // si on est sur le pont 1
