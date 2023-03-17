@@ -220,6 +220,148 @@ public class Technique{
     }
 
     /**
+        Méthode qui retourne une Technique
+        Prend en paramètres une liste d'îles composée de trois îles car il y a 3 îles voisines
+        Prend en paramètres l'île d'origine
+        Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
+        Retourne une technique appliquable sur cette liste d'îles
+    */
+
+    static Technique troisVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
+    {
+
+        Technique t = new Technique();
+
+        /**
+            Il y a 3 cas possibles:
+                - L'île d'origine accepte 5 ponts => 1 pont avec chaque île
+                - L'île d'origine accepte 5 ponts et possède un voisin qui n'accepte qu'un pont => 1 pont avec l'île qui n'en accepte qu'un + des ponts doubles avec les autres îles
+                - L'île d'origine accepte 6 ponts => double ponts avec chaque île
+        */
+
+        /**
+            On récupère les îles voisines
+        */
+
+        Ile premVois = voisins.get(0);
+        Ile scdVois = voisins.get(1);
+        Ile trsmVois = voisins.get(2);
+
+        /**
+            On vérifie en premier lieu que toutes les îles de la liste sont accessibles à partir de l'île d'origine
+        */
+        if(!ilesAccessibles(ileOrigine, voisins, uneGrille))
+        {
+            return null;
+        }
+
+        switch(ileOrigine.getNum())
+        {
+            case 5:
+                /* On regarde si une des îles voisines n'accepte qu'un voisin */
+                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(trsmVois))|| (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois)))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement trois voisins qui peut créer cinq ponts. Parmi ses trois voisins, une île n'accepte qu'un pont au maximum. L'île doit donc être reliée à cette dernière par un pont simple. L'île doit être reliée aux deux autres par des ponts double.");
+                    return t;
+                }
+                else
+                {
+                    if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(trsmVois))
+                    {
+                        t.setIleCour(ileOrigine);
+                        t.setDescription("Il y a une île qui a exactement trois voisins qui peut créer cinq ponts. L'île doit donc se relier à chaque île par un pont simple minimum.");
+                        return t;
+                    }
+                }
+                break;
+            case 6:
+                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une ile qui a exactement trois voisins qui peut doit créer six ponts. L'île doit donc se relier à chaque île par un double pont.");
+                    return t;
+                }
+                break;
+        }
+
+        return null;
+    }
+
+
+    /** 
+        Méthode qui retourne une Technique
+        Prend en paramètres une liste d'îles composée de quatre îles car il y a 4 îles voisines
+        Prend en paramètres l'île d'origine
+        Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
+        Retourne une technique appliquable sur cette liste d'îles
+    */
+
+
+    static Technique quatreVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
+    {
+
+        Technique t = new Technique();
+
+        /**
+            Il y a cas possibles:
+                - 7 ponts => un pont simple avec chaque
+                - 7 ponts dont un voisin avec un => un pont simple avec le un + pont double avec les autres
+                - 8 ponts => pont double avec chaque voisin
+        */
+
+        /**
+            On récupère les îles voisines
+        */
+
+        Ile premVois = voisins.get(0);
+        Ile scdVois = voisins.get(1);
+        Ile trsmVois = voisins.get(2);
+        Ile qtrmVois = voisins.get(3);
+
+        /**
+            On vérifie en premier lieu que toutes les îles de la liste sont accessibles à partir de l'île d'origine
+        */
+        if(!ilesAccessibles(ileOrigine, voisins, uneGrille))
+        {
+            return null;
+        }
+
+        switch(ileOrigine.getNum())
+        {
+            case 7:
+                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois)) || (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(qtrmVois)) || (qtrmVois.getNum() == 1 && Technique.ajoutPontSimple(qtrmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(qtrmVois)))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 7 ponts. Un de ses voisins ne doit créer qu'un pont au maximum. L'île doit donc rejoindre la dernière via un pont simple et les autres via des ponts double.");
+                    return t;
+                }
+                else
+                {
+                    if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontSimple(qtrmVois))
+                    {
+                        t.setIleCour(ileOrigine);
+                        t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 7 ponts. Elle doit donc rejoindre les autres îles via au moins un pont simple.");
+                        return t;
+                    }
+                }
+                break;
+            case 8:
+                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois))
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 8 ponts. Elle doit donc rejoindre les autres îles via des double ponts.");
+                    return t;
+                }
+                break;
+        }
+
+        return null;
+    }
+
+
+
+    /**
         Méthode qui regarde si une île a seulement un voisin
         Retourne un boolean
         Vrai si une île a seulement un voisin non lié déjà
