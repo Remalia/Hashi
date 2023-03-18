@@ -47,6 +47,52 @@ public class Technique{
     }
 
     /** 
+        Méthode qui parcourt une direction passée en paramètres et qui regarde s'il existe un pont
+    */
+    static boolean existePont(int direction, Ile ileOrigine, Ile ileDestination, Element[][] matrice){
+        int coord;
+
+        int xOrigine = ileOrigine.getAbs();
+        int yOrigine = ileOrigine.getOrd();
+
+        int xDestination = ileDestination.getAbs();
+        int yDestination = ileDestination.getOrd();
+
+        
+
+        switch(direction)
+        {
+            case HAUT:
+                for(coord = coordOrigine; coord > coordDestination; coord--)
+                {
+                    if(matrice[scdeCoord][coord] instanceof Intersection) return false;
+                }
+                break;
+            case BAS:
+                for(coord = coordOrigine; coord < coordDestination; coord++)
+                {
+                    if( matrice[scdeCoord][coord] instanceof Intersection) return false;
+                }
+                break;
+            case GAUCHE:
+                for(coord = coordOrigine; coord > coordDestination; coord--)
+                {
+                    if( matrice[coord][scdeCoord] instanceof Intersection) return false;
+                }
+                break;
+            case DROITE:
+                for(coord = coordOrigine; coord < coordDestination; coord++)
+                {
+                    if( matrice[coord][scdeCoord] instanceof Intersection) return false;
+                }
+                break;
+        }
+
+        return true;
+    }
+
+
+    /** 
         Méthode qui vérifie que l'on peut incrémenter le pont entre deux îles
     */
     static boolean verifCreationPont(Ile ileOrigine, Ile ileDestination, Grille uneGrille)
@@ -67,7 +113,7 @@ public class Technique{
             if(yOrigine < yDestination)
             {
                 // On parcourt vers la droite car l'île d'origine est à gauche de l'île de destination
-
+                
             }
             else
             {
