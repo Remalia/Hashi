@@ -51,6 +51,23 @@ public class Intersection extends Element {
     /**
      * @param ile1 une ile de l'intersection
      * @param ile2 une ile de l'intersection
+     * @return true si le pont p de l'intersection peut etre incrementé
+     */
+    public Boolean estIncrementable(Ile ile1, Ile ile2){
+        // si on est sur le pont 1
+        if(ile1 == pont1.getIle1() && ile2 == pont1.getIle2() || ile1 == pont1.getIle2() && ile2 == pont1.getIle1()){
+            return estIncrementable(this.pont1);
+        // si on est sur le pont 2
+        }else if(ile1 == pont2.getIle1() && ile2 == pont2.getIle2() || ile1 == pont2.getIle2() && ile2 == pont2.getIle1()){
+            return estIncrementable(this.pont2);
+        }
+        System.out.println("une des iles donnée n'est pas dans l'intersection");
+        return false;
+    }
+
+    /**
+     * @param ile1 une ile de l'intersection
+     * @param ile2 une ile de l'intersection
      * @return true si le pont p de l'intersection peut etre decrementé
      */
     public Pont getPont(Ile ile1, Ile ile2){
@@ -65,16 +82,31 @@ public class Intersection extends Element {
         return null;
     }
 
-
-    public Boolean estIncrementable(Ile ile1, Ile ile2){
-        // si on est sur le pont 1
-        if(ile1 == pont1.getIle1() && ile2 == pont1.getIle2() || ile1 == pont1.getIle2() && ile2 == pont1.getIle1()){
-            estIncrementable(this.pont1);
-        // si on est sur le pont 2
-        }else if(ile1 == pont2.getIle1() && ile2 == pont2.getIle2() || ile1 == pont2.getIle2() && ile2 == pont2.getIle1()){
-                estIncrementable(this.pont2);
+    /**
+     * 
+     * @return l'etat de l'intersection (pont1, pont2 ou intersection)
+     */
+    public Element getEtat(){
+        if(pont1.getNombrePont() > 0){
+            return pont1;
+        }else if(pont2.getNombrePont() > 0){
+            return pont2;
+        }else{
+            return this;
         }
-        System.out.println("une des iles donnée n'est pas dans l'intersection");
-        return false;
+    }
+
+
+    /**
+     * @return la chaine de caractère de l'intersection
+     */
+    public String toString(){
+        if(pont1.getNombrePont() > 0){
+            return pont1.toString();
+        }else if(pont2.getNombrePont() > 0){
+            return pont2.toString();
+        }else{
+            return "┼";
+        }
     }
 }
