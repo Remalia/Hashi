@@ -46,6 +46,50 @@ public class Technique{
         return(this.ileCour);
     }
 
+    /** 
+        Méthode qui vérifie que l'on peut incrémenter le pont entre deux îles
+    */
+    static boolean verifCreationPont(Ile ileOrigine, Ile ileDestination, Grille uneGrille)
+    {
+        Element[][] matrice = uneGrille.getMatriceGrille();
+
+        int xOrigine = ileOrigine.getAbs();
+        int yOrigine = ileOrigine.getOrd();
+
+        int xDestination = ileDestination.getAbs();
+        int yDestination = ileDestination.getOrd();
+
+        // Il faut connaître si les 2 îles sont sur la même ligne ou la même colonne
+        if(xOrigine == xDestination)
+        {
+            // Même ligne
+            // 2 cas possibles => l'île d'origine est à gauche de l'île de destination ou l'inverse
+            if(yOrigine < yDestination)
+            {
+                // On parcourt vers la droite car l'île d'origine est à gauche de l'île de destination
+
+            }
+            else
+            {
+                // On parcourt vers la gauche car l'île d'origine est à droite de l'île de destination
+            }
+        }
+        else
+        {
+            // Même colonne (on considère qu'on ne peut pas arriver ici sans avoir déjà vérifié qu'ils étaient sur une même ligne ou une même colonne)
+            if(xOrigine < xDestination)
+            {
+                // On parcourt vers le bas car l'île d'origine est au dessus de l'île de destination
+            }
+            else
+            {
+                // On parcourt vers le haut car l'île d'origine est en dessous de l'île de destination
+            }
+        }
+
+        return false;
+    }
+
     /**
         Méthode qui indique si une île peut accepter un pont simple
         Vrai si c'est le cas, faux sino,
@@ -73,7 +117,7 @@ public class Technique{
     {
         for(Ile i: voisins)
         {
-            if(uneGrille.verifCreationPont(ileOrigine, i) != null)
+            if(Technique.verifCreationPont(ileOrigine, i, uneGrille) == false)
             {
                 return(false);
             }
@@ -90,7 +134,7 @@ public class Technique{
             On vérifie juste que l'île d'arrivée est libre et qu'il n'y a pas de ponts entre les 2 îles
         */
 
-        return( !ileDestination.estComplete() && uneGrille.verifCreationPont(ileOrigine, ileDestination) == null);
+        return( !ileDestination.estComplete() && Technique.verifCreationPont(ileOrigine, ileDestination, uneGrille) == true);
     }
 
     /**
