@@ -133,7 +133,7 @@ public class Ile extends Element{
         this.estSelect = s;
     }
 
-    public String toString(){
+    public String toStringConsole(){
         String s = "Ile" + this.id + "\n";
         s += "numéro : " + this.num + "\n";
         s += "(" + this.abs + "," + this.ord + ")\n";
@@ -146,16 +146,20 @@ public class Ile extends Element{
         return s;
     }
 
+    public String toString(){
+        return Integer.toString(this.getNum());
+    }
+
     public static void main(String[] args){
         try {
             Color c = new Color(100, 0, 0);
             Ile ileTest = new Ile(1, 5, 4, 2, c);
-            System.out.println(ileTest.toString());
+            System.out.println(ileTest.toStringConsole());
             ileTest.ajouterPont();
             ileTest.ajouterPont();
-            System.out.println(ileTest.toString());
+            System.out.println(ileTest.toStringConsole());
             ileTest.supprimer2Ponts();
-            System.out.println(ileTest.toString());
+            System.out.println(ileTest.toStringConsole());
             System.out.println(ileTest.getClass());
             if(ileTest.getClass() == Ile.class) 
                 System.out.println("bjr");

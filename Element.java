@@ -39,4 +39,8 @@ public class Element {
     public void setCouleur(Color c){
         this.couleur = c;
     }
+
+    public String toString(){
+        return "░";
+    }
 }

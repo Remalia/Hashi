@@ -92,4 +92,15 @@ public class Pont extends Element{
         this.nombrePont = nombrePont;
     }
 
+    public String toString(){
+        if(this.nombrePont == 0){
+            return ".";
+        }
+        else if (this.nombrePont == 1){
+            return "─";
+        }else{
+            return "═";
+        }
+    }
+
 }
