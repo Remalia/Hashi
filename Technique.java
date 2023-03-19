@@ -49,7 +49,7 @@ public class Technique{
     /** 
         Méthode qui parcourt une direction passée en paramètres et qui regarde s'il existe un pont
     */
-    static boolean existePont(int direction, Ile ileOrigine, Ile ileDestination, Element[][] matrice){
+    static boolean absencePont(int direction, Ile ileOrigine, Ile ileDestination, Element[][] matrice, int taille){
         int coord;
 
         int xOrigine = ileOrigine.getAbs();
@@ -63,27 +63,98 @@ public class Technique{
         switch(direction)
         {
             case HAUT:
-                for(coord = coordOrigine; coord > coordDestination; coord--)
+                for(coord = yOrigine; coord > yDestination && coord >= 0; coord--)
                 {
-                    if(matrice[scdeCoord][coord] instanceof Intersection) return false;
+                    if(matrice[xOrigine][coord] instanceof Intersection)
+                    {
+                        // On doit vérifier si le second pont de l'intersection existe ou non
+
+                        Pont pontUn = ((Intersection) matrice[xOrigine][coord]).getPont1();
+                        Pont pontDeux = ((Intersection) matrice[xOrigine][coord]).getPont2();
+
+                        if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
+                        {
+                            // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
+                            if(pontDeux.getNombrePont() != 0)
+                            {
+                                // Si le pont existe alors on retourne faux car l'île n'est pas accessible
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            if(pontUn.getNombrePont() != 0)
+                            {
+                                return false;
+                            }
+                        }
+                    }
                 }
                 break;
             case BAS:
-                for(coord = coordOrigine; coord < coordDestination; coord++)
+                for(coord = yOrigine; coord < yDestination && coord <= taille; coord++)
                 {
-                    if( matrice[scdeCoord][coord] instanceof Intersection) return false;
+                    if(matrice[xOrigine][coord] instanceof Intersection)
+                    {
+                        // On doit vérifier si le second pont de l'intersection existe ou non
+
+                        Pont pontUn = ((Intersection) matrice[xOrigine][coord]).getPont1();
+                        Pont pontDeux = ((Intersection) matrice[xOrigine][coord]).getPont2();
+
+                        if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
+                        {
+                            // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
+                            if(pontDeux.getNombrePont() != 0) return false;
+                        }
+                        else
+                        {
+                            if(pontUn.getNombrePont() != 0) return false;
+                        }
+                    }
                 }
                 break;
             case GAUCHE:
-                for(coord = coordOrigine; coord > coordDestination; coord--)
+                for(coord = xOrigine; coord > xDestination && coord >= 0; coord--)
                 {
-                    if( matrice[coord][scdeCoord] instanceof Intersection) return false;
+                    if(matrice[coord][yOrigine] instanceof Intersection)
+                    {
+                        // On doit vérifier si le second pont de l'intersection existe ou non
+
+                        Pont pontUn = ((Intersection) matrice[coord][yOrigine]).getPont1();
+                        Pont pontDeux = ((Intersection) matrice[coord][yOrigine]).getPont2();
+
+                        if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
+                        {
+                            // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
+                            if(pontDeux.getNombrePont() != 0) return false;
+                        }
+                        else
+                        {
+                            if(pontUn.getNombrePont() != 0) return false;
+                        }
+                    }
                 }
                 break;
             case DROITE:
-                for(coord = coordOrigine; coord < coordDestination; coord++)
+                for(coord = xOrigine; coord < xDestination && coord <= taille; coord++)
                 {
-                    if( matrice[coord][scdeCoord] instanceof Intersection) return false;
+                    if(matrice[coord][yOrigine] instanceof Intersection)
+                    {
+                        // On doit vérifier si le second pont de l'intersection existe ou non
+
+                        Pont pontUn = ((Intersection) matrice[coord][yOrigine]).getPont1();
+                        Pont pontDeux = ((Intersection) matrice[coord][yOrigine]).getPont2();
+
+                        if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
+                        {
+                            // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
+                            if(pontDeux.getNombrePont() != 0) return false;
+                        }
+                        else
+                        {
+                            if(pontUn.getNombrePont() != 0) return false;
+                        }
+                    }
                 }
                 break;
         }
@@ -105,6 +176,8 @@ public class Technique{
         int xDestination = ileDestination.getAbs();
         int yDestination = ileDestination.getOrd();
 
+        int taille = uneGrille.getTaille();
+
         // Il faut connaître si les 2 îles sont sur la même ligne ou la même colonne
         if(xOrigine == xDestination)
         {
@@ -114,10 +187,12 @@ public class Technique{
             {
                 // On parcourt vers la droite car l'île d'origine est à gauche de l'île de destination
                 
+                return absencePont(DROITE, ileOrigine, ileDestination, matrice, taille);
             }
             else
             {
                 // On parcourt vers la gauche car l'île d'origine est à droite de l'île de destination
+                return absencePont(GAUCHE, ileOrigine, ileDestination, matrice, taille);
             }
         }
         else
@@ -126,14 +201,17 @@ public class Technique{
             if(xOrigine < xDestination)
             {
                 // On parcourt vers le bas car l'île d'origine est au dessus de l'île de destination
+            
+                return absencePont(BAS, ileOrigine, ileDestination, matrice, taille);
             }
             else
             {
                 // On parcourt vers le haut car l'île d'origine est en dessous de l'île de destination
+                return absencePont(HAUT, ileOrigine, ileDestination, matrice, taille);
             }
         }
 
-        return false;
+        //return false;
     }
 
     /**
@@ -163,7 +241,7 @@ public class Technique{
     {
         for(Ile i: voisins)
         {
-            if(Technique.verifCreationPont(ileOrigine, i, uneGrille) == false)
+            if(!Technique.verifCreationPont(ileOrigine, i, uneGrille))
             {
                 return(false);
             }
