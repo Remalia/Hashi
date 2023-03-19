@@ -908,7 +908,7 @@ public class Technique{
     /**
         Méthode qui cherche les îles voisines auxquelles une île peut se connecter
     */
-    ArrayList<Ile> trouverVoisins(int abs, int ord, Grille uneGrille)
+    static ArrayList<Ile> trouverVoisins(int abs, int ord, Grille uneGrille)
     {
         ArrayList<Ile> voisins = new ArrayList<Ile>();
         int tailleGrille = uneGrille.getTaille();
@@ -936,7 +936,7 @@ public class Technique{
         Si aucune technique n'est applicable alors on retourne une technique qui indique que la grille actuelle ne permet pas d'appliquer de techniques
     */
     
-    Technique trouverTechniqueGrille(Grille uneGrille)
+    static Technique trouverTechniqueGrille(Grille uneGrille)
     {
         ArrayList<Ile> voisins = new ArrayList<Ile>();
         Element[][] matrice = uneGrille.getMatriceGrille();
@@ -965,7 +965,7 @@ public class Technique{
                     */
                     if(!((Ile)elem).estComplete())
                     {
-                        voisins = trouverVoisins(i, j, uneGrille);
+                        voisins = Technique.trouverVoisins(i, j, uneGrille);
 
                         switch(voisins.size())
                         {
@@ -1046,66 +1046,52 @@ public class Technique{
         
         Color c = new Color(0,0,255);
 
-        int[][] init1 = {
-            {2, -1, 2, -1, 2, -1, -1, -1, -1, 4},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {4, -1, -1, -1, -1, -1, 2, -1, -1, 4},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {4, -1, 2, -1, 2, -1, 7, -1, 2, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, 1, -1, 1, -1, 4, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, 2, -1, 5, -1, 6, -1, 2, -1},
-            {2, -1, -1, -1, -1, -1, -1, -1, -1, 3}
+        Grille grilleTest = new Grille();
+        
+        System.out.println("On affiche la grille");
 
-        };
-        int[][] init2 = {
-            {2, -1, -1, -1, 2, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            {-1, -1, -1, -1, 2, -1, -1, -1, -1, -1},
-            {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
+        System.out.println(grilleTest);
 
-        };
-        Grille grilleTest = new Grille(init2);
-        /*Color c = new Color(0, 0, 255);
-        try {
-            grilleTest.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-        System.out.println(grilleTest.toString());
-        /*
-        try{
-            Ile ile1 = new Ile(1,2,0,3,c);
-            Ile ile2 = new Ile(2,2,0,9,c);
-            Ile ile3 = new Ile(3,2,8,3,c);
-            grilleTest.ajouterPont(ile1,ile2);
-            grilleTest.ajouterPont(ile1,ile3);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        System.out.println(grilleTest.toString());*/
-        if(Technique.unVoisin(grilleTest))
+        if(Technique.trouverTechniqueGrille(grilleTest) == null)
         {
-            System.out.println("Il y a bien une île qui a un seul voisin");
+            System.out.println("Il n'y a pas de technique appliquable");
         }
         else
         {
-            System.out.println("Il n'y a pas une île qui a un seul voisin");
+            System.out.println("Il y a bien une technique appliquable");
         }
 
+        /**
+            On ajoute des îles pour regarder s'il y a des techniques appliquables
+        */
+
+        System.out.println("On ajoute des îles");
+
+        Ile ile1 = new Ile(1,1,0,0,c);
+        Ile ile2 = new Ile(2,2,0,2,c);
+        Ile ile3 = new Ile(3,2,0,9,c);
+        Ile ile4 = new Ile(4,2,3,2,c);
+        Ile ile5 = new Ile(5,2,3,9,c);
+        grilleTest.ajouterIle(ile1);
+        grilleTest.ajouterIle(ile2);
+        grilleTest.ajouterIle(ile3);
+        grilleTest.ajouterIle(ile4);
+        grilleTest.ajouterIle(ile5);
+
+        System.out.println("On affiche la grille");
+        
+        System.out.println(grilleTest);
+        
         Technique t = new Technique();
 
-        System.out.println("description avant modif : "+t.getDescription());
-        t.setDescription("123 test");
-        System.out.println("description après modif : "+t.getDescription());
-        //System.out.println(t.getIleCour().toString());
+        if(Technique.trouverTechniqueGrille(grilleTest) == null)
+        {
+            System.out.println("Il n'y a pas de technique appliquable après ajout des îles");
+        }
+        else
+        {
+            System.out.println("Il y a bien une technique appliquable après ajout des îles");
+        }
+
     }
 }
