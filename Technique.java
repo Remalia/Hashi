@@ -972,12 +972,11 @@ public class Technique{
                             case 1:
                                 // on retourne la technique seulement si elle existe, on ne retourne pas une technique null
 
-                                /*
-                                t = Technique.unVoisinBis((Ile)obj, voisins, uneGrille);
-                                if(t != null)
-                                {
-                                    return(t);
-                                }
+                                
+                                t = Technique.unVoisinBis((Ile) elem, voisins, uneGrille);
+                                
+                                if(t != null) return(t);
+                                
                                 break;
 
 
@@ -1004,12 +1003,27 @@ public class Technique{
 
                                 
                             case 2:
+                                t = Technique.deuxVoisinsBis((Ile) elem, voisins, uneGrille);
+
+                                if(t != null) return t;
+
+                                break;
                                 //return(Technique.deuxVoisins(voisins));
                                 
                             case 3:
+                                t = Technique.troisVoisinsBis((Ile) elem, voisins, uneGrille);
+                                
+                                if(t != null) return t;
+
+                                break;
                                 //return(Technique.troisVoisins(voisins));
                                 
                             case 4:
+                                t = Technique.quatreVoisinsBis((Ile) elem, voisins, uneGrille);
+
+                                if(t != null) return t;
+
+                                break;
                                 //return(Technique.quatreVoisins(voisins));
                             default:
                         }
