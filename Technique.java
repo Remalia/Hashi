@@ -629,7 +629,7 @@ public class Technique{
         On passe la taille de la grille en paramètres
         On retourne vrai si lors du parcours une île est trouvée
     */
-    static boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+    static boolean parcoursGrille(int xIle, int yIle, int direction, int taille, Element [][] matriceGrille){
         /**
             On récupère l'île d'origine
         */
@@ -642,7 +642,7 @@ public class Technique{
                 for(int y  = yIle - 1; y >= 0; y--)
                 {
                     /** Si on trouve une île on retourne true */
-                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    if(matriceGrille[xIle][y] instanceof Ile)
                     {
                         /** 
                             Il ne faut pas vérifier maintenant si l'île trouvée est pleine
@@ -674,7 +674,7 @@ public class Technique{
             case GAUCHE:
                 for(int x = xIle - 1; x >= 0; x--)
                 {
-                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    if(matriceGrille[x][yIle] instanceof Ile)
                     {
                         /*if(((Ile) matriceGrille[x][yIle]).estComplete())
                         {
@@ -695,7 +695,7 @@ public class Technique{
             case BAS:
                 for(int y = yIle + 1; y < taille; y++)
                 {
-                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    if(matriceGrille[xIle][y] instanceof Ile)
                     {
                         /*
                         if(((Ile) matriceGrille[xIle][y]).estComplete())
@@ -717,7 +717,7 @@ public class Technique{
             case DROITE:
                 for(int x = xIle + 1; x < taille; x++)
                 {
-                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    if(matriceGrille[x][yIle] instanceof Ile)
                     {/*
                         if(((Ile) matriceGrille[x][yIle]).estComplete()){
                             return(false);
@@ -847,7 +847,7 @@ public class Technique{
         On passe la taille de la grille en paramètres
         On retourne une île si elle est trouvée
     */
-    static Ile recupIleGrille(int xIle, int yIle, int direction, int taille, Object [][] matriceGrille){
+    static Ile recupIleGrille(int xIle, int yIle, int direction, int taille, Element [][] matriceGrille){
         /**
             On récupère l'île d'origine
         */
@@ -864,7 +864,7 @@ public class Technique{
                         Par conséquent il n'y a pas de vérification à réaliser 
                         On retourne simplement l'île que l'on trouve en premier
                     */
-                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    if(matriceGrille[xIle][y] instanceof Ile)
                     {
                         return((Ile)matriceGrille[xIle][y]);
                     }
@@ -874,7 +874,7 @@ public class Technique{
             case GAUCHE:
                 for(int x = xIle - 1; x >= 0; x--)
                 {
-                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    if(matriceGrille[x][yIle] instanceof Ile)
                     {
                         return((Ile)matriceGrille[x][yIle]);
                     }
@@ -884,7 +884,7 @@ public class Technique{
             case BAS:
                 for(int y = yIle + 1; y <= taille; y++)
                 {
-                    if(matriceGrille[xIle][y].getClass() == Ile.class)
+                    if(matriceGrille[xIle][y] instanceof Ile)
                     {
                         return((Ile)matriceGrille[xIle][y]);
                     }
@@ -894,7 +894,7 @@ public class Technique{
             case DROITE:
                 for(int x = xIle + 1; x <= taille; x++)
                 {
-                    if(matriceGrille[x][yIle].getClass() == Ile.class)
+                    if(matriceGrille[x][yIle] instanceof Ile)
                     {
                         return((Ile)matriceGrille[x][yIle]);
                     }
@@ -912,18 +912,19 @@ public class Technique{
     {
         ArrayList<Ile> voisins = new ArrayList<Ile>();
         int tailleGrille = uneGrille.getTaille();
+        Element [][] matrice = uneGrille.getMatriceGrille();
 
         /** 
             On parcourt les 4 directions pour récupérer les îles valables
         */
         for(int direction: listeDirections)
         {
-            if(parcoursGrille(abs, ord, direction, tailleGrille, uneGrille.getMatriceGrille()))
+            if(parcoursGrille(abs, ord, direction, tailleGrille, matrice))
             {
                 /**
                     Si dans une direction il y a une île on récupère l'île de la direction parcourue
                 */
-                voisins.add( recupIleGrille(abs, ord, direction, tailleGrille, uneGrille.getMatriceGrille()) );
+                voisins.add( recupIleGrille(abs, ord, direction, tailleGrille, matrice) );
             }
         }
 
@@ -938,8 +939,8 @@ public class Technique{
     Technique trouverTechniqueGrille(Grille uneGrille)
     {
         ArrayList<Ile> voisins = new ArrayList<Ile>();
-        Object[][] matrice = uneGrille.getMatriceGrille();
-        Object obj;
+        Element[][] matrice = uneGrille.getMatriceGrille();
+        Element elem;
 
         Technique t = new Technique();
         
@@ -952,17 +953,17 @@ public class Technique{
             for(int j = 0; j < uneGrille.getTaille(); j++)
             {
                 
-                obj = matrice[i][j];
+                elem = matrice[i][j];
                 /** 
                     On vérifie que la case courrante du parcours est une île avant d'effectuer une recherche à partir des coordonnées de celle-ci
                 */
-                if(obj.getClass() == Ile.class)
+                if(elem instanceof Ile)
                 {
                     /**
                         On vérifie que l'île peut encore accepter au moins un pont sinon on considère l'île comme complète
                         On ne réalise pas de recherche à partir de celle-ci
                     */
-                    if(!((Ile)obj).estComplete())
+                    if(!((Ile)elem).estComplete())
                     {
                         voisins = trouverVoisins(i, j, uneGrille);
 
