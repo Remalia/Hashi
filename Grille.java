@@ -79,11 +79,12 @@ public class Grille {
         int abs = ile.getAbs();
         int ord = ile.getOrd();
         listIle.add(ile);
-
+        matriceGrille[abs][ord].nettoyerCase();
+        Element actuel = matriceGrille[abs][ord];
         Ile temp;
         //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
         for(Direction d : Arrays.asList(Direction.values()) ){
-            temp = matriceGrille[abs][ord].parcoursMatrice(abs, ord, d ,this.matriceGrille);
+            temp = actuel.parcoursMatrice(abs, ord, d ,this.matriceGrille);
             if(temp != null){
                 ajouterPont(ile, temp, 0);
             }
@@ -95,34 +96,21 @@ public class Grille {
      * Donne le pont entre deux iles
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont 
-     * @return le pont entre les deux îles
+     * @return le pont entre les deux îles null si rien
      */
     public Pont chercherPont(Ile ile1, Ile ile2){
         //Si on peut on vérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
-                // verif inter
-                    if(matriceGrille[ile1.getAbs()][ile1.getOrd() + 1] instanceof Pont)
-                        return (Pont) matriceGrille[ile1.getAbs()][ile1.getOrd() + 1];
-                    else if (matriceGrille[ile1.getAbs()][ile1.getOrd() + 1] instanceof Intersection)
-                        return ((Intersection) matriceGrille[ile1.getAbs()][ile1.getOrd() + 1]).getPont(ile1, ile2);
+                return matriceGrille[ile1.getAbs()][ile1.getOrd() + 1].donePont(ile1, ile2);
             }else{
-                if(matriceGrille[ile1.getAbs()][ile1.getOrd() - 1] instanceof Pont)
-                    return (Pont) matriceGrille[ile1.getAbs()][ile1.getOrd() - 1];
-                else if (matriceGrille[ile1.getAbs()][ile1.getOrd() - 1] instanceof Intersection)
-                    return ((Intersection) matriceGrille[ile1.getAbs()][ile1.getOrd() - 1]).getPont(ile1, ile2);
+                return matriceGrille[ile1.getAbs()][ile1.getOrd() - 1].donePont(ile1, ile2);
             }
         }else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
-                if(matriceGrille[ile1.getAbs() + 1][ile1.getOrd()] instanceof Pont)
-                    return (Pont) matriceGrille[ile1.getAbs() + 1][ile1.getOrd()];
-                else if (matriceGrille[ile1.getAbs() + 1][ile1.getOrd()] instanceof Intersection)
-                    return ((Intersection) matriceGrille[ile1.getAbs() + 1][ile1.getOrd()]).getPont(ile1, ile2);
+                return matriceGrille[ile1.getAbs() + 1][ile1.getOrd()].donePont(ile1, ile2);
             }else{
-                if(matriceGrille[ile1.getAbs() - 1][ile1.getOrd()] instanceof Pont)
-                    return (Pont) matriceGrille[ile1.getAbs() - 1][ile1.getOrd()];
-                else if (matriceGrille[ile1.getAbs() - 1][ile1.getOrd()] instanceof Intersection)
-                    return ((Intersection) matriceGrille[ile1.getAbs() - 1][ile1.getOrd()]).getPont(ile1, ile2);
+                return matriceGrille[ile1.getAbs() - 1][ile1.getOrd()].donePont(ile1, ile2);
             }
         }
         //System.out.println("N'as pas trouvé de pont entre les deux îles");
@@ -143,6 +131,7 @@ public class Grille {
 
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
+            System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
             pont.setNombrePont(nbPonts);
             return;
         }
@@ -202,14 +191,7 @@ public class Grille {
         pileSvg.add(pont);
     }
 
-    /**
-     * Retire un pont de la grille
-     * @param pont le pont à retirer
-     */
-    public void retirerPont(Pont pont){
-        pont.setNombrePont(0);
-        this.pileSvg.push(pont);
-    }
+
 
     
     /**
@@ -252,6 +234,7 @@ public class Grille {
      * @param ile2 l'île d'arrivée du pont
      * @return Element si trouvé sur le chemin autre que pont ou intersection ( possiblement null ou ile) sinon null
      */
+    @Deprecated
     public Element verifCreationPont(Ile ile1, Ile ile2){
         int i;
         // si pont vertical
@@ -427,32 +410,30 @@ public class Grille {
         return result;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main2(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauTest");
         grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
         grilleTest.saveGrilleToYAML();
         System.out.println(grilleTest);
     }
-    public static void main2(String[] args){
+    public static void main(String[] args){
         Grille grilleTest = new Grille();
         Color c = new Color(0, 0, 255);
-        
-        try {
-            Ile ile1 = new Ile(1,1,4,1,c);
-            Ile ile2 = new Ile(2,2,4,9,c);
-            Ile ile3 = new Ile(3,3,1,5,c);
-            Ile ile4 = new Ile(4,4,9,5,c);
-            grilleTest.ajouterIle(ile1);
-            grilleTest.ajouterIle(ile2);
-            grilleTest.ajouterIle(ile3);
-            grilleTest.ajouterIle(ile4);
-            //grilleTest.ajouterPont(ile3,ile4);
-            //grilleTest.ajouterPont(ile3,ile4);
-            //grilleTest.ajouterPont(ile1,ile2,1);
-            //grilleTest.ajouterPont(ile1,ile2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Ile ile1 = new Ile(1,1,4,1,c);
+        Ile ile2 = new Ile(2,2,4,9,c);
+        Ile ile3 = new Ile(3,3,1,5,c);
+        Ile ile4 = new Ile(4,4,9,5,c);
+        Ile ile5 = new Ile(5,5,4,3);
+        grilleTest.ajouterIle(ile1);
+        grilleTest.ajouterIle(ile3);
+        System.out.println("nb ponts de l'ile 1 : "+ile1.getListePont().size());
+        System.out.println("nb ponts de l'ile 5 : "+ile2.getListePont().size());
+        System.out.println(grilleTest.toString());
+        grilleTest.ajouterIle(ile2);
+        grilleTest.ajouterIle(ile4);
+        grilleTest.ajouterIle(ile5);
+        System.out.println("nb ponts de l'ile 1 : "+ile1.getListePont().size());
+        System.out.println("nb ponts de l'ile 3 : "+ile3.getListePont().size());
         System.out.println(grilleTest.toString());
         
     }

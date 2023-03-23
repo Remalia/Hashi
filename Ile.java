@@ -157,6 +157,9 @@ public class Ile extends Element{
         return Integer.toString(this.getNum());
     }
 
+    /**
+     * Retourne l'île si l'île est sélectionnée, sinon retourne null
+     */
     @Override
     public Ile parcoursMatrice(int x, int y, Direction d, Element Grille[][]){
         return this;

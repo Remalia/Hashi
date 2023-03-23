@@ -13,7 +13,7 @@ public class Fonctionnalite{
     */
    public void undo(Grille grille){
       Pont pont = grille.pileSvg.pop();
-      grille.retirerPont(pont);
+      //grille.retirerPont(pont);
       grille.pileRecup.push(pont);
    }
 

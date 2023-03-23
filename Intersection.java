@@ -96,6 +96,16 @@ public class Intersection extends Element {
         }
     }
 
+    
+    /**
+     * Retire le pont des lists de ponts des îles
+     */
+    @Override
+    public void nettoyerCase(){
+        this.pont1.nettoyerCase();;
+        this.pont2.nettoyerCase();;                                                                                  
+    }
+
 
     /**
      * @return la chaine de caractère de l'intersection
@@ -108,5 +118,15 @@ public class Intersection extends Element {
         }else{
             return "┼";
         }
+    }
+
+    /**
+     * 
+     * @param ile1 premiere ile du pont
+     * @param ile2 deuxieme ile du pont
+     * @return null si Element quelconque
+     */
+    public Pont donePont(Ile ile1, Ile ile2){
+        return this.getPont(ile1, ile2);
     }
 }

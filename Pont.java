@@ -89,6 +89,16 @@ public class Pont extends Element{
         this.nombrePont = nombrePont;
     }
 
+    
+    /**
+     * Retire le pont des lists de ponts des îles
+     */
+    @Override
+    public void nettoyerCase(){
+        this.ile1.getListePont().remove(this);
+        this.ile2.getListePont().remove(this);                                                                                  
+    }
+
     public String toString(){
         if(this.nombrePont == 0){
             return ".";
@@ -98,6 +108,17 @@ public class Pont extends Element{
         }else{
             return "═";
         }
+    }
+
+    /**
+     * 
+     * @param ile1 premiere ile du pont
+     * @param ile2 deuxieme ile du pont
+     * @return pont si Element est un pont
+     */
+    @Override
+    public Pont donePont(Ile ile1, Ile ile2){
+        return this;
     }
 
 }

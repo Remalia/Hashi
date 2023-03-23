@@ -43,6 +43,16 @@ public class Element {
         return "░";
     }
 
+    /**
+     * 
+     * @param ile1 premiere ile du pont
+     * @param ile2 deuxieme ile du pont
+     * @return null si Element quelconque
+     */
+    public Pont donePont(Ile ile1, Ile ile2){
+        return null;
+    }
+
 
     /**
      * @param x x du parcours dans la grille
@@ -76,6 +86,9 @@ public class Element {
         }
         //Si aucune île n'as été trouvée
         return null;
+    }
+
+    public void nettoyerCase(){
     }
 
 }
