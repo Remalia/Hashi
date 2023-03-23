@@ -405,11 +405,9 @@ public class Grille {
         writer.write("type: fichierNiveau\n" + "difficulte: ");
         writer.write(String.valueOf(this.difficulte));
         writer.write("\ngrille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )");
-        for (Element[] temp: this.getMatriceGrille()) {
-            for(Element e: temp){
-                writer.write("  " + e.getClass().getSimpleName() + "\n");
-                writer.flush();
-            }
+        for (Ile ile : listIle) {
+            writer.write("ile" + ile.getId() + "\n");
+            writer.flush();
         }
         writer.close();
     }
