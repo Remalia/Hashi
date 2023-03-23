@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.awt.Color;
 import java.util.regex.*;
@@ -6,21 +7,40 @@ import java.util.regex.*;
 public class Grille {
 
     Color c = new Color(0, 0, 255);
-
     Stack<Pont> pileSvg;
     Stack<Pont> pileRecup;
     private Element[][] matriceGrille;
     private ArrayList<Ile> listIle;
-    boolean modeHyp;
-    int difficulte;
+    private File fileNiveau;
+    private File fileSave;
+    private String name;
+    private boolean modeHyp;
+    private int difficulte;
 
     /**
      * Constructeur de la grille
      */
-    public Grille(){
+
+    public Grille(String name) throws IOException {
         this.pileSvg = new Stack<Pont>();
         this.pileRecup = new Stack<Pont>();
         this.listIle = new ArrayList<>();
+        this.modeHyp = false;
+        this.name = name;
+        Files.createDirectories(Paths.get("Niveau"));
+        Files.createDirectories(Paths.get("Niveau/"+this.name));
+        try{
+            Files.createFile(Path.of("Niveau/" + this.name + "/Niveau.yaml"));
+        } catch (IOException e) {
+            System.out.println("Fichier de niveau déja créé : " + e.getMessage());
+        }
+        try {
+            Files.createFile(Path.of("Niveau/" + this.name + "/Save.yaml"));
+        } catch (IOException e) {
+            System.out.println("Fichier de sauvegarde déja créé : " + e.getMessage());
+        }
+        this.fileNiveau = new File("Niveau/"+this.name+"/Niveau.yaml");
+        this.fileSave = new File("Niveau/"+this.name+"/Save.yaml");
         matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -28,7 +48,7 @@ public class Grille {
             }
     }
 
-    public Grille(int[][] init){
+    public Grille(){
         // remplissage de la grille temporaire pour les tests */
         this.pileSvg = new Stack<Pont>();
         this.pileRecup = new Stack<Pont>();
@@ -162,7 +182,7 @@ public class Grille {
     public void ajouterPont(Ile ile1, Ile ile2,int nbPonts){
         int i;
         Pont pont = chercherPont(ile1,ile2);
-        
+
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
             pont.setNombrePont(nbPonts);
@@ -181,7 +201,7 @@ public class Grille {
                     else{
                         matriceGrille[ile1.getAbs()][i] = pont;
                     }
-                    
+
             }else{
                 for(i = ile2.getOrd() + 1; i < ile1.getOrd(); i++)
                     if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
@@ -189,12 +209,12 @@ public class Grille {
                     }
                     else{
                         matriceGrille[ile1.getAbs()][i] = pont;
-                    } 
+                    }
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
                 for(i = ile1.getAbs() + 1; i < ile2.getAbs(); i++)
-   
+
                     if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
                         matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
                     }else{
@@ -337,11 +357,10 @@ public class Grille {
 
     /**
      * Récupère la grille et l'initialise terminer
-     * @param file le fichier où l'on trouve la grille
      * @throws FileNotFoundException Fichier non trouvé
      */
-    public void getGrilleFromYAML(File file) throws FileNotFoundException {
-        HashMap<String,String> balises = Parser.getAllBalise(file);
+    public void getGrilleFromYAML() throws FileNotFoundException {
+        HashMap<String,String> balises = Parser.getAllBalise(this.fileNiveau);
         if (balises.get("type").equals("fichierNiveau")){
             difficulte = Integer.parseInt(balises.get("difficulte"));
             balises.forEach((key, val) -> {
@@ -372,9 +391,27 @@ public class Grille {
             });
         }
 
-        
 
 
+
+    }
+
+    /**
+     * Permet de sauvegarder l'état de la grille en fichier YAML
+     * @throws IOException Pas d'accès au fichier
+     */
+    public void saveGrilleToYAML() throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileSave));
+        writer.write("type: fichierNiveau\n" + "difficulte: ");
+        writer.write(String.valueOf(this.difficulte));
+        writer.write("\ngrille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )");
+        for (Element[] temp: this.getMatriceGrille()) {
+            for(Element e: temp){
+                writer.write("  " + e.getClass().getSimpleName() + "\n");
+                writer.flush();
+            }
+        }
+        writer.close();
     }
 
     /**
@@ -392,28 +429,15 @@ public class Grille {
         return result;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Grille grilleTest = new Grille();
-        grilleTest.getGrilleFromYAML(new File("Niveau/NiveauTest.yaml"));
+    public static void main(String[] args) throws IOException {
+        Grille grilleTest = new Grille("NiveauTest");
+        grilleTest.getGrilleFromYAML();
+        grilleTest.saveGrilleToYAML();
         System.out.println(grilleTest);
     }
     public static void main2(String[] args){
 
-        int[][] init = {
-        //    0   1  2   3   4   5   6   7  8   9
-            { 2, -1,-1, -1, -1,  2, -1, -1, -1,  2}, // 0
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 1
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 2
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 3
-            { 2,-1, -1, -1, -1, -1, -1, -1, -1,  2}, // 4
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 5
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 6
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 7
-            {-1,-1, -1, -1, -1, -1, -1, -1, -1, -1}, // 8 
-            { 2,-1, -1, -1, -1,  2, -1, -1, -1,  2}  // 9
-
-        };
-        Grille grilleTest = new Grille(init);
+        Grille grilleTest = new Grille();
         Color c = new Color(0, 0, 255);
         
         try {

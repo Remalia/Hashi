@@ -7,10 +7,6 @@ public class Pont extends Element{
     private Color couleur;
     private int nombrePont;
 
-    
-
-
-
     /**
      * @param i1 première île
      * @param i2 deuxième île
