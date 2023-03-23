@@ -15,8 +15,8 @@ public class Pont extends Element{
         super();
         this.ile1 = i1;
         this.ile2 = i2;
-        this.ile1.ajouterPont();
-        this.ile2.ajouterPont();
+        this.ile1.ajouterPont(this);
+        this.ile2.ajouterPont(this);
         this.nombrePont = 1;
     }
 
@@ -28,8 +28,8 @@ public class Pont extends Element{
     public Pont(Ile i1,Ile i2,int nbPonts){
         this.ile1 = i1;
         this.ile2 = i2;
-        this.ile1.ajouterPont();
-        this.ile2.ajouterPont();
+        this.ile1.ajouterPont(this);
+        this.ile2.ajouterPont(this);
         this.couleur = new Color(0, 0, 255);
         this.nombrePont = nbPonts;
     }
@@ -69,6 +69,7 @@ public class Pont extends Element{
     public int getNombrePont(){
         return this.nombrePont;
     }
+
 
     /**
      * Incrémente le nombre de pont et le remet à 0 si il y a déjà 2 ponts

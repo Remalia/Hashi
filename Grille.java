@@ -63,6 +63,14 @@ public class Grille {
         }
     }
 
+    public File getFileNiveau() {
+        return fileNiveau;
+    }
+
+    public File getFileSave() {
+        return fileSave;
+    }
+
     /**
      * Méthode d'ajout d'une nouvelle ile dans la matrice
      * @param ile L'ile a ajouter
@@ -71,7 +79,7 @@ public class Grille {
         int abs = ile.getAbs();
         int ord = ile.getOrd();
         listIle.add(ile);
-        
+
         Ile temp;
         //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
         for(Direction d : Arrays.asList(Direction.values()) ){
@@ -132,13 +140,13 @@ public class Grille {
     public void  ajouterPont(Ile ile1, Ile ile2,int nbPonts){
         int i;
         Pont pont = chercherPont(ile1,ile2);
-        
+
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
             pont.setNombrePont(nbPonts);
             return;
         }
-        
+
         //Si il n'existe pas de pont on en créé un
         pont = new Pont(ile1,ile2,nbPonts);
         //Si on peut on vérifie si le pont est horizontal ou vertical
@@ -152,7 +160,7 @@ public class Grille {
                     else{
                         matriceGrille[ile1.getAbs()][i] = pont;
                     }
-                    
+
             }else{
                 for(i = ile2.getOrd() + 1; i < ile1.getOrd(); i++)
                     if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
@@ -160,12 +168,12 @@ public class Grille {
                     }
                     else{
                         matriceGrille[ile1.getAbs()][i] = pont;
-                    } 
+                    }
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
                 for(i = ile1.getAbs() + 1; i < ile2.getAbs(); i++)
-   
+
                     if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
                         matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
                     }else{
@@ -310,8 +318,8 @@ public class Grille {
      * Récupère la grille et l'initialise terminer
      * @throws FileNotFoundException Fichier non trouvé
      */
-    public void getGrilleFromYAML() throws FileNotFoundException {
-        HashMap<String,String> balises = Parser.getAllBalise(this.fileNiveau);
+    public void getGrilleFromYAML(File file) throws FileNotFoundException {
+        HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierNiveau")){
             difficulte = Integer.parseInt(balises.get("difficulte"));
             balises.forEach((key, val) -> {
@@ -320,29 +328,50 @@ public class Grille {
                     int abs = Integer.parseInt(val.substring(0,val.indexOf("|")-1));
                     int ord = Integer.parseInt(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
                     int num = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
-                    Ile ile = new Ile(id,num,ord,abs);
+                    Ile ile = new Ile(id,num,abs,ord);
                     ajouterIle(ile);
                 }
             });
             balises.forEach((key, val) -> {
-                if (key.matches("pont[0-9]+")){
-                    Ile ile1 = null;
-                    Ile ile2 = null;
-                    int idIle1 = obtainsIdElement(val.substring(0,val.indexOf("|")-1));
-                    int idIle2 = obtainsIdElement(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
-                    int nbPont = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
-                    for (Ile ile : listIle) {
-                        if (ile.getId() == idIle1)
-                            ile1 = ile;
-                        if (ile.getId() == idIle2)
-                            ile2 = ile;
-                    }
-                    this.ajouterPont(ile1,ile2,nbPont);
-                }
+                setupPontFromRegex("pont[0-9]+",key,val);
+                setupPontFromRegex("pontSvg[0-9]+",key,val);
+                setupPontFromRegex("pontRecup[0-9]+",key,val);
             });
         }
+    }
 
-        
+    /**
+     * Permet depuis un regex en particulier récupère un pont et l'ajoute soit à la pile de recup, sauvegarde ou la liste de pont
+     * @param regex Le regex (3 disponibles : 'pont[0-9]+'  |  'pontSvg[0-9]+'  |  'pontRecup[0-9]+' )
+     * @param key La clé de la balise
+     * @param val la valeur de la balise
+     */
+    private void setupPontFromRegex(String regex,String key,String val){
+        if (key.matches(regex)){
+            Ile ile1 = null;
+            Ile ile2 = null;
+            int idIle1 = obtainsIdElement(val.substring(0,val.indexOf("|")-1));
+            int idIle2 = obtainsIdElement(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
+            int nbPont = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
+            for (Ile ile : listIle) {
+                if (ile.getId() == idIle1)
+                    ile1 = ile;
+                if (ile.getId() == idIle2)
+                    ile2 = ile;
+            }
+            if(regex.contains("pont["))
+                this.ajouterPont(ile1,ile2,nbPont);
+            if(regex.contains("pontSvg")) {
+                Pont p = chercherPont(ile1,ile2);
+                pileSvg.add(p);
+            }
+            if(regex.contains("pontRecup")){
+                Pont p = chercherPont(ile1,ile2);
+                pileRecup.add(p);
+            }
+        }
+
+
 
 
     }
@@ -355,10 +384,30 @@ public class Grille {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileSave));
         writer.write("type: fichierNiveau\n" + "difficulte: ");
         writer.write(String.valueOf(this.difficulte));
-        writer.write("\ngrille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )");
+        writer.write("\ngrille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )\n");
+        int idPont = 1;
+        List<Pont> listTemp = new ArrayList<>();
         for (Ile ile : listIle) {
-            writer.write("ile" + ile.getId() + "\n");
-            writer.flush();
+            writer.write("  ile" + ile.getId() + ": "+ ile.getAbs() + " | " + ile.getOrd() + " | " + ile.getNum()+"\n");
+        }
+        for (Ile ile : listIle){
+            for (Pont p: ile.getListePont()) {
+                if(!listTemp.contains(p)){
+                    writer.write("  pont" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
+                    idPont++;
+                    listTemp.add(p);
+                }
+            }
+        }
+        writer.write("pileSvg: #( pont --> ileUn | ileDeux | nbPont )\n");
+        for (Pont p: this.pileSvg) {
+            writer.write("  pontSvg" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
+            idPont++;
+        }
+        writer.write("pileRecup: #( pont --> ileUn | ileDeux | nbPont )\n");
+        for (Pont p: this.pileRecup) {
+            writer.write("  pontRecup" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
+            idPont++;
         }
         writer.close();
     }
@@ -378,14 +427,13 @@ public class Grille {
         return result;
     }
 
-    public static void main2(String[] args) throws FileNotFoundException {
-        Grille grilleTest = new Grille();
-        grilleTest.getGrilleFromYAML(new File("Niveau\\NiveauTest.yaml"));
+    public static void main(String[] args) throws IOException {
+        Grille grilleTest = new Grille("NiveauTest");
+        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
+        grilleTest.saveGrilleToYAML();
         System.out.println(grilleTest);
     }
-
-    public static void main(String[] args){
-
+    public static void main2(String[] args){
         Grille grilleTest = new Grille();
         Color c = new Color(0, 0, 255);
         
