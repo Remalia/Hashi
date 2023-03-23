@@ -889,7 +889,7 @@ public class Technique{
             {2, -1, -1, -1, -1, -1, -1, -1, -1, 2}
 
         };
-        Grille grilleTest = new Grille(init2);
+        Grille grilleTest = new Grille();
         /*Color c = new Color(0, 0, 255);
         try {
             grilleTest.ajouterPont(new Ile(1,2,0,0,c), new Ile(2,2,0,10,c));

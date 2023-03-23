@@ -17,7 +17,7 @@ public class Surbrillance {
         reseauActif = false;
     }
 
-    
+    //test git eclipse
 
     /** 
      * Active la surbrillance du réseau auquel appartient l'île en paramètre
