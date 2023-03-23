@@ -378,18 +378,12 @@ public class Grille {
         return result;
     }
 
-<<<<<<< HEAD
     public static void main2(String[] args) throws FileNotFoundException {
         Grille grilleTest = new Grille();
-        grilleTest.getGrilleFromYAML(new File("Niveau/NiveauTest.yaml"));
-=======
-    public static void main(String[] args) throws IOException {
-        Grille grilleTest = new Grille("NiveauTest");
-        grilleTest.getGrilleFromYAML();
-        grilleTest.saveGrilleToYAML();
->>>>>>> 679210d54b28942516d6f7e5dede38d1bec3f65d
+        grilleTest.getGrilleFromYAML(new File("Niveau\\NiveauTest.yaml"));
         System.out.println(grilleTest);
     }
+
     public static void main(String[] args){
 
         Grille grilleTest = new Grille();
