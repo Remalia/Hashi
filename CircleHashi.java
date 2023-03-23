@@ -17,13 +17,16 @@ public class CircleHashi{
 	}
 	
 	public boolean ligneEstDansListe(Line ligne) {
-	    for (Line l : listeLignes) {
+	    Iterator<Line> iterator = listeLignes.iterator();
+	    while (iterator.hasNext()) {
+	        Line l = iterator.next();
 	        if (ligne.getStartX() == l.getStartX() && ligne.getStartY() == l.getStartY() && ligne.getEndX() == l.getEndX() && ligne.getEndY() == l.getEndY()){
 	            return true;
 	        }
 	    }
 	    return false;
 	}
+
 	
 	public Line retournerLigne(Line ligne) {
 		for (Line l : listeLignes) {
@@ -32,6 +35,11 @@ public class CircleHashi{
 	        }
 	    }
 	    return null;
+	}
+	
+	public Line retournerLigneInverse(Line ligne) {
+		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
+		return retournerLigne(x);
 	}
 
 	public void ajouterLigne(Line ligne) {
@@ -51,6 +59,11 @@ public class CircleHashi{
 	            iter.remove();
 	        }
 	    }
+	}
+	
+	public void supprimerLigneInverse(Line ligne) {
+		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
+		supprimerLigne(x);
 	}
 
 }
