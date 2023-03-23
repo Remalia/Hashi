@@ -959,12 +959,17 @@ public class Technique{
                 */
                 if(elem instanceof Ile)
                 {
+
+                    System.out.println("Durant la recherche d'une technique nous avons affaire à une îles aux coordonnées :"+i+","+j);
                     /**
                         On vérifie que l'île peut encore accepter au moins un pont sinon on considère l'île comme complète
                         On ne réalise pas de recherche à partir de celle-ci
                     */
                     if(!((Ile)elem).estComplete())
                     {
+
+                        System.out.println("L'île aux coordonnées ("+i+","+j+") n'est pas complète.");
+
                         voisins = Technique.trouverVoisins(i, j, uneGrille);
 
                         switch(voisins.size())
@@ -972,7 +977,7 @@ public class Technique{
                             case 1:
                                 // on retourne la technique seulement si elle existe, on ne retourne pas une technique null
 
-                                
+                                System.out.println("L'île aux coordonnées ("+i+","+j+") a un voisin");
                                 t = Technique.unVoisinBis((Ile) elem, voisins, uneGrille);
                                 
                                 if(t != null) return(t);
@@ -1003,6 +1008,7 @@ public class Technique{
 
                                 
                             case 2:
+                                System.out.println("L'île aux coordonnées ("+i+","+j+") a deux voisins");
                                 t = Technique.deuxVoisinsBis((Ile) elem, voisins, uneGrille);
 
                                 if(t != null) return t;
@@ -1011,6 +1017,7 @@ public class Technique{
                                 //return(Technique.deuxVoisins(voisins));
                                 
                             case 3:
+                                System.out.println("L'île aux coordonnées ("+i+","+j+") a trois voisins");
                                 t = Technique.troisVoisinsBis((Ile) elem, voisins, uneGrille);
                                 
                                 if(t != null) return t;
@@ -1019,6 +1026,7 @@ public class Technique{
                                 //return(Technique.troisVoisins(voisins));
                                 
                             case 4:
+                                System.out.println("L'île aux coordonnées ("+i+","+j+") a quatre voisins");
                                 t = Technique.quatreVoisinsBis((Ile) elem, voisins, uneGrille);
 
                                 if(t != null) return t;
@@ -1026,10 +1034,19 @@ public class Technique{
                                 break;
                                 //return(Technique.quatreVoisins(voisins));
                             default:
+                                break;
                         }
                     }
+                    else
+                    {
+                        System.out.println("L'île aux coordonnées ("+i+","+j+") est complète");
+                        System.out.println("L'île accepte "+((Ile)elem).getNum()+" ponts");
+                        System.out.println("L'île a déjà "+((Ile)elem).getNbPonts()+" ponts");
+                    }
+                    System.out.println("\n\n");
                 }
             }
+
         }
         /**
             Si aucune technique n'a été détectée sur l'ensemble de la grille
