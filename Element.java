@@ -5,7 +5,6 @@ import java.awt.Color;
  */
 public class Element {
     private Color couleur;
-
     /**
      * Constructeur de la classe Element
      * @param color la couleur de l'élément
@@ -43,4 +42,47 @@ public class Element {
     public String toString(){
         return "░";
     }
+
+
+    /**
+     * @param x x du parcours dans la grille
+     * @param y y du parcours dans la grille
+     * @param d direction dans laquelle on cherche
+     * @param Grille Grille à parcourir
+     * @return Une ile si trouvée, null sinon.
+     */
+    public Ile parcoursMatrice(int x, int y, Direction d, Element Grille[][]){
+        switch(d){
+            case HAUT :
+                if(y > 0 && Grille[x][y - 1] != null){
+                    return Grille[x][y - 1].parcoursMatrice(x, y - 1, d, Grille);
+                }
+                break;
+            case BAS :
+                if(y < 9 && Grille[x][y+1] != null){
+                    return Grille[x][y + 1].parcoursMatrice(x, y + 1, d, Grille);
+                }
+                break;
+            case GAUCHE :
+                if(x > 0 && Grille[x-1][y] != null){
+                    return Grille[x-1][y].parcoursMatrice( x - 1, y, d, Grille);
+                }
+                break;
+            case DROITE :
+                if(x < 9 && Grille[x+1][y] != null){
+                    return Grille[x+1][y].parcoursMatrice( x + 1, y, d, Grille);
+                }
+                break;
+        }
+        //Si aucune île n'as été trouvée
+        return null;
+    }
+
 }
+
+/*
+    null -> ile
+    ile -> elle meme
+    pont -> ile (recréer les ponts)
+    inter -> ile (recréer les ponts)
+*/

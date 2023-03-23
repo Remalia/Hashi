@@ -150,6 +150,11 @@ public class Ile extends Element{
         return Integer.toString(this.getNum());
     }
 
+    @Override
+    public Ile parcoursMatrice(int x, int y, Direction d, Element Grille[][]){
+        return this;
+    }
+
     public static void main(String[] args){
         try {
             Color c = new Color(100, 0, 0);
