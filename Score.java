@@ -1,3 +1,6 @@
+/**
+ * Classe Score représentant un score de jeu
+ */
 public class Score {
     private String name;
     private int pts;

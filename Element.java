@@ -39,17 +39,21 @@ public class Element {
         this.couleur = c;
     }
 
+    /**
+     * Méthode toString de la classe Element
+     * @return la représentation textuelle de l'élément
+     */
     public String toString(){
         return "░";
     }
 
     /**
-     * 
+     * Retourne null si Element quelconque
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
      * @return null si Element quelconque
      */
-    public Pont donePont(Ile ile1, Ile ile2){
+    public Pont donnePont(Ile ile1, Ile ile2){
         return null;
     }
 
@@ -88,15 +92,10 @@ public class Element {
         return null;
     }
 
-    public void nettoyerCase(){
-
+    /**
+     * Méthode abstract qui permet de nettoyer une case
+     */
+    public void nettoyerCase() {
     }
 
 }
-
-/*
-    null -> ile
-    ile -> elle meme
-    pont -> ile (recréer les ponts)
-    inter -> ile (recréer les ponts)
-*/

@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.util.*;
 
+/**
+ * Classe représentant une île du jeu
+ * @see Element
+ */
 public class Ile extends Element{
     private int id; /** identifiant de l'île */
     private int num; /** numéro associé à l'île */
@@ -10,6 +14,14 @@ public class Ile extends Element{
     private boolean estSelect; /** statut de sélection de l'île */
     private List<Pont> listePont;
     
+    /**
+     * Constructeur de la classe Ile
+     * @param id l'identifiant de l'île
+     * @param num le numéro de l'île
+     * @param abs l'abscisse de l'île
+     * @param ord l'ordonnée de l'île
+     * @param c la couleur de l'île
+     */
     public Ile(int id, int num, int abs, int ord, Color c){
         super(c);
         this.id = id;
@@ -21,6 +33,13 @@ public class Ile extends Element{
         this.estSelect = false; // île non selectionée à la création
     }
 
+    /**
+     * Constructeur de la classe Ile sans la couleur
+     * @param id l'identifiant de l'île
+     * @param num le numéro de l'île
+     * @param abs l'abscisse de l'île
+     * @param ord l'ordonnée de l'île
+     */
     public Ile(int id, int num, int abs,int ord){
         super();
         this.id = id;
@@ -32,6 +51,10 @@ public class Ile extends Element{
         this.estSelect = false; // île non selectionée à la création
     }
 
+    /**
+     * Retourne la liste des ponts rattachés à l'île
+     * @return la liste des ponts rattachés à l'île
+     */
     public List<Pont> getListePont(){
         return this.listePont;
     }
@@ -130,10 +153,18 @@ public class Ile extends Element{
         this.nbPonts = nb;
     }
 
+    /**
+     * Affecte un numéro à l'île
+     * @param num le numéro de l'île
+     */
     public void setNum(int num){
         this.num = num;
     }
 
+    /**
+     * Affecte un identifiant à l'île
+     * @param id l'identifiant de l'île
+     */
     public void setId(int id){
         this.id = id;
     }
@@ -159,6 +190,10 @@ public class Ile extends Element{
         return s;
     }
 
+    /**
+     * Métode toString pour l'affichage graphique
+     */
+    @Override
     public String toString(){
         return Integer.toString(this.getNum());
     }

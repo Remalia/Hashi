@@ -1,3 +1,9 @@
+
+/**
+ * Classe d'intersection entre deux ponts
+ * @see Element
+ * @see Pont
+ */
 public class Intersection extends Element {
     private Pont pont1;
     private Pont pont2;

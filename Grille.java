@@ -4,6 +4,9 @@ import java.util.*;
 import java.awt.Color;
 import java.util.regex.*;
 
+/**
+ * Classe représentant la grille du jeu
+ */
 public class Grille {
 
     Color c = new Color(0, 0, 255);
@@ -18,9 +21,9 @@ public class Grille {
     private int difficulte;
 
     /**
-     * Constructeur de la grille
+     * Constructeur de la grille avec un nom de niveau
+     * @param name le nom du niveau
      */
-
     public Grille(String name) throws IOException {
         this.pileSvg = new Stack<Pont>();
         this.pileRecup = new Stack<Pont>();
@@ -48,6 +51,9 @@ public class Grille {
             }
     }
 
+    /**
+     * Constructeur de la grille
+     */
     public Grille(){
         // remplissage de la grille temporaire pour les tests */
         this.pileSvg = new Stack<Pont>();
@@ -63,14 +69,26 @@ public class Grille {
         }
     }
 
+    /**
+     * Retourne la file du niveau
+     * @return la file du niveau
+     */
     public File getFileNiveau() {
         return fileNiveau;
     }
 
+    /**
+     * Retourne la file de sauvegarde
+     * @return la file de sauvegarde
+     */
     public File getFileSave() {
         return fileSave;
     }
 
+    /**
+     * Retourne la liste des îles
+     * @return la liste des îles
+     */
     public ArrayList<Ile> getListIle() {
         return listIle;
     }
@@ -96,12 +114,22 @@ public class Grille {
         matriceGrille[abs][ord] = ile;
     }
 
+    /**
+     * Méthode de retrait d'une ile dans la matrice
+     * @param ile L'ile a retirer
+     */
     public void removeIle(Ile ile){
         listIle.remove(ile);
         matriceGrille[ile.getAbs()][ile.getOrd()].nettoyerCase();
         matriceGrille[ile.getAbs()][ile.getOrd()] = new Element();
     }
 
+    /**
+     * Retourne une ile à partir de sa position
+     * @param x l'abscisse de l'île
+     * @param y l'ordonnée de l'île
+     * @return l'île à la position x,y
+     */
     public Ile getIleFromPos(int x, int y){
         Ile result = null;
         for (Ile ile: listIle) {
@@ -121,22 +149,21 @@ public class Grille {
         //Si on peut on vérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
-                return matriceGrille[ile1.getAbs()][ile1.getOrd() + 1].donePont(ile1, ile2);
+                return matriceGrille[ile1.getAbs()][ile1.getOrd() + 1].donnePont(ile1, ile2);
             }else{
-                return matriceGrille[ile1.getAbs()][ile1.getOrd() - 1].donePont(ile1, ile2);
+                return matriceGrille[ile1.getAbs()][ile1.getOrd() - 1].donnePont(ile1, ile2);
             }
         }else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
-                return matriceGrille[ile1.getAbs() + 1][ile1.getOrd()].donePont(ile1, ile2);
+                return matriceGrille[ile1.getAbs() + 1][ile1.getOrd()].donnePont(ile1, ile2);
             }else{
-                return matriceGrille[ile1.getAbs() - 1][ile1.getOrd()].donePont(ile1, ile2);
+                return matriceGrille[ile1.getAbs() - 1][ile1.getOrd()].donnePont(ile1, ile2);
             }
         }
-        //System.out.println("N'as pas trouvé de pont entre les deux îles");
         return null;
     }
 
-    // potentiels voisins dans creation ile
+
 
     /** 
      * Ajoute un pont à la grille
