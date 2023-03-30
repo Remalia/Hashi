@@ -41,7 +41,7 @@ public class Grille {
         }
         this.fileNiveau = new File("Niveau/"+this.name+"/Niveau.yaml");
         this.fileSave = new File("Niveau/"+this.name+"/Save.yaml");
-        matriceGrille = new Element[10][10];
+        this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
                 matriceGrille[i][j] = new Element();
@@ -53,7 +53,7 @@ public class Grille {
         this.pileSvg = new Stack<Pont>();
         this.pileRecup = new Stack<Pont>();
         this.listIle = new ArrayList<>();
-        matriceGrille = new Element[10][10];
+        this.matriceGrille = new Element[10][10];
         int i, j;
         // initialisation de la grille en dur TEMPORAIRE*/
         for(i = 0; i < 10; i++){
@@ -69,6 +69,10 @@ public class Grille {
 
     public File getFileSave() {
         return fileSave;
+    }
+
+    public ArrayList<Ile> getListIle() {
+        return listIle;
     }
 
     /**
@@ -90,6 +94,21 @@ public class Grille {
             }
         }
         matriceGrille[abs][ord] = ile;
+    }
+
+    public void removeIle(Ile ile){
+        listIle.remove(ile);
+        matriceGrille[ile.getAbs()][ile.getOrd()].nettoyerCase();
+        matriceGrille[ile.getAbs()][ile.getOrd()] = new Element();
+    }
+
+    public Ile getIleFromPos(int x, int y){
+        Ile result = null;
+        for (Ile ile: listIle) {
+            if(ile.getAbs() == x && ile.getOrd() == y)
+                result = ile;
+        }
+        return result;
     }
 
     /**
@@ -375,7 +394,7 @@ public class Grille {
         }
         for (Ile ile : listIle){
             for (Pont p: ile.getListePont()) {
-                if(!listTemp.contains(p)){
+                if(!listTemp.contains(p) && p.getNombrePont() != 0){
                     writer.write("  pont" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
                     idPont++;
                     listTemp.add(p);

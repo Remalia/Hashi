@@ -2,8 +2,8 @@ import java.awt.Color;
 import java.util.*;
 
 public class Ile extends Element{
-    private final int id; /** identifiant de l'île */
-    private final int num; /** numéro associé à l'île */
+    private int id; /** identifiant de l'île */
+    private int num; /** numéro associé à l'île */
     private int nbPonts; /** nombre de ponts rattaché à l'île */
     private final int abs; /** abscisse de l'île */
     private final int ord; /** ordonnée de l'île */
@@ -130,7 +130,13 @@ public class Ile extends Element{
         this.nbPonts = nb;
     }
 
-    
+    public void setNum(int num){
+        this.num = num;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
 
     /**
     * Met à jour le statut sélectionné ou non sélectionné de l'île

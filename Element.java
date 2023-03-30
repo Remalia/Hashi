@@ -89,6 +89,7 @@ public class Element {
     }
 
     public void nettoyerCase(){
+
     }
 
 }
