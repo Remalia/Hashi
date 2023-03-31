@@ -21,8 +21,8 @@ import java.io.IOException;
 
 
 public class GrilleV3 extends Application {
-    public static Color etatNormal = Color.YELLOW;
-    public static Color etatSelect = Color.GREEN;
+    public static final Color etatNormal = Color.YELLOW;
+    public static final Color etatSelect = Color.GREEN;
 
     // Dimensions de notre grille et de ces composants
     private final int NB_LIGNES = 10;
