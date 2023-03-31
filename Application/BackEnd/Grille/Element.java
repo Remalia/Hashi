@@ -1,3 +1,5 @@
+package Application.BackEnd.Grille;
+
 import java.awt.Color;
 
 /**
@@ -6,7 +8,7 @@ import java.awt.Color;
 public class Element {
     private Color couleur;
     /**
-     * Constructeur de la classe Element
+     * Constructeur de la classe Application.BackEnd.Grille.Element
      * @param color la couleur de l'élément
      */
     public Element (Color color) {
@@ -14,8 +16,7 @@ public class Element {
     }
 
     /**
-     * Constructeur de la classe Element
-     * @param r la composante rouge de la couleur
+     * Constructeur de la classe Application.BackEnd.Grille.Element
      */
     public Element(){
         this.couleur = new Color(0, 0, 255);
@@ -40,7 +41,7 @@ public class Element {
     }
 
     /**
-     * Méthode toString de la classe Element
+     * Méthode toString de la classe Application.BackEnd.Grille.Element
      * @return la représentation textuelle de l'élément
      */
     public String toString(){
@@ -48,10 +49,10 @@ public class Element {
     }
 
     /**
-     * Retourne null si Element quelconque
+     * Retourne null si Application.BackEnd.Grille.Element quelconque
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
-     * @return null si Element quelconque
+     * @return null si Application.BackEnd.Grille.Element quelconque
      */
     public Pont donnePont(Ile ile1, Ile ile2){
         return null;
@@ -62,27 +63,27 @@ public class Element {
      * @param x x du parcours dans la grille
      * @param y y du parcours dans la grille
      * @param d direction dans laquelle on cherche
-     * @param Grille Grille à parcourir
+     * @param Grille Application.BackEnd.Grille.Grille à parcourir
      * @return Une ile si trouvée, null sinon.
      */
     public Ile parcoursMatrice(int x, int y, Direction d, Element Grille[][]){
         switch(d){
-            case HAUT :
+            case HAUT:
                 if(y > 0 && Grille[x][y - 1] != null){
                     return Grille[x][y - 1].parcoursMatrice(x, y - 1, d, Grille);
                 }
                 break;
-            case BAS :
+            case BAS:
                 if(y < 9 && Grille[x][y+1] != null){
                     return Grille[x][y + 1].parcoursMatrice(x, y + 1, d, Grille);
                 }
                 break;
-            case GAUCHE :
+            case GAUCHE:
                 if(x > 0 && Grille[x-1][y] != null){
                     return Grille[x-1][y].parcoursMatrice( x - 1, y, d, Grille);
                 }
                 break;
-            case DROITE :
+            case DROITE:
                 if(x < 9 && Grille[x+1][y] != null){
                     return Grille[x+1][y].parcoursMatrice( x + 1, y, d, Grille);
                 }

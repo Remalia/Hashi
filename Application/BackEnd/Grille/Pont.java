@@ -1,3 +1,5 @@
+package Application.BackEnd.Grille;
+
 import java.awt.Color;
 
 
@@ -6,7 +8,7 @@ import java.awt.Color;
  * @see Element
  * @see Ile
  */
-public class Pont extends Element{
+public class Pont extends Element {
     private Ile ile1;
     private Ile ile2;
     private Color couleur;
@@ -14,12 +16,12 @@ public class Pont extends Element{
 
 
     /**
-     * Constructeur de la classe Pont
+     * Constructeur de la classe Application.BackEnd.Grille.Pont
      * @param i1 première île
      * @param i2 deuxième île
      * @param nbPonts nombre de ponts
      */
-    public Pont(Ile i1,Ile i2,int nbPonts){
+    public Pont(Ile i1, Ile i2, int nbPonts){
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
@@ -100,7 +102,7 @@ public class Pont extends Element{
     }
 
     /**
-     * Méthode toString de la classe Pont
+     * Méthode toString de la classe Application.BackEnd.Grille.Pont
      * @return la représentation textuelle du pont en foncitrion de sa valeur
      */
     public String toString(){
@@ -118,7 +120,7 @@ public class Pont extends Element{
      * 
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
-     * @return pont si Element est un pont
+     * @return pont si Application.BackEnd.Grille.Element est un pont
      */
     @Override
     public Pont donnePont(Ile ile1, Ile ile2){

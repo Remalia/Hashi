@@ -1,3 +1,8 @@
+package Application.BackEnd;
+
+import Application.BackEnd.Grille.Grille;
+import Application.BackEnd.Grille.Ile;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -124,14 +129,14 @@ public class LevelEditor extends JPanel{
 
 
     private JButton buttonIleOrPont(){
-        JButton button = new JButton("Ile");
+        JButton button = new JButton("Application.BackEnd.Grille.Ile");
         button.addActionListener(e -> {
             if(creerIle){
                 creerIle = false;
-                button.setText("Pont");
+                button.setText("Application.BackEnd.Grille.Pont");
             }else{
                 creerIle = true;
-                button.setText("Ile");
+                button.setText("Application.BackEnd.Grille.Ile");
             }
         });
         return button;
@@ -210,7 +215,7 @@ public class LevelEditor extends JPanel{
         this.grille.saveGrilleToYAML();
     }
     public static void main(String args[]) throws IOException {
-        JFrame jframe =  new JFrame("LevelEditor");
+        JFrame jframe =  new JFrame("Application.BackEnd.LevelEditor");
         LevelEditor level = new LevelEditor();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.getContentPane().add(level);

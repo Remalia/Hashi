@@ -1,3 +1,8 @@
+package Application.BackEnd.Grille;
+
+import Application.BackEnd.Grille.Element;
+import Application.BackEnd.Grille.Ile;
+import Application.BackEnd.Grille.Pont;
 
 /**
  * Classe d'intersection entre deux ponts
@@ -9,7 +14,7 @@ public class Intersection extends Element {
     private Pont pont2;
     
     /**
-     * Constructeur de la classe Intersection
+     * Constructeur de la classe Application.BackEnd.Grille.Intersection
      * @param p1 premier pont
      * @param p2 deuxième pont
      */
@@ -31,14 +36,14 @@ public class Intersection extends Element {
         return pont2;
     }
     /**
-     * @param p Pont à set en premier pont de l'intersection
+     * @param p Application.BackEnd.Grille.Pont à set en premier pont de l'intersection
      */
     public void setPont1(Pont p){
         pont1 = p;
     }
 
     /**
-     * @param p Pont à set en deuxième pont de l'intersection
+     * @param p Application.BackEnd.Grille.Pont à set en deuxième pont de l'intersection
      */
     public void setPont2(Pont p){
         pont2 = p;
@@ -130,7 +135,7 @@ public class Intersection extends Element {
      * 
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
-     * @return null si Element quelconque
+     * @return null si Application.BackEnd.Grille.Element quelconque
      */
     public Pont donePont(Ile ile1, Ile ile2){
         return this.getPont(ile1, ile2);
