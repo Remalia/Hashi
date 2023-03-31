@@ -16,22 +16,22 @@ public class Fonctionnalite{
     * 
     * Fonction
     */
-   public void undo(Grille grille){
+   /*public void undo(Grille grille){
       Pont pont = grille.pileSvg.pop();
       //grille.retirerPont(pont);
       grille.pileRecup.push(pont);
-   }
+   }*/
 
    /**
     * 
     * @param grille
     * 
     */
-   public void redo(Grille grille){
+   /*public void redo(Grille grille){
       Pont pont = grille.pileSvg.push(grille.pileRecup.pop());
       grille.ajouterPont(pont.getIle1(), pont.getIle2(),pont.getNombrePont());
       grille.pileSvg.push(pont);
-   }
+   }*/
 
    /**
     * @return
@@ -68,11 +68,7 @@ public class Fonctionnalite{
       } catch (Exception e) {
          e.printStackTrace();
       }
-      System.out.println(grille.toString());
-      fonc.undo(grille);
-      System.out.println(grille.toString());
-      fonc.redo(grille);
-      System.out.println(grille.toString());
+      System.out.println(grille);
    }
 
 }

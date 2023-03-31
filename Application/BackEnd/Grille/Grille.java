@@ -1,5 +1,6 @@
 package Application.BackEnd.Grille;
 
+import Application.BackEnd.Commandes.Action;
 import Application.BackEnd.Sauvegarde.Parser;
 
 import java.io.*;
@@ -14,8 +15,8 @@ import java.util.regex.*;
 public class Grille {
 
     Color c = new Color(0, 0, 255);
-    public Stack<Pont> pileSvg;
-    public Stack<Pont> pileRecup;
+    public Stack<Action> pileSvg;
+    public Stack<Action> pileRecup;
     private Element[][] matriceGrille;
     private ArrayList<Ile> listIle;
     private File fileNiveau;
@@ -29,8 +30,8 @@ public class Grille {
      * @param name le nom du niveau
      */
     public Grille(String name) throws IOException {
-        this.pileSvg = new Stack<Pont>();
-        this.pileRecup = new Stack<Pont>();
+        this.pileSvg = new Stack<>();
+        this.pileRecup = new Stack<>();
         this.listIle = new ArrayList<>();
         this.modeHyp = false;
         this.name = name;
@@ -60,8 +61,8 @@ public class Grille {
      */
     public Grille(){
         // remplissage de la grille temporaire pour les tests */
-        this.pileSvg = new Stack<Pont>();
-        this.pileRecup = new Stack<Pont>();
+        this.pileSvg = new Stack<>();
+        this.pileRecup = new Stack<>();
         this.listIle = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
         int i, j;
@@ -238,7 +239,8 @@ public class Grille {
      */
     public void incrementerPont(Pont pont){
         pont.ajoutNombrePont();
-        pileSvg.add(pont);
+        //pileSvg.add(pont);
+        //TODO Ajouter Action D'ajout de pont
     }
 
 
@@ -396,11 +398,13 @@ public class Grille {
                 this.ajouterPont(ile1,ile2,nbPont);
             if(regex.contains("pontSvg")) {
                 Pont p = chercherPont(ile1,ile2);
-                pileSvg.add(p);
+                //pileSvg.add(p);
+                //TODO Action d'ajout de pont
             }
             if(regex.contains("pontRecup")){
                 Pont p = chercherPont(ile1,ile2);
-                pileRecup.add(p);
+                //pileRecup.add(p);
+                //TODO Action d'ajout de pont
             }
         }
 
@@ -433,7 +437,8 @@ public class Grille {
             }
         }
         writer.write("pileSvg: #( pont --> ileUn | ileDeux | nbPont )\n");
-        for (Pont p: this.pileSvg) {
+        /*for (Pont p: this.pileSvg) {
+            //TODO Adapter la pile de recup^et de sauvegarde avec des actions
             writer.write("  pontSvg" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
             idPont++;
         }
@@ -441,7 +446,7 @@ public class Grille {
         for (Pont p: this.pileRecup) {
             writer.write("  pontRecup" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
             idPont++;
-        }
+        }*/
         writer.close();
     }
 
