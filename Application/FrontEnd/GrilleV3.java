@@ -1,19 +1,15 @@
 package Application.FrontEnd;
 
-import Application.BackEnd.Grille.Element;
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
-import Application.FrontEnd.CircleHashi;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
-import Application.BackEnd.Grille.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import javafx.scene.shape.*;
-
 
 import java.io.IOException;
 
@@ -87,6 +83,7 @@ public class GrilleV3 extends Application {
             cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()] = new CircleHashi(cercle,ile);
             cercle.setOnMouseClicked(this::changerCouleur);
             panneau.getChildren().add(cercle);
+            panneau.getChildren().add(cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()].text);
         }
         
 
@@ -126,6 +123,7 @@ public class GrilleV3 extends Application {
         
         if (premierCercleClique && cercle != premierCercle) { // si deux iles ont été cliquées
             // #TODO incrémenter pont entre les deux iles selectionnées
+
             deuxiemeCercle = cercle;
             dessinerLigne(premierCercle, deuxiemeCercle, panneau);
             premierCercleClique = false;
@@ -161,10 +159,10 @@ public class GrilleV3 extends Application {
         Line ligne3 = new Line(cercle1.getCenterX()-5, cercle1.getCenterY()-5, cercle2.getCenterX()-5, cercle2.getCenterY()-5);
         System.out.println(ligne1);
         
-        if(cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) != true && cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3) != true) {
+        if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
 
-            if((cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne1) != true)) {
-                if((cerclesHashi[indiceSecondCercle].ligneEstDansListe(ligne1) == true)) {
+            if((!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne1))) {
+                if((cerclesHashi[indiceSecondCercle].ligneEstDansListe(ligne1))) {
                     System.out.println("Deja mis");
                 } else {
                     cerclesHashi[indicePremierCercle].ajouterLigne(ligne1);
