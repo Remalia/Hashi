@@ -173,6 +173,7 @@ public class GrilleV4 extends Application {
     }
 
     // Dessiner la ligne entre les cercles
+    //
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
         Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);
