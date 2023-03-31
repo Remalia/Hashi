@@ -25,7 +25,7 @@
     <td><a href="https://github.com/Remalia/Hashi/commits?author=Alexis-42"><img src="https://avatars.githubusercontent.com/u/97942917?v=4" width="175px;" alt=""/><br /><sub><b>Alexis Guimbert</b></sub></a><br /></td>
   </tr>
   <tr>
-      <td><a href="https://github.com/Remalia/Hashi/commits"><img src="https://www.pngall.com/wp-content/uploads/2/Question-Mark-PNG.png" width="175px;" alt=""/><br /><sub><b>Mohamed Al Aftan</b></sub></a><br /></td>
+      <td><a href="https://github.com/Remalia/Hashi/commits"><img src="https://avatars.githubusercontent.com/u/97880885?s=400&u=88658b475717541eeeec54a98354846b105bc1e9&v=4" width="175px;" alt=""/><br /><sub><b>Mohamed Al Aftan</b></sub></a><br /></td>
     <td><a href="https://github.com/Remalia/Hashi/commits"><img src="https://www.pngall.com/wp-content/uploads/2/Question-Mark-PNG.png" width="175px;" alt=""/><br /><sub><b>Thibaut Duchesne</b></sub></a><br /></td>
   </tr>
 </table>
