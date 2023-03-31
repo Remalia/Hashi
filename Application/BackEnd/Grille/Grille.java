@@ -181,7 +181,7 @@ public class Grille {
 
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
-            System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
+            //System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
             pont.setNombrePont(nbPonts);
             return;
         }
@@ -193,7 +193,7 @@ public class Grille {
             if(ile1.getOrd() < ile2.getOrd()){
                 for(i = ile1.getOrd() + 1; i < ile2.getOrd() ; i++)
                     //Si il y'a déjà un pont on crée une intersection
-                    if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
+                    if(matriceGrille[ile1.getAbs()][i].donnePont(ile1, ile2) != null){
                         matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
                     }
                     else{
@@ -458,6 +458,40 @@ public class Grille {
             result = Integer.parseInt(m.group(0));
         }
         return result;
+    }
+
+    /**
+     * @param x x du parcours dans la grille
+     * @param y y du parcours dans la grille
+     * @param d direction dans laquelle on cherche
+     * @param Grille Application.BackEnd.Grille.Grille à parcourir
+     * @return Une ile si trouvée, null sinon.
+     */
+    public Ile parcoursMatrice(int x, int y, Direction d){
+        switch(d){
+            case HAUT:
+                if(y > 0 && this.matriceGrille[x][y - 1] != null){
+                    return this.parcoursMatrice(x, y - 1, d);
+                }
+                break;
+            case BAS:
+                if(y < 9 && this.matriceGrille[x][y+1] != null){
+                    return this.parcoursMatrice(x, y + 1, d);
+                }
+                break;
+            case GAUCHE:
+                if(x > 0 && this.matriceGrille[x-1][y] != null){
+                    return this.parcoursMatrice( x - 1, y, d);
+                }
+                break;
+            case DROITE:
+                if(x < 9 && this.matriceGrille[x+1][y] != null){
+                    return this.parcoursMatrice( x + 1, y, d);
+                }
+                break;
+        }
+        //Si aucune île n'as été trouvée
+        return null;
     }
 
     public static void main(String[] args) throws IOException {

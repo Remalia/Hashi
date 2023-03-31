@@ -6,14 +6,17 @@ import java.util.Iterator;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
-public class CircleHashi{
-	
-	Circle cercle;
-	ArrayList<Line> listeLignes;
+import Application.BackEnd.Grille.Ile;
 
-	CircleHashi(Circle cercle){
+public class CircleHashi{
+	public Ile ile;
+	public Circle cercle;
+	public ArrayList<Line> listeLignes;
+
+	CircleHashi(Circle cercle, Ile ile){
 		this.cercle = cercle;
 		this.listeLignes = new ArrayList<Line>();
+		this.ile = ile;
 	}
 	
 	public boolean ligneEstDansListe(Line ligne) {
