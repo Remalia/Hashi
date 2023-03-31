@@ -137,7 +137,7 @@ public class Intersection extends Element {
      * @param ile2 deuxieme ile du pont
      * @return null si Application.BackEnd.Grille.Element quelconque
      */
-    public Pont donePont(Ile ile1, Ile ile2){
+    public Pont donnePont(Ile ile1, Ile ile2){
         return this.getPont(ile1, ile2);
     }
 }
