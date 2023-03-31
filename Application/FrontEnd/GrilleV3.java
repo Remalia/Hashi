@@ -123,15 +123,16 @@ public class GrilleV3 extends Application {
         
         if (premierCercleClique && cercle != premierCercle) { // si deux iles ont été cliquées
             // #TODO incrémenter pont entre les deux iles selectionnées
-
             deuxiemeCercle = cercle;
             dessinerLigne(premierCercle, deuxiemeCercle, panneau);
             premierCercleClique = false;
             for (int i = 0; i < cerclesHashi.length; i++) {
-                if ((cerclesHashi[i].cercle.getCenterX() == deuxiemeCercle.getCenterX()) && (cerclesHashi[i].cercle.getCenterY() == deuxiemeCercle.getCenterY())) {
-                    indiceSecondCercle = i;
-                    System.out.println(indicePremierCercle +"-"+ indiceSecondCercle);
-                    break;
+                if(cerclesHashi[i] != null) {
+                    if ((cerclesHashi[i].cercle.getCenterX() == deuxiemeCercle.getCenterX()) && (cerclesHashi[i].cercle.getCenterY() == deuxiemeCercle.getCenterY())) {
+                        indiceSecondCercle = i;
+                        System.out.println(indicePremierCercle + "-" + indiceSecondCercle);
+                        return;
+                    }
                 }
             }
         }
@@ -139,10 +140,12 @@ public class GrilleV3 extends Application {
             premierCercle = cercle;
             premierCercleClique = true;
             for (int i = 0; i < cerclesHashi.length; i++) {
-                System.out.println(cerclesHashi[i].cercle.getCenterX());
-                if ((cerclesHashi[i].cercle.getCenterX() == premierCercle.getCenterX()) && (cerclesHashi[i].cercle.getCenterY() == premierCercle.getCenterY())) {
-                    indicePremierCercle = i;
-                    break;
+                if(cerclesHashi[i] != null) {
+                    System.out.println(cerclesHashi[i].cercle.getCenterX());
+                    if ((cerclesHashi[i].cercle.getCenterX() == premierCercle.getCenterX()) && (cerclesHashi[i].cercle.getCenterY() == premierCercle.getCenterY())) {
+                        indicePremierCercle = i;
+                        break;
+                    }
                 }
             }
         }
