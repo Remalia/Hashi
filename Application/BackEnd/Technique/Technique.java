@@ -1,11 +1,13 @@
 package Application.BackEnd.Technique;
 
 import Application.BackEnd.Grille.*;
+//import Application.BackEnd.Grille.Ile;
 
 import java.util.ArrayList;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class Technique{
     
@@ -1278,22 +1280,15 @@ public class Technique{
 
                 // On regarde si avec le reste de mes voisins je peux créer un réseau stable
 
-<<<<<<< HEAD:Technique.java
                 if((grilleBis = simulationReseau(uneGrille, ileCour, voisins, i)) != null){
-=======
+
                 //if(matriceBis = simulationReseau(matrice, ileCour, voisins, i) != null){
->>>>>>> main:Application/BackEnd/Technique/Technique.java
                     // Si le réseau est stable en ayant bloqué le chemin vers l'autre île on appelle récursivement la méthode sur les autres îles
                     
                     //t = parcoursBloquageRecursif()
                 }
-<<<<<<< HEAD:Technique.java
             }
         } 
-=======
-            //}
-        }
->>>>>>> main:Application/BackEnd/Technique/Technique.java
 
         for(Ile i: voisins)
         {
