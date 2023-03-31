@@ -64,7 +64,7 @@ public class CircleHashi{
 	public void ajouterLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
 		listeLignes.add(x);
-	}//
+	}
 
 	public void supprimerLigne(Line ligne) {
 		Iterator<Line> iter = listeLignes.iterator();

@@ -134,7 +134,7 @@ public class GrilleV3 extends Application {
                     break;
                 }
             }
-        } //
+        }
         else {
             premierCercle = cercle;
             premierCercleClique = true;
