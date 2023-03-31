@@ -10,7 +10,7 @@ import javafx.scene.shape.Line;
 import Application.BackEnd.Grille.Ile;
 import javafx.scene.text.*;
 
-public class CircleHashi{
+public class  CircleHashi{
 	public Text text;
 
 	public Ile ile;
@@ -21,7 +21,7 @@ public class CircleHashi{
 		this.cercle = cercle;
 		this.listeLignes = new ArrayList<Line>();
 		this.ile = ile;
-		this.text = new Text(cercle.getCenterX()-6, cercle.getCenterY()+6, String.valueOf(ile.getNbPonts()));
+		this.text = new Text(cercle.getCenterX()-6, cercle.getCenterY()+6, String.valueOf(ile.getNum()));
 		this.text.setFont(new Font(20));
 		this.text.setMouseTransparent(true);
 	}
