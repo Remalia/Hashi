@@ -1,3 +1,5 @@
+package Application.BackEnd.Grille;
+
 import java.awt.Color;
 import java.util.*;
 
@@ -5,7 +7,7 @@ import java.util.*;
  * Classe représentant une île du jeu
  * @see Element
  */
-public class Ile extends Element{
+public class Ile extends Element {
     private int id; /** identifiant de l'île */
     private int num; /** numéro associé à l'île */
     private int nbPonts; /** nombre de ponts rattaché à l'île */
@@ -15,7 +17,7 @@ public class Ile extends Element{
     private List<Pont> listePont;
     
     /**
-     * Constructeur de la classe Ile
+     * Constructeur de la classe Application.BackEnd.Grille.Ile
      * @param id l'identifiant de l'île
      * @param num le numéro de l'île
      * @param abs l'abscisse de l'île
@@ -34,7 +36,7 @@ public class Ile extends Element{
     }
 
     /**
-     * Constructeur de la classe Ile sans la couleur
+     * Constructeur de la classe Application.BackEnd.Grille.Ile sans la couleur
      * @param id l'identifiant de l'île
      * @param num le numéro de l'île
      * @param abs l'abscisse de l'île
@@ -178,7 +180,7 @@ public class Ile extends Element{
     }
 
     public String toStringConsole(){
-        String s = "Ile" + this.id + "\n";
+        String s = "Application.BackEnd.Grille.Ile" + this.id + "\n";
         s += "numéro : " + this.num + "\n";
         s += "(" + this.abs + "," + this.ord + ")\n";
         s += this.getCouleur().toString() + "\n";

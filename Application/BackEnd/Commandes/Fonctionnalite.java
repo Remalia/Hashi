@@ -1,4 +1,9 @@
+package Application.BackEnd.Commandes;
+
 import java.awt.Color;
+import Application.BackEnd.Grille.Grille;
+import Application.BackEnd.Grille.Ile;
+import Application.BackEnd.Grille.Pont;
 
 public class Fonctionnalite{
 

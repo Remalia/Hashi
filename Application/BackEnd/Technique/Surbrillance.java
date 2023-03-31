@@ -1,8 +1,14 @@
+package Application.BackEnd.Technique;
+
+import Application.BackEnd.Grille.Grille;
+import Application.BackEnd.Grille.Ile;
+import Application.BackEnd.Grille.Pont;
+
 import java.awt.Color;
 import java.util.*;
 
 /**
- * Classe Surbrillance permettant de surbriller les îles et les ponts
+ * Classe Application.BackEnd.Technique.Surbrillance permettant de surbriller les îles et les ponts
  */
 public class Surbrillance {
 
@@ -12,7 +18,7 @@ public class Surbrillance {
     boolean reseauActif;
 
     /** 
-     * Constructeur de Surbrillance
+     * Constructeur de Application.BackEnd.Technique.Surbrillance
      */
     public Surbrillance(){
 

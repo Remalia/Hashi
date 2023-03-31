@@ -1,8 +1,10 @@
+package Application.BackEnd.Sauvegarde;
+
 import java.io.*;
 import java.util.*;
 
 /**
- * Classement des scores en fonction des niveaux
+ * Application.BackEnd.Sauvegarde.Classement des scores en fonction des niveaux
  */
 
 public class Classement {
@@ -23,7 +25,7 @@ public class Classement {
     }
 
     /**
-     * Construit un Classement
+     * Construit un Application.BackEnd.Sauvegarde.Classement
      * @param path Emplacement où le classement sera écrit et stocké.
      */
     Classement(String path) throws FileNotFoundException {
@@ -38,7 +40,7 @@ public class Classement {
      * @throws FileNotFoundException Fichier Introuvable
      */
     public static void main(String[] args) throws FileNotFoundException {
-        Classement tester = new Classement("Scores\\ScoreTest.yaml");
+        Classement tester = new Classement("Application\\Niveau\\NiveauTest\\ScoreTest.yaml");
         System.out.println(tester.scores);
     }
 }

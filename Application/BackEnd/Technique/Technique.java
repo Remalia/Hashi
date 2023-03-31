@@ -1,3 +1,7 @@
+package Application.BackEnd.Technique;
+
+import Application.BackEnd.Grille.*;
+
 import java.util.ArrayList;
 import java.awt.Color;
 import java.util.Arrays;
@@ -321,7 +325,7 @@ public class Technique{
     }
 
     /**
-        Méthode qui retourne une Technique
+        Méthode qui retourne une Application.BackEnd.Technique.Technique
         Prend en paramètres une liste d'îles composée d'une seule île car il n'y a qu'un seul voisin 
         Prend en paramètres l'île d'origine
         Effectue des vérifications sur cette liste d'îles
@@ -350,7 +354,7 @@ public class Technique{
     }
 
     /**
-        Méthode qui retourne une Technique
+        Méthode qui retourne une Application.BackEnd.Technique.Technique
         Prend en paramètres une liste d'îles composée de deux îles car il y a 2 îles voisines
         Prend en paramètres l'île d'origine
         Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
@@ -447,7 +451,7 @@ public class Technique{
     }
 
     /**
-        Méthode qui retourne une Technique
+        Méthode qui retourne une Application.BackEnd.Technique.Technique
         Prend en paramètres une liste d'îles composée de trois îles car il y a 3 îles voisines
         Prend en paramètres l'île d'origine
         Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
@@ -517,7 +521,7 @@ public class Technique{
 
 
     /** 
-        Méthode qui retourne une Technique
+        Méthode qui retourne une Application.BackEnd.Technique.Technique
         Prend en paramètres une liste d'îles composée de quatre îles car il y a 4 îles voisines
         Prend en paramètres l'île d'origine
         Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
@@ -636,12 +640,12 @@ public class Technique{
                 Si une île peut accueilir plus de 2 ponts cela signifie qu'elle a au moins 2 voisins, on ne la prend pas en compte dans notre recherche 
                 Si une île est complète on ne la prend pas en compte
             */
-          /*  if(obj.getClass() == Ile.class)
+          /*  if(obj.getClass() == Application.BackEnd.Grille.Ile.class)
             {
                 System.out.println("\n\n\nIl y a une île");
-                if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
+                if(((Application.BackEnd.Grille.Ile)obj).getNum() <= 2 && !((Application.BackEnd.Grille.Ile)obj).estComplete() )
                 {
-                    if(nbVoisins((Ile) obj, uneGrille) == 1){
+                    if(nbVoisins((Application.BackEnd.Grille.Ile) obj, uneGrille) == 1){
                         return(true);
                     }
                 }
@@ -707,7 +711,7 @@ public class Technique{
                             Il ne faut pas vérifier maintenant si l'île trouvée est pleine
                             On le vérifiera plus tard 
                         */
-                        /*if(((Ile) matriceGrille[xIle][y]).estComplete())
+                        /*if(((Application.BackEnd.Grille.Ile) matriceGrille[xIle][y]).estComplete())
                         {
                             return(false);
                         }*/
@@ -718,11 +722,11 @@ public class Technique{
                         Si au contraire il y a un pont on regarde si le pont est accueili par l'île d'origine
                     */
 
-                    /*if(matriceGrille[xIle][y].getClass() == Pont.class)
+                    /*if(matriceGrille[xIle][y].getClass() == Application.BackEnd.Grille.Pont.class)
                     {
                         //On doit regarder si une des deux îles du pont est la même que celle d'origine  
 
-                        if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
+                        if( ((Application.BackEnd.Grille.Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Application.BackEnd.Grille.Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);
@@ -735,15 +739,15 @@ public class Technique{
                 {
                     if(matriceGrille[x][yIle] instanceof Ile)
                     {
-                        /*if(((Ile) matriceGrille[x][yIle]).estComplete())
+                        /*if(((Application.BackEnd.Grille.Ile) matriceGrille[x][yIle]).estComplete())
                         {
                             return(false);
                         }*/
                         return(true);
                     }/*
-                    if(matriceGrille[x][yIle].getClass() == Pont.class)
+                    if(matriceGrille[x][yIle].getClass() == Application.BackEnd.Grille.Pont.class)
                     {
-                        if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
+                        if( ((Application.BackEnd.Grille.Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Application.BackEnd.Grille.Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);                    
@@ -757,15 +761,15 @@ public class Technique{
                     if(matriceGrille[xIle][y] instanceof Ile)
                     {
                         /*
-                        if(((Ile) matriceGrille[xIle][y]).estComplete())
+                        if(((Application.BackEnd.Grille.Ile) matriceGrille[xIle][y]).estComplete())
                         {
                             return(false);
                         }*/
                         return(true);
                     }/*
-                    if(matriceGrille[xIle][y].getClass() == Pont.class)
+                    if(matriceGrille[xIle][y].getClass() == Application.BackEnd.Grille.Pont.class)
                     {
-                        if( ((Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
+                        if( ((Application.BackEnd.Grille.Pont)matriceGrille[xIle][y]).getIle1().equals(ileOrigine) ||  ((Application.BackEnd.Grille.Pont)matriceGrille[xIle][y]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);
@@ -778,14 +782,14 @@ public class Technique{
                 {
                     if(matriceGrille[x][yIle] instanceof Ile)
                     {/*
-                        if(((Ile) matriceGrille[x][yIle]).estComplete()){
+                        if(((Application.BackEnd.Grille.Ile) matriceGrille[x][yIle]).estComplete()){
                             return(false);
                         }*/
                         return(true);
                     }/*
-                    if(matriceGrille[x][yIle].getClass() == Pont.class)
+                    if(matriceGrille[x][yIle].getClass() == Application.BackEnd.Grille.Pont.class)
                     {
-                        if( ((Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
+                        if( ((Application.BackEnd.Grille.Pont)matriceGrille[x][yIle]).getIle1().equals(ileOrigine) ||  ((Application.BackEnd.Grille.Pont)matriceGrille[x][yIle]).getIle2().equals(ileOrigine) ){
                             return(true);
                         }
                         return(false);
@@ -1069,7 +1073,7 @@ public class Technique{
                                 if(t != null) return t;
 
                                 break;
-                                //return(Technique.deuxVoisins(voisins));
+                                //return(Application.BackEnd.Technique.Technique.deuxVoisins(voisins));
                                 
                             case 3:
                                 System.out.println("L'île aux coordonnées ("+i+","+j+") a trois voisins");
@@ -1078,7 +1082,7 @@ public class Technique{
                                 if(t != null) return t;
 
                                 break;
-                                //return(Technique.troisVoisins(voisins));
+                                //return(Application.BackEnd.Technique.Technique.troisVoisins(voisins));
                                 
                             case 4:
                                 System.out.println("L'île aux coordonnées ("+i+","+j+") a quatre voisins");
@@ -1087,7 +1091,7 @@ public class Technique{
                                 if(t != null) return t;
 
                                 break;
-                                //return(Technique.quatreVoisins(voisins));
+                                //return(Application.BackEnd.Technique.Technique.quatreVoisins(voisins));
                             default:
                                 break;
                         }
@@ -1108,7 +1112,7 @@ public class Technique{
             On retourne une technique indiquant que la grille actuelle ne permet pas d'appliquer une quelconque technique
         */
 
-        //return(Technique.aucuneTechnique());
+        //return(Application.BackEnd.Technique.Technique.aucuneTechnique());
 
         //temporaire pour l'instant
         return(null);
@@ -1274,13 +1278,22 @@ public class Technique{
 
                 // On regarde si avec le reste de mes voisins je peux créer un réseau stable
 
+<<<<<<< HEAD:Technique.java
                 if((grilleBis = simulationReseau(uneGrille, ileCour, voisins, i)) != null){
+=======
+                //if(matriceBis = simulationReseau(matrice, ileCour, voisins, i) != null){
+>>>>>>> main:Application/BackEnd/Technique/Technique.java
                     // Si le réseau est stable en ayant bloqué le chemin vers l'autre île on appelle récursivement la méthode sur les autres îles
                     
                     //t = parcoursBloquageRecursif()
                 }
+<<<<<<< HEAD:Technique.java
             }
         } 
+=======
+            //}
+        }
+>>>>>>> main:Application/BackEnd/Technique/Technique.java
 
         for(Ile i: voisins)
         {
@@ -1445,7 +1458,7 @@ public class Technique{
 
         // vérification de la réussie de la copie de la matrice d'éléments
 
-        Element[][] m = Technique.copierGrille(grilleTest);
+        Application.BackEnd.Grille.Element[][] m = Application.BackEnd.Technique.Technique.copierGrille(grilleTest);
 
         System.out.println(grilleTest);
         

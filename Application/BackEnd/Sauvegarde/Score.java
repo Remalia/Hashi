@@ -1,5 +1,7 @@
+package Application.BackEnd.Sauvegarde;
+
 /**
- * Classe Score représentant un score de jeu
+ * Classe Application.BackEnd.Sauvegarde.Score représentant un score de jeu
  */
 public class Score {
     private String name;
@@ -73,6 +75,6 @@ public class Score {
      */
     @Override
     public String toString() {
-        return "Score : " + name + ", " + pts + " pts en " + timer + " ";
+        return "Application.BackEnd.Sauvegarde.Score : " + name + ", " + pts + " pts en " + timer + " ";
     }
 }

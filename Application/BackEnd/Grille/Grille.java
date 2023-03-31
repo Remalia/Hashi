@@ -1,3 +1,7 @@
+package Application.BackEnd.Grille;
+
+import Application.BackEnd.Sauvegarde.Parser;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -10,8 +14,8 @@ import java.util.regex.*;
 public class Grille {
 
     Color c = new Color(0, 0, 255);
-    Stack<Pont> pileSvg;
-    Stack<Pont> pileRecup;
+    public Stack<Pont> pileSvg;
+    public Stack<Pont> pileRecup;
     private Element[][] matriceGrille;
     private ArrayList<Ile> listIle;
     private File fileNiveau;
@@ -30,20 +34,20 @@ public class Grille {
         this.listIle = new ArrayList<>();
         this.modeHyp = false;
         this.name = name;
-        Files.createDirectories(Paths.get("Niveau"));
-        Files.createDirectories(Paths.get("Niveau/"+this.name));
+        Files.createDirectories(Paths.get("Application/Niveau"));
+        Files.createDirectories(Paths.get("Application/Niveau/"+this.name));
         try{
-            Files.createFile(Path.of("Niveau/" + this.name + "/Niveau.yaml"));
+            Files.createFile(Path.of("Application/Niveau/" + this.name + "/Niveau.yaml"));
         } catch (IOException e) {
             System.out.println("Fichier de niveau déja créé : " + e.getMessage());
         }
         try {
-            Files.createFile(Path.of("Niveau/" + this.name + "/Save.yaml"));
+            Files.createFile(Path.of("Application/Niveau/" + this.name + "/Save.yaml"));
         } catch (IOException e) {
             System.out.println("Fichier de sauvegarde déja créé : " + e.getMessage());
         }
-        this.fileNiveau = new File("Niveau/"+this.name+"/Niveau.yaml");
-        this.fileSave = new File("Niveau/"+this.name+"/Save.yaml");
+        this.fileNiveau = new File("Application/Niveau/"+this.name+"/Niveau.yaml");
+        this.fileSave = new File("Application/Niveau/"+this.name+"/Save.yaml");
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -97,7 +101,7 @@ public class Grille {
      * Méthode d'ajout d'une nouvelle ile dans la matrice
      * @param ile L'ile a ajouter
      */
-    void ajouterIle(Ile ile){
+    public void ajouterIle(Ile ile){
         int abs = ile.getAbs();
         int ord = ile.getOrd();
         listIle.add(ile);
@@ -171,7 +175,7 @@ public class Grille {
      * @param ile2 l'île d'arrivée du pont
      * @return void
      */
-    public void  ajouterPont(Ile ile1, Ile ile2,int nbPonts){
+    public void  ajouterPont(Ile ile1, Ile ile2, int nbPonts){
         int i;
         Pont pont = chercherPont(ile1,ile2);
 
@@ -278,7 +282,7 @@ public class Grille {
      * Vérifie si la création d'un pont est possible
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
-     * @return Element si trouvé sur le chemin autre que pont ou intersection ( possiblement null ou ile) sinon null
+     * @return Application.BackEnd.Grille.Element si trouvé sur le chemin autre que pont ou intersection ( possiblement null ou ile) sinon null
      */
     @Deprecated
     public Element verifCreationPont(Ile ile1, Ile ile2){
@@ -456,13 +460,13 @@ public class Grille {
         return result;
     }
 
-    public static void main2(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauTest");
         grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
         grilleTest.saveGrilleToYAML();
         System.out.println(grilleTest);
     }
-    public static void main(String[] args){
+    public static void main2(String[] args){
         Grille grilleTest = new Grille();
         Color c = new Color(0, 0, 255);
         Ile ile1 = new Ile(1,1,4,1,c);

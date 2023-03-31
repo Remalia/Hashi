@@ -1,3 +1,5 @@
+package Application.FrontEnd;
+
 /*
  * Chronomètre utilisé pour affecter un score au joueur
  */
