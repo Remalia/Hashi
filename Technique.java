@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 
 public class Technique{
     
@@ -216,22 +217,79 @@ public class Technique{
     }
 
     /**
-        Méthode qui indique si une île peut accepter un pont simple
+        Méthode qui indique si une île peut accepter un pont simple ou s'il en existe déjà un
         Vrai si c'est le cas, faux sino,
     */
 
-    static boolean ajoutPontSimple(Ile ile)
+    static boolean ajoutPontSimple(Ile ileDest, Ile ileCour)
     {
-        return(ile.getNum() > ile.getNbPonts());
+        List<Pont> listePonts = ileDest.getListePont();
+        Ile ile1;
+        Ile ile2;
+        // On regarde dans la liste des ponts si il existe déjà un pont entre les 2 îles
+        for(Pont p: listePonts)
+        {
+            ile1 = p.getIle1();
+            ile2 = p.getIle2();
+            if((ile1 == ileDest && ile2 == ileCour) || (ile1 == ileCour && ile2 == ileDest))
+            {
+                // Si le pont existe entre 2 îles 
+                // On regarde la valeur du pont
+                int valeurPont = p.getNombrePont();
+                switch(valeurPont)
+                {
+                    case 0:
+                        return(ileDest.getNum() > ileDest.getNbPonts() && ileCour.getNum() > ileCour.getNbPonts());
+                    
+                    case 1:
+                        // Il y a déjà un pont qui existe on considère qu'on peut artficiellement l'ajouter
+                        return true;
+                    
+                    case 2:
+                        // S'il y a un pont double on retourne false -> pas en adéquation avec la volonté de la vérification -> créaton possible d'un pont simple ou présence déjà existante d'un pont SIMPLE
+                        return false;
+                }
+            }
+        }
+        // Il n'y a pas de pont on regarde donc la différence
+        return(ileDest.getNum() > ileDest.getNbPonts() && ileCour.getNum() > ileCour.getNbPonts());
     }
 
     /** 
         Méthode qui indique si une île peut accepter un pont double
         Vrai si c'est le cas, faux sinon
     */
-    static boolean ajoutPontDouble(Ile ile)
+    static boolean ajoutPontDouble(Ile ileDest, Ile ileCour)
     {
-        return( (ile.getNum() - ile.getNbPonts()) >= 2);
+        List<Pont> listePonts = ileDest.getListePont();
+        Ile ile1;
+        Ile ile2;
+        for(Pont p: listePonts)
+        {
+            ile1 = p.getIle1();
+            ile2 = p.getIle2();
+            if((ile1 == ileDest && ile2 == ileCour) || (ile1 == ileCour && ile2 == ileDest))
+            {
+                // Si le pont existe entre 2 îles 
+                // On regarde la valeur du pont
+                int valeurPont = p.getNombrePont();
+                switch(valeurPont)
+                {
+                    case 0:
+                        // On regarde si les 2 îles peuvent accepter un pont
+                        return( (ileDest.getNum() - ileDest.getNbPonts()) >= 2 && (ileCour.getNum() - ileCour.getNbPonts()) >= 2);
+                    
+                    case 1:
+                        // On regarde si on peut transformer le pont simple en pont double
+                        return(ileDest.getNum() > ileDest.getNbPonts() && ileCour.getNum() > ileCour.getNbPonts());
+                    
+                    case 2:
+                        // pont double déjà existant --> Vrai
+                        return true;
+                }
+            }
+        }
+        return( (ileDest.getNum() - ileDest.getNbPonts()) >= 2 && (ileCour.getNum() - ileCour.getNbPonts()) >= 2);
     }
 
     /** 
@@ -340,7 +398,7 @@ public class Technique{
         switch(ileOrigine.getNum())
         {
             case 1:
-                if( (premVois.getNum() == 1 && !premVois.estComplete() && Technique.ajoutPontSimple(scdVois)) || (scdVois.getNum() == 1 && !scdVois.estComplete() && Technique.ajoutPontSimple(premVois)) )
+                if( (premVois.getNum() == 1 && !premVois.estComplete() && Technique.ajoutPontSimple(scdVois, ileOrigine)) || (scdVois.getNum() == 1 && !scdVois.estComplete() && Technique.ajoutPontSimple(premVois, ileOrigine)) )
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui ne peut créer qu'un pont au maximum. Cependant un de ses voisins ne peut accepter qu'un pont, il faut donc la relier à l'autre île par un pont simple.");
@@ -354,13 +412,13 @@ public class Technique{
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins (qui a pour unique voisin l'île en question) ne peut accepter qu'un pont au maximum, il faut donc relier l'île aux 2 autres îles par un pont simple");
                     return t;
                 }
-                else if( (premVois.getNum() == 2 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) ) || (scdVois.getNum() == 2 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(premVois)))
+                else if( (premVois.getNum() == 2 && Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontSimple(scdVois, ileOrigine) ) || (scdVois.getNum() == 2 && Technique.ajoutPontSimple(scdVois, ileOrigine) && Technique.ajoutPontSimple(premVois, ileOrigine)))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins ne peut accepter que deux ponts au maximum, il faut donc relier l'île à l'autre île par un pont simple");
                     return t;
                 }
-                else if( (premVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(premVois)) )
+                else if( (premVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois,ileOrigine)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(premVois, ileOrigine)) )
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins ne peut accepter qu'un pont au maximum, il faut donc relier l'île à l'autre île par un pont simple");
@@ -368,7 +426,7 @@ public class Technique{
                 }
                 break;
             case 3:
-                if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois))
+                if(Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontSimple(scdVois, ileOrigine))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer trois ponts au maximum. Il faut donc relier cette île à ses 2 voisines par des ponts simples.");
@@ -376,7 +434,7 @@ public class Technique{
                 }
                 break;
             case 4:
-                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois))
+                if(Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer quatre ponts au maximum. Il faut donc relier cette île à ses 2 voisines par des ponts double.");
@@ -428,7 +486,7 @@ public class Technique{
         {
             case 5:
                 /* On regarde si une des îles voisines n'accepte qu'un voisin */
-                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(trsmVois))|| (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois)))
+                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine) && Technique.ajoutPontDouble(trsmVois, ileOrigine)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois, ileOrigine) && Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(trsmVois, ileOrigine))|| (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois, ileOrigine) && Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine)))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement trois voisins qui peut créer cinq ponts. Parmi ses trois voisins, une île n'accepte qu'un pont au maximum. L'île doit donc être reliée à cette dernière par un pont simple. L'île doit être reliée aux deux autres par des ponts double.");
@@ -436,7 +494,7 @@ public class Technique{
                 }
                 else
                 {
-                    if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(trsmVois))
+                    if(Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontSimple(scdVois, ileOrigine) && Technique.ajoutPontSimple(trsmVois, ileOrigine))
                     {
                         t.setIleCour(ileOrigine);
                         t.setDescription("Il y a une île qui a exactement trois voisins qui peut créer cinq ponts. L'île doit donc se relier à chaque île par un pont simple minimum.");
@@ -445,7 +503,7 @@ public class Technique{
                 }
                 break;
             case 6:
-                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois))
+                if(Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine) && Technique.ajoutPontDouble(trsmVois, ileOrigine))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une ile qui a exactement trois voisins qui peut doit créer six ponts. L'île doit donc se relier à chaque île par un double pont.");
@@ -499,7 +557,7 @@ public class Technique{
         switch(ileOrigine.getNum())
         {
             case 7:
-                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois)) || (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(qtrmVois)) || (qtrmVois.getNum() == 1 && Technique.ajoutPontSimple(qtrmVois) && Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(qtrmVois)))
+                if((premVois.getNum() == 1 && Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine) && Technique.ajoutPontDouble(trsmVois, ileOrigine) && Technique.ajoutPontDouble(qtrmVois, ileOrigine)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois, ileOrigine) && Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(trsmVois, ileOrigine) && Technique.ajoutPontDouble(qtrmVois, ileOrigine)) || (trsmVois.getNum() == 1 && Technique.ajoutPontSimple(trsmVois, ileOrigine) && Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine) && Technique.ajoutPontDouble(qtrmVois, ileOrigine)) || (qtrmVois.getNum() == 1 && Technique.ajoutPontSimple(qtrmVois, ileOrigine) && Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine) && Technique.ajoutPontDouble(qtrmVois, ileOrigine)))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 7 ponts. Un de ses voisins ne doit créer qu'un pont au maximum. L'île doit donc rejoindre la dernière via un pont simple et les autres via des ponts double.");
@@ -507,7 +565,7 @@ public class Technique{
                 }
                 else
                 {
-                    if(Technique.ajoutPontSimple(premVois) && Technique.ajoutPontSimple(scdVois) && Technique.ajoutPontSimple(trsmVois) && Technique.ajoutPontSimple(qtrmVois))
+                    if(Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontSimple(scdVois, ileOrigine) && Technique.ajoutPontSimple(trsmVois, ileOrigine) && Technique.ajoutPontSimple(qtrmVois, ileOrigine))
                     {
                         t.setIleCour(ileOrigine);
                         t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 7 ponts. Elle doit donc rejoindre les autres îles via au moins un pont simple.");
@@ -516,7 +574,7 @@ public class Technique{
                 }
                 break;
             case 8:
-                if(Technique.ajoutPontDouble(premVois) && Technique.ajoutPontDouble(scdVois) && Technique.ajoutPontDouble(trsmVois) && Technique.ajoutPontDouble(qtrmVois))
+                if(Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine) && Technique.ajoutPontDouble(trsmVois, ileOrigine) && Technique.ajoutPontDouble(qtrmVois, ileOrigine))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement quatre voisins qui doit créer 8 ponts. Elle doit donc rejoindre les autres îles via des double ponts.");
@@ -1144,7 +1202,7 @@ public class Technique{
                                     /** On ne peut pas bloquer une île voisine si le nombre de ponts qu'accepent l'île est > 2*/
 
                                     if(((Ile)elem).getNum() > 2){
-                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, matriceBis, taille, voisins);
+                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins);
 
                                         if(t != null) return t;
                                     }
@@ -1155,7 +1213,7 @@ public class Technique{
                                     /** On ne peut pas bloquer une île voisine si le nombre de ponts qu'accepent l'île est > 4*/
 
                                     if(((Ile)elem).getNum() > 4){
-                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, matriceBis, taille, voisins);
+                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins);
 
                                         if(t != null) return t;
                                     }
@@ -1164,7 +1222,7 @@ public class Technique{
                                 case 4:
 
                                     if(((Ile)elem).getNum() > 6){
-                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, matriceBis, taille, voisins);
+                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins);
 
                                         if(t != null) return t;
                                     }
@@ -1187,10 +1245,11 @@ public class Technique{
         Méthode récursive qui parcourt une matrice d'élément afin de regarder s'il est possible de relier toutes les îles 
         La particularité de cette méthode est qu'au premier appel de celle-ci on décide de bloquer une direction
     */
-    static Technique parcoursBloquageRecursif(Ile ileCour, Ile ileOrigine, Element[][] matrice, int taille, ArrayList<Ile> voisins)
+    static Technique parcoursBloquageRecursif(Ile ileCour, Ile ileOrigine, Grille uneGrille, int taille, ArrayList<Ile> voisins)
     {
         Technique t = new Technique();
-        Element[][] matriceBis;
+        //Element[][] matriceBis;
+        Grille grilleBis;
 
         /* Maintenant on a une fonction qui nous permet d'obtenir les voisins d'une île*/
         /* On bloque les voisins un par un */
@@ -1215,13 +1274,13 @@ public class Technique{
 
                 // On regarde si avec le reste de mes voisins je peux créer un réseau stable
 
-                if(matriceBis = simulationReseau(matrice, ileCour, voisins, i) != null){
+                if((grilleBis = simulationReseau(uneGrille, ileCour, voisins, i)) != null){
                     // Si le réseau est stable en ayant bloqué le chemin vers l'autre île on appelle récursivement la méthode sur les autres îles
                     
                     //t = parcoursBloquageRecursif()
                 }
             }
-        }
+        } 
 
         for(Ile i: voisins)
         {
@@ -1236,8 +1295,83 @@ public class Technique{
         Un des voisins n'est pas relié volontairement(il est passé e paramètres)
         Retourne null si la configuration simulée n'est pas viable
     */
-    static Element[][] simulationReseau(Element[][] m, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee)
+    static Grille simulationReseau(Grille g, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee)
     {
+        Grille nvGrille = g;
+        Pont p;
+        // On intiialise avec le nombre de ponts déjà créés
+        int nbPontsCreables = ileCour.getNbPonts();
+        // On regarde les voisins
+        for(Ile i: voisins)
+        {   
+            /*// On ne prend pas en compte l'île que l'on doit bloquer
+            if(ileBloquee != i)
+            {   
+
+                // On regarde s'il y a déjà un pont entre les 2 îles
+                if((p = m.cherchePont(ileCour, i)) != null)
+                {
+
+                    // Il n'y a pas de pont on regarde si on peut créer des ponts
+                    if(Technique.ajoutPontDouble(i))
+                    {
+                        // On peut ajouter un pont double
+                        m.ajouterPontDouble(ileCour, i, 2);
+                    }
+                    else if (Technique.ajoutPontSimple(i, ileCour))
+                    {
+
+                    }
+
+                }
+                else
+                {
+                    // Il existe un pont
+                    // On s'intéresse donc au nombre de ponts qu'il y a entre ces 2 îles
+                }
+
+            */
+                /*
+                if(Technique.ajoutPontDouble(i))
+                {   
+                    // On regarde s'il existe déjà un pont
+                    if( p = m.cherchePont(ileCour, i) != null)
+                    {
+                        switch(p.getNombrePont())
+                        {
+                            case 1:
+                                // Si on a un pont on incrémente le pont
+
+                                break;
+                            case 2:
+                                // on ne fait rien
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // il n'y a pas de pont déjà existant on en ajoute un double
+                        m.ajouterPont(ileCour, i, 2);
+                        nbPontsCreables += 2;
+                    }
+                }
+                else if (Technique.ajoutPontSimple())
+                {
+                    if( p = m.chercherPont(ileCour, i) != null)
+                    {
+                        // il n'y a pas de ponts déjà existants
+                        m.ajoutPont(ileCour, i, 1);
+                        nbPontsCreables++;
+                    }
+                }
+            }*/
+        }
+        // Si à la fin l'île courrante a autant de ponts qu'elle doit en avoir alors
+        if(nbPontsCreables == ileCour.getNum())
+        {
+            return nvGrille;
+        }
+
         return null;
     }
 
