@@ -6,3 +6,6 @@ resources
 script-dir/
 element-list
 .vscode
+out/
+.idea
+*.iml
