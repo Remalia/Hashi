@@ -1,34 +1,63 @@
 import java.awt.Color;
+import java.util.*;
 
+/**
+ * Classe représentant une île du jeu
+ * @see Element
+ */
 public class Ile extends Element{
-    private final int id; /** identifiant de l'île */
-    private final int num; /** numéro associé à l'île */
+    private int id; /** identifiant de l'île */
+    private int num; /** numéro associé à l'île */
     private int nbPonts; /** nombre de ponts rattaché à l'île */
     private final int abs; /** abscisse de l'île */
     private final int ord; /** ordonnée de l'île */
     private boolean estSelect; /** statut de sélection de l'île */
+    private List<Pont> listePont;
     
+    /**
+     * Constructeur de la classe Ile
+     * @param id l'identifiant de l'île
+     * @param num le numéro de l'île
+     * @param abs l'abscisse de l'île
+     * @param ord l'ordonnée de l'île
+     * @param c la couleur de l'île
+     */
     public Ile(int id, int num, int abs, int ord, Color c){
         super(c);
         this.id = id;
         this.num = num;
         this.abs = abs;
         this.ord = ord;
+        this.listePont = new ArrayList<>();
         this.nbPonts = 0; // à la création il n'y a pas de ponts
         this.estSelect = false; // île non selectionée à la création
     }
 
+    /**
+     * Constructeur de la classe Ile sans la couleur
+     * @param id l'identifiant de l'île
+     * @param num le numéro de l'île
+     * @param abs l'abscisse de l'île
+     * @param ord l'ordonnée de l'île
+     */
     public Ile(int id, int num, int abs,int ord){
         super();
         this.id = id;
         this.num = num;
         this.abs = abs;
         this.ord = ord;
+        this.listePont = new ArrayList<>();
         this.nbPonts = 0; // à la création il n'y a pas de ponts
         this.estSelect = false; // île non selectionée à la création
     }
 
-
+    /**
+     * Retourne la liste des ponts rattachés à l'île
+     * @return la liste des ponts rattachés à l'île
+     */
+    public List<Pont> getListePont(){
+        return this.listePont;
+    }
 
     /**
     * Vérifie si l'île en paramètre est la même île
@@ -49,8 +78,9 @@ public class Ile extends Element{
     /**
     * Incrémente de 1 le nombre de ponts attachés à l'île
     */
-    public void ajouterPont(){
+    public void ajouterPont(Pont p){
         this.nbPonts += 1;
+        listePont.add(p);
     }
 
     /**
@@ -123,7 +153,21 @@ public class Ile extends Element{
         this.nbPonts = nb;
     }
 
-    
+    /**
+     * Affecte un numéro à l'île
+     * @param num le numéro de l'île
+     */
+    public void setNum(int num){
+        this.num = num;
+    }
+
+    /**
+     * Affecte un identifiant à l'île
+     * @param id l'identifiant de l'île
+     */
+    public void setId(int id){
+        this.id = id;
+    }
 
     /**
     * Met à jour le statut sélectionné ou non sélectionné de l'île
@@ -146,8 +190,20 @@ public class Ile extends Element{
         return s;
     }
 
+    /**
+     * Métode toString pour l'affichage graphique
+     */
+    @Override
     public String toString(){
         return Integer.toString(this.getNum());
+    }
+
+    /**
+     * Retourne l'île si l'île est sélectionnée, sinon retourne null
+     */
+    @Override
+    public Ile parcoursMatrice(int x, int y, Direction d, Element Grille[][]){
+        return this;
     }
 
     public static void main(String[] args){
@@ -155,8 +211,6 @@ public class Ile extends Element{
             Color c = new Color(100, 0, 0);
             Ile ileTest = new Ile(1, 5, 4, 2, c);
             System.out.println(ileTest.toStringConsole());
-            ileTest.ajouterPont();
-            ileTest.ajouterPont();
             System.out.println(ileTest.toStringConsole());
             ileTest.supprimer2Ponts();
             System.out.println(ileTest.toStringConsole());

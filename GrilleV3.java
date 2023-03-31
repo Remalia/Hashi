@@ -37,7 +37,11 @@ public class GrilleV3 extends Application {
     // Panneau qui contiendra notre grille
     Pane panneau = new Pane();
     
-    
+
+    /**
+     * TODO
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
     	
@@ -68,7 +72,11 @@ public class GrilleV3 extends Application {
         primaryStage.show();
     }
 
- // Méthode appelée lorsqu'un cercle est cliqué. Elle change la couleur du cercle entre le noir et le blanc.
+
+    /**
+     * Méthode appelée lorsqu'un cercle est cliqué. Elle change la couleur du cercle entre le noir et le blanc.
+     * @param event l'événement de la souris
+     */
     private void changerCouleur(MouseEvent event) {
         Circle cercle = (Circle) event.getSource();
         if (cercle.getFill() == Color.BLACK) {
@@ -101,8 +109,12 @@ public class GrilleV3 extends Application {
             }
         }
     }
-    
-    // Dessiner la ligne entre les cercles
+    /**
+     * Dessine une ligne entre deux cercles
+     * @param cercle1 le premier cercle
+     * @param cercle2 le deuxième cercle
+     * @param panneau le panneau sur lequel dessiner
+     */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
     	Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
         Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);

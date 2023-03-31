@@ -1,6 +1,9 @@
 import java.awt.Color;
 import java.util.*;
 
+/**
+ * Classe Surbrillance permettant de surbriller les îles et les ponts
+ */
 public class Surbrillance {
 
     Color c = new Color(255,200,200);
@@ -16,8 +19,6 @@ public class Surbrillance {
         pontsPotentielsActif = false;
         reseauActif = false;
     }
-
-    
 
     /** 
      * Active la surbrillance du réseau auquel appartient l'île en paramètre

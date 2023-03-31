@@ -13,7 +13,7 @@ public class Fonctionnalite{
     */
    public void undo(Grille grille){
       Pont pont = grille.pileSvg.pop();
-      grille.retirerPont(pont);
+      //grille.retirerPont(pont);
       grille.pileRecup.push(pont);
    }
 
@@ -54,20 +54,8 @@ public class Fonctionnalite{
    }
 
    public static void main(String args[]){
-      int[][] init = {
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-         {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1}
-      };
 
-      Grille grille = new Grille(init);
+      Grille grille = new Grille();
       Fonctionnalite fonc = new Fonctionnalite();
       Color c = new Color(0, 0, 255);
       try {
