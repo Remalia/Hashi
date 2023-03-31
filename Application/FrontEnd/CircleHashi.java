@@ -32,10 +32,8 @@ public class  CircleHashi{
 
 
 	public boolean ligneEstDansListe(Line ligne) {
-		Iterator<Line> iterator = listeLignes.iterator();
-		while (iterator.hasNext()) {
-			Line l = iterator.next();
-			if (ligne.getStartX() == l.getStartX() && ligne.getStartY() == l.getStartY() && ligne.getEndX() == l.getEndX() && ligne.getEndY() == l.getEndY()){
+		for (Line l : listeLignes) {
+			if (ligne.getStartX() == l.getStartX() && ligne.getStartY() == l.getStartY() && ligne.getEndX() == l.getEndX() && ligne.getEndY() == l.getEndY()) {
 				return true;
 			}
 		}
