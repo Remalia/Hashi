@@ -2,17 +2,32 @@ package Application.FrontEnd;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
+import Application.BackEnd.Grille.Ile;
+import javafx.scene.text.*;
+
 public class CircleHashi{
+	public Text text;
 
-	Circle cercle;
-	ArrayList<Line> listeLignes;
+	public Ile ile;
+	public Circle cercle;
+	public ArrayList<Line> listeLignes;
 
-	CircleHashi(Circle cercle){
+	CircleHashi(Circle cercle, Ile ile){
 		this.cercle = cercle;
 		this.listeLignes = new ArrayList<Line>();
+		this.ile = ile;
+		this.text = new Text(cercle.getCenterX()-6, cercle.getCenterY()+6, String.valueOf(ile.getNbPonts()));
+		this.text.setFont(new Font(20));
+		this.text.setMouseTransparent(true);
+	}
+
+	public void changerCouleurTexte(Color couleur) {
+		this.text.setFill(couleur);
 	}
 
 
