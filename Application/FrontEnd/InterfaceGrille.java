@@ -31,42 +31,30 @@ public class InterfaceGrille extends Application {
     private CircleHashi[] cerclesHashi = new CircleHashi[NB_LIGNES * NB_COLONNES];
 
     // Sauvegardes temporelle
-    private Circle premierCercle = null;
-    private Circle deuxiemeCercle = null;
+    private CircleHashi premierCercle = null;
+    private CircleHashi deuxiemeCercle = null;
     private boolean premierCercleClique = false;
     private Integer indicePremierCercle;
     private Integer indiceSecondCercle;
+
+    private Grille grille;
 
     // Panneau qui contiendra notre grille
     Pane panneau = new Pane();
 
 
+    /**
+     * Redéfinition de la méthode start de Application
+     * @param primaryStage la fenêtre principale
+     * @throws IOException si le fichier YAML n'est pas trouvé
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        /*
-        // Création des cercles hashi
-        for (int i = 0; i < NB_LIGNES ; i++) {
-            for (int j = 0; j < NB_COLONNES ; j++) {
-                Circle cercle = new Circle(COORDPRIMCERCLEX * (i+1), COORDPRIMCERCLEY * (j+1), RAYON, Color.BLACK); // Ici, les coordonnées des cercles ne sont pas initialisé
-                cerclesHashi[i * NB_COLONNES + j] = new CircleHashi(cercle);
-                cercle.setOnMouseClicked(this::changerCouleur);
-            }
-        }
-
-
-        //	Ajout des cerlces dans le panneau
-
-        for (int i = 0; i < NB_LIGNES; i++) {
-            for (int j = 0; j < NB_COLONNES; j++) {
-                Circle cercle = cerclesHashi[i * NB_COLONNES + j];
-            	panneau.getChildren().add(cercle);
-            }
-        }
-        */
         Grille grille = new Grille("NiveauTest");
         grille.getGrilleFromYAML(grille.getFileNiveau());
         grille.saveGrilleToYAML();
-        System.out.println(grille.getListIle());
+        this.grille = new Grille(grille);
+        System.out.println(grille);
         for(Ile ile : grille.getListIle()){
             double coordX = COORDPRIMCERCLEX * (ile.getAbs()+1);
             double coordY = COORDPRIMCERCLEY * (ile.getOrd()+1);
@@ -76,8 +64,9 @@ public class InterfaceGrille extends Application {
             cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()] = cercle;
             cercle.setOnMouseClicked(this::interactionCouleur);
             panneau.getChildren().add(cercle);
-            panneau.getChildren().add(cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()].text);
+            panneau.getChildren().add(cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()].getText());
         }
+
 
 
 
@@ -88,94 +77,96 @@ public class InterfaceGrille extends Application {
         primaryStage.show();
     }
 
+
     /**
-     * Fonction qui donne le CircleHashi à l'aide de son cercle
-     * @param c cercle appartenant au CircleHashi
+     * Méthode appelée lorsqu'un cercle est cliqué. Elle change la couleur du cercle + gestion des ponts.
+     * @param event évènement de la souris
      */
-    private CircleHashi getCircleHashi(Circle c){
-        for(CircleHashi cercleHashi : cerclesHashi){
-            if(cercleHashi == c){
-                return cercleHashi;
-            }
-        }
-        return null;
-    }
-
-    // Méthode appelée lorsqu'un cercle est cliqué. Elle change la couleur du cercle + gestion des ponts.
     private void interactionCouleur(MouseEvent event) {
-        Circle cercle = (Circle) event.getSource();
+        CircleHashi cercle = (CircleHashi) event.getSource();
 
-        // Cas de réhinitialisation du clique de cercle
+        // Cas de réinitialisation du clique de cercle
         if(cercle == premierCercle) {
-            premierCercle.setFill(Color.YELLOW);
-            premierCercle = null;
-            deuxiemeCercle = null;
-            premierCercleClique = false;
-            indicePremierCercle = null;
-            indiceSecondCercle = null;
-            System.out.println("Réhinitialisé");
+            reinitialiserCercles();
         }
 
-        // Cas ou 2 cercles ont été cliqué
+        // Cas ou deux cercles ont été cliqués
         else if (premierCercleClique && cercle != premierCercle) {
             deuxiemeCercle = cercle;
-            double c1x = premierCercle.getCenterX();
-            double c2x = deuxiemeCercle.getCenterX();
-            double c1y = premierCercle.getCenterY();
-            double c2y = deuxiemeCercle.getCenterY();
-
-            if(c1x == c2x || c1y == c2y) {
-                premierCercle.setFill(Color.YELLOW);
-                premierCercleClique = false;
-                for (int i = 0; i < cerclesHashi.length; i++) {
-                    if (cerclesHashi[i] != null) {
-                        if ((cerclesHashi[i].getCenterX() == deuxiemeCercle.getCenterX()) && (cerclesHashi[i].getCenterY() == deuxiemeCercle.getCenterY())) {
-                            indiceSecondCercle = i;
-                            //System.out.println(indicePremierCercle +"-"+ indiceSecondCercle);
-                            break;
-                        }
-                    }
-                }
+            if (memeLigneOuColonne(premierCercle, deuxiemeCercle)) {
+                indiceSecondCercle = trouverIndiceCercle(deuxiemeCercle);
                 dessinerLigne(premierCercle, deuxiemeCercle, panneau);
-                premierCercle.setFill(Color.YELLOW);
-                premierCercle = null;
-                deuxiemeCercle = null;
-                premierCercleClique = false;
-                indicePremierCercle = null;
-                indiceSecondCercle = null;
-                System.out.println("New Etats");
+                reinitialiserCercles();
+            } else {
+                reinitialiserCercles();
             }
-            else {
-                premierCercle.setFill(Color.YELLOW);
-                premierCercle = null;
-                deuxiemeCercle = null;
-                premierCercleClique = false;
-                indicePremierCercle = null;
-                indiceSecondCercle = null;
-                System.out.println("Combinaison interdit");
-            }
-
         }
 
-        // Cas ou seulement 1 cercles est cliqué
+        // Cas ou seulement un cercle est cliqué
         else {
             premierCercle = cercle;
             premierCercle.setFill(Color.GREEN);
             premierCercleClique = true;
-            for (int i = 0; i < cerclesHashi.length; i++) {
-                if (cerclesHashi[i] != null) {
-                    if((cerclesHashi[i].getCenterX() == premierCercle.getCenterX()) && (cerclesHashi[i].getCenterY() == premierCercle.getCenterY())) {
-                        indicePremierCercle = i;
-                        break;
-                    }
+            indicePremierCercle = trouverIndiceCercle(premierCercle);
+        }
+    }
+
+    /**
+     * Méthode qui retourne vrai si les deux cercles sont sur la même ligne ou la même colonne
+     * @param cercle1 premier cercle à comparer
+     * @param cercle2 deuxième cercle à comparer
+     * @return vrai si les deux cercles sont sur la même ligne ou la même colonne
+     */
+    private boolean memeLigneOuColonne(CircleHashi cercle1, CircleHashi cercle2) {
+        double c1x = cercle1.getCenterX();
+        double c2x = cercle2.getCenterX();
+        double c1y = cercle1.getCenterY();
+        double c2y = cercle2.getCenterY();
+
+        return (c1x == c2x || c1y == c2y);
+    }
+
+    /**
+     * Méthode qui réinitialise les variables de la classe
+     */
+    private void reinitialiserCercles(){
+        premierCercle.setFill(Color.YELLOW);
+        premierCercle = null;
+        deuxiemeCercle = null;
+        premierCercleClique = false;
+        indicePremierCercle = null;
+        indiceSecondCercle = null;
+    }
+
+    /**
+     * Méthode qui retourne l'indice du cercle dans le tableau de cercles
+     * @param cercle cercle dont on veut l'indice
+     * @return l'indice du cercle dans le tableau de cercles
+     */
+    private int trouverIndiceCercle(CircleHashi cercle) {
+        for (int i = 0; i < cerclesHashi.length; i++) {
+            if (cerclesHashi[i] != null) {
+                if((cerclesHashi[i].getCenterX() == cercle.getCenterX()) && (cerclesHashi[i].getCenterY() == cercle.getCenterY())) {
+                    return i;
                 }
             }
         }
+        return -1;
     }
 
     // Dessiner la ligne entre les cercles
 
+    /**
+     * Fonction qui dessine une ligne entre 2 cercles
+     * @param cercle1 cercle de départ
+     * @param cercle2 cercle d'arrivé
+     * @param panneau panneau sur lequel dessiner la ligne
+     */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
+        if(this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle()) == false){
+            System.out.println("Erreur : pont impossible");
+            return;
+        }
         Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
         Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);
         Line ligne3 = new Line(cercle1.getCenterX()-5, cercle1.getCenterY()-5, cercle2.getCenterX()-5, cercle2.getCenterY()-5);
@@ -186,9 +177,10 @@ public class InterfaceGrille extends Application {
             if((cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne1) != true)) {
                 cerclesHashi[indicePremierCercle].ajouterLigne(ligne1);
                 cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne1);
-                panneau.getChildren().removeAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].text,cerclesHashi[indiceSecondCercle].text);
+                panneau.getChildren().removeAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
                 panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne1));
-                panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].text,cerclesHashi[indiceSecondCercle].text);
+                panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
+                grille.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),1);
             }
 
             else {
@@ -196,13 +188,14 @@ public class InterfaceGrille extends Application {
                 cerclesHashi[indicePremierCercle].ajouterLigne(ligne3);
                 cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne2);
                 cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne3);
-                panneau.getChildren().removeAll(cercle1,cercle2, cerclesHashi[indicePremierCercle].retournerLigne(ligne1), cerclesHashi[indiceSecondCercle].retournerLigne(ligne1), cerclesHashi[indicePremierCercle].retournerLigneInverse(ligne1),cerclesHashi[indiceSecondCercle].retournerLigneInverse(ligne1),cerclesHashi[indicePremierCercle].text,cerclesHashi[indiceSecondCercle].text);
+                panneau.getChildren().removeAll(cercle1,cercle2, cerclesHashi[indicePremierCercle].retournerLigne(ligne1), cerclesHashi[indiceSecondCercle].retournerLigne(ligne1), cerclesHashi[indicePremierCercle].retournerLigneInverse(ligne1),cerclesHashi[indiceSecondCercle].retournerLigneInverse(ligne1),cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
                 cerclesHashi[indicePremierCercle].supprimerLigne(ligne1);
                 cerclesHashi[indiceSecondCercle].supprimerLigne(ligne1);
                 cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne1);
                 cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne1);
                 panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne2), cerclesHashi[indicePremierCercle].retournerLigne(ligne3));
-                panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].text,cerclesHashi[indiceSecondCercle].text);
+                panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
+                grille.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),2);
             }
         }
         else {
@@ -215,7 +208,10 @@ public class InterfaceGrille extends Application {
             cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne3);
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne2);
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne3);
+            grille.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),0);
         }
+
+        System.out.println(this.grille);
     }
 
     public static void main(String[] args) {

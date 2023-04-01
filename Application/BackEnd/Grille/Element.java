@@ -57,7 +57,7 @@ public class Element {
     public Pont donnePont(Ile ile1, Ile ile2){
         return null;
     }
-
+    public Element donneIle(){return this; }
 
     /**
      * @param x x du parcours dans la grille
@@ -92,6 +92,11 @@ public class Element {
         //Si aucune île n'as été trouvée
         return null;
     }
+
+    public boolean estIncrementable(Ile ile1, Ile ile2){
+        return false;
+    }
+
 
     /**
      * Méthode abstract qui permet de nettoyer une case

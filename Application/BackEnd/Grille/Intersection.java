@@ -49,23 +49,19 @@ public class Intersection extends Element {
         pont2 = p;
     }
 
-    /**
-     * @return true si le pont p de l'intersection peut etre incrementé
-     */
-    public Boolean estIncrementable(Pont p){
-        if(p == pont1){
-            return pont2.getNombrePont() == 0;
-        }else{
-            return pont1.getNombrePont() == 0;
-        }
-    }
+
     /**
      * @param ile1 une ile de l'intersection
      * @param ile2 une ile de l'intersection
      * @return true si le pont p de l'intersection peut etre incrementé
      */
-    public Boolean estIncrementable(Ile ile1, Ile ile2){
+    @Override
+    public boolean estIncrementable(Ile ile1, Ile ile2){
         // si on est sur le pont 1
+        System.out.println("ile1 : " + ile1 + " ile2 : " + ile2);
+        System.out.println("pont 1 : " + pont1.getIle1() + " " + pont1.getIle2());
+        System.out.println("pont 2 : " + pont2.getIle1() + " " + pont2.getIle2());
+
         if(ile1 == pont1.getIle1() && ile2 == pont1.getIle2() || ile1 == pont1.getIle2() && ile2 == pont1.getIle1()){
             return estIncrementable(this.pont1);
         // si on est sur le pont 2
@@ -74,6 +70,17 @@ public class Intersection extends Element {
         }
         System.out.println("une des iles donnée n'est pas dans l'intersection");
         return false;
+    }
+
+    /**
+     * @return true si le pont p de l'intersection peut etre incrementé
+     */
+    public boolean estIncrementable(Pont p){
+        if(p == pont1){
+            return pont2.getNombrePont() == 0;
+        }else{
+            return pont1.getNombrePont() == 0;
+        }
     }
 
     /**
@@ -91,6 +98,15 @@ public class Intersection extends Element {
         }
         System.out.println("une des iles donnée n'est pas dans l'intersection");
         return null;
+    }
+
+    public void setPont( Ile ile1, Ile ile2,Pont p){
+        if(ile1 == pont1.getIle1() || ile1 == pont1.getIle2() || ile2 == pont1.getIle1() || ile2 == pont1.getIle2()){
+            this.pont1 = p;
+        // si on est sur le pont 2
+        }else if(ile1 == pont2.getIle1() || ile1 == pont2.getIle2() || ile2 == pont2.getIle1() || ile2 == pont2.getIle2()){
+            this.pont2 = p;
+        }
     }
 
     /**
@@ -140,4 +156,12 @@ public class Intersection extends Element {
     public Pont donnePont(Ile ile1, Ile ile2){
         return this.getPont(ile1, ile2);
     }
+
+    @Override
+    public Element donneIle(){
+        this.pont1.setNombrePont(0);
+        this.pont2.setNombrePont(0);
+        return this;
+    }
+
 }
