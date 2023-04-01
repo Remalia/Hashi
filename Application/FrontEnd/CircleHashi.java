@@ -10,18 +10,17 @@ import javafx.scene.shape.Line;
 import Application.BackEnd.Grille.Ile;
 import javafx.scene.text.*;
 
-public class  CircleHashi{
+public class  CircleHashi extends Circle{
 	public Text text;
 
 	public Ile ile;
-	public Circle cercle;
 	public ArrayList<Line> listeLignes;
 
-	CircleHashi(Circle cercle, Ile ile){
-		this.cercle = cercle;
+	CircleHashi(Ile ile ,double coordX , double coordY , double rayon ,  javafx.scene.paint.Paint paint ){
+		super(coordX,coordY,rayon,paint);
 		this.listeLignes = new ArrayList<Line>();
 		this.ile = ile;
-		this.text = new Text(cercle.getCenterX()-6, cercle.getCenterY()+6, String.valueOf(ile.getNum()));
+		this.text = new Text(this.getCenterX()-6, this.getCenterY()+6, String.valueOf(ile.getNum()));
 		this.text.setFont(new Font(20));
 		this.text.setMouseTransparent(true);
 	}

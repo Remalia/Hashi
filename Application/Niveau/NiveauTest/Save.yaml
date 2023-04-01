@@ -32,4 +32,3 @@ grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
   pont11: ile18 | ile17 | 1
   pont12: ile14 | ile15 | 1
 pileSvg: #( pont --> ileUn | ileDeux | nbPont )
-pileRecup: #( pont --> ileUn | ileDeux | nbPont )
