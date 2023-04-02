@@ -19,11 +19,15 @@ public class CreditController extends MainSceneController {
 	/**
 	 * method to switch to the credits scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException 
 	 */
 	@FXML
 	public void credits(MouseEvent event) throws IOException {
 	    img_scene("../FXML/crédits.fxml",event);
+	}
+
+	@FXML
+	public void retour_menu_p(MouseEvent event) throws IOException {
+		img_scene("../FXML/menu_p.fxml",event);
 	}
 
 }
