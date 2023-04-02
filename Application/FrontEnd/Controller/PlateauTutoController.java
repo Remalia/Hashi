@@ -1,8 +1,4 @@
-package Application.FrontEnd.Controller;/*
- * @author 	: 	Thibaut
- * @version : 	1.0
- * @date	:	2016-04-12
- */
+package Application.FrontEnd.Controller;
 
 import java.io.IOException;
 import javafx.scene.image.Image;
@@ -17,19 +13,16 @@ import javafx.fxml.FXML;
  * This class is the controller of the main scene
  * It allows to switch between the different scenes of the application
  * It also allows to quit the application
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class PlateauTutoController extends CreditController{
 	
 	private int clickcount=0;
-	
 	private ImageView arrow;
-	private Line line;
-	private Line line2;
-	private Line line1;
-	private Line lineR1;
-	private Line lineR2;
-	private Line lineR3;
-	private Line lineR4;
+
+
 	@FXML private Circle circle1;
 	@FXML private Circle circle2;
 	@FXML private Circle circle3;
@@ -42,7 +35,7 @@ public class PlateauTutoController extends CreditController{
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
 	public void menu_param_m(MouseEvent event) throws IOException{
@@ -52,7 +45,7 @@ public class PlateauTutoController extends CreditController{
 	/**
 	 * method to switch to the tutorial scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
 	public void switchtuto2(MouseEvent event) throws IOException{
@@ -61,11 +54,16 @@ public class PlateauTutoController extends CreditController{
 	
 	/**
 	 * method to switch to add a line to the tutorial
-	 * @param event
-	 * @throws IOException
+	 * @param event : the event that triggers the switch
+	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
-	public void clic(MouseEvent event) throws IOException{    
+	public void clic(MouseEvent event) throws IOException{
+		Line line;
+		Line lineR1;
+		Line lineR2;
+
+
 	    clickcount++;
 	    circle1.setDisable(true);
 	    circle2.setDisable(false);
@@ -104,11 +102,16 @@ public class PlateauTutoController extends CreditController{
 	
 	/**
 	 * method to switch to add a line to the tutorial
-	 * @param event
-	 * @throws IOException
+	 * @param event : the event that triggers the switch
+	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
-	public void clic2(MouseEvent event) throws IOException{	
+	public void clic2(MouseEvent event) throws IOException{
+		Line line2;
+		Line line1;
+		Line lineR3;
+		Line lineR4;
+
 		clickcount++;
 		circle3.setDisable(true);
 		circle4.setDisable(false);
@@ -153,6 +156,9 @@ public class PlateauTutoController extends CreditController{
 		}
 	}
 	
+	/**
+	 * method to explain the game to the player with a tutorial
+	 */
 	@FXML 
 	public void initialize () {
 		if(text != null)

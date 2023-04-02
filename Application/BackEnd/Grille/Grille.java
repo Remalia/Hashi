@@ -66,12 +66,25 @@ public class Grille {
         this.listIle = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
         int i, j;
-        // initialisation de la grille en dur TEMPORAIRE*/
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
                 matriceGrille[i][j] = new Element();
             }
         }
+    }
+
+    public Grille (Grille grilleSolution){
+        this.pileSvg = new Stack<>();
+        this.pileRecup = new Stack<>();
+        this.listIle = grilleSolution.getListIle();
+        this.matriceGrille = new Element[10][10];
+        int i, j;
+        for(i = 0; i < 10; i++){
+            for(j = 0; j < 10; j++){
+                matriceGrille[i][j] = grilleSolution.getMatriceGrille()[i][j].donneIle();
+            }
+        }
+
     }
 
     /**
@@ -197,6 +210,9 @@ public class Grille {
                     if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
                         matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
                     }
+                    else if(matriceGrille[ile1.getAbs()][i] instanceof Intersection){
+                        ((Intersection)matriceGrille[ile1.getAbs()][i]).setPont(ile1, ile2, pont);
+                    }
                     else{
                         matriceGrille[ile1.getAbs()][i] = pont;
                     }
@@ -206,9 +222,13 @@ public class Grille {
                     if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
                         matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
                     }
+                    else if(matriceGrille[ile1.getAbs()][i] instanceof Intersection){
+                        ((Intersection)matriceGrille[ile1.getAbs()][i]).setPont(ile1, ile2, pont);
+                    }
                     else{
                         matriceGrille[ile1.getAbs()][i] = pont;
                     }
+
             }
         } else if(ile1.getOrd() == ile2.getOrd()){
             if(ile1.getAbs() < ile2.getAbs()){
@@ -216,7 +236,11 @@ public class Grille {
 
                     if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
                         matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
-                    }else{
+                    }
+                    else if(matriceGrille[i][ile2.getOrd()] instanceof Intersection){
+                        ((Intersection)matriceGrille[i][ile2.getOrd()]).setPont(ile1, ile2, pont);
+                    }
+                    else{
                         matriceGrille[i][ile2.getOrd()] = pont;
                     }
 
@@ -224,7 +248,11 @@ public class Grille {
                 for(i = ile2.getAbs() + 1; i < ile1.getAbs(); i++)
                     if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
                         matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
-                    }else{
+                    }
+                    else if(matriceGrille[i][ile2.getOrd()] instanceof Intersection){
+                        ((Intersection)matriceGrille[i][ile2.getOrd()]).setPont(ile1, ile2, pont);
+                    }
+                    else{
                         matriceGrille[i][ile2.getOrd()] = pont;
                     }
             }
@@ -255,7 +283,7 @@ public class Grille {
         String s = "";
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
-                s += matriceGrille[i][j].toString() + " ";
+                s += matriceGrille[j][i].toString() + " ";
             }
             s += "\n";
         }
@@ -347,6 +375,54 @@ public class Grille {
         } // traitement si null
         System.out.println("pont possible à créer");
         return null;
+    }
+
+    /**
+     * Vérifie si l'incrémentation d'un pont est possible
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
+     * @return true si l'incrémentation est possible, false sinon
+     */
+    public boolean estIncrementable(Ile ile1,Ile ile2) {
+        int i;
+        // si pont vertical
+        if (ile1.getAbs() == ile2.getAbs()) {
+            if (ile1.getOrd() < ile2.getOrd()) { // si ile1 est en haut
+                for (i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++) {
+                    if (matriceGrille[ile1.getAbs()][i].estIncrementable(ile1,ile2) == false) {
+                        System.out.println("1Incrementation impossible sur la case " + ile1.getAbs() + " " + i + " car " + matriceGrille[ile1.getAbs()][i].getClass().getName());
+                        return false;
+                    }
+                }
+            } else { // si ile2 est en haut
+                for (i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++) {
+                    if (matriceGrille[ile1.getAbs()][i].estIncrementable(ile1,ile2) == false) {
+                        System.out.println("2Incrementation impossible sur la case " + ile2.getAbs() + " " + i + " car " + matriceGrille[ile2.getAbs()][i].getClass().getName());
+                        return false;
+                    }
+                }
+            }
+        }
+        // si horizontal
+        else if (ile1.getOrd() == ile2.getOrd()) {
+            if (ile1.getAbs() < ile2.getAbs()) { //  si ile1 est à gauche
+                for (i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++) {
+                    if (matriceGrille[i][ile1.getOrd()].estIncrementable(ile1,ile2) == false) {
+                        System.out.println("3Incrementation impossible sur la case " + i + " " + ile1.getOrd() + " car " + matriceGrille[i][ile1.getOrd()].getClass().getName());
+                        return false;
+                    }
+                }
+
+            } else { // si ile2 est à gauche
+                for (i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++) {
+                    if (matriceGrille[i][ile1.getOrd()].estIncrementable(ile1,ile2) == false) {
+                        System.out.println("4Incrementation impossible sur la case " + i + " " + ile1.getOrd() + " car " + matriceGrille[i][ile1.getOrd()].getClass().getName());
+                        return false;
+                    }
+                }
+            }
+        } // traitement si null
+        return true;
     }
 
     /**
@@ -469,7 +545,7 @@ public class Grille {
         Grille grilleTest = new Grille("NiveauTest");
         grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
         grilleTest.saveGrilleToYAML();
-        System.out.println(grilleTest);
+        System.out.println(new Grille(grilleTest));
     }
     public static void main2(String[] args){
         Grille grilleTest = new Grille();

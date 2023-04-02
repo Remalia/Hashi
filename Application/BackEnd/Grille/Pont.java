@@ -127,4 +127,16 @@ public class Pont extends Element {
         return this;
     }
 
+    @Override
+    public Element donneIle(){
+        this.setNombrePont(0);
+        return this;
+    }
+
+    @Override
+    public boolean estIncrementable(Ile ile1, Ile ile2){
+        return true;
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package Application.FrontEnd.Controller;
+package Application.FrontEnd;
 
 import java.util.ArrayList;
 import java.util.List;

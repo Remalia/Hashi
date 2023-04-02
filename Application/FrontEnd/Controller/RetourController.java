@@ -1,9 +1,4 @@
 package Application.FrontEnd.Controller;
-/*
- * @author 	: 	Thibaut
- * @version : 	1.0
- * @date	:	2016-04-12
- */
 
 import java.io.IOException;
 import javafx.scene.input.MouseEvent;
@@ -14,13 +9,16 @@ import javafx.event.ActionEvent;
  * This class is the controller of the main scene
  * It allows to switch between the different scenes of the application
  * It also allows to quit the application
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class RetourController extends CreditController {
 	
 	/**
 	 * method to switch to the menu principal scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException 
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void retour_menu_p(MouseEvent event) throws IOException {
@@ -30,7 +28,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void menu_param_m(MouseEvent event) throws IOException{
@@ -40,7 +38,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void retour_mode(MouseEvent event) throws IOException{
@@ -50,7 +48,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void showplateau(ActionEvent event) throws IOException{
@@ -60,7 +58,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the game
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void lancer(ActionEvent event) throws IOException{
