@@ -18,7 +18,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to switch to the menu principal scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException 
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void retour_menu_p(MouseEvent event) throws IOException {
@@ -28,7 +28,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void menu_param_m(MouseEvent event) throws IOException{
@@ -38,7 +38,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void retour_mode(MouseEvent event) throws IOException{
@@ -48,7 +48,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void showplateau(ActionEvent event) throws IOException{
@@ -58,7 +58,7 @@ public class RetourController extends CreditController {
 	/**
 	 * method to go to the game
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void lancer(ActionEvent event) throws IOException{

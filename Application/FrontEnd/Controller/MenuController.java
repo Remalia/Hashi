@@ -18,7 +18,7 @@ public class MenuController extends CreditController{
 	/**
 	 * method to go to the second menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void menu_jouer(ActionEvent event) throws IOException{

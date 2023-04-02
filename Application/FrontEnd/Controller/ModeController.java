@@ -22,7 +22,7 @@ public class ModeController extends RetourController{
 	/**
 	 * method to switch to the mode libre scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void switchlibre(ActionEvent event) throws IOException{
@@ -32,7 +32,7 @@ public class ModeController extends RetourController{
 	/**
 	 * method to switch to the mode aventure scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void switchaventure(ActionEvent event) throws IOException{
