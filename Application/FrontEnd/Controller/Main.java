@@ -1,9 +1,4 @@
 package Application.FrontEnd.Controller;
-/**
- * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
- * @version 1.0
- * @since 2023-04-02
- */
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +12,9 @@ import java.util.Objects;
  * Main class of the application Hashi
  * It is used to launch the application
  * It is also used to switch between the different scenes of the application
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class Main extends Application {
 	

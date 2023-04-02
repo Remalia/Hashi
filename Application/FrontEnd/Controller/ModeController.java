@@ -13,6 +13,9 @@ import javafx.event.ActionEvent;
  * This class is the controller of the main scene
  * It allows to switch between the different scenes of the application
  * It also allows to quit the application
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class ModeController extends RetourController{
 	

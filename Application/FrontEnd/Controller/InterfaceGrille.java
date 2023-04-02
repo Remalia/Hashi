@@ -1,11 +1,5 @@
 package Application.FrontEnd.Controller;
 
-/**
- * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
- * @version 1.0
- * @since 2023-04-02
- */
-
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import javafx.animation.KeyFrame;
@@ -23,6 +17,9 @@ import java.io.IOException;
 
 /**
  * This class is the grid of the game
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class InterfaceGrille extends MainSceneController {
 
