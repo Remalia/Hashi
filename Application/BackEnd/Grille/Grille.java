@@ -271,6 +271,28 @@ public class Grille {
         //TODO Ajouter Action D'ajout de pont
     }
 
+    /**
+     * Donne un booléen indiquant si un pont peut être incrémenté
+     * @param pont le pont à vérifier
+     */
+    public boolean incrementerPontPossible(Pont pont){
+        // si pont est vertical
+        if(pont.getIle1().getOrd() == pont.getIle2().getOrd()){
+            for (int i = pont.getIle1().getAbs() + 1; i < pont.getIle2().getAbs(); i++) {
+                // si il y a une partie du pont qui ne peut pas être incrémentée
+                if(!(matriceGrille[i][pont.getIle1().getOrd()].pontIncrementable(pont)))
+                    return false;
+            }
+        }else{ // si pont est horizontal
+            for (int i = pont.getIle1().getOrd() + 1; i < pont.getIle2().getOrd(); i++) {
+                // si il y a une partie du pont qui ne peut pas être incrémentée
+                if(!(matriceGrille[pont.getIle1().getAbs()][i].pontIncrementable(pont)))
+                    return false;
+            }
+        }
+        return true;
+    }
+
 
 
     
