@@ -1,18 +1,15 @@
-package Application.FrontEnd;
+package Application.FrontEnd.Controller;
 
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
