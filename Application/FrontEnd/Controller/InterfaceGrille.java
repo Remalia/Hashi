@@ -35,8 +35,8 @@ public class InterfaceGrille extends MainSceneController {
 
     @FXML
     private AnchorPane principal;
-    public static final Color etatNormal = Color.YELLOW;
-    public static final Color etatSelect = Color.GREEN;
+    public static Color etatNormal = Color.YELLOW;
+    public static Color etatSelect = Color.GREEN;
 
     // 
     private int NB_CERCLES;
@@ -138,13 +138,13 @@ public class InterfaceGrille extends MainSceneController {
 
         // Case of renitialisation of the circle
         if(cercle == premierCercle) {
-            premierCercle.setFill(Color.YELLOW);
+            premierCercle.setFill(etatNormal);
             premierCercle = null;
             deuxiemeCercle = null;
             premierCercleClique = false;
             indicePremierCercle = null;
             indiceSecondCercle = null;
-            System.out.println("Réhinitialisé");
+            System.out.println("Réinitialisé");
         }
 
         // Case where 2 circles are clicked
@@ -156,7 +156,7 @@ public class InterfaceGrille extends MainSceneController {
             double c2y = deuxiemeCercle.getCenterY();
 
             if(c1x == c2x || c1y == c2y) {
-                premierCercle.setFill(Color.YELLOW);
+                premierCercle.setFill(etatNormal);
                 premierCercleClique = false;
                 for (int i = 0; i < cerclesHashi.length; i++) {
                     if (cerclesHashi[i] != null) {
@@ -168,7 +168,7 @@ public class InterfaceGrille extends MainSceneController {
                     }
                 }
                 dessinerLigne(premierCercle, deuxiemeCercle, panneau);
-                premierCercle.setFill(Color.YELLOW);
+                premierCercle.setFill(etatNormal);
                 premierCercle = null;
                 deuxiemeCercle = null;
                 premierCercleClique = false;
@@ -177,7 +177,7 @@ public class InterfaceGrille extends MainSceneController {
                 System.out.println("New Etats");
             }
             else {
-                premierCercle.setFill(Color.YELLOW);
+                premierCercle.setFill(etatNormal);
                 premierCercle = null;
                 deuxiemeCercle = null;
                 premierCercleClique = false;
@@ -191,7 +191,7 @@ public class InterfaceGrille extends MainSceneController {
         // Case where 1 circle is clicked
         else {
             premierCercle = cercle;
-            premierCercle.setFill(Color.GREEN);
+            premierCercle.setFill(etatSelect);
             premierCercleClique = true;
             for (int i = 0; i < cerclesHashi.length; i++) {
                 if (cerclesHashi[i] != null) {
