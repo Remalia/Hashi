@@ -1,10 +1,14 @@
 package Application.FrontEnd.Controller;/*
- * @author 	: 	Thibaut
- * @version : 	1.0
- * @date	:	2016-04-12
+
+/**
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 
 import java.io.IOException;
+import java.util.Objects;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,11 +32,11 @@ public class MainSceneController{
 	/**
 	 * Switch between the different scenes of the application
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception if the file is not found
 	 */
 	public void scene(String file, ActionEvent event) throws IOException{
         window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		root = FXMLLoader.load(getClass().getResource(file));
+		root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(file)));
         scene = new Scene(root);
 		window.setResizable(false);
         window.setScene(scene);
@@ -43,11 +47,11 @@ public class MainSceneController{
 	 * Switch between the different scenes of the application with an image
 	 * @param file : the file of the scene to switch to 
 	 * @param event : the event that triggers the switch 
-	 * @throws IOException
+	 * @throws IOException Exception if the file is not found
 	 */
 	public void img_scene(String file, MouseEvent event) throws IOException{
         window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-		root = FXMLLoader.load(getClass().getResource(file));
+		root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(file)));
         scene = new Scene(root);
 		window.setResizable(false);
         window.setScene(scene);

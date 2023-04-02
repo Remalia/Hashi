@@ -1,5 +1,11 @@
 package Application.FrontEnd.Controller;
 
+/**
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
+ */
+
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import javafx.animation.KeyFrame;
@@ -13,13 +19,17 @@ import javafx.scene.text.Text;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-
 import java.io.IOException;
 
+/**
+ * This class is the grid of the game
+ */
 public class InterfaceGrille extends MainSceneController {
 
-    private Timeline timer=null; // Ajouter une variable timer
+    
+    private Timeline timer;
     private int tempsEcoule = 0;
+
     @FXML
     private Pane panneau;
 
@@ -31,7 +41,7 @@ public class InterfaceGrille extends MainSceneController {
     public static final Color etatNormal = Color.YELLOW;
     public static final Color etatSelect = Color.GREEN;
 
-    // Dimensions de notre grille et de ces composants
+    // 
     private int NB_CERCLES;
     private int RAYON;
     private int ESPACE;
@@ -46,20 +56,19 @@ public class InterfaceGrille extends MainSceneController {
     private Integer indicePremierCercle;
     private Integer indiceSecondCercle;
 
-
+    /**
+     * Function initializing the grid
+     * @throws IOException if the file is not found
+     */
     @FXML
     public void initialize () throws IOException {
 
         this.NB_CERCLES = 10;
         this.RAYON = 25;
         this.ESPACE = RAYON * 3;
-
-        // Calcul de la taille du panneau pour afficher correctement la grille
-        double panneauWidth = NB_CERCLES * ESPACE + RAYON;
-        double panneauHeight = NB_CERCLES * ESPACE + RAYON;
-
         this.cerclesHashi = new CircleHashi[this.NB_CERCLES * this.NB_CERCLES];
 
+        // Timer
         this.timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             tempsEcoule++;
             int minutes = tempsEcoule / 60;
@@ -68,11 +77,13 @@ public class InterfaceGrille extends MainSceneController {
         }));
         timer.setCycleCount(Timeline.INDEFINITE);
 
-        // Définition de la taille du panneau
+        // Initialize the pane
+        double panneauWidth = NB_CERCLES * ESPACE + RAYON;
+        double panneauHeight = NB_CERCLES * ESPACE + RAYON;
+
         panneau.setPrefWidth(panneauWidth);
         panneau.setPrefHeight(panneauHeight);
 
-        // Centrage du panneau dans la fenêtre
         principal.widthProperty().addListener((obs, oldVal, newVal) -> {
             double newX = (newVal.doubleValue() - panneauWidth) / 2;
             panneau.setLayoutX(newX);
@@ -82,10 +93,13 @@ public class InterfaceGrille extends MainSceneController {
             panneau.setLayoutY(newY);
         });
 
+        // Initialize the grid
         Grille grille = new Grille("NiveauTest");
         grille.getGrilleFromYAML(grille.getFileNiveau());
         grille.saveGrilleToYAML();
+
         System.out.println(grille.getListIle());
+
         for(Ile ile : grille.getListIle()){
             double coordX = ESPACE * (ile.getAbs()+1);
             double coordY = ESPACE * (ile.getOrd()+1);
@@ -100,8 +114,9 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Fonction qui donne le CircleHashi à l'aide de son cercle
-     * @param c cercle appartenant au CircleHashi
+     * Function to get the circle
+     * @param c the circle
+     * @return the circle
      */
     private CircleHashi getCircleHashi(Circle c){
         for(CircleHashi cercleHashi : cerclesHashi){
@@ -112,7 +127,10 @@ public class InterfaceGrille extends MainSceneController {
         return null;
     }
 
-    // Méthode appelée lorsqu'un cercle est cliqué. Elle change la couleur du cercle + gestion des ponts.
+    /**
+     * Function to change the color of the circle and the bridge
+     * @param event the event
+     */
     private void interactionCouleur(MouseEvent event) {
 
         if (!chronometreDemarre) {
@@ -121,7 +139,7 @@ public class InterfaceGrille extends MainSceneController {
         }
         Circle cercle = (Circle) event.getSource();
 
-        // Cas de réhinitialisation du clique de cercle
+        // Case of renitialisation of the circle
         if(cercle == premierCercle) {
             premierCercle.setFill(Color.YELLOW);
             premierCercle = null;
@@ -132,7 +150,7 @@ public class InterfaceGrille extends MainSceneController {
             System.out.println("Réhinitialisé");
         }
 
-        // Cas ou 2 cercles ont été cliqué
+        // Case where 2 circles are clicked
         else if (premierCercleClique && cercle != premierCercle) {
             deuxiemeCercle = cercle;
             double c1x = premierCercle.getCenterX();
@@ -173,7 +191,7 @@ public class InterfaceGrille extends MainSceneController {
 
         }
 
-        // Cas ou seulement 1 cercles est cliqué
+        // Case where 1 circle is clicked
         else {
             premierCercle = cercle;
             premierCercle.setFill(Color.GREEN);
@@ -189,8 +207,7 @@ public class InterfaceGrille extends MainSceneController {
         }
     }
 
-    // Dessiner la ligne entre les cercles
-
+    // Design the bridge
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
         Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);
