@@ -3,32 +3,43 @@ package Application.FrontEnd.Controller;
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-
+import javafx.util.Duration;
 import java.io.IOException;
 
-public class InterfaceGrille extends Application {
+public class InterfaceGrille extends MainSceneController {
 
-    public static final Color etatNormal = Color.YELLOW;
-    public static final Color etatSelect = Color.GREEN;
+    private Timeline timer=null; // Ajouter une variable timer
+    private int tempsEcoule = 0;
+    @FXML
+    private Pane panneau;
+
+    @FXML
+    private Text chronometre;
+
+    @FXML
+    private AnchorPane principal;
+    public static Color etatNormal = Color.YELLOW;
+    public static Color etatSelect = Color.GREEN;
 
     // Dimensions de notre grille et de ces composants
-    private final int NB_LIGNES = 10;
-    private final int NB_COLONNES = 10;
-    private final int RAYON = 20;
-    private final int ESPACE = 30;
-    private final int LARGEUR_FENETRE = NB_COLONNES * (RAYON * 2 + ESPACE) + ESPACE*2;
-    private final int HAUTEUR_FENETRE = NB_LIGNES * (RAYON * 2 + ESPACE) + ESPACE*2;
-    private final int COORDPRIMCERCLEX = 70;
-    private final int COORDPRIMCERCLEY = 70;
+    private int NB_CERCLES;
+    private int RAYON;
+    private int ESPACE;
+    boolean chronometreDemarre = false;
 
-    private CircleHashi[] cerclesHashi = new CircleHashi[NB_LIGNES * NB_COLONNES];
+    private CircleHashi[] cerclesHashi;
 
     // Sauvegardes temporelle
     private CircleHashi premierCercle = null;
@@ -39,42 +50,60 @@ public class InterfaceGrille extends Application {
 
     private Grille grille;
 
-    // Panneau qui contiendra notre grille
-    Pane panneau = new Pane();
-
 
     /**
      * Redéfinition de la méthode start de Application
-     * @param primaryStage la fenêtre principale
      * @throws IOException si le fichier YAML n'est pas trouvé
      */
-    @Override
-    public void start(Stage primaryStage) throws IOException {
+    @FXML
+    public void initialize() throws IOException {
+        this.NB_CERCLES = 10;
+        this.RAYON = 25;
+        this.ESPACE = RAYON * 3;
+
+        // Calcul de la taille du panneau pour afficher correctement la grille
+        double panneauWidth = NB_CERCLES * ESPACE + RAYON;
+        double panneauHeight = NB_CERCLES * ESPACE + RAYON;
+
+        this.cerclesHashi = new CircleHashi[this.NB_CERCLES * this.NB_CERCLES];
+
+        this.timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            tempsEcoule++;
+            int minutes = tempsEcoule / 60;
+            int secondes = tempsEcoule % 60;
+            chronometre.setText(String.format("%02d:%02d", minutes, secondes));
+        }));
+        timer.setCycleCount(Timeline.INDEFINITE);
+
+        // Définition de la taille du panneau
+        panneau.setPrefWidth(panneauWidth);
+        panneau.setPrefHeight(panneauHeight);
+
+        // Centrage du panneau dans la fenêtre
+        principal.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double newX = (newVal.doubleValue() - panneauWidth) / 2;
+            panneau.setLayoutX(newX);
+        });
+        principal.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double newY = (newVal.doubleValue() - panneauHeight) / 2;
+            panneau.setLayoutY(newY);
+        });
         Grille grille = new Grille("NiveauTest");
         grille.getGrilleFromYAML(grille.getFileNiveau());
         grille.saveGrilleToYAML();
         this.grille = new Grille(grille);
         System.out.println(grille);
         for(Ile ile : grille.getListIle()){
-            double coordX = COORDPRIMCERCLEX * (ile.getAbs()+1);
-            double coordY = COORDPRIMCERCLEY * (ile.getOrd()+1);
+            double coordX = ESPACE * (ile.getAbs()+1);
+            double coordY = ESPACE * (ile.getOrd()+1);
             CircleHashi cercle = new CircleHashi(ile,coordX,coordY , RAYON, etatNormal); // Ici, les coordonnées des cercles ne sont pas initialisé
             cercle.setStrokeWidth(6.0);
             cercle.setStroke(Color.ORANGE);
-            cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()] = cercle;
+            cerclesHashi[ile.getAbs() * NB_CERCLES + ile.getOrd()] = cercle;
             cercle.setOnMouseClicked(this::interactionCouleur);
             panneau.getChildren().add(cercle);
-            panneau.getChildren().add(cerclesHashi[ile.getAbs() * NB_COLONNES + ile.getOrd()].getText());
+            panneau.getChildren().add(cerclesHashi[ile.getAbs() * NB_CERCLES + ile.getOrd()].getText());
         }
-
-
-
-
-        // Affichage du panneau qui contiendra notre grilleHashi
-        Scene scene = new Scene(panneau, LARGEUR_FENETRE, HAUTEUR_FENETRE);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Application.BackEnd.Grille.Grille Hashi");
-        primaryStage.show();
     }
 
 
@@ -84,6 +113,11 @@ public class InterfaceGrille extends Application {
      */
     private void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
+
+        if (!chronometreDemarre) {
+            chronometreDemarre = true;
+            timer.play();
+        }
 
         // Cas de réinitialisation du clique de cercle
         if(cercle == premierCercle) {
@@ -163,7 +197,7 @@ public class InterfaceGrille extends Application {
      * @param panneau panneau sur lequel dessiner la ligne
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
-        if(this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle()) == false){
+        if(!this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
             System.out.println("Erreur : pont impossible");
             return;
         }
@@ -172,9 +206,9 @@ public class InterfaceGrille extends Application {
         Line ligne3 = new Line(cercle1.getCenterX()-5, cercle1.getCenterY()-5, cercle2.getCenterX()-5, cercle2.getCenterY()-5);
         //System.out.println(ligne1);
 
-        if(cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) != true && cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3) != true) {
+        if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
 
-            if((cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne1) != true)) {
+            if((!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne1))) {
                 cerclesHashi[indicePremierCercle].ajouterLigne(ligne1);
                 cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne1);
                 panneau.getChildren().removeAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
@@ -212,10 +246,6 @@ public class InterfaceGrille extends Application {
         }
 
         System.out.println(this.grille);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
