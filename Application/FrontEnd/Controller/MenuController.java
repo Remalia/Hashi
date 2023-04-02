@@ -23,7 +23,7 @@ public class MenuController extends CreditController{
 	 */
 	@FXML
 	public void menu_jouer(ActionEvent event) throws IOException{
-        scene("./FXML/menu_s.fxml",event);
+        scene("../FXML/menu_s.fxml",event);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class MenuController extends CreditController{
 	 */
 	@FXML
 	public void menu_param(ActionEvent event) throws IOException{
-		scene("./FXML/parametre.fxml",event);
+		scene("../FXML/parametre.fxml",event);
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class MenuController extends CreditController{
 	 */
 	@FXML
 	public void switchtuto(ActionEvent event) throws IOException{
-        scene("./FXML/tutoriel.fxml",event);
+        scene("../FXML/tutoriel.fxml",event);
 	}
 	
 	/**

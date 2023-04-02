@@ -46,7 +46,7 @@ public class PlateauTutoController extends CreditController{
 	 */
 	@FXML
 	public void menu_param_m(MouseEvent event) throws IOException{
-		img_scene("./FXML/parametre.fxml",event);
+		img_scene("../FXML/parametre.fxml",event);
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class PlateauTutoController extends CreditController{
 	 */
 	@FXML
 	public void switchtuto2(MouseEvent event) throws IOException{
-        img_scene("./FXML/tutoriel.fxml",event);
+        img_scene("../FXML/tutoriel.fxml",event);
 	}
 	
 	/**

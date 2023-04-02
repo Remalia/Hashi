@@ -23,7 +23,7 @@ public class CreditController extends MainSceneController {
 	 */
 	@FXML
 	public void credits(MouseEvent event) throws IOException {
-	    img_scene("./FXML/crédits.fxml",event);
+	    img_scene("../FXML/crédits.fxml",event);
 	}
 
 }

@@ -24,7 +24,7 @@ public class RetourController extends CreditController {
 	 */
 	@FXML
 	public void retour_menu_p(MouseEvent event) throws IOException {
-	    img_scene("./FXML/menu_p.fxml",event);
+	    img_scene("../FXML/menu_p.fxml",event);
 	}
 	
 	/**
@@ -34,7 +34,7 @@ public class RetourController extends CreditController {
 	 */
 	@FXML
 	public void menu_param_m(MouseEvent event) throws IOException{
-		img_scene("./FXML/parametre.fxml",event);
+		img_scene("../FXML/parametre.fxml",event);
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class RetourController extends CreditController {
 	 */
 	@FXML
 	public void retour_mode(MouseEvent event) throws IOException{
-		img_scene("./FXML/menu_s.fxml",event);
+		img_scene("../FXML/menu_s.fxml",event);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class RetourController extends CreditController {
 	 */
 	@FXML
 	public void showplateau(ActionEvent event) throws IOException{
-		scene("./FXML/tutoriel_plateau.fxml",event);
+		scene("../FXML/tutoriel_plateau.fxml",event);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class RetourController extends CreditController {
 	 */
 	@FXML
 	public void lancer(ActionEvent event) throws IOException{
-		scene("./FXML/plateau.fxml",event);
+		scene("../FXML/plateau.fxml",event);
 	}
 	
 	

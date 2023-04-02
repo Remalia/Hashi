@@ -26,7 +26,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage window) {
 		try {
-			root = FXMLLoader.load(getClass().getResource("./FXML/menu_p.fxml"));
+			root = FXMLLoader.load(getClass().getResource("../FXML/menu_p.fxml"));
 			scene = new Scene(root);
 			window.setTitle("Hashi");
 			window.setScene(scene);
