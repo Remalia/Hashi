@@ -377,6 +377,12 @@ public class Grille {
         return null;
     }
 
+    /**
+     * Vérifie si l'incrémentation d'un pont est possible
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
+     * @return true si l'incrémentation est possible, false sinon
+     */
     public boolean estIncrementable(Ile ile1,Ile ile2) {
         int i;
         // si pont vertical
