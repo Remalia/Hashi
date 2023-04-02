@@ -1,4 +1,4 @@
-package Application.FrontEnd;
+package Application.FrontEnd.Controller;
 
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;

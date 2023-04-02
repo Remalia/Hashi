@@ -117,15 +117,6 @@ public class Pont extends Element {
     }
 
     /**
-     * Retourne false si Element quelconque et true si Pont ou intersection avec l'autre pont à 0
-     * @return true si Pont
-     */
-    @Override
-    public boolean pontIncrementable(Pont pont){
-        return true;
-    }
-
-    /**
      * 
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
