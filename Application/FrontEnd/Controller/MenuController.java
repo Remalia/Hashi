@@ -28,7 +28,7 @@ public class MenuController extends CreditController{
 	/**
 	 * method to go to the settings menu
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void menu_param(ActionEvent event) throws IOException{
@@ -38,7 +38,7 @@ public class MenuController extends CreditController{
 	/**
 	 * method to switch to the tutorial scene
 	 * @param event : the event that triggers the switch
-	 * @throws IOException
+	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
 	public void switchtuto(ActionEvent event) throws IOException{

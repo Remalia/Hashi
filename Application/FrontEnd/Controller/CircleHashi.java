@@ -1,11 +1,5 @@
 package Application.FrontEnd.Controller;
 
-/**
- * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
- * @version 1.0
- * @since 2023-04-02
- */
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.scene.paint.Color;
@@ -18,6 +12,9 @@ import javafx.scene.text.*;
  * Classe CircleHashi
  * This class is used to create a circle with a number in it
  * It is used to represent an island
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class CircleHashi extends Circle{
 
