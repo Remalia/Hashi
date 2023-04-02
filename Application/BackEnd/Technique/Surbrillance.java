@@ -1,5 +1,6 @@
 package Application.BackEnd.Technique;
 
+import Application.BackEnd.Commandes.Action;
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import Application.BackEnd.Grille.Pont;
@@ -39,9 +40,9 @@ public class Surbrillance {
                 return;
             else{
                 /** parcours des ponts de la grille */
-                Iterator<Pont> itr_svg = grille.pileSvg.iterator();
+                Iterator itr_svg = grille.pileSvg.iterator();
                 while(itr_svg.hasNext()){
-                    Pont pont_cour = itr_svg.next();
+                    Pont pont_cour = (Pont) itr_svg.next();
                     /** recherche des ponts reliant l'île ciblée à d'autres îles */
                     if(pont_cour.getIle1().equals(ile)){
                         pont_cour.setCouleur(c);
