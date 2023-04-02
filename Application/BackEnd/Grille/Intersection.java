@@ -52,7 +52,8 @@ public class Intersection extends Element {
     /**
      * @return true si le pont p de l'intersection peut etre incrementé
      */
-    public Boolean estIncrementable(Pont p){
+
+    private Boolean estIncrementable(Pont p){
         if(p == pont1){
             return pont2.getNombrePont() == 0;
         }else{
@@ -129,6 +130,15 @@ public class Intersection extends Element {
         }else{
             return "┼";
         }
+    }
+
+    /**
+     * Retourne false si Element quelconque et true si Pont ou intersection avec l'autre pont à 0
+     * @return true si Pont
+     */
+    @Override
+    public boolean pontIncrementable(Pont pont){
+        return this.estIncrementable(pont);
     }
 
     /**

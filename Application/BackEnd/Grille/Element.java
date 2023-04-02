@@ -58,6 +58,13 @@ public class Element {
         return null;
     }
 
+    /**
+     * Retourne false si Element quelconque et true si Pont ou intersection avec l'autre pont à 0
+     * @return false si Element quelconque
+     */
+    public boolean pontIncrementable(Pont pont){
+        return false;
+    }
 
     /**
      * @param x x du parcours dans la grille

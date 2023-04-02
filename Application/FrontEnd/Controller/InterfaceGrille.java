@@ -1,7 +1,8 @@
 package Application.FrontEnd.Controller;
-
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
+import Application.BackEnd.Grille.Pont;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -22,8 +23,7 @@ import java.io.IOException;
  * @since 2023-04-02
  */
 public class InterfaceGrille extends MainSceneController {
-
-    
+    private Grille grille;
     private Timeline timer;
     private int tempsEcoule = 0;
 
@@ -91,7 +91,7 @@ public class InterfaceGrille extends MainSceneController {
         });
 
         // Initialize the grid
-        Grille grille = new Grille("NiveauTest");
+        this.grille = new Grille("NiveauTest");
         grille.getGrilleFromYAML(grille.getFileNiveau());
         grille.saveGrilleToYAML();
 
@@ -139,11 +139,7 @@ public class InterfaceGrille extends MainSceneController {
         // Case of renitialisation of the circle
         if(cercle == premierCercle) {
             premierCercle.setFill(etatNormal);
-            premierCercle = null;
-            deuxiemeCercle = null;
-            premierCercleClique = false;
-            indicePremierCercle = null;
-            indiceSecondCercle = null;
+            this.annulerSelection();
             System.out.println("Réinitialisé");
         }
 
@@ -156,33 +152,32 @@ public class InterfaceGrille extends MainSceneController {
             double c2y = deuxiemeCercle.getCenterY();
 
             if(c1x == c2x || c1y == c2y) {
-                premierCercle.setFill(etatNormal);
-                premierCercleClique = false;
-                for (int i = 0; i < cerclesHashi.length; i++) {
-                    if (cerclesHashi[i] != null) {
-                        if ((cerclesHashi[i].getCenterX() == deuxiemeCercle.getCenterX()) && (cerclesHashi[i].getCenterY() == deuxiemeCercle.getCenterY())) {
-                            indiceSecondCercle = i;
-                            //System.out.println(indicePremierCercle +"-"+ indiceSecondCercle);
-                            break;
+                Pont pontAIncrementer = grille.chercherPont(getCircleHashi(premierCercle).ile, getCircleHashi(deuxiemeCercle).ile);
+                // si le pont ne va pas croiser un autre pont
+                if(grille.incrementerPontPossible(pontAIncrementer)) {
+                    System.out.println("Incrementation possible");
+                    premierCercle.setFill(etatNormal);
+                    premierCercleClique = false;
+                    for (int i = 0; i < cerclesHashi.length; i++) {
+                        if (cerclesHashi[i] != null) {
+                            if ((cerclesHashi[i].getCenterX() == deuxiemeCercle.getCenterX()) && (cerclesHashi[i].getCenterY() == deuxiemeCercle.getCenterY())) {
+                                indiceSecondCercle = i;
+                                //System.out.println(indicePremierCercle +"-"+ indiceSecondCercle);
+                                break;
+                            }
                         }
                     }
+                    dessinerLigne(premierCercle, deuxiemeCercle, panneau);
+                    premierCercle.setFill(etatNormal);
+                    this.annulerSelection();
+                    System.out.println("New Etats");
+                }else {
+                    System.out.println("Impossible sinon collision !");
+                    this.annulerSelection();
                 }
-                dessinerLigne(premierCercle, deuxiemeCercle, panneau);
+            } else {
                 premierCercle.setFill(etatNormal);
-                premierCercle = null;
-                deuxiemeCercle = null;
-                premierCercleClique = false;
-                indicePremierCercle = null;
-                indiceSecondCercle = null;
-                System.out.println("New Etats");
-            }
-            else {
-                premierCercle.setFill(etatNormal);
-                premierCercle = null;
-                deuxiemeCercle = null;
-                premierCercleClique = false;
-                indicePremierCercle = null;
-                indiceSecondCercle = null;
+                this.annulerSelection();
                 System.out.println("Combinaison interdit");
             }
 
@@ -202,6 +197,18 @@ public class InterfaceGrille extends MainSceneController {
                 }
             }
         }
+    }
+
+    /**
+     * retourne les valeurs de premierCercle & deuxiemeCerle à null et les remet à leur état normal ( non selectionné )
+     */
+    private void annulerSelection(){
+        premierCercle.setFill(etatNormal);
+        premierCercle = null;
+        deuxiemeCercle = null;
+        premierCercleClique = false;
+        indicePremierCercle = null;
+        indiceSecondCercle = null;
     }
 
     // Design the bridge
