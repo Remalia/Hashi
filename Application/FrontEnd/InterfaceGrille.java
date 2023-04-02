@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class InterfaceGrille extends MainSceneController {
 
-    private Timeline timer; // Ajouter une variable timer
+    private Timeline timer=null; // Ajouter une variable timer
     private int tempsEcoule = 0;
     @FXML
     private Pane panneau;
