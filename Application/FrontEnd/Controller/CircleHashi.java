@@ -11,9 +11,12 @@ import Application.BackEnd.Grille.Ile;
 import javafx.scene.text.*;
 
 /**
- * Classe CircleHashi qui herite de Circle
- * Cette classe permet de creer un cercle avec un texte et une ile
- *
+ * Classe CircleHashi
+ * This class is used to create a circle with a number in it
+ * It is used to represent an island
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
  */
 public class  CircleHashi extends Circle{
 	private Text text;
@@ -21,12 +24,12 @@ public class  CircleHashi extends Circle{
 	private List<Line> listeLignes;
 
 	/**
-	 * Constructeur de la classe CircleHashi
-	 * @param ile l'ile du cercle
-	 * @param coordX la coordonnee x du cercle
-	 * @param coordY la coordonnee y du cercle
-	 * @param rayon le rayon du cercle
-	 * @param paint la couleur du cercle
+	 * Constructeur
+	 * @param ile : Ile : the island
+	 * @param coordX : double : the x coordinate
+	 * @param coordY : double : the y coordinate
+	 * @param rayon : double : the radius
+	 * @param paint	: javafx.scene.paint.Paint : the color
 	 */
 	CircleHashi(Ile ile ,double coordX , double coordY , double rayon ,  javafx.scene.paint.Paint paint ){
 		super(coordX,coordY,rayon,paint);
@@ -38,8 +41,8 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * Change la couleur du texte
-	 * @param couleur la nouvelle couleur du texte
+	 * This method is used to change the color of the text
+	 * @param couleur : Color
 	 */
 	public void changerCouleurTexte(Color couleur) {
 		this.text.setFill(couleur);
@@ -47,9 +50,8 @@ public class  CircleHashi extends Circle{
 
 
 	/**
-	 * Verifie si la ligne est dans la liste de lignes
-	 * @param ligne la ligne a verifier
-	 * @return true si la ligne est dans la liste de lignes, false sinon
+	 * This method is used to check if a line is in the list of lines
+	 * @param ligne : Line : the line to check
 	 */
 	public boolean ligneEstDansListe(Line ligne) {
 		for (Line l : listeLignes) {
@@ -62,9 +64,9 @@ public class  CircleHashi extends Circle{
 
 
 	/**
-	 * Retourne la ligne inverse de la ligne passee en parametre
-	 * @param ligne la ligne dont on veut la ligne inverse
-	 * @return la ligne inverse de la ligne passee en parametre
+	 * This method returns the line
+	 * @param ligne : Line : the line to reverse
+	 * @return Line
 	 */
 	public Line retournerLigne(Line ligne) {
 		for (Line l : listeLignes) {
@@ -76,9 +78,9 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * Retourne la ligne inverse de la ligne passee en parametre
-	 * @param ligne la ligne dont on veut la ligne inverse
-	 * @return la ligne inverse de la ligne passee en parametre
+	 * This method returns the reverse of a line
+	 * @param ligne : Line : the line to reverse
+	 * @return Line
 	 */
 	public Line retournerLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
@@ -86,16 +88,16 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * Ajoute la ligne a la liste de lignes
-	 * @param ligne la ligne a ajouter
+	 * This method is used to add a line to the list of lines
+	 * @param ligne : Line : the line to add
 	 */
 	public void ajouterLigne(Line ligne) {
 		listeLignes.add(ligne);
 	}
 
 	/**
-	 * Ajoute la ligne inverse a la liste de lignes
-	 * @param ligne la ligne a ajouter
+	 * This method is used to add the reverse of a line to the list of lines
+	 * @param ligne : Line : the line to add
 	 */
 	public void ajouterLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
@@ -103,16 +105,16 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * Supprime la ligne de la liste de lignes
-	 * @param ligne la ligne a supprimer
+	 * This method is used to remove a line from the list of lines
+	 * @param ligne : Line : the line to remove
 	 */
 	public void supprimerLigne(Line ligne) {
 		listeLignes.removeIf(l -> ligne.getStartX() == l.getStartX() && ligne.getStartY() == l.getStartY() && ligne.getEndX() == l.getEndX() && ligne.getEndY() == l.getEndY());
 	}
 
 	/**
-	 * Supprime la ligne inverse de la liste de lignes
-	 * @param ligne la ligne a supprimer
+	 * This method is used to remove the reverse of a line from the list of lines
+	 * @param ligne : Line : the line to remove
 	 */
 	public void supprimerLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
@@ -121,14 +123,14 @@ public class  CircleHashi extends Circle{
 
 	// Getters et Setters
 	/**
-	 * @return l'ile du cercle
+	 * @return the island of the circle
 	 */
 	public Ile getIle() {
 		return ile;
 	}
 
 	/**
-	 * @return le texte du cercle
+	 * @return the text of the circle
 	 */
 	public Text getText() {
 		return text;

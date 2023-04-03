@@ -18,6 +18,12 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import java.io.IOException;
 
+/**
+ * This class is the grid of the game
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
+ */
 public class InterfaceGrille extends MainSceneController {
 
     private Timeline timer=null; // Ajouter une variable timer
@@ -33,7 +39,6 @@ public class InterfaceGrille extends MainSceneController {
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
-    // Dimensions de notre grille et de ces composants
     private int NB_CERCLES;
     private int RAYON;
     private int ESPACE;
@@ -41,7 +46,6 @@ public class InterfaceGrille extends MainSceneController {
 
     private CircleHashi[] cerclesHashi;
 
-    // Sauvegardes temporelle
     private CircleHashi premierCercle = null;
     private CircleHashi deuxiemeCercle = null;
     private boolean premierCercleClique = false;
@@ -52,8 +56,8 @@ public class InterfaceGrille extends MainSceneController {
 
 
     /**
-     * Redéfinition de la méthode start de Application
-     * @throws IOException si le fichier YAML n'est pas trouvé
+     * Function initializing the grid
+     * @throws IOException if the file is not found
      */
     @FXML
     public void initialize() throws IOException {
@@ -108,8 +112,8 @@ public class InterfaceGrille extends MainSceneController {
 
 
     /**
-     * Méthode appelée lorsqu'un cercle est cliqué. Elle change la couleur du cercle + gestion des ponts.
-     * @param event évènement de la souris
+     * Function to change the color of the circle and the bridge
+     * @param event the event
      */
     private void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
@@ -119,12 +123,12 @@ public class InterfaceGrille extends MainSceneController {
             timer.play();
         }
 
-        // Cas de réinitialisation du clique de cercle
+        // Case of renitialisation of the circle
         if(cercle == premierCercle) {
             reinitialiserCercles();
         }
 
-        // Cas ou deux cercles ont été cliqués
+        // Case where 2 circles are clicked
         else if (premierCercleClique && cercle != premierCercle) {
             deuxiemeCercle = cercle;
             if (memeLigneOuColonne(premierCercle, deuxiemeCercle)) {
@@ -136,7 +140,7 @@ public class InterfaceGrille extends MainSceneController {
             }
         }
 
-        // Cas ou seulement un cercle est cliqué
+        // Case where 1 circle is clicked
         else {
             premierCercle = cercle;
             premierCercle.setFill(Color.GREEN);
@@ -146,10 +150,10 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthode qui retourne vrai si les deux cercles sont sur la même ligne ou la même colonne
-     * @param cercle1 premier cercle à comparer
-     * @param cercle2 deuxième cercle à comparer
-     * @return vrai si les deux cercles sont sur la même ligne ou la même colonne
+     * This method returns true if the two circles are on the same line or the same column
+     * @param cercle1 first circle to compare
+     * @param cercle2 second circle to compare
+     * @return true if the two circles are on the same line or the same column
      */
     private boolean memeLigneOuColonne(CircleHashi cercle1, CircleHashi cercle2) {
         double c1x = cercle1.getCenterX();
@@ -161,7 +165,7 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthode qui réinitialise les variables de la classe
+     * Méthod to reinitialize the circles
      */
     private void reinitialiserCercles(){
         premierCercle.setFill(Color.YELLOW);
@@ -173,9 +177,9 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthode qui retourne l'indice du cercle dans le tableau de cercles
-     * @param cercle cercle dont on veut l'indice
-     * @return l'indice du cercle dans le tableau de cercles
+     * Méthod who returns the index of the circle in the array
+     * @param cercle the circle to find
+     * @return the index of the circle in the array
      */
     private int trouverIndiceCercle(CircleHashi cercle) {
         for (int i = 0; i < cerclesHashi.length; i++) {
@@ -188,13 +192,11 @@ public class InterfaceGrille extends MainSceneController {
         return -1;
     }
 
-    // Dessiner la ligne entre les cercles
-
     /**
-     * Fonction qui dessine une ligne entre 2 cercles
-     * @param cercle1 cercle de départ
-     * @param cercle2 cercle d'arrivé
-     * @param panneau panneau sur lequel dessiner la ligne
+     * Méthod to draw the bridge between the two circles
+     * @param cercle1 the first circle
+     * @param cercle2 the second circle
+     * @param panneau the pane where the bridge will be drawn
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         if(!this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
