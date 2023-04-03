@@ -2,16 +2,18 @@ package Application.FrontEnd.Controller;
 
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
-import javafx.application.Application;
+import javafx.animation.Animation;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -36,13 +38,17 @@ public class InterfaceGrille extends MainSceneController {
 
     @FXML
     private AnchorPane principal;
+
+    @FXML private ImageView switch_timer;
+
+    private Image newImage;
+
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
     private int NB_CERCLES;
     private int RAYON;
     private int ESPACE;
-    boolean chronometreDemarre = false;
 
     private CircleHashi[] cerclesHashi;
 
@@ -53,6 +59,34 @@ public class InterfaceGrille extends MainSceneController {
     private Integer indiceSecondCercle;
 
     private Grille grille;
+
+
+    /**
+     * method to switch to the mode
+     * @param event : the event that triggers the switch
+     */
+    @FXML
+    public void retour_mode(MouseEvent event) throws IOException {
+        img_scene("../FXML/jeuaventure.fxml",event);
+    }
+
+    /**
+     * method to stop the timer
+     * @param event : the event that triggers the switch
+     */
+    @FXML
+    public void stop_timer(ActionEvent event) throws IOException {
+        Image newImage;
+        if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
+            newImage = new Image("Application/FrontEnd/background/bouton-pause.png");
+            switch_timer.setImage(newImage);
+            timer.play();
+        }else{
+            newImage = new Image("Application/FrontEnd/background/bouton-jouer.png");
+            switch_timer.setImage(newImage);
+            timer.pause();
+        }
+    }
 
 
     /**
@@ -118,8 +152,9 @@ public class InterfaceGrille extends MainSceneController {
     private void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
 
-        if (!chronometreDemarre) {
-            chronometreDemarre = true;
+        if (!(timer.getStatus() == Animation.Status.RUNNING)) {
+            newImage = new Image("Application/FrontEnd/background/bouton-pause.png");
+            switch_timer.setImage(newImage);
             timer.play();
         }
 
