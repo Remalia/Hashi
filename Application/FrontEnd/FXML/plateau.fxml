@@ -13,7 +13,7 @@
 <AnchorPane fx:id="principal" minHeight="900.0" minWidth="1200.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfaceGrille">
    <children>
       <Pane fx:id="panneau" layoutX="341.0" layoutY="222.0" prefHeight="436.0" prefWidth="483.0" />
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="50.0" layoutY="59.0">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="50.0" layoutY="59.0" onMouseClicked="#retour_mode">
          <image>
             <Image url="@../background/retour.png" />
          </image>
@@ -45,10 +45,10 @@
       </Group>
       <Group layoutX="477.0" layoutY="753.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+            <Button mnemonicParsing="false" onAction="#stop_timer" prefHeight="60.0" prefWidth="60.0" />
+            <ImageView fx:id="switch_timer" fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/bouton-pause(1).png" />
+                  <Image url="@../background/bouton-jouer.png" />
                </image>
             </ImageView>
          </children>
