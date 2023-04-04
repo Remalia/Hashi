@@ -1318,55 +1318,14 @@ public class Technique{
     */
     static Grille simulationReseau(Grille g, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee, int indiceIleBloquee, int indiceConfig)
     {
-        Grille nvGrille = g;
+        //Grille nvGrille = g;
         Pont p;
         Ile v;
         // On intiialise avec le nombre de ponts déjà créés
         int nbPontsCreables = 0;
 
         // Valeur de l'itération sur les îles voisines
-        int iteration = 0;
-
-        // V1 sans prendre en compte toutes les possibilités
-        // On regarde les voisins
-        for(Ile i: voisins)
-        {   
-            // Si c'est l'île qu'on a bloqué il n'y a pas de traitement
-            if(ileBloquee != i)
-            {
-                // On regarde s'il y a déjà un pont entre les 2 îles
-                if((p = g.chercherPont(ileCour, i)) != null)
-                {
-                    // Il n'y a pas de pont on va donc commencer par vérifier si on peut créer un pont double puis simple
-                    if(Technique.ajoutPontDouble(i, ileCour))
-                    {
-                        g.ajouterPont(ileCour, i, 2);
-                        nbPontsCreables += 2;
-                    }
-                    else if(Technique.ajoutPontSimple(i, ileCour))
-                    {
-                        g.ajouterPont(ileCour, i, 1);
-                        nbPontsCreables++;
-                    }
-                }
-                else
-                {
-                    // Il existe un pont
-                    // On regarde la valeur du pont
-                    nbPontsCreables += p.getNombrePont();
-                }
-            }
-            else
-            {
-                // Il faut prendre en compte le pont s'il existe entre l'île qu'on décide de bloquer
-                if((p = g.chercherPont(ileCour, i)) != null)
-                {
-                    nbPontsCreables += p.getNombrePont();
-                }
-
-            }
-        }
-
+        int valIteration = 0;
 
         // V3 
         // on tente de définir les 3 indices des îles voisines qui ne sont pas bloquées afin de réaliser différentes configurations
@@ -1395,72 +1354,76 @@ public class Technique{
             if(ileBloquee != i)
             {
                 // on regarde sur quelle ile on se trouve
-                switch(iteration)
+                switch(valIteration)
                 {
                     case 0:
                         // On fait une fonction qui effectue un traitement sur l'île passée en paramètres à partir du nombre de ponts passés en paramètres
-                        if(Technique.simulationPont(valeurPontUn, ileCour, i, g))
+                        if((p = g.chercherPont(i, ileCour)) != null)
                         {
-                            g.ajouterPont(ileCour, i, valeurPontUn);
-                            nbPontsCreables += valeurPontUn;
+                            if(Technique.simulationPont(valeurPontUn, ileCour, i, g))
+                            {
+                                g.ajouterPont(ileCour, i, valeurPontUn);
+                                nbPontsCreables += valeurPontUn;
+                            }
+                        }
+                        else
+                        {
+                            // Si la valeur existante du pont est différente de la valeur théorique du pont dans la configuration on retourne null
+                            if(p.getNombrePont() != valeurPontUn)
+                            {
+                                return null;
+                            }
+                            nbPontsCreables += p.getNombrePont();
                         }
                         break;
                     case 1:
-                        if(Technique.simulationPont(valeurPontDeux, ileCour, i, g))
+                        if((p = g.chercherPont(i, ileCour)) != null)
                         {
-                            g.ajouterPont(ileCour, i, valeurPontDeux);
-                            nbPontsCreables += valeurPontDeux;
+                            if(Technique.simulationPont(valeurPontDeux, ileCour, i, g))
+                            {
+                                g.ajouterPont(ileCour, i, valeurPontDeux);
+                                nbPontsCreables += valeurPontDeux;
+                            }
+                        }
+                        else
+                        {
+                            if(p.getNombrePont() != valeurPontDeux)
+                            {
+                                return null;
+                            }
+                            nbPontsCreables += p.getNombrePont();
                         }
                         break;
                     case 2:
-                    if(Technique.simulationPont(valeurPontTrois, ileCour, i, g))
+                        if((p = g.chercherPont(i, ileCour)) != null)
                         {
-                            g.ajouterPont(ileCour, i, valeurPontTrois);
-                            nbPontsCreables += valeurPontTrois;
+                            if(Technique.simulationPont(valeurPontTrois, ileCour, i, g))
+                            {
+                                g.ajouterPont(ileCour, i, valeurPontTrois);
+                                nbPontsCreables += valeurPontTrois;
+                            }
+                        }
+                        else
+                        {
+                            if(p.getNombrePont() != valeurPontTrois)
+                            {
+                                return null;
+                            }
+                            nbPontsCreables += p.getNombrePont();
                         }
                         break;
                 }
 
                 // On a itéré sur une île non bloquée on incrémente le compteur
-                iteration++;
+                valIteration++;
             }
         }
-
-
-        // V2 avec la prise en compte de toutes les possibilités
-        // Le modulo nous permet de vérifier le cas où l'indice bloquee est 0
-        for(int indice = indiceIleBloquee + 1; (indice % voisins.size()) != indiceIleBloquee; indice++)
-        {
-            // on vérifie que l'indice n'est pas en dehors de la liste
-            indice = (indice > voisins.size() ? 0 : indice);
-
-            // on vérifie que l'île n'est pas celle que l'on doit bloquer
-            if(( v = voisins.get(indice)) != ileBloquee)
-            {
-                switch(indiceIleBloquee)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                }
-            }
-            else
-            {
-                // On compte la valeur du pont
-            }
-        }
-
 
         // Si à la fin l'île courrante a autant de ponts qu'elle doit en avoir alors on retourne la grille modifiée afin de continuer à partir d'elle
         // Sinon on arrête le parcours de cette possibilité
         if(nbPontsCreables == ileCour.getNum())
         {
-            return nvGrille;
+            return g;
         }
 
         return null;
@@ -1468,6 +1431,19 @@ public class Technique{
     
     static boolean simulationPont(int valeurPont, Ile ileCour, Ile ileDest, Grille g)
     {
+        Pont p;
+
+        if((p = g.chercherPont(ileCour, ileDest)) != null)
+        {
+            switch(valeurPont)
+            {
+                case 1:
+                    return(Technique.ajoutPontSimple(ileDest, ileCour));
+                case 2:
+                    return(Technique.ajoutPontDouble(ileDest, ileCour));
+            }
+        }
+
         return false;
     }
 
