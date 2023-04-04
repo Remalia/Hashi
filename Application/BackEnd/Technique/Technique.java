@@ -1260,6 +1260,9 @@ public class Technique{
         /* Maintenant on a une fonction qui nous permet d'obtenir les voisins d'une île*/
         /* On bloque les voisins un par un */
 
+        // La condition d'arrêt consiste à vérifier si la grille est correcte
+
+
         // Premier appel de la méthode donc on doit bloquer les voisins un à un
         if(ileOrigine == null)
         {
@@ -1431,17 +1434,12 @@ public class Technique{
     
     static boolean simulationPont(int valeurPont, Ile ileCour, Ile ileDest, Grille g)
     {
-        Pont p;
-
-        if((p = g.chercherPont(ileCour, ileDest)) != null)
+        switch(valeurPont)
         {
-            switch(valeurPont)
-            {
-                case 1:
-                    return(Technique.ajoutPontSimple(ileDest, ileCour));
-                case 2:
-                    return(Technique.ajoutPontDouble(ileDest, ileCour));
-            }
+            case 1:
+                return(Technique.ajoutPontSimple(ileDest, ileCour));
+            case 2:
+                return(Technique.ajoutPontDouble(ileDest, ileCour));
         }
 
         return false;
