@@ -1295,9 +1295,9 @@ public class Technique{
 
                // V2
                // On boucle sur les 9 configurations possibles
-               for(int j = 0; j < 9; j++)
+               for(int indiceConfig = 0; indiceConfig < 9; indiceConfig++)
                {
-                grilleBis = simulationReseau(uneGrille, ileCour, voisins, i, indice, j);
+                    grilleBis = simulationReseau(uneGrille, ileCour, voisins, i, indice, indiceConfig);
                }
                indice++;
             }
@@ -1324,6 +1324,9 @@ public class Technique{
         // On intiialise avec le nombre de ponts déjà créés
         int nbPontsCreables = 0;
 
+        // Valeur de l'itération sur les îles voisines
+        int iteration = 0;
+
         // V1 sans prendre en compte toutes les possibilités
         // On regarde les voisins
         for(Ile i: voisins)
@@ -1342,7 +1345,7 @@ public class Technique{
                     }
                     else if(Technique.ajoutPontSimple(i, ileCour))
                     {
-                        g.ajouterPont(ileCour, i, 2);
+                        g.ajouterPont(ileCour, i, 1);
                         nbPontsCreables++;
                     }
                 }
@@ -1363,6 +1366,66 @@ public class Technique{
 
             }
         }
+
+
+        // V3 
+        // on tente de définir les 3 indices des îles voisines qui ne sont pas bloquées afin de réaliser différentes configurations
+        //int k = indiceConfig % 3;
+        int valeurPontUn    = indiceConfig % 3; // on met le pont de la première île à la valeur valeurPontUn
+        //int valeurPontDeux  = (indiceConfig  - 3 < 3 ? indiceConfig - 3 : indiceConfig); // les valeurs varient dans {0,1,2}, elles changent toutes les 3 répétitions
+        // Il y a 26 valeurs au total
+        // On fait un modulo 9 pour isoler la séquence de 9 valeurs (3 fois d'affilé chaque valeur) qui se repète
+        // Les 3 premires sont des 0, les 3 suivantes des 1, les 3 dernières des 2
+        // On récupère le multiple de 3 dans la valeur
+        int x = indiceConfig%9;
+        int valeurPontDeux = (x < 3 ? 0 : (x < 6 ? 1 : 2)); // si x appartient [0..3[ -> 0, [3..6[ -> 1, [7..9[ -> 2
+        // peut etre ecrit comme ça ?
+        valeurPontDeux = x/3;
+        // si ça ça marche on peut faire
+        int valeurPontTrois = indiceConfig / 9; 
+        // explication :
+        // On sait que le troisième pont va voir sa valeur modifier toutes les 9 configurations:
+        // il faut 3 configurations pour changer le deuxième
+        // il faut 3 configurations du deuxième pont pour changer le troisième ==> 9 configurations
+        // On divise donc par 9 l'indice de la configuration pour connaître la valeur pont
+
+        for(Ile i: voisins)
+        {
+            // Si c'est l'île bloquée il n'y a pas de traitement
+            if(ileBloquee != i)
+            {
+                // on regarde sur quelle ile on se trouve
+                switch(iteration)
+                {
+                    case 0:
+                        // On fait une fonction qui effectue un traitement sur l'île passée en paramètres à partir du nombre de ponts passés en paramètres
+                        if(Technique.simulationPont(valeurPontUn, ileCour, i, g))
+                        {
+                            g.ajouterPont(ileCour, i, valeurPontUn);
+                            nbPontsCreables += valeurPontUn;
+                        }
+                        break;
+                    case 1:
+                        if(Technique.simulationPont(valeurPontDeux, ileCour, i, g))
+                        {
+                            g.ajouterPont(ileCour, i, valeurPontDeux);
+                            nbPontsCreables += valeurPontDeux;
+                        }
+                        break;
+                    case 2:
+                    if(Technique.simulationPont(valeurPontTrois, ileCour, i, g))
+                        {
+                            g.ajouterPont(ileCour, i, valeurPontTrois);
+                            nbPontsCreables += valeurPontTrois;
+                        }
+                        break;
+                }
+
+                // On a itéré sur une île non bloquée on incrémente le compteur
+                iteration++;
+            }
+        }
+
 
         // V2 avec la prise en compte de toutes les possibilités
         // Le modulo nous permet de vérifier le cas où l'indice bloquee est 0
@@ -1401,6 +1464,11 @@ public class Technique{
         }
 
         return null;
+    }
+    
+    static boolean simulationPont(int valeurPont, Ile ileCour, Ile ileDest, Grille g)
+    {
+        return false;
     }
 
     /** 
