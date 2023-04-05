@@ -540,6 +540,18 @@ public class Grille {
         }
         return result;
     }
+    
+    /**
+     * Vérifie si la grille est correcte
+     */
+    public boolean grilleCorrecte(){
+        for(Ile i: this.listIle){
+            if(!i.estComplete()){
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauTest");
