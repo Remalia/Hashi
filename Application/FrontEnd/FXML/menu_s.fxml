@@ -21,12 +21,12 @@
             <RowConstraints minHeight="110.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchaventure" text="Aventure" GridPane.rowIndex="1">
+            <Button fx:id="aventure" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchaventure" text="Aventure" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchlibre" text="Libre">
+            <Button fx:id="libre" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchlibre" text="Libre">
                <font>
                   <Font size="23.0" />
                </font>
