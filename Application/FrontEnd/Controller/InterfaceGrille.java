@@ -77,11 +77,11 @@ public class InterfaceGrille extends MainSceneController {
     public void stop_timer(ActionEvent event) throws IOException {
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
-            newImage = new Image("Application/FrontEnd/background/bouton-pause.png");
+            newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
             timer.play();
         }else{
-            newImage = new Image("Application/FrontEnd/background/bouton-jouer.png");
+            newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
             switch_timer.setImage(newImage);
             timer.pause();
         }
@@ -152,7 +152,7 @@ public class InterfaceGrille extends MainSceneController {
         CircleHashi cercle = (CircleHashi) event.getSource();
 
         if (!(timer.getStatus() == Animation.Status.RUNNING)) {
-            newImage = new Image("Application/FrontEnd/background/bouton-pause.png");
+            newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
             timer.play();
         }
