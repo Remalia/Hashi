@@ -22,7 +22,7 @@ public class Main extends Application {
 	Scene scene;
 	    
 	/**
-	 * Start the application
+	 * Start the application Hashi
 	 * @param window : the window of the application
 	 */
 	@Override

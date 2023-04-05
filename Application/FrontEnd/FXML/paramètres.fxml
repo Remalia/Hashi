@@ -27,12 +27,12 @@
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="141.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aides" wrappingWidth="105.62109375">
+      <Text fill="WHITE" layoutX="135.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aides" wrappingWidth="105.62109375">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <CheckBox layoutX="262.0" layoutY="183.0" mnemonicParsing="false" />
+      <CheckBox layoutX="246.0" layoutY="183.0" mnemonicParsing="false" />
       <CheckBox layoutX="297.0" layoutY="239.0" mnemonicParsing="false" />
       <CheckBox layoutX="297.0" layoutY="285.0" mnemonicParsing="false" />
       <CheckBox layoutX="326.0" layoutY="437.0" mnemonicParsing="false" />
