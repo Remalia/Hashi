@@ -1,8 +1,9 @@
 package Application.BackEnd.Commandes;
 
+import java.util.Iterator;
 import java.util.Stack;
 
-public class ActionHistory {
+public class ActionHistory implements Iterable<Action>{
     private Stack<Action> history = new Stack<>();
 
     /**
@@ -34,5 +35,10 @@ public class ActionHistory {
      */
     public void clear(){
         history.clear();
+    }
+
+    @Override
+    public Iterator<Action> iterator() {
+        return history.iterator();
     }
 }

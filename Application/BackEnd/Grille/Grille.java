@@ -198,7 +198,7 @@ public class Grille {
      * Ajoute un pont à la grille
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
-     * @return void
+     * @param nbPonts le nombre de ponts à set
      */
     public void  ajouterPont(Ile ile1, Ile ile2, int nbPonts){
         int i;
@@ -444,32 +444,18 @@ public class Grille {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierNiveau")){
             difficulte = Integer.parseInt(balises.get("difficulte"));
-            balises.forEach((key, val) -> {
-                if (key.matches("ile[0-9]+")){
-                    int id = obtainsIdElement(key);
-                    int abs = Integer.parseInt(val.substring(0,val.indexOf("|")-1));
-                    int ord = Integer.parseInt(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
-                    int num = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
-                    Ile ile = new Ile(id,num,abs,ord);
-                    ajouterIle(ile);
-                }
-            });
-            balises.forEach((key, val) -> {
-                setupPontFromRegex("pont[0-9]+",key,val);
-                setupPontFromRegex("pontSvg[0-9]+",key,val);
-                setupPontFromRegex("pontRecup[0-9]+",key,val);
-            });
+            balises.forEach(this::setupIle);
+            balises.forEach(this::setupPont);
         }
     }
 
     /**
-     * Permet depuis un regex en particulier récupère un pont et l'ajoute soit à la pile de recup, sauvegarde ou la liste de pont
-     * @param regex Le regex (3 disponibles : 'pont[0-9]+'  |  'pontSvg[0-9]+'  |  'pontRecup[0-9]+' )
+     * Récupère un pont et l'ajoute à la liste de pont
      * @param key La clé de la balise
      * @param val la valeur de la balise
      */
-    private void setupPontFromRegex(String regex,String key,String val){
-        if (key.matches(regex)){
+    private void setupPont(String key,String val){
+        if (key.matches("pont[0-9]+")){
             Ile ile1 = null;
             Ile ile2 = null;
             int idIle1 = obtainsIdElement(val.substring(0,val.indexOf("|")-1));
@@ -481,23 +467,24 @@ public class Grille {
                 if (ile.getId() == idIle2)
                     ile2 = ile;
             }
-            if(regex.contains("pont["))
-                this.ajouterPont(ile1,ile2,nbPont);
-            if(regex.contains("pontSvg")) {
-                Pont p = chercherPont(ile1,ile2);
-                //pileSvg.add(p);
-                //TODO Action d'ajout de pont
-            }
-            if(regex.contains("pontRecup")){
-                Pont p = chercherPont(ile1,ile2);
-                //pileRecup.add(p);
-                //TODO Action d'ajout de pont
-            }
+            ajouterPont(ile1,ile2,nbPont);
         }
+    }
 
-
-
-
+    /**
+     * Récupère une ile et l'ajoute à la liste d'ile
+     * @param key La clé de la balise
+     * @param val la valeur de la balise
+     */
+    private void setupIle(String key, String val){
+        if (key.matches("ile[0-9]+")){
+            int id = obtainsIdElement(key);
+            int abs = Integer.parseInt(val.substring(0,val.indexOf("|")-1));
+            int ord = Integer.parseInt(val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1));
+            int num = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
+            Ile ile = new Ile(id,num,abs,ord);
+            ajouterIle(ile);
+        }
     }
 
     /**
@@ -523,17 +510,14 @@ public class Grille {
                 }
             }
         }
-        writer.write("pileSvg: #( pont --> ileUn | ileDeux | nbPont )\n");
-        /*for (Pont p: this.pileSvg) {
-            //TODO Adapter la pile de recup^et de sauvegarde avec des actions
-            writer.write("  pontSvg" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
-            idPont++;
+        writer.write("pileSvg: #( actionAjouterPont --> { ileUn ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        for (Action a: this.historySvg ) {
+            writer.write(a.ecrireAction(true));
         }
-        writer.write("pileRecup: #( pont --> ileUn | ileDeux | nbPont )\n");
-        for (Pont p: this.pileRecup) {
-            writer.write("  pontRecup" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
-            idPont++;
-        }*/
+        writer.write("pileRecup: #( actionAjouterPont --> { ileUn ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        for (Action a: this.historyRecup ) {
+            writer.write(a.ecrireAction(false));
+        }
         writer.close();
     }
 
@@ -542,7 +526,7 @@ public class Grille {
      * @param key la clé string
      * @return -1 si il n'y a pas d'id sinon l'id
      */
-    private int obtainsIdElement(String key){
+    public int obtainsIdElement(String key){
         int result = -1;
         Pattern p = Pattern.compile("[0-9]+");
         Matcher m = p.matcher(key);
