@@ -29,6 +29,7 @@ public class Grille {
     /**
      * Constructeur de la grille avec un nom de niveau
      * @param name le nom du niveau
+     * @throws IOException Fichier/dossier déja créer
      */
     public Grille(String name) throws IOException {
         this.listIle = new ArrayList<>();

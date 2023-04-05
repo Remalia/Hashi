@@ -19,6 +19,10 @@ public class LevelEditor extends JPanel{
 
     private List<ButtonPos> save;
 
+    /**
+     * Permet de créer un level editor
+     * @throws IOException Fichier/dossier déja créer
+     */
     LevelEditor() throws IOException {
         this.lb = new ArrayList<>();
         this.save = new ArrayList<>();
@@ -26,6 +30,11 @@ public class LevelEditor extends JPanel{
         createPlageButton(10,10);
     }
 
+    /**
+     * Créer et initialise l'affichage swing avec des buttons
+     * @param x Emplacement x du button
+     * @param y Emplacement y du button
+     */
     private void createPlageButton(int x, int y) {
         GridLayout grille = new GridLayout(x+1, y+1, 5, 5);
         this.setLayout(grille);
@@ -44,27 +53,54 @@ public class LevelEditor extends JPanel{
         this.add(new JLabel(""));
         this.add(buttonExport());
     }
+
+    /**
+     * Classe JButton + emplacement dans une grille
+     */
     private class ButtonPos{
         private JButton b;
         private int x;
         private int y;
+
+        /**
+         * Constructeur d'un button avec position
+         * @param x position x
+         * @param y position y
+         */
         ButtonPos(int x,int y){
             this.b = buttonCreator();
             this.x = x;
             this.y = y;
         }
 
+        /**
+         * Récupère le Jbutton du buttonPos
+         * @return le Jbutton
+         */
         public JButton getButton() {
             return b;
         }
 
+        /**
+         * Récupère la position X du buttonPos
+         * @return La position X
+         */
         public int getX() {
             return x;
         }
 
+        /**
+         * Récupère la position Y du buttonPos
+         * @return La position Y
+         */
         public int getY() {
             return y;
         }
+
+        /**
+         * Permet de créer et définir le JButton classique (type ile ou pont)
+         * @return Le Jbutton
+         */
         private JButton buttonCreator(){
             JButton button = new JButton("");
             button.addActionListener(e -> {
@@ -115,6 +151,10 @@ public class LevelEditor extends JPanel{
 
     }
 
+    /**
+     * Permet de créer un button qui permet de changer entre pont simple et double
+     * @return le Jbutton
+     */
     private JButton buttonQTEPont() {
         JButton button = new JButton("QTE : " + qtePont);
         button.addActionListener(e -> {
@@ -128,6 +168,10 @@ public class LevelEditor extends JPanel{
     }
 
 
+    /**
+     * Permet de créer un JButton permettant de changer le mode de création des cliques entre ile et pont
+     * @return Le JButton
+     */
     private JButton buttonIleOrPont(){
         JButton button = new JButton("Application.BackEnd.Grille.Ile");
         button.addActionListener(e -> {
@@ -142,6 +186,10 @@ public class LevelEditor extends JPanel{
         return button;
     }
 
+    /**
+     * Permet de créer un button pour exporter le projet
+     * @return Le JButton
+     */
     private JButton buttonExport(){
         JButton button = new JButton("Exporter");
         button.addActionListener(e -> {
@@ -154,6 +202,13 @@ public class LevelEditor extends JPanel{
         return button;
     }
 
+    /**
+     * permet de récupérer et set la prochaine valeur de l'ile pour la grille
+     * @param text la valeur actuel de l'ile
+     * @param x la position x de l'ile
+     * @param y la position y de l'ile
+     * @return La prochaine valeur
+     */
     private String getNextValueFromText(String text,int x, int y){
         String result = "";
         switch (text){
@@ -210,6 +265,10 @@ public class LevelEditor extends JPanel{
         return result;
     }
 
+    /**
+     * Permet d'exporter la grille
+     * @throws IOException Fichier non trouvé
+     */
     public void exporterGrille() throws IOException {
         System.out.println("EXPORT");
         this.grille.saveGrilleToYAML();
