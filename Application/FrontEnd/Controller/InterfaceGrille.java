@@ -61,7 +61,7 @@ public class InterfaceGrille extends MainSceneController {
 
 
     /**
-     * method to switch to the mode
+     * method to switch to the mode libre/aventure
      * @param event : the event that triggers the switch
      */
     @FXML
