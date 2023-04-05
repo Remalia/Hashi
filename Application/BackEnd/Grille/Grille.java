@@ -1,6 +1,7 @@
 package Application.BackEnd.Grille;
 
 import Application.BackEnd.Commandes.Action;
+import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
 
 import java.io.*;
@@ -15,8 +16,8 @@ import java.util.regex.*;
 public class Grille {
 
     Color c = new Color(0, 0, 255);
-    public Stack<Action> pileSvg;
-    public Stack<Action> pileRecup;
+    private final ActionHistory historySvg = new ActionHistory();
+    private final ActionHistory historyRecup = new ActionHistory();
     private Element[][] matriceGrille;
     private ArrayList<Ile> listIle;
     private File fileNiveau;
@@ -30,8 +31,6 @@ public class Grille {
      * @param name le nom du niveau
      */
     public Grille(String name) throws IOException {
-        this.pileSvg = new Stack<>();
-        this.pileRecup = new Stack<>();
         this.listIle = new ArrayList<>();
         this.modeHyp = false;
         this.name = name;
@@ -61,8 +60,6 @@ public class Grille {
      */
     public Grille(){
         // remplissage de la grille temporaire pour les tests */
-        this.pileSvg = new Stack<>();
-        this.pileRecup = new Stack<>();
         this.listIle = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
         int i, j;
@@ -74,8 +71,6 @@ public class Grille {
     }
 
     public Grille (Grille grilleSolution){
-        this.pileSvg = new Stack<>();
-        this.pileRecup = new Stack<>();
         this.listIle = grilleSolution.getListIle();
         this.matriceGrille = new Element[10][10];
         int i, j;
@@ -93,6 +88,22 @@ public class Grille {
      */
     public File getFileNiveau() {
         return fileNiveau;
+    }
+
+    /**
+     * Retourne l'historique de récupération (Redo)
+     * @return l'historique de récupération
+     */
+    public ActionHistory getHistoryRecup() {
+        return historyRecup;
+    }
+
+    /**
+     * Retourne l'historique de sauvegarde (Undo)
+     * @return l'historique de sauvegarde
+     */
+    public ActionHistory getHistorySvg() {
+        return historySvg;
     }
 
     /**
