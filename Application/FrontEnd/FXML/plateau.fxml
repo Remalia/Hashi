@@ -10,17 +10,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="principal" minHeight="900.0" minWidth="1200.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfaceGrille">
+<AnchorPane fx:id="principal" minHeight="900.0" minWidth="1200.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfaceGrille">
    <children>
       <Pane fx:id="panneau" layoutX="341.0" layoutY="222.0" prefHeight="436.0" prefWidth="483.0" />
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="50.0" layoutY="59.0" onMouseClicked="#retour_mode">
          <image>
-            <Image url="@../background/retour.png" />
+            <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="1089.0" layoutY="55.0">
          <image>
-            <Image url="@../background/reglage.png" />
+            <Image url="@../assets/reglage.png" />
          </image>
       </ImageView>
       <Group layoutX="281.0" layoutY="753.0">
@@ -28,7 +28,7 @@
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/traverser.png" />
+                  <Image url="@../assets/traverser.png" />
                </image>
             </ImageView>
          </children>
@@ -38,7 +38,7 @@
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/pense.png" />
+                  <Image url="@../assets/pense.png" />
                </image>
             </ImageView>
          </children>
@@ -48,7 +48,7 @@
             <Button mnemonicParsing="false" onAction="#stop_timer" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fx:id="switch_timer" fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/bouton-jouer.png" />
+                  <Image url="@../assets/bouton-jouer.png" />
                </image>
             </ImageView>
          </children>
@@ -58,7 +58,7 @@
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/undo.png" />
+                  <Image url="@../assets/undo.png" />
                </image>
             </ImageView>
          </children>
@@ -68,7 +68,7 @@
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/redo.png" />
+                  <Image url="@../assets/redo.png" />
                </image>
             </ImageView>
          </children>
@@ -78,7 +78,7 @@
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/correct.png" />
+                  <Image url="@../assets/correct.png" />
                </image>
             </ImageView>
          </children>
@@ -88,7 +88,7 @@
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
-                  <Image url="@../background/idee.png" />
+                  <Image url="@../assets/idee.png" />
                </image>
             </ImageView>
          </children>

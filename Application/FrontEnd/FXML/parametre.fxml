@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="599.0" prefWidth="608.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.ParamController">
+<AnchorPane prefHeight="599.0" prefWidth="608.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.ParamController">
    <children>
       <Text layoutX="219.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paramètres" textAlignment="CENTER" wrappingWidth="170.7294921875">
          <font>

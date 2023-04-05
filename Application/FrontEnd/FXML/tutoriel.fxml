@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.RetourController">
+<AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.RetourController">
    <children>
       <GridPane layoutX="300.0" layoutY="300.0">
          <columnConstraints>
@@ -40,17 +40,17 @@
       </Text>
       <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="56.0" layoutY="710.0" onMouseClicked="#credits">
          <image>
-            <Image url="@../background/Logo.png" />
+            <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_menu_p">
          <image>
-            <Image url="@../background/retour.png" />
+            <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0" onMouseClicked="#menu_param_m">
          <image>
-            <Image url="@../background/reglage.png" />
+            <Image url="@../assets/reglage.png" />
          </image>
       </ImageView>
    </children>
