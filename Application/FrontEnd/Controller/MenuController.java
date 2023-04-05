@@ -32,7 +32,7 @@ public class MenuController extends CreditController{
 	 */
 	@FXML
 	public void menu_param(ActionEvent event) throws IOException{
-		scene("../FXML/parametre.fxml",event);
+		scene("../FXML/paramètres.fxml",event);
 	}
 	
 	/**
