@@ -173,14 +173,14 @@ public class LevelEditor extends JPanel{
      * @return Le JButton
      */
     private JButton buttonIleOrPont(){
-        JButton button = new JButton("Application.BackEnd.Grille.Ile");
+        JButton button = new JButton("Ile");
         button.addActionListener(e -> {
             if(creerIle){
                 creerIle = false;
-                button.setText("Application.BackEnd.Grille.Pont");
+                button.setText("Pont");
             }else{
                 creerIle = true;
-                button.setText("Application.BackEnd.Grille.Ile");
+                button.setText("Ile");
             }
         });
         return button;

@@ -204,8 +204,13 @@ public class Ile extends Element {
      * Retourne l'île si l'île est sélectionnée, sinon retourne null
      */
     @Override
-    public Ile parcoursMatrice(int x, int y, Direction d, Element Grille[][]){
+    public Ile getIleFromDirection(int x, int y, Direction d, Element Grille[][]){
         return this;
+    }
+
+    @Override
+    public void nettoyerCase() {
+
     }
 
     public static void main(String[] args){
