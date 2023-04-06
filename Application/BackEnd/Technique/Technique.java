@@ -1297,10 +1297,10 @@ public class Technique{
 
 
                // V2
-               // On boucle sur les 9 configurations possibles
-               for(int indiceConfig = 0; indiceConfig < 9; indiceConfig++)
+               // On boucle sur les nbVois - 1 * 3 configurations possibles
+               for(int indiceConfig = 0; indiceConfig < (voisins.size() - 1) * 3; indiceConfig++)
                {
-                    grilleBis = simulationReseau(uneGrille, ileCour, voisins, i, indice, indiceConfig);
+                    grilleBis = simulationReseau(uneGrillestatic, ileCour, voisins, i, indice, indiceConfig);
                }
                indice++;
             }
