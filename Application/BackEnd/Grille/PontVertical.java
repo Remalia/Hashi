@@ -1,17 +1,14 @@
 package Application.BackEnd.Grille;
 
-import javafx.geometry.Orientation;
-
 public class PontVertical extends Pont{
 
     /**
      * Constructeur de la classe Pont
      * @param i1      première île
      * @param i2      deuxième île
-     * @param nbPonts nombre de ponts
      */
-    public PontVertical(Ile i1, Ile i2, int nbPonts) {
-        super(i1, i2, nbPonts,Orientation.VERTICAL);
+    public PontVertical(Ile i1, Ile i2) {
+        super(i1, i2,Orientation.VERTICAL);
     }
 
     @Override

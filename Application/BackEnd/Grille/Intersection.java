@@ -119,16 +119,6 @@ public class Intersection extends Element {
         }
     }
 
-    
-    /**
-     * Retire le pont des lists de ponts des îles
-     */
-    @Override
-    public void nettoyerCase(){
-        this.pont1.nettoyerCase();;
-        this.pont2.nettoyerCase();;                                                                                  
-    }
-
 
     /**
      * @return la chaine de caractère de l'intersection

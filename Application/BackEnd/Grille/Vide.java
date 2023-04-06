@@ -11,14 +11,6 @@ public class Vide extends Element{
     }
 
     /**
-     * Permet de nettoyer un Vide
-     */
-    @Override
-    public void nettoyerCase() {
-
-    }
-
-    /**
      * Permet de récupérer l'unique instance de Vide
      * @return L'instance
      */

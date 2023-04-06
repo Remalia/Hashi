@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
+import java.lang.Math;
 
 
 public class Technique{
@@ -1186,53 +1187,16 @@ public class Technique{
                         if(!uneIleAccessible((Ile)elem, voisins, uneGrille)){}
                         else
                         {
-                            /** 
-                                Matrice que l'on va modifier
-                            */
-                            matriceBis = Technique.copierGrille(uneGrille);
 
-                            /** 
-                                On va désormais modifier le comportement en fonction du nombre de voisins
-                            */
-
-                            switch(voisins.size())
-                            {   
-                                /** 
-                                    Il faut qu'on parcourt les 4 directions
-                                        ==> S'il n'y a pas d'île atteignable dans la direction on ne fait rien
-                                        ==> Sinon on tente de créer un réseau correcte
-                                */
-                                case 2:
-                                    /** On réalise un parcours récursif afin de savoir si on peut créer*/
-
-                                    /** On ne peut pas bloquer une île voisine si le nombre de ponts qu'accepent l'île est > 2*/
-
-                                    if(((Ile)elem).getNum() > 2){
-                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins);
-
-                                        if(t != null) return t;
-                                    }
-
-                                    break;
-                                case 3:
-
-                                    /** On ne peut pas bloquer une île voisine si le nombre de ponts qu'accepent l'île est > 4*/
-
-                                    if(((Ile)elem).getNum() > 4){
-                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins);
-
-                                        if(t != null) return t;
-                                    }
-
-                                    break;
-                                case 4:
-
-                                    if(((Ile)elem).getNum() > 6){
-                                        t  = Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins);
-
-                                        if(t != null) return t;
-                                    }
-                                    break;
+                            // On vérifie juste qu'il y a au moins 2 voisins car sinon peut pas en bloquer un
+                            if(voisins.size() > 1)
+                            {
+                                if(Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins))
+                                {
+                                    t.setIleCour((Ile)elem);
+                                    t.setDescription("On peut créer un réseau entier en bloquant une direction à partir d'une île");
+                                    return t;
+                                }
                             }
                         }
 
@@ -1244,73 +1208,60 @@ public class Technique{
             }
         }
 
-        return t;
+        // Si on ne trouve pas un réseau capable d'être correcte en bloquant une île voisine à partir d'une île
+        // On retourne null
+
+
+        return null;
     }
 
     /**
         Méthode récursive qui parcourt une matrice d'élément afin de regarder s'il est possible de relier toutes les îles 
         La particularité de cette méthode est qu'au premier appel de celle-ci on décide de bloquer une direction
     */
-    static Technique parcoursBloquageRecursif(Ile ileCour, Ile ileOrigine, Grille uneGrille, int taille, ArrayList<Ile> voisins)
+    static boolean parcoursBloquageRecursif(Ile ileCour, Ile ileOrigine, Grille uneGrille, int taille, ArrayList<Ile> voisins)
     {
         Technique t = new Technique();
         //Element[][] matriceBis;
         Grille grilleBis;
-        int indice = 0;
         /* Maintenant on a une fonction qui nous permet d'obtenir les voisins d'une île*/
         /* On bloque les voisins un par un */
 
         // La condition d'arrêt consiste à vérifier si la grille est correcte
-
-
-        // Premier appel de la méthode donc on doit bloquer les voisins un à un
-        if(ileOrigine == null)
+        if(uneGrille.grilleCorrecte())
         {
-            for(Ile i: voisins)
-            {
-                /** 
-                
-                
-                    Il faut prendre en compte que certaines iles ne peuvent pas être rejointe !!!!!!
-                
-                
-                */
+            return true;
+        }
 
 
-
-
-
-
-                // On regarde si avec le reste de mes voisins je peux créer un réseau stable
-                
-                /*
-                //V1
-                if((grilleBis = simulationReseau(uneGrille, ileCour, voisins, i, indice)) != null){
-
-                //if(matriceBis = simulationReseau(matrice, ileCour, voisins, i) != null){
-                    // Si le réseau est stable en ayant bloqué le chemin vers l'autre île on appelle récursivement la méthode sur les autres îles
-                    
-                    //t = parcoursBloquageRecursif()
-                }
-                indice++;
-                */
-
-
-               // V2
-               // On boucle sur les 9 configurations possibles
-               for(int indiceConfig = 0; indiceConfig < 9; indiceConfig++)
-               {
-                    grilleBis = simulationReseau(uneGrille, ileCour, voisins, i, indice, indiceConfig);
-               }
-               indice++;
-            }
-        } 
-
+        // On parcourt tous les voisins de l'île courrante
         for(Ile i: voisins)
         {
+            grilleBis = uneGrille;
+                // On bloque l'origine pour ne pas boucler dessus ==> ne pas boucler signifie mettre le pont à 0
+            if(i != ileOrigine)
+            {
+                grilleBis.ajouterPont(ileCour, ileOrigine, 0);
+            }
 
+            // V2
+            // On boucle sur les 3 ** (nbVoisins - 1)"configurations possibles
+            for(int indiceConfig = 0; indiceConfig < (int) Math.pow(3, (voisins.size() - 1)); indiceConfig++)
+            {
+                grilleBis = simulationReseau(grilleBis, ileCour, voisins, i, indiceConfig);
+                    
+                if(grilleBis != null)
+                {
+                    if(Technique.parcoursBloquageRecursif(i, ileCour, grilleBis, taille, Technique.trouverVoisins(i.getAbs(), i.getOrd(), grilleBis)))
+                    {
+                        return true;
+                    }
+                }
+            }
         }
-        return null;
+
+
+        return false;
     }
 
     /**
@@ -1319,7 +1270,7 @@ public class Technique{
         Un des voisins n'est pas relié volontairement(il est passé e paramètres)
         Retourne null si la configuration simulée n'est pas viable
     */
-    static Grille simulationReseau(Grille g, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee, int indiceIleBloquee, int indiceConfig)
+    static Grille simulationReseau(Grille g, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee, int indiceConfig)
     {
         //Grille nvGrille = g;
         Pont p;
@@ -1436,6 +1387,8 @@ public class Technique{
     {
         switch(valeurPont)
         {
+            case 0:
+                return true;
             case 1:
                 return(Technique.ajoutPontSimple(ileDest, ileCour));
             case 2:
