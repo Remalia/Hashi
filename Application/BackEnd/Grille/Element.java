@@ -1,6 +1,6 @@
 package Application.BackEnd.Grille;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 /**
  * Classe abstraite représentant un élément du jeu
@@ -19,7 +19,7 @@ public abstract class Element {
      * Constructeur de la classe Application.BackEnd.Grille.Element
      */
     Element(){
-        this.couleur = new Color(0, 0, 255);
+        this.couleur =  Color.rgb(0, 0, 255);
     }
 
     /**

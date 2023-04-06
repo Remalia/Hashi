@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Application.BackEnd.Sauvegarde.Classement des scores en fonction des niveaux
+ * Classement des scores en fonction des niveaux
  */
 
 public class Classement {
@@ -35,7 +35,7 @@ public class Classement {
     }
 
     /**
-     * tester de classement
+     * testeur de classement
      * @param args arguments
      * @throws FileNotFoundException Fichier Introuvable
      */

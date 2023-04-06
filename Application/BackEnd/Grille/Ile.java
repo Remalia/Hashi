@@ -1,6 +1,6 @@
 package Application.BackEnd.Grille;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.*;
 
 /**
@@ -180,7 +180,7 @@ public class Ile extends Element {
     }
 
     public String toStringConsole(){
-        String s = "Application.BackEnd.Grille.Ile" + this.id + "\n";
+        String s = "Ile" + this.id + "\n";
         s += "numéro : " + this.num + "\n";
         s += "(" + this.abs + "," + this.ord + ")\n";
         s += this.getCouleur().toString() + "\n";
@@ -232,10 +232,17 @@ public class Ile extends Element {
         return voisins;
     }
 
+    /**
+     * Retourne le nombre de voisins de l'île même s'ils ne sont pas accessibles
+     */
+    public int getNbVoisins()
+    {
+        return this.listePont.size();
+    }
 
     public static void main(String[] args){
         try {
-            Color c = new Color(100, 0, 0);
+            Color c = Color.rgb(100, 0, 0);
             Ile ileTest = new Ile(1, 5, 4, 2, c);
             System.out.println(ileTest.toStringConsole());
             System.out.println(ileTest.toStringConsole());

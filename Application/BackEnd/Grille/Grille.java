@@ -27,6 +27,8 @@ public class Grille {
     private boolean modeHyp;
     private int difficulte;
 
+    private Grille solution;
+
     /**
      * Constructeur de la grille avec un nom de niveau
      * @param name le nom du niveau
@@ -72,17 +74,11 @@ public class Grille {
         }
     }
 
-    public Grille (Grille grilleSolution){
-        //TODO A SUPPRIMER CTE MERDE --> Changer par Allan
-        this.listIle = grilleSolution.getListIle();
-        this.matriceGrille = new Element[10][10];
-        int i, j;
-        for(i = 0; i < 10; i++){
-            for(j = 0; j < 10; j++){
-                matriceGrille[i][j] = grilleSolution.getMatriceGrille()[i][j].donneIle();
-            }
-        }
-
+    private void setGrilleSolution(){
+        this.solution = this;
+    }
+    public Grille getGrilleSolution(){
+        return this.solution;
     }
 
     /**
@@ -435,6 +431,7 @@ public class Grille {
             balises.forEach(this::setupIle);
             balises.forEach(this::setupPont);
         }
+        this.solution = getGrilleSolution();
         //TODO préférence de passage par plateau A RELIER AVEC LE FRONTEND
     }
 
@@ -544,10 +541,10 @@ public class Grille {
     public static void main2(String[] args){
         Grille grilleTest = new Grille();
         Color c = new Color(0, 0, 255);
-        Ile ile1 = new Ile(1,1,4,1,c);
-        Ile ile2 = new Ile(2,2,4,9,c);
-        Ile ile3 = new Ile(3,3,1,5,c);
-        Ile ile4 = new Ile(4,4,9,5,c);
+        Ile ile1 = new Ile(1,1,4,1);
+        Ile ile2 = new Ile(2,2,4,9);
+        Ile ile3 = new Ile(3,3,1,5);
+        Ile ile4 = new Ile(4,4,9,5);
         Ile ile5 = new Ile(5,5,4,3);
         grilleTest.ajouterIle(ile1);
         grilleTest.ajouterIle(ile3);

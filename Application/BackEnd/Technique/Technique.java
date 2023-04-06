@@ -413,7 +413,7 @@ public class Technique{
                 }
                 break;
             case 2:
-                if( (premVois.getNum() == 1 && Technique.nbVoisins(premVois, uneGrille) == 1) || (scdVois.getNum() == 1 && Technique.nbVoisins(scdVois, uneGrille) == 1) )
+                if( (premVois.getNum() == 1 && premVois.getNbVois() == 1) || (scdVois.getNum() == 1 && scdVois.getNbVois() == 1) )
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins (qui a pour unique voisin l'île en question) ne peut accepter qu'un pont au maximum, il faut donc relier l'île aux 2 autres îles par un pont simple");
@@ -627,7 +627,7 @@ public class Technique{
                     System.out.println("Il y a une île, i/j : "+i+"/"+j);
                     if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
                     {
-                        if(nbVoisins((Ile) obj, uneGrille) == 1){
+                        if(((Ile) obj).getNbVoisins() == 1){
                             return(true);
                         }
                     }
@@ -824,7 +824,7 @@ public class Technique{
             {
                 if(((Ile)obj).getNum() <= 2 && !((Ile)obj).estComplete() )
                 {
-                    if(nbVoisins((Ile) obj, uneGrille) == 1){
+                    if(((Ile) obj).getNbVoisins() == 1){
                         return((Ile)obj);
                     }
                 }

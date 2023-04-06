@@ -1,5 +1,7 @@
 package Application.BackEnd.Grille;
-import java.awt.Color;
+
+import javafx.scene.paint.Color;
+
 
 
 /**
@@ -20,7 +22,7 @@ public abstract class Pont extends Element implements InterfacePont{
      * @param orientation L'orientation du pont
      */
     public Pont(Ile i1, Ile i2,Orientation orientation){
-        super(new Color(0, 0, 255));
+        super(Color.rgb(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
@@ -104,7 +106,6 @@ public abstract class Pont extends Element implements InterfacePont{
         }
     }
 
-
     /**
      * Donne le pont
      * @param ile1 premiere ile du pont
@@ -114,20 +115,17 @@ public abstract class Pont extends Element implements InterfacePont{
     @Override
     public Pont donnePont(Ile ile1, Ile ile2){
         return this;
-        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
     public Element donneIle(){
         this.setNbPont(0);
         return this;
-        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
     public boolean estIncrementable(Ile ile1, Ile ile2){
         return true;
-        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
