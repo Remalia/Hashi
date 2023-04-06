@@ -29,6 +29,7 @@ public class Grille {
     /**
      * Constructeur de la grille avec un nom de niveau
      * @param name le nom du niveau
+     * @throws IOException Fichier/dossier déja créer
      */
     public Grille(String name) throws IOException {
         this.listIle = new ArrayList<>();
@@ -274,12 +275,12 @@ public class Grille {
 
     /**
      * Incrémente la valeur d'un pont
-     * @param pont le pont à incrémenter
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
      */
-    public void incrementerPont(Pont pont){
-        pont.ajoutNombrePont();
-        //pileSvg.add(pont);
-        //TODO Ajouter Action D'ajout de pont
+    public void incrementerPont(Ile ile1, Ile ile2){
+        Pont pont = chercherPont(ile1,ile2);
+        pont.incrementerPont();
     }
 
 
