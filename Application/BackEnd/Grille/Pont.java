@@ -75,7 +75,7 @@ public class Pont extends Element {
     /**
      * Incrémente le nombre de pont et le remet à 0 si il y a déjà 2 ponts
      */
-    public void ajoutNombrePont(){
+    public void incrementerPont(){
         // si le pont est simple on le passe en double
         if(++this.nombrePont == 2){
             // si le pont est double on le supprime

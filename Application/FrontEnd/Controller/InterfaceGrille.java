@@ -53,7 +53,7 @@ public class InterfaceGrille extends MainSceneController {
 
     private int NB_CERCLES;
     private int RAYON;
-    private int ESPACE;
+    private double ESPACE;
 
     private CircleHashi[] cerclesHashi;
 
@@ -63,58 +63,92 @@ public class InterfaceGrille extends MainSceneController {
     private Integer indicePremierCercle;
     private Integer indiceSecondCercle;
 
+    private boolean modehypothese = false;
+
     private Grille grille;
 
+
+    /**
+     * Cette méthode permet de passer à la scène aventure
+     * @param event : l'évènement qui déclenche le passage à la scène aventure
+     * @throws IOException Exception thrown if the file is not found
+     */
+    @FXML
+    public void retour_mode(MouseEvent event) throws IOException {
+        img_scene("../FXML/jeulibre.fxml",event);
+    }
 
     /**
      * method to switch to the mode libre/aventure
      * @param event : the event that triggers the switch
      */
     @FXML
-    public void retour_mode(MouseEvent event) throws IOException {
-        img_scene("../FXML/jeuaventure.fxml",event);
+    public void hypothese(ActionEvent event) throws IOException {
+        if(modehypothese == false){
+            modehypothese = true;
+            System.out.println("Mode hypothese activé");
+        }
+        else{
+            modehypothese = false;
+            System.out.println("Mode hypothese désactivé");
+        }
     }
 
     /**
-     * method to stop the timer
-     * @param event : the event that triggers the switch
+     * Cette méthode permet de changer l'état d'un cercle
+     * @param cercles : les cercles de la grille
+     * @param colorFill : la couleur de remplissage du cercle
+     * @param colorBord : la couleur du bord du cercle
+     * @param text : la couleur du texte
+     * @param disable : si le cercle est désactivé ou non
+     */
+    public void changement_pause(CircleHashi[] cercles, Color colorFill, Color colorBord, Color text, Boolean disable){
+            for(CircleHashi c : cercles)
+                if(c != null) {
+                    c.setFill(colorFill);
+                    c.getText().setFill(text);
+                    c.setStroke(colorBord);
+                    c.setDisable(disable);
+                }
+    }
+
+    /**
+     * Cette méthode permet de mettre en pause le chronometre
+     * @param event : l'évènement qui déclenche la pause
      */
     @FXML
     public void stop_timer(ActionEvent event) throws IOException {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Pause");
-        alert.setHeaderText("Le jeu est en pause");
-        alert.setContentText("Cliquez sur OK pour reprendre le jeu.");
-        alert.showAndWait();
-
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
+            changement_pause(this.cerclesHashi, Color.YELLOW, Color.ORANGE, Color.BLACK, false);
             timer.play();
         }else{
             newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
             switch_timer.setImage(newImage);
+            changement_pause(this.cerclesHashi, Color.GREY, Color.GREY, Color.WHITE, true);
             timer.pause();
         }
     }
 
 
     /**
-     * Function initializing the grid
-     * @throws IOException if the file is not found
+     * Cette fonction permet d'initialiser la grille
+     * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
      */
     @FXML
     public void initialize() throws IOException {
         this.NB_CERCLES = 10;
-        this.RAYON = 25;
-        this.ESPACE = RAYON * 3;
+        this.RAYON = 20;
+        this.ESPACE = RAYON * 2.5;
 
         // Calcul de la taille du panneau pour afficher correctement la grille
         double panneauWidth = NB_CERCLES * ESPACE + RAYON;
         double panneauHeight = NB_CERCLES * ESPACE + RAYON;
 
         this.cerclesHashi = new CircleHashi[this.NB_CERCLES * this.NB_CERCLES];
+
 
         this.timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             tempsEcoule++;
@@ -157,8 +191,8 @@ public class InterfaceGrille extends MainSceneController {
 
 
     /**
-     * Function to change the color of the circle and the bridge
-     * @param event the event
+     * Cette méthode permet de gérer les interactions avec les cercles
+     * @param event : l'évènement qui déclenche l'interaction
      */
     private void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
@@ -196,10 +230,10 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * This method returns true if the two circles are on the same line or the same column
-     * @param cercle1 first circle to compare
-     * @param cercle2 second circle to compare
-     * @return true if the two circles are on the same line or the same column
+     * Cette méthode permet de vérifier si deux cercles sont sur la même ligne ou la même colonne
+     * @param cercle1 : le premier cercle
+     * @param cercle2 : le deuxième cercle
+     * @return true si les deux cercles sont sur la même ligne ou la même colonne, false sinon
      */
     private boolean memeLigneOuColonne(CircleHashi cercle1, CircleHashi cercle2) {
         double c1x = cercle1.getCenterX();
@@ -211,7 +245,7 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthod to reinitialize the circles
+     * Cette méthode permet de réinitialiser les cercles
      */
     private void reinitialiserCercles(){
         premierCercle.setFill(Color.YELLOW);
@@ -223,9 +257,9 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthod who returns the index of the circle in the array
-     * @param cercle the circle to find
-     * @return the index of the circle in the array
+     * Cette méthode permet de trouver l'indice d'un cercle dans le tableau de cercles
+     * @param cercle : le cercle dont on cherche l'indice
+     * @return l'indice du cercle dans le tableau de cercles
      */
     private int trouverIndiceCercle(CircleHashi cercle) {
         for (int i = 0; i < cerclesHashi.length; i++) {
@@ -239,10 +273,10 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthod to draw the bridge between the two circles
-     * @param cercle1 the first circle
-     * @param cercle2 the second circle
-     * @param panneau the pane where the bridge will be drawn
+     * Cette méthode permet de dessiner une ligne entre deux cercles
+     * @param cercle1 : le premier cercle
+     * @param cercle2 : le deuxième cercle
+     * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         if(!this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
@@ -252,6 +286,12 @@ public class InterfaceGrille extends MainSceneController {
         Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
         Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);
         Line ligne3 = new Line(cercle1.getCenterX()-5, cercle1.getCenterY()-5, cercle2.getCenterX()-5, cercle2.getCenterY()-5);
+        ligne1.setStrokeWidth(3);
+        ligne2.setStrokeWidth(3);
+        ligne3.setStrokeWidth(3);
+        ligne1.setStroke(Color.GREY);
+        ligne2.setStroke(Color.GREY);
+        ligne3.setStroke(Color.GREY);
         //System.out.println(ligne1);
 
         if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
