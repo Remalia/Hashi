@@ -98,6 +98,10 @@ public abstract class Element {
     }
 
 
+    public boolean estDisponible(){
+        return false;
+    }
+
     /**
      * Méthode abstract qui permet de nettoyer une case
      */

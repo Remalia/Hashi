@@ -28,4 +28,10 @@ public class Vide extends Element{
         }
         return instance;
     }
+
+    @Override
+    public boolean estDisponible(){
+        return true;
+    }
+
 }

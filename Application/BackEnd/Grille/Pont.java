@@ -129,5 +129,10 @@ public abstract class Pont extends Element implements InterfacePont{
         return true;
     }
 
+    @Override
+    public boolean estDisponible(){
+        return nbPont == 0;
+    }
+
 
 }

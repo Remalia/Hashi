@@ -3,6 +3,7 @@ package Application.BackEnd.Grille;
 import Application.BackEnd.Commandes.Action;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
+import javafx.geometry.Orientation;
 
 import java.io.*;
 import java.nio.file.*;
@@ -201,8 +202,7 @@ public class Grille {
      * @param ile2 l'île d'arrivée du pont
      * @param nbPonts le nombre de ponts à set
      */
-    public void  ajouterPont(Ile ile1, Ile ile2, int nbPonts){
-        int i;
+    public void ajouterPont(Ile ile1, Ile ile2, int nbPonts){
         Pont pont = chercherPont(ile1,ile2);
 
         if(pont != null){
@@ -212,67 +212,35 @@ public class Grille {
             return;
         }
 
-        //Si il n'existe pas de pont on en créé un
-        //pont = new Pont(ile1,ile2,nbPonts);
-        //TODO /!\ Création pont horizontal ou vertical
-        //Si on peut on vérifie si le pont est horizontal ou vertical
-        if(ile1.getAbs() == ile2.getAbs()){
-            if(ile1.getOrd() < ile2.getOrd()){
-                for(i = ile1.getOrd() + 1; i < ile2.getOrd() ; i++)
-                    //Si il y'a déjà un pont on crée une intersection
-                    if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
-                        matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
-                    }
-                    else if(matriceGrille[ile1.getAbs()][i] instanceof Intersection){
-                        ((Intersection)matriceGrille[ile1.getAbs()][i]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[ile1.getAbs()][i] = pont;
-                    }
-
-            }else{
-                for(i = ile2.getOrd() + 1; i < ile1.getOrd(); i++)
-                    if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
-                        matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
-                    }
-                    else if(matriceGrille[ile1.getAbs()][i] instanceof Intersection){
-                        ((Intersection)matriceGrille[ile1.getAbs()][i]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[ile1.getAbs()][i] = pont;
-                    }
-
-            }
-        } else if(ile1.getOrd() == ile2.getOrd()){
-            if(ile1.getAbs() < ile2.getAbs()){
-                for(i = ile1.getAbs() + 1; i < ile2.getAbs(); i++)
-
-                    if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
-                        matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
-                    }
-                    else if(matriceGrille[i][ile2.getOrd()] instanceof Intersection){
-                        ((Intersection)matriceGrille[i][ile2.getOrd()]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[i][ile2.getOrd()] = pont;
-                    }
-
-            }else{
-                for(i = ile2.getAbs() + 1; i < ile1.getAbs(); i++)
-                    if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
-                        matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
-                    }
-                    else if(matriceGrille[i][ile2.getOrd()] instanceof Intersection){
-                        ((Intersection)matriceGrille[i][ile2.getOrd()]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[i][ile2.getOrd()] = pont;
-                    }
-            }
+        if(getOrientationFrom2Iles(ile1,ile2)==Orientation.HORIZONTAL){
+            pont = new PontHorizontal(ile1,ile2,nbPonts);
+        }else{
+            pont = new PontVertical(ile1,ile2,nbPonts);
         }
+
+        ajouterPontDansGrille(pont);
 
     }
 
+    public void ajouterPontDansGrille(Pont pont){
+        Ile ile1 = pont.getIle1();
+        Ile ile2 = pont.getIle2();
+        switch (getDirectionFrom2Iles(pont.getIle1(),pont.getIle2())){
+            case HAUT :
+                break;
+            case BAS :
+                // ord ++
+                break;
+            case GAUCHE :
+                // abs --
+                break;
+            case DROITE :
+                // abs ++
+                break;
+        }
+    }
+
+    // TODO fonc dans element qui pour une case vide return null et dans un pont ou ile return pour pont Orientation
 
     /**
      * Incrémente la valeur d'un pont
@@ -284,6 +252,39 @@ public class Grille {
         pont.incrementerPont();
     }
 
+
+    /**
+     * Donne l'orientation d'un pont entre deux îles
+     * @param ile1 première ile du pont
+     * @param ile2 seconde ile du pont
+     */
+    public Orientation getOrientationFrom2Iles(Ile ile1, Ile ile2){
+        if(ile1.getOrd() == ile2.getOrd()){
+            return javafx.geometry.Orientation.VERTICAL;
+        } else {
+            return Orientation.HORIZONTAL;
+        }
+    }
+
+    /**
+     * Donne l'orientation d'un pont entre deux îles
+     * @param ile1 première ile du pont
+     * @param ile2 seconde ile du pont
+     */
+    public Direction getDirectionFrom2Iles(Ile ile1, Ile ile2){
+        Orientation orientation = getOrientationFrom2Iles(ile1, ile2);
+        if(orientation == Orientation.VERTICAL){
+            if(ile1.getOrd() < ile2.getOrd())
+                return Direction.BAS;
+            else
+                return Direction.HAUT;
+        } else {
+            if(ile1.getAbs() < ile2.getAbs())
+                return Direction.GAUCHE;
+            else
+                return Direction.DROITE;
+        }
+    }
 
 
     
