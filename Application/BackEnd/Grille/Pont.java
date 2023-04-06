@@ -1,5 +1,7 @@
 package Application.BackEnd.Grille;
 
+import javafx.geometry.Orientation;
+
 import java.awt.Color;
 
 
@@ -8,12 +10,11 @@ import java.awt.Color;
  * @see Element
  * @see Ile
  */
-public class Pont extends Element {
-    private Ile ile1;
-    private Ile ile2;
-    private Color couleur;
-    private int nombrePont;
-
+public abstract class Pont extends Element implements InterfacePont{
+    private final Ile ile1;
+    private final Ile ile2;
+    private int nbPont;
+    private final Orientation orient;
 
     /**
      * Constructeur de la classe Application.BackEnd.Grille.Pont
@@ -21,19 +22,21 @@ public class Pont extends Element {
      * @param i2 deuxième île
      * @param nbPonts nombre de ponts
      */
-    public Pont(Ile i1, Ile i2, int nbPonts){
+    public Pont(Ile i1, Ile i2, int nbPonts,Orientation o){
+        super(new Color(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
         this.ile2.ajouterPont(this);
-        this.couleur = new Color(0, 0, 255);
-        this.nombrePont = nbPonts;
+        this.nbPont = nbPonts;
+        this.orient = o;
     }
 
     /**
      * Retourne la première île liée au pont
      * @return la première île liée au pont
      */
+    @Override
     public Ile getIle1() {
         return ile1;
     }
@@ -42,33 +45,21 @@ public class Pont extends Element {
      * Retourne la deuxième île liée au pont
      * @return la deuxième île liée au pont
      */
+    @Override
     public Ile getIle2() {
         return ile2;
     }
 
-    /**
-     * Retourne la couleur actuelle du pont
-     * @return retourne la couleur actuelle du pont
-     */
-    public Color getCouleur() {
-        return couleur;
-    }
-
-
-    /**
-     * Affecte une nouvelle couleur au pont
-     * @param couleur nouvelle couleur d'un pont
-     */
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
+    public Orientation getOrient() {
+        return orient;
     }
 
     /**
      * Retourne le nombre de ponts
-     * @return si 1 ce pont est simple et 2 si il est double 
+     * @return si 1 ce pont est simple et 2 si il est double
      */
-    public int getNombrePont(){
-        return this.nombrePont;
+    public int getNbPont(){
+        return this.nbPont;
     }
 
 
@@ -77,18 +68,18 @@ public class Pont extends Element {
      */
     public void incrementerPont(){
         // si le pont est simple on le passe en double
-        if(++this.nombrePont == 2){
+        if(++this.nbPont == 2){
             // si le pont est double on le supprime
-            this.nombrePont = 0;
+            this.nbPont = 0;
         }
     }
 
     /**
      * Affecte un nombre de ponts
-     * @param nombrePont nombre de ponts
+     * @param nbPont nombre de ponts
      */
-    public void setNombrePont(int nombrePont) {
-        this.nombrePont = nombrePont;
+    public void setNbPont(int nbPont) {
+        this.nbPont = nbPont;
     }
 
     
@@ -106,10 +97,10 @@ public class Pont extends Element {
      * @return la représentation textuelle du pont en foncitrion de sa valeur
      */
     public String toString(){
-        if(this.nombrePont == 0){
+        if(this.nbPont == 0){
             return ".";
         }
-        else if (this.nombrePont == 1){
+        else if (this.nbPont == 1){
             return "─";
         }else{
             return "═";
@@ -129,7 +120,7 @@ public class Pont extends Element {
 
     @Override
     public Element donneIle(){
-        this.setNombrePont(0);
+        this.setNbPont(0);
         return this;
     }
 

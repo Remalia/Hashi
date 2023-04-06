@@ -1,9 +1,5 @@
 package Application.BackEnd.Grille;
 
-import Application.BackEnd.Grille.Element;
-import Application.BackEnd.Grille.Ile;
-import Application.BackEnd.Grille.Pont;
-
 /**
  * Classe d'intersection entre deux ponts
  * @see Element
@@ -77,9 +73,9 @@ public class Intersection extends Element {
      */
     public boolean estIncrementable(Pont p){
         if(p == pont1){
-            return pont2.getNombrePont() == 0;
+            return pont2.getNbPont() == 0;
         }else{
-            return pont1.getNombrePont() == 0;
+            return pont1.getNbPont() == 0;
         }
     }
 
@@ -114,9 +110,9 @@ public class Intersection extends Element {
      * @return l'etat de l'intersection (pont1, pont2 ou intersection)
      */
     public Element getEtat(){
-        if(pont1.getNombrePont() > 0){
+        if(pont1.getNbPont() > 0){
             return pont1;
-        }else if(pont2.getNombrePont() > 0){
+        }else if(pont2.getNbPont() > 0){
             return pont2;
         }else{
             return this;
@@ -138,9 +134,9 @@ public class Intersection extends Element {
      * @return la chaine de caractère de l'intersection
      */
     public String toString(){
-        if(pont1.getNombrePont() > 0){
+        if(pont1.getNbPont() > 0){
             return pont1.toString();
-        }else if(pont2.getNombrePont() > 0){
+        }else if(pont2.getNbPont() > 0){
             return pont2.toString();
         }else{
             return "┼";
@@ -159,8 +155,8 @@ public class Intersection extends Element {
 
     @Override
     public Element donneIle(){
-        this.pont1.setNombrePont(0);
-        this.pont2.setNombrePont(0);
+        this.pont1.setNbPont(0);
+        this.pont2.setNbPont(0);
         return this;
     }
 
