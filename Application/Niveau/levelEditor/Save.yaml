@@ -1,19 +1,14 @@
 type: fichierNiveau
 difficulte: 0
 grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
-  ile1: 2 | 2 | 4
-  ile2: 2 | 6 | 5
-  ile3: 6 | 6 | 2
-  ile4: 2 | 8 | 2
-  ile5: 0 | 6 | 1
-  ile6: 8 | 2 | 3
-  ile7: 8 | 5 | 1
+  ile1: 1 | 1 | 4
+  ile2: 1 | 5 | 4
+  ile3: 6 | 5 | 1
+  ile4: 1 | 8 | 1
+  ile5: 5 | 1 | 2
   pont1: ile2 | ile1 | 2
-  pont2: ile6 | ile1 | 2
-  pont3: ile3 | ile2 | 2
-  pont4: ile4 | ile2 | 2
-  pont5: ile5 | ile2 | 1
-  pont6: ile7 | ile6 | 1
-pileSvg: #( action --> { ileUn ileDeux } nbPonts | oldNbPonts | modeHyp )
-  actionSvg1: { ile1 ile2 } 1 | 0 | F
-  actionSvg2: { ile1 ile2 } 2 | 1 | F
+  pont2: ile5 | ile1 | 2
+  pont3: ile3 | ile2 | 1
+  pont4: ile4 | ile2 | 1
+historySvg: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )
+historyRecup: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )

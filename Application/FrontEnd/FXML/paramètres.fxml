@@ -35,7 +35,7 @@
       <CheckBox layoutX="246.0" layoutY="183.0" mnemonicParsing="false" />
       <CheckBox layoutX="297.0" layoutY="239.0" mnemonicParsing="false" />
       <CheckBox layoutX="297.0" layoutY="285.0" mnemonicParsing="false" />
-      <CheckBox layoutX="326.0" layoutY="437.0" mnemonicParsing="false" />
+      <CheckBox fx:id="checkbox" layoutX="326.0" layoutY="437.0" mnemonicParsing="false" onAction="#mode_sombre" />
       <Text fill="WHITE" layoutX="178.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Textuelles">
          <font>
             <Font size="20.0" />
@@ -83,17 +83,17 @@
             <RowConstraints minHeight="80.0" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <Button minHeight="30.0" minWidth="300.0" mnemonicParsing="false" onAction="#menu_jouer" prefHeight="33.0" prefWidth="440.0" text="Remettre à zéro le jeu">
+            <Button minHeight="30.0" minWidth="300.0" mnemonicParsing="false"  prefHeight="33.0" prefWidth="440.0" text="Remettre à zéro le jeu">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button minHeight="30.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchtuto" text="Remettre à zéro le classement de chaque niveau" GridPane.rowIndex="1">
+            <Button minHeight="30.0" minWidth="400.0" mnemonicParsing="false" text="Remettre à zéro le classement de chaque niveau" GridPane.rowIndex="1">
                <font>
                   <Font size="17.0" />
                </font>
             </Button>
-            <Button minHeight="30.0" minWidth="400.0" mnemonicParsing="false" onAction="#menu_param" prefHeight="33.0" prefWidth="440.0" text="Remettre les paramètres par défauts" GridPane.rowIndex="2">
+            <Button minHeight="30.0" minWidth="400.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="440.0" text="Remettre les paramètres par défauts" GridPane.rowIndex="2">
                <font>
                   <Font size="17.0" />
                </font>

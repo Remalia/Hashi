@@ -1,8 +1,10 @@
+package Application.BackEnd.Technique;
 import java.awt.Color;
 import java.util.*;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+import Application.BackEnd.Grille.*;
 
 public abstract class Surbrillance {
 

@@ -52,7 +52,7 @@ public class Grille {
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
-                matriceGrille[i][j] = new Element();
+                matriceGrille[i][j] = Vide.getInstance();
             }
     }
 
@@ -66,7 +66,7 @@ public class Grille {
         int i, j;
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
-                matriceGrille[i][j] = new Element();
+                matriceGrille[i][j] = Vide.getInstance();
             }
         }
     }
@@ -135,8 +135,8 @@ public class Grille {
         Element actuel = matriceGrille[abs][ord];
         Ile temp;
         //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
-        for(Direction d : Arrays.asList(Direction.values()) ){
-            temp = actuel.parcoursMatrice(abs, ord, d ,this.matriceGrille);
+        for(Direction d : Direction.values()){
+            temp = actuel.getIleFromDirection(abs, ord, d ,this.matriceGrille);
             if(temp != null){
                 ajouterPont(ile, temp, 0);
             }
@@ -151,7 +151,7 @@ public class Grille {
     public void removeIle(Ile ile){
         listIle.remove(ile);
         matriceGrille[ile.getAbs()][ile.getOrd()].nettoyerCase();
-        matriceGrille[ile.getAbs()][ile.getOrd()] = new Element();
+        matriceGrille[ile.getAbs()][ile.getOrd()] = Vide.getInstance();
     }
 
     /**
@@ -438,7 +438,7 @@ public class Grille {
     }
 
     /**
-     * Récupère la grille et l'initialise terminer
+     * Récupère la grille et l'initialise
      * @throws FileNotFoundException Fichier non trouvé
      */
     public void getGrilleFromYAML(File file) throws FileNotFoundException {
@@ -448,6 +448,7 @@ public class Grille {
             balises.forEach(this::setupIle);
             balises.forEach(this::setupPont);
         }
+        //TODO préférence de passage par plateau A RELIER AVEC LE FRONTEND
     }
 
     /**
@@ -511,11 +512,11 @@ public class Grille {
                 }
             }
         }
-        writer.write("pileSvg: #( actionAjouterPont --> { ileUn ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        writer.write("historySvg: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
         for (Action a: this.historySvg ) {
             writer.write(a.ecrireAction(true));
         }
-        writer.write("pileRecup: #( actionAjouterPont --> { ileUn ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        writer.write("historyRecup: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
         for (Action a: this.historyRecup ) {
             writer.write(a.ecrireAction(false));
         }
@@ -552,8 +553,6 @@ public class Grille {
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauTest");
         grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
-        grilleTest.saveGrilleToYAML();
-        System.out.println(new Grille(grilleTest));
     }
     public static void main2(String[] args){
         Grille grilleTest = new Grille();

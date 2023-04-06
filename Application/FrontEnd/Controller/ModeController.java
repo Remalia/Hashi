@@ -22,7 +22,7 @@ import javafx.util.Duration;
  * @version 1.0
  * @since 2023-04-02
  */
-public class ModeController extends RetourController{
+public class ModeController extends MenuController{
 
 	@FXML private Button libre;
 	@FXML private Button aventure;
@@ -60,7 +60,7 @@ public class ModeController extends RetourController{
 	 */
 	@FXML
 	public void switchaventure(ActionEvent event) throws IOException{
-		scene("../FXML/jeuaventure.fxml",event);
+		scene("../FXML/plateau.fxml",event);
 	}
 
 

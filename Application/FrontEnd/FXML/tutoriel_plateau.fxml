@@ -51,7 +51,7 @@
                   <Font size="28.0" />
                </font>
             </Text>
-            <ImageView fx:id="arrow2" fitHeight="68.0" fitWidth="68.0" layoutX="253.0" layoutY="120.0" visible="false">
+            <ImageView fitHeight="68.0" fitWidth="68.0" layoutX="253.0" layoutY="120.0" visible="false">
                <image>
                   <Image url="@../assets/arrow.png" />
                </image>

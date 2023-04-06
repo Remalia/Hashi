@@ -33,9 +33,9 @@
             </ImageView>
          </children>
       </Group>
-      <Group layoutX="370.0" layoutY="753.0">
+      <Group layoutX="854.0" layoutY="752.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
+            <Button mnemonicParsing="false" onAction="#hypothese" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
                   <Image url="@../assets/pense.png" />
@@ -73,7 +73,7 @@
             </ImageView>
          </children>
       </Group>
-      <Group layoutX="849.0" layoutY="753.0">
+      <Group layoutX="369.0" layoutY="750.0">
          <children>
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
@@ -93,7 +93,7 @@
             </ImageView>
          </children>
       </Group>
-      <Label layoutX="389.0" layoutY="59.0" prefHeight="54.0" prefWidth="429.0" text="Aventure : Level 1" textFill="WHITE">
+      <Label layoutX="389.0" layoutY="59.0" prefHeight="54.0" prefWidth="429.0" text="Libre : Level 1" textFill="WHITE">
          <font>
             <Font size="44.0" />
          </font>

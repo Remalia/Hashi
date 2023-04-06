@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +19,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.Optional;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -63,46 +62,80 @@ public class InterfaceGrille extends MainSceneController {
     private Integer indicePremierCercle;
     private Integer indiceSecondCercle;
 
+    private boolean modehypothese = false;
+
     private Grille grille;
 
+
+    /**
+     * Cette méthode permet de passer à la scène libre
+     * @param event : l'évènement qui déclenche le passage à la scène aventure
+     * @throws IOException Exception thrown if the file is not found
+     */
+    @FXML
+    public void retour_mode(MouseEvent event) throws IOException {
+        img_scene("../FXML/jeulibre.fxml",event);
+    }
 
     /**
      * method to switch to the mode libre/aventure
      * @param event : the event that triggers the switch
      */
     @FXML
-    public void retour_mode(MouseEvent event) throws IOException {
-        img_scene("../FXML/jeuaventure.fxml",event);
+    public void hypothese(ActionEvent event) throws IOException {
+        if(modehypothese == false){
+            modehypothese = true;
+            System.out.println("Mode hypothese activé");
+        }
+        else{
+            modehypothese = false;
+            System.out.println("Mode hypothese désactivé");
+            popupHypothese();
+        }
     }
 
     /**
-     * method to stop the timer
-     * @param event : the event that triggers the switch
+     * Cette méthode permet de changer l'état d'un cercle
+     * @param cercles : les cercles de la grille
+     * @param colorFill : la couleur de remplissage du cercle
+     * @param colorBord : la couleur du bord du cercle
+     * @param text : la couleur du texte
+     * @param disable : si le cercle est désactivé ou non
+     */
+    public void changement_pause(CircleHashi[] cercles, Color colorFill, Color colorBord, Color text, Boolean disable){
+        for(CircleHashi c : cercles)
+            if(c != null) {
+                c.setFill(colorFill);
+                c.getText().setFill(text);
+                c.setStroke(colorBord);
+                c.setDisable(disable);
+            }
+    }
+
+    /**
+     * Cette méthode permet de mettre en pause le chronometre
+     * @param event : l'évènement qui déclenche la pause
      */
     @FXML
     public void stop_timer(ActionEvent event) throws IOException {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Pause");
-        alert.setHeaderText("Le jeu est en pause");
-        alert.setContentText("Cliquez sur OK pour reprendre le jeu.");
-        alert.showAndWait();
-
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
+            changement_pause(this.cerclesHashi, Color.YELLOW, Color.ORANGE, Color.BLACK, false);
             timer.play();
         }else{
             newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
             switch_timer.setImage(newImage);
+            changement_pause(this.cerclesHashi, Color.GREY, Color.GREY, Color.WHITE, true);
             timer.pause();
         }
     }
 
 
     /**
-     * Function initializing the grid
-     * @throws IOException if the file is not found
+     * Cette fonction permet d'initialiser la grille
+     * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
      */
     @FXML
     public void initialize() throws IOException {
@@ -158,8 +191,8 @@ public class InterfaceGrille extends MainSceneController {
 
 
     /**
-     * Function to change the color of the circle and the bridge
-     * @param event the event
+     * Cette méthode permet de gérer les interactions avec les cercles
+     * @param event : l'évènement qui déclenche l'interaction
      */
     private void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
@@ -197,10 +230,10 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * This method returns true if the two circles are on the same line or the same column
-     * @param cercle1 first circle to compare
-     * @param cercle2 second circle to compare
-     * @return true if the two circles are on the same line or the same column
+     * Cette méthode permet de vérifier si deux cercles sont sur la même ligne ou la même colonne
+     * @param cercle1 : le premier cercle
+     * @param cercle2 : le deuxième cercle
+     * @return true si les deux cercles sont sur la même ligne ou la même colonne, false sinon
      */
     private boolean memeLigneOuColonne(CircleHashi cercle1, CircleHashi cercle2) {
         double c1x = cercle1.getCenterX();
@@ -212,7 +245,7 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthod to reinitialize the circles
+     * Cette méthode permet de réinitialiser les cercles
      */
     private void reinitialiserCercles(){
         premierCercle.setFill(Color.YELLOW);
@@ -224,9 +257,9 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthod who returns the index of the circle in the array
-     * @param cercle the circle to find
-     * @return the index of the circle in the array
+     * Cette méthode permet de trouver l'indice d'un cercle dans le tableau de cercles
+     * @param cercle : le cercle dont on cherche l'indice
+     * @return l'indice du cercle dans le tableau de cercles
      */
     private int trouverIndiceCercle(CircleHashi cercle) {
         for (int i = 0; i < cerclesHashi.length; i++) {
@@ -240,10 +273,10 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Méthod to draw the bridge between the two circles
-     * @param cercle1 the first circle
-     * @param cercle2 the second circle
-     * @param panneau the pane where the bridge will be drawn
+     * Cette méthode permet de dessiner une ligne entre deux cercles
+     * @param cercle1 : le premier cercle
+     * @param cercle2 : le deuxième cercle
+     * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         if(!this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
@@ -256,9 +289,17 @@ public class InterfaceGrille extends MainSceneController {
         ligne1.setStrokeWidth(3);
         ligne2.setStrokeWidth(3);
         ligne3.setStrokeWidth(3);
-        ligne1.setStroke(Color.GREY);
-        ligne2.setStroke(Color.GREY);
-        ligne3.setStroke(Color.GREY);
+        if(this.modehypothese == true){
+            ligne1.setStroke(Color.GREEN);
+            ligne2.setStroke(Color.GREEN);
+            ligne3.setStroke(Color.GREEN);
+        }
+        else{
+            ligne1.setStroke(Color.RED);
+            ligne2.setStroke(Color.RED);
+            ligne3.setStroke(Color.RED);
+        }
+
         //System.out.println(ligne1);
 
         if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
@@ -301,6 +342,27 @@ public class InterfaceGrille extends MainSceneController {
         }
 
         System.out.println(this.grille);
+    }
+
+    /**
+     * Cette méthode permet de d'afficher un pop-up qui donne le choix à l'utilisateur de soit revenir à l'état d'origine, soit confirmer son hypothèse.
+     */
+    public boolean popupHypothese() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Choix option de la fonctionalité hypothèse");
+        alert.setHeaderText("Voulez-vous appliquer votre hypothèse sur le jeu ou revenir sur le point initiale ?");
+
+        ButtonType ouiButton = new ButtonType("Nouveau état");
+        ButtonType nonButton = new ButtonType("État d'origine");
+
+        alert.getButtonTypes().setAll(ouiButton, nonButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ouiButton) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -1,6 +1,8 @@
+package Application.BackEnd.Technique;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import Application.BackEnd.Grille.*;
 
 public class SurbrillanceVoisins extends Surbrillance {
 	/** 
