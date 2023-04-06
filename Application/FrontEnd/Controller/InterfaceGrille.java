@@ -64,7 +64,7 @@ public class InterfaceGrille extends MainSceneController {
 
     private boolean modehypothese = false;
 
-    private Grille grille;
+    private Grille grilleSolution;
 
 
     /**
@@ -174,7 +174,7 @@ public class InterfaceGrille extends MainSceneController {
         Grille grille = new Grille("NiveauTest");
         grille.getGrilleFromYAML(grille.getFileNiveau());
         grille.saveGrilleToYAML();
-        this.grille = new Grille(grille);
+        grilleSolution = grille.getGrilleSolution();
         System.out.println(grille);
         for(Ile ile : grille.getListIle()){
             double coordX = ESPACE * (ile.getAbs()+1);
@@ -279,7 +279,7 @@ public class InterfaceGrille extends MainSceneController {
      * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
-        if(!this.grille.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
+        if(!this.grilleSolution.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
             System.out.println("Erreur : pont impossible");
             return;
         }
@@ -310,7 +310,7 @@ public class InterfaceGrille extends MainSceneController {
                 panneau.getChildren().removeAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
                 panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne1));
                 panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                grille.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),1);
+                grilleSolution.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),1);
             }
 
             else {
@@ -325,7 +325,7 @@ public class InterfaceGrille extends MainSceneController {
                 cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne1);
                 panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne2), cerclesHashi[indicePremierCercle].retournerLigne(ligne3));
                 panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                grille.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),2);
+                grilleSolution.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),2);
             }
         }
         else {
@@ -338,10 +338,10 @@ public class InterfaceGrille extends MainSceneController {
             cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne3);
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne2);
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne3);
-            grille.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),0);
+            grilleSolution.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),0);
         }
 
-        System.out.println(this.grille);
+        System.out.println(this.grilleSolution);
     }
 
     /**
