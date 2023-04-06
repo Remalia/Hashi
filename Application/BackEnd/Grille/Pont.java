@@ -11,7 +11,6 @@ import java.awt.Color;
 public class Pont extends Element {
     private Ile ile1;
     private Ile ile2;
-    private Color couleur;
     private int nombrePont;
 
 
@@ -22,11 +21,11 @@ public class Pont extends Element {
      * @param nbPonts nombre de ponts
      */
     public Pont(Ile i1, Ile i2, int nbPonts){
+        super(new Color(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
         this.ile2.ajouterPont(this);
-        this.couleur = new Color(0, 0, 255);
         this.nombrePont = nbPonts;
     }
 
@@ -44,23 +43,6 @@ public class Pont extends Element {
      */
     public Ile getIle2() {
         return ile2;
-    }
-
-    /**
-     * Retourne la couleur actuelle du pont
-     * @return retourne la couleur actuelle du pont
-     */
-    public Color getCouleur() {
-        return couleur;
-    }
-
-
-    /**
-     * Affecte une nouvelle couleur au pont
-     * @param couleur nouvelle couleur d'un pont
-     */
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
     }
 
     /**
