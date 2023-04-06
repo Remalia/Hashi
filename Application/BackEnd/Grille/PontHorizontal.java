@@ -1,5 +1,7 @@
 package Application.BackEnd.Grille;
 
+import javafx.geometry.Orientation;
+
 public class PontHorizontal extends Pont{
 
     /**
@@ -9,16 +11,16 @@ public class PontHorizontal extends Pont{
      * @param nbPonts nombre de ponts
      */
     public PontHorizontal(Ile i1, Ile i2, int nbPonts) {
-        super(i1, i2, nbPonts);
+        super(i1, i2, nbPonts,Orientation.HORIZONTAL);
     }
 
     @Override
-    public Ile getNbPont() {
-        return null;
+    public int getNbPont() {
+        return super.getNbPont();
     }
 
     @Override
-    public Direction getDirection() {
-        return null;
+    public Orientation getOrientation() {
+        return this.getOrient();
     }
 }

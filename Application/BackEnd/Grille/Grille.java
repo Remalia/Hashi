@@ -208,7 +208,7 @@ public class Grille {
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
             System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
-            pont.setNombrePont(nbPonts);
+            pont.setNbPont(nbPonts);
             return;
         }
 
@@ -506,8 +506,8 @@ public class Grille {
         }
         for (Ile ile : listIle){
             for (Pont p: ile.getListePont()) {
-                if(!listTemp.contains(p) && p.getNombrePont() != 0){
-                    writer.write("  pont" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
+                if(!listTemp.contains(p) && p.getNbPont() != 0){
+                    writer.write("  pont" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNbPont() + "\n");
                     idPont++;
                     listTemp.add(p);
                 }
