@@ -95,7 +95,7 @@ public class InterfaceGrille extends MainSceneController {
     }
 
     /**
-     * Cette méthode permet de mettre en pause le timer
+     * Cette méthode permet de mettre en pause le chronometre
      * @param event : l'évènement qui déclenche la pause
      */
     @FXML
