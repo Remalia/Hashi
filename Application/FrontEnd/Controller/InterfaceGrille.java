@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +20,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.Collection;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * This class is the grid of the game
@@ -75,6 +81,12 @@ public class InterfaceGrille extends MainSceneController {
      */
     @FXML
     public void stop_timer(ActionEvent event) throws IOException {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Pause");
+        alert.setHeaderText("Le jeu est en pause");
+        alert.setContentText("Cliquez sur OK pour reprendre le jeu.");
+        alert.showAndWait();
+
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
