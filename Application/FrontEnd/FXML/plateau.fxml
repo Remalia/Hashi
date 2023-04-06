@@ -35,7 +35,7 @@
       </Group>
       <Group layoutX="854.0" layoutY="752.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
+            <Button mnemonicParsing="false" onAction="#hypothese" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
                   <Image url="@../assets/pense.png" />

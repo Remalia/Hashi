@@ -83,7 +83,7 @@ public class InterfaceGrille extends MainSceneController {
      * @param event : the event that triggers the switch
      */
     @FXML
-    public void hypothese(ActionEvent event) throws IOException {
+    public void hypothese(ActionEvent event){
         if(modehypothese == false){
             modehypothese = true;
             System.out.println("Mode hypothese activé");
