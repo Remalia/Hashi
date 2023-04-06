@@ -213,13 +213,17 @@ public class Grille {
             pont.setNbPont(nbPonts);
         }
 
+        actualiserGrille();
+
+    }
+
+    public void actualiserGrille(){
         for(Ile ile : listIle){
             for(Pont p : ile.getListePont()){
-                if(p.getNbPont() != 0)
+                if(p.getNbPont() != 0 && !collisionCreationPont(p))
                     ajouterPontDansGrille(p);
             }
         }
-
     }
 
     /**
@@ -255,39 +259,41 @@ public class Grille {
     }
 
     /**
-     * Ajoute l'élément vide dans la grille si intersection entre ponts
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
+     * Fonction qui vérifie si il y a déjà un pont entre deux îles autre que celui passé en paramètre
+     * @param pont pont à vérifier
+     * @return true si il y a déjà un pont entre les deux îles avec nbPont > 0
      */
-    private boolean CollisionCreationPont(Ile ile1, Ile ile2){
+    private boolean collisionCreationPont(Pont pont){
+        Ile ile1 = pont.getIle1();
+        Ile ile2 = pont.getIle2();
         System.out.println("CollisionCreationPont");
         switch (getDirectionFrom2Iles(ile1,ile2)){
             case HAUT :
                 for(int i = ile1.getOrd(); i > ile2.getOrd(); i--){
-                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance())
-                        return false;
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                        return true;
                 }
-                return true;
+                return false;
             case BAS :
                 for(int i = ile1.getOrd(); i < ile2.getOrd(); i++){
-                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance())
-                        return false;
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                        return true;
                 }
-                return true;
+                return false;
             case GAUCHE :
                 for(int i = ile1.getAbs(); i > ile2.getAbs(); i--){
-                    if(matriceGrille[i][ile1.getOrd()] != Vide.getInstance())
-                        return false;
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                        return true;
                 }
-                return true;
+                return false;
             case DROITE :
                 for(int i = ile1.getAbs(); i < ile2.getAbs(); i++){
-                    if(matriceGrille[i][ile1.getOrd()] != Vide.getInstance())
-                        return false;
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                        return true;
                 }
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -298,6 +304,7 @@ public class Grille {
     public void incrementerPont(Ile ile1, Ile ile2){
         Pont pont = chercherPont(ile1,ile2);
         pont.incrementerPont();
+        actualiserGrille();
     }
 
 

@@ -310,7 +310,7 @@ public class InterfaceGrille extends MainSceneController {
                 panneau.getChildren().removeAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
                 panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne1));
                 panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                grilleSolution.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),1);
+                grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
             }
 
             else {
@@ -325,7 +325,7 @@ public class InterfaceGrille extends MainSceneController {
                 cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne1);
                 panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne2), cerclesHashi[indicePremierCercle].retournerLigne(ligne3));
                 panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                grilleSolution.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),2);
+                grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
             }
         }
         else {
@@ -338,7 +338,7 @@ public class InterfaceGrille extends MainSceneController {
             cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne3);
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne2);
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne3);
-            grilleSolution.ajouterPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle(),0);
+            grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
         }
 
         System.out.println(this.grilleSolution);
