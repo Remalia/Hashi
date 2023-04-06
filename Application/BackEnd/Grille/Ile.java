@@ -208,7 +208,6 @@ public class Ile extends Element {
         return this;
     }
 
-<<<<<<< HEAD
     /**
      * Retourne la liste des îles voisines de l'instance
      */
@@ -231,12 +230,13 @@ public class Ile extends Element {
         }
 
         return voisins;
-=======
+    }
+    
     @Override
     public void nettoyerCase() {
 
->>>>>>> main
     }
+
 
     public static void main(String[] args){
         try {
