@@ -15,7 +15,6 @@ public abstract class Pont extends Element implements InterfacePont{
     private final Ile ile2;
     private int nbPont;
     private final Orientation orient;
-
     /**
      * Constructeur de la classe Application.BackEnd.Grille.Pont
      * @param i1 première île
@@ -23,7 +22,7 @@ public abstract class Pont extends Element implements InterfacePont{
      * @param orientation L'orientation du pont
      */
     public Pont(Ile i1, Ile i2,Orientation orientation){
-        super(new Color(0, 0, 255));
+        super(Color.rgb(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
@@ -90,7 +89,6 @@ public abstract class Pont extends Element implements InterfacePont{
     /**
      * Retire le pont des lists de ponts des îles
      */
-    @Override
     public void nettoyerCase(){
         this.ile1.getListePont().remove(this);
         this.ile2.getListePont().remove(this);                                                                                  

@@ -1,6 +1,5 @@
 package Application.BackEnd.Technique;
-import java.awt.Color;
-import java.util.*;
+import javafx.scene.paint.Color;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +7,8 @@ import Application.BackEnd.Grille.*;
 
 public abstract class Surbrillance {
 
-    Color c = new Color(255,200,200); /* Couleur de la surbrillance */
-    Color couleurNormale = new Color(255,255,255); /* Couleur normale */
+    Color c = Color.rgb(255,200,200); /* Couleur de la surbrillance */
+    Color couleurNormale = Color.rgb(255,255,255); /* Couleur normale */
     Grille grille; /* Grille du jeu */
     Ile ile; /* Ile source de la surbrillance */
 

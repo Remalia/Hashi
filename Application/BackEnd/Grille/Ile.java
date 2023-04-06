@@ -242,7 +242,7 @@ public class Ile extends Element {
 
     public static void main(String[] args){
         try {
-            Color c = new Color(100, 0, 0);
+            Color c = Color.rgb(100, 0, 0);
             Ile ileTest = new Ile(1, 5, 4, 2, c);
             System.out.println(ileTest.toStringConsole());
             System.out.println(ileTest.toStringConsole());
