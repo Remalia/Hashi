@@ -180,7 +180,7 @@ public class Ile extends Element {
     }
 
     public String toStringConsole(){
-        String s = "Application.BackEnd.Grille.Ile" + this.id + "\n";
+        String s = "Ile" + this.id + "\n";
         s += "numéro : " + this.num + "\n";
         s += "(" + this.abs + "," + this.ord + ")\n";
         s += this.getCouleur().toString() + "\n";
@@ -232,11 +232,6 @@ public class Ile extends Element {
         return voisins;
     }
 
-    @Override
-    public void nettoyerCase()
-    {
-        
-    }
     /**
      * Retourne le nombre de voisins de l'île même s'ils ne sont pas accessibles
      */
