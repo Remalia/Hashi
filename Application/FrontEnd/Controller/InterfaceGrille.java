@@ -53,7 +53,7 @@ public class InterfaceGrille extends MainSceneController {
 
     private int NB_CERCLES;
     private int RAYON;
-    private int ESPACE;
+    private double ESPACE;
 
     private CircleHashi[] cerclesHashi;
 
@@ -107,8 +107,8 @@ public class InterfaceGrille extends MainSceneController {
     @FXML
     public void initialize() throws IOException {
         this.NB_CERCLES = 10;
-        this.RAYON = 25;
-        this.ESPACE = RAYON * 3;
+        this.RAYON = 20;
+        this.ESPACE = RAYON * 2.5;
 
         // Calcul de la taille du panneau pour afficher correctement la grille
         double panneauWidth = NB_CERCLES * ESPACE + RAYON;
@@ -252,6 +252,12 @@ public class InterfaceGrille extends MainSceneController {
         Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
         Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);
         Line ligne3 = new Line(cercle1.getCenterX()-5, cercle1.getCenterY()-5, cercle2.getCenterX()-5, cercle2.getCenterY()-5);
+        ligne1.setStrokeWidth(3);
+        ligne2.setStrokeWidth(3);
+        ligne3.setStrokeWidth(3);
+        ligne1.setStroke(Color.GREY);
+        ligne2.setStroke(Color.GREY);
+        ligne3.setStroke(Color.GREY);
         //System.out.println(ligne1);
 
         if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
