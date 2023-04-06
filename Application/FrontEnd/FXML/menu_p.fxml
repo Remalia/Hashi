@@ -33,7 +33,7 @@
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#menu_param" text="Options" GridPane.rowIndex="2">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#menu_param" text="Paramètres" GridPane.rowIndex="2">
                <font>
                   <Font size="23.0" />
                </font>
