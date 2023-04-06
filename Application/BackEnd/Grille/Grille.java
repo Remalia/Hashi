@@ -213,7 +213,8 @@ public class Grille {
         }
 
         //Si il n'existe pas de pont on en créé un
-        pont = new Pont(ile1,ile2,nbPonts);
+        //pont = new Pont(ile1,ile2,nbPonts);
+        //TODO /!\ Création pont horizontal ou vertical
         //Si on peut on vérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){

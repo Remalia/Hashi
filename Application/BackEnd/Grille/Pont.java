@@ -8,7 +8,7 @@ import java.awt.Color;
  * @see Element
  * @see Ile
  */
-public class Pont extends Element {
+public abstract class Pont extends Element implements InterfacePont{
     private Ile ile1;
     private Ile ile2;
     private int nombrePont;
