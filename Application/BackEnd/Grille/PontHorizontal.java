@@ -11,4 +11,14 @@ public class PontHorizontal extends Pont{
     public PontHorizontal(Ile i1, Ile i2, int nbPonts) {
         super(i1, i2, nbPonts);
     }
+
+    @Override
+    public Ile getNbPont() {
+        return null;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return null;
+    }
 }
