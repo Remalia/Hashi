@@ -208,6 +208,30 @@ public class Ile extends Element {
         return this;
     }
 
+    /**
+     * Retourne la liste des îles voisines de l'instance
+     */
+    public List<Ile> getIlesVoisines()
+    {
+        Ile i;
+        List<Ile> voisins = new ArrayList<Ile>();
+        for(Pont p: this.listePont)
+        {
+            i = p.getIle1();
+
+            if(equals(i))
+            {
+                voisins.add(p.getIle2());
+            }
+            else
+            {
+                voisins.add(i);
+            }
+        }
+
+        return voisins;
+    }
+
     public static void main(String[] args){
         try {
             Color c = new Color(100, 0, 0);
