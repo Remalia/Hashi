@@ -232,6 +232,11 @@ public class Ile extends Element {
         return voisins;
     }
 
+    @Override
+    public void nettoyerCase()
+    {
+        
+    }
     /**
      * Retourne le nombre de voisins de l'île même s'ils ne sont pas accessibles
      */
