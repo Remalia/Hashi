@@ -1,7 +1,4 @@
 package Application.BackEnd.Grille;
-
-import javafx.geometry.Orientation;
-
 import java.awt.Color;
 
 
@@ -20,16 +17,16 @@ public abstract class Pont extends Element implements InterfacePont{
      * Constructeur de la classe Application.BackEnd.Grille.Pont
      * @param i1 première île
      * @param i2 deuxième île
-     * @param nbPonts nombre de ponts
+     * @param orientation L'orientation du pont
      */
-    public Pont(Ile i1, Ile i2, int nbPonts,Orientation o){
+    public Pont(Ile i1, Ile i2,Orientation orientation){
         super(new Color(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
         this.ile2.ajouterPont(this);
-        this.nbPont = nbPonts;
-        this.orient = o;
+        this.nbPont = 0;
+        this.orient = orientation;
     }
 
     /**
@@ -50,6 +47,10 @@ public abstract class Pont extends Element implements InterfacePont{
         return ile2;
     }
 
+    /**
+     * Renvoie l'orientation du pont
+     * @return L'orientation
+     */
     public Orientation getOrient() {
         return orient;
     }
@@ -82,16 +83,6 @@ public abstract class Pont extends Element implements InterfacePont{
         this.nbPont = nbPont;
     }
 
-    
-    /**
-     * Retire le pont des lists de ponts des îles
-     */
-    @Override
-    public void nettoyerCase(){
-        this.ile1.getListePont().remove(this);
-        this.ile2.getListePont().remove(this);                                                                                  
-    }
-
     /**
      * Méthode toString de la classe Application.BackEnd.Grille.Pont
      * @return la représentation textuelle du pont en foncitrion de sa valeur
@@ -101,32 +92,42 @@ public abstract class Pont extends Element implements InterfacePont{
             return ".";
         }
         else if (this.nbPont == 1){
-            return "─";
+            return switch (this.getOrientation()) {
+                case HORIZONTAL -> "-";
+                case VERTICAL -> "|";
+            };
         }else{
-            return "═";
+            return switch (this.getOrientation()){
+                case VERTICAL -> "∥";
+                case HORIZONTAL -> "=";
+            };
         }
     }
 
+
     /**
-     * 
+     * Donne le pont
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
-     * @return pont si Application.BackEnd.Grille.Element est un pont
+     * @return pont Element est un pont
      */
     @Override
     public Pont donnePont(Ile ile1, Ile ile2){
         return this;
+        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
     public Element donneIle(){
         this.setNbPont(0);
         return this;
+        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
     public boolean estIncrementable(Ile ile1, Ile ile2){
         return true;
+        //TODO A SUPPRIMER CTE MERDE
     }
 
 
