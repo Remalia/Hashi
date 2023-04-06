@@ -33,7 +33,6 @@ public class Element {
 
     /**
     * Affecte une couleur à un élément
-    *
     * @param  c  la couleur à affecter
     */
     public void setCouleur(Color c){

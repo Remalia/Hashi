@@ -274,12 +274,12 @@ public class Grille {
 
     /**
      * Incrémente la valeur d'un pont
-     * @param pont le pont à incrémenter
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
      */
-    public void incrementerPont(Pont pont){
-        pont.ajoutNombrePont();
-        //pileSvg.add(pont);
-        //TODO Ajouter Action D'ajout de pont
+    public void incrementerPont(Ile ile1, Ile ile2){
+        Pont pont = chercherPont(ile1,ile2);
+        pont.incrementerPont();
     }
 
 
