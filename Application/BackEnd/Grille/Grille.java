@@ -74,9 +74,6 @@ public class Grille {
         }
     }
 
-    private void setGrilleSolution(){
-        this.solution = this;
-    }
     public Grille getGrilleSolution(){
         return this.solution;
     }
@@ -431,7 +428,7 @@ public class Grille {
             balises.forEach(this::setupIle);
             balises.forEach(this::setupPont);
         }
-        this.solution = getGrilleSolution();
+        this.solution = this;
         //TODO préférence de passage par plateau A RELIER AVEC LE FRONTEND
     }
 
