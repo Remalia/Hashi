@@ -22,6 +22,7 @@ public class  CircleHashi extends Circle{
 	private Text text;
 	private Ile ile;
 	private List<Line> listeLignes;
+	private List<Line> listeLignesHypotheseSauvegarde;
 
 	/**
 	 * Constructeur
@@ -34,6 +35,7 @@ public class  CircleHashi extends Circle{
 	CircleHashi(Ile ile ,double coordX , double coordY , double rayon ,  javafx.scene.paint.Paint paint ){
 		super(coordX,coordY,rayon,paint);
 		this.listeLignes = new ArrayList();
+		this.listeLignesHypotheseSauvegarde = new ArrayList();
 		this.ile = ile;
 		this.text = new Text(this.getCenterX()-6, this.getCenterY()+6, String.valueOf(ile.getNum()));
 		this.text.setFont(new Font(20));
@@ -119,6 +121,31 @@ public class  CircleHashi extends Circle{
 	public void supprimerLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
 		supprimerLigne(x);
+	}
+
+	/**
+	 * This method is used to save the initial list of bridges associate to the island
+	 * @param
+	 */
+	public void sauvegardeInitial() {
+		listeLignesHypotheseSauvegarde.addAll(listeLignes);
+	}
+
+	/**
+	 * This method is used to switch between the new list or the old list
+	 * @param
+	 */
+	public void switchSauvegarde(boolean modeHypothese) {
+		if(modeHypothese == true){
+			listeLignesHypotheseSauvegarde.clear();
+			listeLignesHypotheseSauvegarde.addAll(listeLignes);
+			System.out.println("Retour à l'initail");
+		}
+		else{
+			listeLignes.clear();
+			listeLignes.addAll(listeLignesHypotheseSauvegarde);
+			System.out.println("Validaton du mode");
+		}
 	}
 
 	// Getters et Setters

@@ -63,6 +63,8 @@ public class InterfaceGrille extends MainSceneController {
     private Integer indicePremierCercle;
     private Integer indiceSecondCercle;
 
+    private boolean modehypothese = false;
+
     private Grille grille;
 
 
@@ -74,6 +76,22 @@ public class InterfaceGrille extends MainSceneController {
     @FXML
     public void retour_mode(MouseEvent event) throws IOException {
         img_scene("../FXML/jeuaventure.fxml",event);
+    }
+
+    /**
+     * method to switch to the mode libre/aventure
+     * @param event : the event that triggers the switch
+     */
+    @FXML
+    public void hypothese(ActionEvent event) throws IOException {
+        if(modehypothese == false){
+            modehypothese = true;
+            System.out.println("Mode hypothese activé");
+        }
+        else{
+            modehypothese = false;
+            System.out.println("Mode hypothese désactivé");
+        }
     }
 
     /**
