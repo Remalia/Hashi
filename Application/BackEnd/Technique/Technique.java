@@ -4,7 +4,7 @@ import Application.BackEnd.Grille.*;
 //import Application.BackEnd.Grille.Ile;
 
 import java.util.ArrayList;
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.lang.Math;
@@ -413,7 +413,7 @@ public class Technique{
                 }
                 break;
             case 2:
-                if( (premVois.getNum() == 1 && premVois.getNbVois() == 1) || (scdVois.getNum() == 1 && scdVois.getNbVois() == 1) )
+                if( (premVois.getNum() == 1 && premVois.getNbVoisins() == 1) || (scdVois.getNum() == 1 && scdVois.getNbVoisins() == 1) )
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins (qui a pour unique voisin l'île en question) ne peut accepter qu'un pont au maximum, il faut donc relier l'île aux 2 autres îles par un pont simple");
@@ -1416,7 +1416,7 @@ public class Technique{
 
     public static void main(String[] args){
         
-        Color c = new Color(0,0,255);
+        Color c = Color.rgb(0,0,255);
 
         Grille grilleTest = new Grille();
         

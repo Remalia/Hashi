@@ -1,12 +1,12 @@
 package Application.BackEnd.Grille;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.util.*;
 
 public class TestIle{
     public static void main(String [] args)
     {
-        Color c = new Color(100, 0, 0);
+        Color c = Color.rgb(100, 0, 0);
 
         Ile ileTest1 = new Ile(1, 5, 4, 2, c);
         Ile ileTest2 = new Ile(2, 5, 8, 2, c);
