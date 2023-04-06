@@ -32,7 +32,6 @@ public class Plateau{
             Action a = this.grille.getHistorySvg().pop();
             a.undo();
         }
-
     }
 
     /**

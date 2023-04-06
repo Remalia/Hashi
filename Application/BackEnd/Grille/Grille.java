@@ -1,7 +1,6 @@
 package Application.BackEnd.Grille;
 
 import Application.BackEnd.Commandes.Action;
-import Application.BackEnd.Commandes.ActionAjouterPont;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
 
@@ -53,7 +52,7 @@ public class Grille {
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
-                matriceGrille[i][j] = new Element();
+                matriceGrille[i][j] = Vide.getInstance();
             }
     }
 
@@ -67,7 +66,7 @@ public class Grille {
         int i, j;
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
-                matriceGrille[i][j] = new Element();
+                matriceGrille[i][j] = Vide.getInstance();
             }
         }
     }
@@ -137,7 +136,7 @@ public class Grille {
         Ile temp;
         //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
         for(Direction d : Direction.values()){
-            temp = actuel.parcoursMatrice(abs, ord, d ,this.matriceGrille);
+            temp = actuel.getIleFromDirection(abs, ord, d ,this.matriceGrille);
             if(temp != null){
                 ajouterPont(ile, temp, 0);
             }
@@ -152,7 +151,7 @@ public class Grille {
     public void removeIle(Ile ile){
         listIle.remove(ile);
         matriceGrille[ile.getAbs()][ile.getOrd()].nettoyerCase();
-        matriceGrille[ile.getAbs()][ile.getOrd()] = new Element();
+        matriceGrille[ile.getAbs()][ile.getOrd()] = Vide.getInstance();
     }
 
     /**
