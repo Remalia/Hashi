@@ -96,11 +96,4 @@ public abstract class Element {
     public boolean estIncrementable(Ile ile1, Ile ile2){
         return false;
     }
-
-
-    /**
-     * Méthode abstract qui permet de nettoyer une case
-     */
-    public abstract void nettoyerCase();
-
 }

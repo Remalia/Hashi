@@ -231,11 +231,6 @@ public class Ile extends Element {
 
         return voisins;
     }
-    
-    @Override
-    public void nettoyerCase() {
-
-    }
 
 
     public static void main(String[] args){

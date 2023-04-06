@@ -20,16 +20,16 @@ public abstract class Pont extends Element implements InterfacePont{
      * Constructeur de la classe Application.BackEnd.Grille.Pont
      * @param i1 première île
      * @param i2 deuxième île
-     * @param nbPonts nombre de ponts
+     * @param orientation L'orientation du pont
      */
-    public Pont(Ile i1, Ile i2, int nbPonts,Orientation o){
+    public Pont(Ile i1, Ile i2,Orientation orientation){
         super(new Color(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
         this.ile2.ajouterPont(this);
-        this.nbPont = nbPonts;
-        this.orient = o;
+        this.nbPont = 0;
+        this.orient = orientation;
     }
 
     /**
@@ -50,6 +50,10 @@ public abstract class Pont extends Element implements InterfacePont{
         return ile2;
     }
 
+    /**
+     * Renvoie l'orientation du pont
+     * @return L'orientation
+     */
     public Orientation getOrient() {
         return orient;
     }
@@ -101,17 +105,23 @@ public abstract class Pont extends Element implements InterfacePont{
             return ".";
         }
         else if (this.nbPont == 1){
-            return "─";
+            return switch (this.getOrientation()) {
+                case HORIZONTAL -> "-";
+                case VERTICAL -> "|";
+            };
         }else{
-            return "═";
+            return switch (this.getOrientation()){
+                case VERTICAL -> "∥";
+                case HORIZONTAL -> "=";
+            };
         }
     }
 
     /**
-     * 
+     * Donne le pont
      * @param ile1 premiere ile du pont
      * @param ile2 deuxieme ile du pont
-     * @return pont si Application.BackEnd.Grille.Element est un pont
+     * @return pont Element est un pont
      */
     @Override
     public Pont donnePont(Ile ile1, Ile ile2){
