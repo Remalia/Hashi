@@ -1,5 +1,5 @@
 package Application.FrontEnd.Controller;
-
+// GIT STACH
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import javafx.animation.Animation;
@@ -21,6 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Optional;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -91,6 +92,7 @@ public class InterfaceGrille extends MainSceneController {
         else{
             modehypothese = false;
             System.out.println("Mode hypothese désactivé");
+            popupHypothese();
         }
     }
 
@@ -289,9 +291,17 @@ public class InterfaceGrille extends MainSceneController {
         ligne1.setStrokeWidth(3);
         ligne2.setStrokeWidth(3);
         ligne3.setStrokeWidth(3);
-        ligne1.setStroke(Color.GREY);
-        ligne2.setStroke(Color.GREY);
-        ligne3.setStroke(Color.GREY);
+        if(this.modehypothese == true){
+            ligne1.setStroke(Color.GREEN);
+            ligne2.setStroke(Color.GREEN);
+            ligne3.setStroke(Color.GREEN);
+        }
+        else{
+            ligne1.setStroke(Color.RED);
+            ligne2.setStroke(Color.RED);
+            ligne3.setStroke(Color.RED);
+        }
+
         //System.out.println(ligne1);
 
         if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
@@ -334,6 +344,27 @@ public class InterfaceGrille extends MainSceneController {
         }
 
         System.out.println(this.grille);
+    }
+
+    /**
+     * Cette méthode permet de d'afficher un pop-up qui donne le choix à l'utilisateur de soit revenir à l'état d'origine, soit confirmer son hypothèse.
+     */
+    public boolean popupHypothese() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Choix option de la fonctionalité hypothèse");
+        alert.setHeaderText("Voulez-vous appliquer votre hypothèse sur le jeu ou revenir sur le point initiale ?");
+
+        ButtonType ouiButton = new ButtonType("Nouveau état");
+        ButtonType nonButton = new ButtonType("État d'origine");
+
+        alert.getButtonTypes().setAll(ouiButton, nonButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ouiButton) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
