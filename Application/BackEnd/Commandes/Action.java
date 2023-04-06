@@ -35,5 +35,5 @@ public abstract class Action {
     /**
      * Permet de lire l'action dans un fichier YAML
      */
-    public abstract Action lireAction(Plateau p,int id,String ligne);
+    public abstract void lireAction(Plateau p,int id,String ligne);
 }

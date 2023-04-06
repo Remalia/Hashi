@@ -37,6 +37,18 @@ public class ActionHistory implements Iterable<Action>{
         history.clear();
     }
 
+    /**
+     * Récupère la taille de la liste des historiques
+     * @return la taille
+     */
+    public int length(){
+        return history.size();
+    }
+
+    /**
+     * Permet d'itérer sur chacune des valeurs d'une actionHistory
+     * @return l'iterator
+     */
     @Override
     public Iterator<Action> iterator() {
         return history.iterator();

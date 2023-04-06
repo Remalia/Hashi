@@ -76,7 +76,7 @@ public class InterfaceGrille extends MainSceneController {
      */
     @FXML
     public void retour_mode(MouseEvent event) throws IOException {
-        img_scene("../FXML/jeuaventure.fxml",event);
+        img_scene("../FXML/jeulibre.fxml",event);
     }
 
     /**

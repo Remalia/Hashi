@@ -60,7 +60,7 @@ public class ModeController extends RetourController{
 	 */
 	@FXML
 	public void switchaventure(ActionEvent event) throws IOException{
-		scene("../FXML/jeuaventure.fxml",event);
+		scene("../FXML/plateau.fxml",event);
 	}
 
 
