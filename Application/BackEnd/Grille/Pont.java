@@ -71,10 +71,7 @@ public abstract class Pont extends Element implements InterfacePont{
      */
     public void incrementerPont(){
         // si le pont est simple on le passe en double
-        if(++this.nbPont == 2){
-            // si le pont est double on le supprime
-            this.nbPont = 0;
-        }
+        this.nbPont = (this.nbPont + 1) % 3;
     }
 
     /**

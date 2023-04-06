@@ -215,6 +215,11 @@ public class Grille {
         }
     }
 
+    public void actualiserPontDansGrille(Pont pont){
+        if(pont.getNbPont() > 0 && !collisionCreationPont(pont))
+            ajouterPontDansGrille(pont);
+    }
+
     /**
      * ajoute un pont dans la grille
      * @param pont à ajouter dans la grille
@@ -253,6 +258,8 @@ public class Grille {
      * @return true si il y a déjà un pont entre les deux îles avec nbPont > 0
      */
     public boolean collisionCreationPont(Pont pont){
+        if(pont == null)
+            return false;
         Ile ile1 = pont.getIle1();
         Ile ile2 = pont.getIle2();
         switch (getDirectionFrom2Iles(ile1,ile2)){
@@ -291,8 +298,10 @@ public class Grille {
      */
     public void incrementerPont(Ile ile1, Ile ile2){
         Pont pont = chercherPont(ile1,ile2);
-        pont.incrementerPont();
-        actualiserGrille();
+        if(pont != null) {
+            pont.incrementerPont();
+            actualiserPontDansGrille(pont);
+        }
     }
 
 
@@ -303,7 +312,7 @@ public class Grille {
      */
     public Orientation getOrientationFrom2Iles(Ile ile1, Ile ile2){
         if(ile1.getOrd() == ile2.getOrd()){
-            return javafx.geometry.Orientation.VERTICAL;
+            return Orientation.VERTICAL;
         } else {
             return Orientation.HORIZONTAL;
         }
