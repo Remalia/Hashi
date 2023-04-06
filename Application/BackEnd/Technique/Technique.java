@@ -1156,7 +1156,7 @@ public class Technique{
 
         int taille = uneGrille.getTaille();
 
-        Technique t;
+        Technique t = new Technique();
 
         for(int i = 0; i < uneGrille.getTaille(); i++)
         {
@@ -1193,6 +1193,8 @@ public class Technique{
                             {
                                 if(Technique.parcoursBloquageRecursif((Ile)elem, null, uneGrille, taille, voisins))
                                 {
+                                    t.setIleCour((Ile)elem);
+                                    t.setDescription("On peut créer un réseau entier en bloquant une direction à partir d'une île");
                                     return t;
                                 }
                             }
@@ -1226,7 +1228,7 @@ public class Technique{
         /* On bloque les voisins un par un */
 
         // La condition d'arrêt consiste à vérifier si la grille est correcte
-        if(uneGrille.grilleCorrect())
+        if(uneGrille.grilleCorrecte())
         {
             return true;
         }
@@ -1250,7 +1252,7 @@ public class Technique{
                     
                 if(grilleBis != null)
                 {
-                    if(Technique.parcoursBloquageRecursif(i, ileCour, grilleBis, Technique.trouverVoisins(i.getAbs(), i.getOrd(), grilleBis)))
+                    if(Technique.parcoursBloquageRecursif(i, ileCour, grilleBis, taille, Technique.trouverVoisins(i.getAbs(), i.getOrd(), grilleBis)))
                     {
                         return true;
                     }
@@ -1268,7 +1270,7 @@ public class Technique{
         Un des voisins n'est pas relié volontairement(il est passé e paramètres)
         Retourne null si la configuration simulée n'est pas viable
     */
-    static Grille simulationReseau(Grille g, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee, int indiceIleBloquee, int indiceConfig)
+    static Grille simulationReseau(Grille g, Ile ileCour, ArrayList<Ile>voisins, Ile ileBloquee, int indiceConfig)
     {
         //Grille nvGrille = g;
         Pont p;
