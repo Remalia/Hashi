@@ -11,14 +11,14 @@ public abstract class Element {
      * Constructeur de la classe Application.BackEnd.Grille.Element
      * @param color la couleur de l'élément
      */
-    public Element (Color color) {
+    Element(Color color) {
         this.couleur = color;
     }
 
     /**
      * Constructeur de la classe Application.BackEnd.Grille.Element
      */
-    public Element(){
+    Element(){
         this.couleur = new Color(0, 0, 255);
     }
 

@@ -84,7 +84,7 @@ public class Technique{
                         if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
                         {
                             // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
-                            if(pontDeux.getNombrePont() != 0)
+                            if(pontDeux.getNbPont() != 0)
                             {
                                 // Si le pont existe alors on retourne faux car l'île n'est pas accessible
                                 return false;
@@ -92,7 +92,7 @@ public class Technique{
                         }
                         else
                         {
-                            if(pontUn.getNombrePont() != 0)
+                            if(pontUn.getNbPont() != 0)
                             {
                                 return false;
                             }
@@ -113,11 +113,11 @@ public class Technique{
                         if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
                         {
                             // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
-                            if(pontDeux.getNombrePont() != 0) return false;
+                            if(pontDeux.getNbPont() != 0) return false;
                         }
                         else
                         {
-                            if(pontUn.getNombrePont() != 0) return false;
+                            if(pontUn.getNbPont() != 0) return false;
                         }
                     }
                 }
@@ -135,11 +135,11 @@ public class Technique{
                         if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
                         {
                             // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
-                            if(pontDeux.getNombrePont() != 0) return false;
+                            if(pontDeux.getNbPont() != 0) return false;
                         }
                         else
                         {
-                            if(pontUn.getNombrePont() != 0) return false;
+                            if(pontUn.getNbPont() != 0) return false;
                         }
                     }
                 }
@@ -157,11 +157,11 @@ public class Technique{
                         if(pontUn.getIle1() == ileOrigine || pontUn.getIle2() == ileOrigine)
                         {
                             // Si le premier pont est celui qui rejoint les 2 îles passées en paramètres alors on regarde la valeur de l'autre pont   
-                            if(pontDeux.getNombrePont() != 0) return false;
+                            if(pontDeux.getNbPont() != 0) return false;
                         }
                         else
                         {
-                            if(pontUn.getNombrePont() != 0) return false;
+                            if(pontUn.getNbPont() != 0) return false;
                         }
                     }
                 }
@@ -242,7 +242,7 @@ public class Technique{
             {
                 // Si le pont existe entre 2 îles 
                 // On regarde la valeur du pont
-                int valeurPont = p.getNombrePont();
+                int valeurPont = p.getNbPont();
                 switch(valeurPont)
                 {
                     case 0:
@@ -279,7 +279,7 @@ public class Technique{
             {
                 // Si le pont existe entre 2 îles 
                 // On regarde la valeur du pont
-                int valeurPont = p.getNombrePont();
+                int valeurPont = p.getNbPont();
                 switch(valeurPont)
                 {
                     case 0:
@@ -1323,11 +1323,11 @@ public class Technique{
                         else
                         {
                             // Si la valeur existante du pont est différente de la valeur théorique du pont dans la configuration on retourne null
-                            if(p.getNombrePont() != valeurPontUn)
+                            if(p.getNbPont() != valeurPontUn)
                             {
                                 return null;
                             }
-                            nbPontsCreables += p.getNombrePont();
+                            nbPontsCreables += p.getNbPont();
                         }
                         break;
                     case 1:
@@ -1341,11 +1341,11 @@ public class Technique{
                         }
                         else
                         {
-                            if(p.getNombrePont() != valeurPontDeux)
+                            if(p.getNbPont() != valeurPontDeux)
                             {
                                 return null;
                             }
-                            nbPontsCreables += p.getNombrePont();
+                            nbPontsCreables += p.getNbPont();
                         }
                         break;
                     case 2:
@@ -1359,11 +1359,11 @@ public class Technique{
                         }
                         else
                         {
-                            if(p.getNombrePont() != valeurPontTrois)
+                            if(p.getNbPont() != valeurPontTrois)
                             {
                                 return null;
                             }
-                            nbPontsCreables += p.getNombrePont();
+                            nbPontsCreables += p.getNbPont();
                         }
                         break;
                 }

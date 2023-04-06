@@ -208,12 +208,13 @@ public class Grille {
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
             System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
-            pont.setNombrePont(nbPonts);
+            pont.setNbPont(nbPonts);
             return;
         }
 
         //Si il n'existe pas de pont on en créé un
-        pont = new Pont(ile1,ile2,nbPonts);
+        //pont = new Pont(ile1,ile2,nbPonts);
+        //TODO /!\ Création pont horizontal ou vertical
         //Si on peut on vérifie si le pont est horizontal ou vertical
         if(ile1.getAbs() == ile2.getAbs()){
             if(ile1.getOrd() < ile2.getOrd()){
@@ -505,8 +506,8 @@ public class Grille {
         }
         for (Ile ile : listIle){
             for (Pont p: ile.getListePont()) {
-                if(!listTemp.contains(p) && p.getNombrePont() != 0){
-                    writer.write("  pont" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNombrePont() + "\n");
+                if(!listTemp.contains(p) && p.getNbPont() != 0){
+                    writer.write("  pont" + idPont + ": ile" +p.getIle1().getId() + " | ile"+ p.getIle2().getId() + " | " + p.getNbPont() + "\n");
                     idPont++;
                     listTemp.add(p);
                 }

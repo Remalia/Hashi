@@ -7,7 +7,7 @@ public class Vide extends Element{
      * Permet de créer une case vide (private car Singleton --> Passage par getInstance)
      */
     private Vide(){
-
+        super();
     }
 
     /**
