@@ -93,7 +93,7 @@
             </ImageView>
          </children>
       </Group>
-      <Label layoutX="389.0" layoutY="59.0" prefHeight="54.0" prefWidth="429.0" text="Aventure : Level 1" textFill="WHITE">
+      <Label layoutX="389.0" layoutY="59.0" prefHeight="54.0" prefWidth="429.0" text="Libre : Level 1" textFill="WHITE">
          <font>
             <Font size="44.0" />
          </font>
