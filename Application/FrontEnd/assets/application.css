@@ -1,3 +1,14 @@
 .root{
-    -fx-background-color:#14B5D6
+    -fx-background-image:url("./background.jpg")
+}
+
+.button {
+   -fx-background-radius: 20;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark-mode {
+    -fx-background-image: url("fichier_image_mode_sombre.png");
+    -fx-text-fill: white;
+  }
 }

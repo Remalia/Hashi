@@ -2,6 +2,8 @@ package Application.FrontEnd.Controller;
 
 import java.io.IOException;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +15,79 @@ import javafx.fxml.FXML;
  * @version 1.0
  * @since 2023-04-02
  */
-public class MenuController extends CreditController{
-	
+public class MenuController extends MainSceneController {
+
+	@FXML private CheckBox checkbox;
+
+
+	@FXML
+	public void mode_sombre(ActionEvent event) {
+		if (checkbox.isSelected()) {
+			System.out.println("La checkbox est cochée");
+		} else {
+			System.out.println("La checkbox n'est pas cochée");
+		}
+	}
+
+
+	/**
+	 * method to go to the settings menu
+	 * @param event : the event that triggers the switch
+	 * @throws IOException Exception thrown if the file is not found
+	 */
+	@FXML
+	public void menu_param_m(MouseEvent event) throws IOException{
+		img_scene("../FXML/paramètres.fxml",event);
+	}
+
+	/**
+	 * method to go to the settings menu
+	 * @param event : the event that triggers the switch
+	 * @throws IOException Exception thrown if the file is not found
+	 */
+	@FXML
+	public void retour_mode(MouseEvent event) throws IOException{
+		img_scene("../FXML/menu_s.fxml",event);
+	}
+
+	/**
+	 * method to go to the settings menu
+	 * @param event : the event that triggers the switch
+	 * @throws IOException Exception thrown if the file is not found
+	 */
+	@FXML
+	public void showplateau(ActionEvent event) throws IOException{
+		scene("../FXML/tutoriel_plateau.fxml",event);
+	}
+
+	/**
+	 * method to go to the game
+	 * @param event : the event that triggers the switch
+	 * @throws IOException Exception thrown if the file is not found
+	 */
+	@FXML
+	public void lancer(ActionEvent event) throws IOException{
+		scene("../FXML/plateau.fxml",event);
+	}
+
+	/**
+	 * method to switch to the credits scene
+	 * @param event : the event that triggers the switch
+	 */
+	@FXML
+	public void credits(MouseEvent event) throws IOException {
+		img_scene("../FXML/crédits.fxml",event);
+	}
+
+	/**
+	 * method to switch to the menu scene
+	 * @param event : the event that triggers the switch
+	 */
+	@FXML
+	public void retour_menu_p(MouseEvent event) throws IOException {
+		img_scene("../FXML/menu_p.fxml",event);
+	}
+
 	/**
 	 * method to go to the second menu
 	 * @param event : the event that triggers the switch

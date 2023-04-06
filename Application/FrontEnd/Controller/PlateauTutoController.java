@@ -17,7 +17,7 @@ import javafx.fxml.FXML;
  * @version 1.0
  * @since 2023-04-02
  */
-public class PlateauTutoController extends CreditController{
+public class PlateauTutoController extends MainSceneController {
 	
 	private int clickcount=0;
 	private ImageView arrow;
@@ -31,6 +31,16 @@ public class PlateauTutoController extends CreditController{
 	@FXML private Text txtR1;
 	@FXML private Text txtR2;
 	@FXML private Pane pane;
+
+
+	/**
+	 * method to switch to the credits scene
+	 * @param event : the event that triggers the switch
+	 */
+	@FXML
+	public void credits(MouseEvent event) throws IOException {
+		img_scene("../FXML/crédits.fxml",event);
+	}
 	
 	/**
 	 * method to go to the settings menu
