@@ -189,19 +189,18 @@ public class Grille {
 
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
-            System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
-            pont.setNbPont(nbPonts);
+            System.out.println(pont.getClass().getSimpleName()+" entre "+ile1.getAbs()+","+ile1.getOrd()+" val("+ile1.getNum() +") et "+ile2.getAbs()+","+ile2.getOrd()+" val("+ile2.getNum() +")");
+            pont.setNbPont(nbPonts);;
             return;
         }
-
-        if(getOrientationFrom2Iles(ile1,ile2)==Orientation.HORIZONTAL){
-            pont = new PontHorizontal(ile1,ile2);
-            pont.setNbPont(nbPonts);
-        }else{
+        // inverse de la logique sinon les ponts Verticaux sont Horizontaux et vice versa
+        if(getOrientationFrom2Iles(ile1,ile2) == Orientation.HORIZONTAL)
             pont = new PontVertical(ile1,ile2);
-            pont.setNbPont(nbPonts);
-        }
-
+        else
+            pont = new PontHorizontal(ile1,ile2);
+        pont.setNbPont(nbPonts);
+        ile1.ajouterPont(pont);
+        ile2.ajouterPont(pont);
         actualiserGrille();
 
     }
@@ -288,6 +287,7 @@ public class Grille {
                 }
                 return false;
         }
+        System.out.println("Erreur quelque part dans collisionCreationPont");
         return true;
     }
 
