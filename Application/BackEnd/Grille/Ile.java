@@ -232,6 +232,13 @@ public class Ile extends Element {
         return voisins;
     }
 
+    /**
+     * Retourne le nombre de voisins de l'île même s'ils ne sont pas accessibles
+     */
+    public int getNbVoisins()
+    {
+        return this.listePont.size();
+    }
 
     public static void main(String[] args){
         try {
