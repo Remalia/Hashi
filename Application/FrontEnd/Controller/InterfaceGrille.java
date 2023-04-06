@@ -20,6 +20,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.Collection;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * This class is the grid of the game
