@@ -1,5 +1,8 @@
 package Application.BackEnd.Grille;
-import java.awt.Color;
+
+import javafx.geometry.Orientation;
+import javafx.scene.paint.Color;
+
 
 
 /**
@@ -83,6 +86,16 @@ public abstract class Pont extends Element implements InterfacePont{
         this.nbPont = nbPont;
     }
 
+    
+    /**
+     * Retire le pont des lists de ponts des îles
+     */
+    @Override
+    public void nettoyerCase(){
+        this.ile1.getListePont().remove(this);
+        this.ile2.getListePont().remove(this);                                                                                  
+    }
+
     /**
      * Méthode toString de la classe Application.BackEnd.Grille.Pont
      * @return la représentation textuelle du pont en foncitrion de sa valeur
@@ -104,7 +117,6 @@ public abstract class Pont extends Element implements InterfacePont{
         }
     }
 
-
     /**
      * Donne le pont
      * @param ile1 premiere ile du pont
@@ -114,20 +126,17 @@ public abstract class Pont extends Element implements InterfacePont{
     @Override
     public Pont donnePont(Ile ile1, Ile ile2){
         return this;
-        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
     public Element donneIle(){
         this.setNbPont(0);
         return this;
-        //TODO A SUPPRIMER CTE MERDE
     }
 
     @Override
     public boolean estIncrementable(Ile ile1, Ile ile2){
         return true;
-        //TODO A SUPPRIMER CTE MERDE
     }
 
 
