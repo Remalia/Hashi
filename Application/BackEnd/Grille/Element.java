@@ -102,9 +102,4 @@ public abstract class Element {
         return false;
     }
 
-    /**
-     * Méthode abstract qui permet de nettoyer une case
-     */
-    public abstract void nettoyerCase();
-
 }

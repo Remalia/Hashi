@@ -135,7 +135,7 @@ public class Grille {
         listIle.add(ile);
         Element actuel = matriceGrille[abs][ord];
         Ile temp;
-        //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
+        //Une fois l'île créée on éssaye de trouver< des îles dans les 4 directions
         for(Direction d : Direction.values()){
             temp = actuel.getIleFromDirection(abs, ord, d ,this.matriceGrille);
             if(temp != null){
@@ -197,7 +197,7 @@ public class Grille {
 
 
     /** 
-     * Ajoute un pont à la grille
+     * Ajoute un pont à la grille ( utilisé SEULEMENT lors de la CREATION de la grille avec le YAML )
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
      * @param nbPonts le nombre de ponts à set
@@ -213,34 +213,89 @@ public class Grille {
         }
 
         if(getOrientationFrom2Iles(ile1,ile2)==Orientation.HORIZONTAL){
-            pont = new PontHorizontal(ile1,ile2,nbPonts);
+            pont = new PontHorizontal(ile1,ile2);
+            pont.setNbPont(nbPonts);
         }else{
-            pont = new PontVertical(ile1,ile2,nbPonts);
+            pont = new PontVertical(ile1,ile2);
+            pont.setNbPont(nbPonts);
         }
 
-        ajouterPontDansGrille(pont);
+        for(Ile ile : listIle){
+            for(Pont p : ile.getListePont()){
+                if(p.getNbPont() != 0)
+                    ajouterPontDansGrille(p);
+            }
+        }
 
     }
 
+    /**
+     * ajoute un pont dans la grille
+     * @param pont à ajouter dans la grille
+     */
     public void ajouterPontDansGrille(Pont pont){
         Ile ile1 = pont.getIle1();
         Ile ile2 = pont.getIle2();
-        switch (getDirectionFrom2Iles(pont.getIle1(),pont.getIle2())){
-            case HAUT :
-                break;
-            case BAS :
-                // ord ++
-                break;
-            case GAUCHE :
-                // abs --
-                break;
-            case DROITE :
-                // abs ++
-                break;
+        System.out.println("ajout pont entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
+        switch (getDirectionFrom2Iles(pont.getIle1(), pont.getIle2())) {
+            case HAUT -> {
+                for (int i = ile1.getOrd(); i > ile2.getOrd(); i--) {
+                    matriceGrille[ile1.getAbs()][i] = pont;
+                }
+            }
+            case BAS -> {
+                for (int i = ile1.getOrd(); i < ile2.getOrd(); i++) {
+                    matriceGrille[ile1.getAbs()][i] = pont;
+                }
+            }
+            case GAUCHE -> {
+                for (int i = ile1.getAbs(); i > ile2.getAbs(); i--) {
+                    matriceGrille[i][ile1.getOrd()] = pont;
+                }
+            }
+            case DROITE -> {
+                for (int i = ile1.getAbs(); i < ile2.getAbs(); i++) {
+                    matriceGrille[i][ile1.getOrd()] = pont;
+                }
+            }
         }
     }
 
-    // TODO fonc dans element qui pour une case vide return null et dans un pont ou ile return pour pont Orientation
+    /**
+     * Ajoute l'élément vide dans la grille si intersection entre ponts
+     * @param ile1 l'île de départ du pont
+     * @param ile2 l'île d'arrivée du pont
+     */
+    private boolean CollisionCreationPont(Ile ile1, Ile ile2){
+        System.out.println("CollisionCreationPont");
+        switch (getDirectionFrom2Iles(ile1,ile2)){
+            case HAUT :
+                for(int i = ile1.getOrd(); i > ile2.getOrd(); i--){
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance())
+                        return false;
+                }
+                return true;
+            case BAS :
+                for(int i = ile1.getOrd(); i < ile2.getOrd(); i++){
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance())
+                        return false;
+                }
+                return true;
+            case GAUCHE :
+                for(int i = ile1.getAbs(); i > ile2.getAbs(); i--){
+                    if(matriceGrille[i][ile1.getOrd()] != Vide.getInstance())
+                        return false;
+                }
+                return true;
+            case DROITE :
+                for(int i = ile1.getAbs(); i < ile2.getAbs(); i++){
+                    if(matriceGrille[i][ile1.getOrd()] != Vide.getInstance())
+                        return false;
+                }
+                return true;
+        }
+        return false;
+    }
 
     /**
      * Incrémente la valeur d'un pont
@@ -319,18 +374,6 @@ public class Grille {
      */
     public Element[][] getMatriceGrille(){
         return matriceGrille;
-    }
-
-
-    /**
-     * Vérifie si la création d'un pont est possible
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
-     * @return boolean
-     */
-    public boolean verifCreationPont(Ile ile1, Ile ile2){
-        //TODO A FAIRE --> Horizontal / Vertical
-        return true;
     }
 
     /**
