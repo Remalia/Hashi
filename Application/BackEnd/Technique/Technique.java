@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.lang.Math;
 
+import java.util.*;
+
 
 public class Technique{
     
@@ -549,7 +551,7 @@ public class Technique{
         */
 
         Ile premVois = voisins.get(0);
-        Ile scdVois = voisins.get(1);
+        Ile scdVois  = voisins.get(1);
         Ile trsmVois = voisins.get(2);
         Ile qtrmVois = voisins.get(3);
 
@@ -1120,6 +1122,63 @@ public class Technique{
         //temporaire pour l'instant
         return(null);
     }
+
+    // V2
+    static Technique trouverTechniqueGrilleV2(Grille uneGrille)
+    {
+        List<Ile> iles    = uneGrille.getListIle();
+        List<Ile> voisins = new ArrayList<Ile>();
+        int nbVois;
+
+        Technique t;
+
+        // On randomize pour pas parcourir de haut gauche vers bas droite
+        for(Ile i: Collections.shuffle(iles))
+        {
+
+            // On vérifie que l'île n'est pas complète
+
+            if(!i.estComplete())
+            {
+                voisins   = i.getIlesVoisines();
+                nbVoisins = i.getNbVoisins();
+
+                switch(nbVoisins)
+                {
+                    case 1:
+                        // Si on trouve une technique
+                        if( (t = Technique.unVoisinBis(i, voisins, uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    case 2:
+                        if( (t = Technique.deuxVoisinsBis(i, voisins, uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    case 3:
+                        if( (t = Technique.troisVoisinsBis(i, voisins, uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    case 4:
+                        if( (t = Technique.quatreVoisinsBis(i, voisins, uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return null;
+    }
+
     /** 
         Méthode qui copie une matrice d'élément
     */
