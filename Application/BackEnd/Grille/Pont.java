@@ -124,11 +124,6 @@ public abstract class Pont extends Element implements InterfacePont{
     }
 
     @Override
-    public boolean estIncrementable(Ile ile1, Ile ile2){
-        return true;
-    }
-
-    @Override
     public boolean estDisponible(){
         return nbPont == 0;
     }

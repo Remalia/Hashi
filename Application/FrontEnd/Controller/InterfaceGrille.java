@@ -279,7 +279,7 @@ public class InterfaceGrille extends MainSceneController {
      * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
-        if(!this.grilleSolution.estIncrementable(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle())){
+        if(this.grilleSolution.collisionCreationPont(grilleSolution.chercherPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle()))){
             System.out.println("Erreur : pont impossible");
             return;
         }
@@ -289,7 +289,7 @@ public class InterfaceGrille extends MainSceneController {
         ligne1.setStrokeWidth(3);
         ligne2.setStrokeWidth(3);
         ligne3.setStrokeWidth(3);
-        if(this.modehypothese == true){
+        if(this.modehypothese){
             ligne1.setStroke(Color.GREEN);
             ligne2.setStroke(Color.GREEN);
             ligne3.setStroke(Color.GREEN);

@@ -169,20 +169,9 @@ public class Grille {
      * @return le pont entre les deux îles null si rien
      */
     public Pont chercherPont(Ile ile1, Ile ile2){
-        //Si on peut on vérifie si le pont est horizontal ou vertical
-        //TODO Passer a partir des orientations pour check + HashMap au lieu de list dans les Ponts
-        if(ile1.getAbs() == ile2.getAbs()){
-            if(ile1.getOrd() < ile2.getOrd()){
-                return matriceGrille[ile1.getAbs()][ile1.getOrd() + 1].donnePont(ile1, ile2);
-            }else{
-                return matriceGrille[ile1.getAbs()][ile1.getOrd() - 1].donnePont(ile1, ile2);
-            }
-        }else if(ile1.getOrd() == ile2.getOrd()){
-            if(ile1.getAbs() < ile2.getAbs()){
-                return matriceGrille[ile1.getAbs() + 1][ile1.getOrd()].donnePont(ile1, ile2);
-            }else{
-                return matriceGrille[ile1.getAbs() - 1][ile1.getOrd()].donnePont(ile1, ile2);
-            }
+        for(Pont p : ile1.getListePont()){
+            if(p.getIle1() == ile1 && p.getIle2() == ile2 || p.getIle1() == ile2 && p.getIle2() == ile1)
+                return p;
         }
         return null;
     }
@@ -263,32 +252,31 @@ public class Grille {
      * @param pont pont à vérifier
      * @return true si il y a déjà un pont entre les deux îles avec nbPont > 0
      */
-    private boolean collisionCreationPont(Pont pont){
+    public boolean collisionCreationPont(Pont pont){
         Ile ile1 = pont.getIle1();
         Ile ile2 = pont.getIle2();
-        System.out.println("CollisionCreationPont");
         switch (getDirectionFrom2Iles(ile1,ile2)){
             case HAUT :
                 for(int i = ile1.getOrd(); i > ile2.getOrd(); i--){
-                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() && matriceGrille[ile1.getAbs()][i] != pont)
                         return true;
                 }
                 return false;
             case BAS :
                 for(int i = ile1.getOrd(); i < ile2.getOrd(); i++){
-                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() && matriceGrille[ile1.getAbs()][i] != pont)
                         return true;
                 }
                 return false;
             case GAUCHE :
                 for(int i = ile1.getAbs(); i > ile2.getAbs(); i--){
-                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                    if(matriceGrille[i][ile1.getOrd()] != Vide.getInstance() && matriceGrille[i][ile1.getOrd()] != pont)
                         return true;
                 }
                 return false;
             case DROITE :
                 for(int i = ile1.getAbs(); i < ile2.getAbs(); i++){
-                    if(matriceGrille[ile1.getAbs()][i] != Vide.getInstance() || matriceGrille[ile1.getAbs()][i] != pont)
+                    if(matriceGrille[i][ile1.getOrd()] != Vide.getInstance() && matriceGrille[i][ile1.getOrd()] != pont)
                         return true;
                 }
                 return false;
@@ -374,54 +362,6 @@ public class Grille {
      */
     public Element[][] getMatriceGrille(){
         return matriceGrille;
-    }
-
-    /**
-     * Vérifie si l'incrémentation d'un pont est possible
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
-     * @return true si l'incrémentation est possible, false sinon
-     */
-    public boolean estIncrementable(Ile ile1,Ile ile2) {
-        int i;
-        // si pont vertical
-        if (ile1.getAbs() == ile2.getAbs()) {
-            if (ile1.getOrd() < ile2.getOrd()) { // si ile1 est en haut
-                for (i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++) {
-                    if (!matriceGrille[ile1.getAbs()][i].estIncrementable(ile1, ile2)) {
-                        System.out.println("1Incrementation impossible sur la case " + ile1.getAbs() + " " + i + " car " + matriceGrille[ile1.getAbs()][i].getClass().getName());
-                        return false;
-                    }
-                }
-            } else { // si ile2 est en haut
-                for (i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++) {
-                    if (matriceGrille[ile1.getAbs()][i].estIncrementable(ile1,ile2) == false) {
-                        System.out.println("2Incrementation impossible sur la case " + ile2.getAbs() + " " + i + " car " + matriceGrille[ile2.getAbs()][i].getClass().getName());
-                        return false;
-                    }
-                }
-            }
-        }
-        // si horizontal
-        else if (ile1.getOrd() == ile2.getOrd()) {
-            if (ile1.getAbs() < ile2.getAbs()) { //  si ile1 est à gauche
-                for (i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++) {
-                    if (matriceGrille[i][ile1.getOrd()].estIncrementable(ile1,ile2) == false) {
-                        System.out.println("3Incrementation impossible sur la case " + i + " " + ile1.getOrd() + " car " + matriceGrille[i][ile1.getOrd()].getClass().getName());
-                        return false;
-                    }
-                }
-
-            } else { // si ile2 est à gauche
-                for (i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++) {
-                    if (matriceGrille[i][ile1.getOrd()].estIncrementable(ile1,ile2) == false) {
-                        System.out.println("4Incrementation impossible sur la case " + i + " " + ile1.getOrd() + " car " + matriceGrille[i][ile1.getOrd()].getClass().getName());
-                        return false;
-                    }
-                }
-            }
-        } // traitement si null
-        return true;
     }
 
     /**
