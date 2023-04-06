@@ -116,6 +116,7 @@ public class InterfaceGrille extends MainSceneController {
 
         this.cerclesHashi = new CircleHashi[this.NB_CERCLES * this.NB_CERCLES];
 
+
         this.timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             tempsEcoule++;
             int minutes = tempsEcoule / 60;
