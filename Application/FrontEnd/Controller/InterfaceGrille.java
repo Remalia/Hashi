@@ -128,7 +128,7 @@ public class InterfaceGrille extends Main {
 
 
     /**
-     * Cette fonction permet d'initialiser la grille
+     * Cette fonction permet d'initialiser la grille Hashi
      * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
      */
     @FXML
