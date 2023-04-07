@@ -1,6 +1,7 @@
 package Application.FrontEnd.Controller;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javafx.event.Event;
 import javafx.scene.image.Image;
@@ -67,10 +68,9 @@ public class PlateauTutoController extends MainSceneController {
 	/**
 	 * method to switch to add a line to the tutorial
 	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
-	public void clic(MouseEvent event) throws IOException{
+	public void clic(MouseEvent event){
 		Line line;
 		Line lineR1;
 		Line lineR2;
@@ -115,10 +115,9 @@ public class PlateauTutoController extends MainSceneController {
 	/**
 	 * method to switch to add a line to the tutorial
 	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
-	public void clic2(MouseEvent event) throws IOException{
+	public void clic2(MouseEvent event){
 		Line line2;
 		Line line1;
 		Line lineR3;
@@ -179,7 +178,7 @@ public class PlateauTutoController extends MainSceneController {
 	        circle2.setDisable(true);
 	    }
 		if(circle1 != null) {
-			  Image image = new Image(getClass().getResourceAsStream("background/arrow.png"));
+			  Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("background/arrow.png")));
 		        arrow = new ImageView(image);
 		        arrow.setLayoutX(circle1.getLayoutX() - 110); // Coordonnée X de l'image
 		        arrow.setLayoutY(circle1.getLayoutY() + 31); // Coordonnée Y de l'image

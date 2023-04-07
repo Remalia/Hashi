@@ -65,5 +65,20 @@
             <Font size="25.0" />
          </font>
       </Text>
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="56.0" layoutY="54.0" onMouseClicked="#tutoriel">
+         <image>
+            <Image url="@../assets/retour.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="66.0" layoutY="720.0" onMouseClicked="#credits">
+         <image>
+            <Image url="@../assets/Logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="905.0" layoutY="60.0" onMouseClicked="#parametres">
+         <image>
+            <Image url="@../assets/reglage.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

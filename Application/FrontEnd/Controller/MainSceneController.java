@@ -1,6 +1,7 @@
 package Application.FrontEnd.Controller;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javafx.event.Event;
@@ -42,7 +43,7 @@ public class MainSceneController {
 	 */
 	public void switchToScene(String file, Event event) throws IOException {
 		window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		root = FXMLLoader.load(getClass().getResource(file));
+		root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(file)));
 		scene = new Scene(root);
 		scene.getStylesheets().add(css);
 		window.setResizable(false);

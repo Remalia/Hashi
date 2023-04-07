@@ -10,12 +10,9 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import java.io.IOException;
 import java.util.prefs.BackingStoreException;
-
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.stage.PopupWindow;
-import javafx.util.Duration;
 
 /**
  * This class is the controller of the main scene

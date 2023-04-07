@@ -1,16 +1,9 @@
 package Application.FrontEnd.Controller;
 
 import java.io.IOException;
-import java.util.prefs.Preferences;
-
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 /**
  * This class is the controller of the main scene
