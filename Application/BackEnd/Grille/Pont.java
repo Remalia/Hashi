@@ -56,6 +56,10 @@ public abstract class Pont extends Element implements InterfacePont{
     public Orientation getOrient() {
         return orient;
     }
+    @Override
+    public boolean estDifferent(Pont p){
+        return this.ile1 != p.ile1 && this.ile1 != p.ile2 && this.ile2 != p.ile1 && this.ile2 != p.ile2;
+    }
 
     /**
      * Retourne le nombre de ponts

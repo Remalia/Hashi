@@ -20,6 +20,10 @@ public class Vide extends Element{
         }
         return instance;
     }
+    @Override
+    public boolean estDifferent(Pont pont){
+        return false;
+    }
 
     @Override
     public boolean estDisponible(){

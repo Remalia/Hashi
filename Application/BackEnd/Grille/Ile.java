@@ -81,6 +81,9 @@ public class Ile extends Element {
     * Incrémente de 1 le nombre de ponts attachés à l'île
     */
     public void ajouterPont(Pont p){
+        if(this.listePont.contains(p)){
+            return;
+        }
         this.nbPonts += 1;
         listePont.add(p);
     }

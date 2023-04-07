@@ -102,4 +102,8 @@ public abstract class Element {
         return false;
     }
 
+    public boolean estDifferent(Pont pont){
+        return true;
+    }
+
 }
