@@ -33,7 +33,7 @@
             </Button>
          </children>
       </GridPane>
-      <Text fill="WHITE" layoutX="191.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel" textAlignment="CENTER" wrappingWidth="618.36572265625">
+      <Text layoutX="191.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel" textAlignment="CENTER" wrappingWidth="618.36572265625">
          <font>
             <Font size="68.0" />
          </font>

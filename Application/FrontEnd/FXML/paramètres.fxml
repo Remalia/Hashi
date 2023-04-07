@@ -13,11 +13,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.ParamController">
    <children>
-      <Label layoutX="311.0" layoutY="48.0" prefHeight="82.0" prefWidth="407.0" text="Paramètres" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="311.0" layoutY="48.0" prefHeight="82.0" prefWidth="407.0" text="Paramètres" textAlignment="CENTER">
          <font>
             <Font size="68.0" />
          </font>
@@ -27,51 +26,16 @@
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <Text fill="WHITE" layoutX="135.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aides" wrappingWidth="105.62109375">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
       <CheckBox fx:id="aides" layoutX="246.0" layoutY="183.0" mnemonicParsing="false" onAction="#setAides" />
       <CheckBox fx:id="aide_text" layoutX="297.0" layoutY="239.0" mnemonicParsing="false" onAction="#setAide_text" />
       <CheckBox fx:id="aide_visu" layoutX="297.0" layoutY="285.0" mnemonicParsing="false" onAction="#setAide_visu" />
       <CheckBox fx:id="mode_css" layoutX="326.0" layoutY="437.0" mnemonicParsing="false" onAction="#set_mode_css" selected="true" />
-      <Text fill="WHITE" layoutX="178.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Textuelles">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="182.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Visuelles">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="135.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Interface">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="178.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mode sombre">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
       <SplitMenuButton layoutX="302.0" layoutY="388.0" mnemonicParsing="false" text="1980x1080">
          <items>
             <MenuItem mnemonicParsing="false" text="Action 1" />
             <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
       </SplitMenuButton>
-      <Text fill="WHITE" layoutX="179.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Résolution">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="134.0" layoutY="518.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Données">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
       <GridPane layoutX="280.0" layoutY="542.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" />
@@ -100,14 +64,49 @@
             </Button>
          </children>
       </GridPane>
-      <Circle fill="WHITE" layoutX="162.0" layoutY="252.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
-      <Circle fill="WHITE" layoutX="162.0" layoutY="294.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
-      <Circle fill="WHITE" layoutX="161.0" layoutY="400.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
-      <Circle fill="WHITE" layoutX="161.0" layoutY="446.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+      <Circle layoutX="162.0" layoutY="252.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+      <Circle layoutX="162.0" layoutY="294.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+      <Circle layoutX="161.0" layoutY="400.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
+      <Circle layoutX="161.0" layoutY="446.0" radius="5.0" stroke="WHITE" strokeType="INSIDE" />
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="56.0" layoutY="54.0" onMouseClicked="#menu_principal">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
+      <Label layoutX="135.0" layoutY="170.0" prefHeight="42.0" prefWidth="119.0" text="Aides" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="181.0" layoutY="278.0" prefHeight="33.0" prefWidth="119.0" text="Visuelles" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="181.0" layoutY="231.0" prefHeight="33.0" prefWidth="119.0" text="Textuelles" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="134.0" layoutY="332.0" prefHeight="44.0" prefWidth="184.0" text="Interface" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="134.0" layoutY="483.0" prefHeight="44.0" prefWidth="184.0" text="Données" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="181.0" layoutY="382.0" prefHeight="33.0" prefWidth="119.0" text="Résolution" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="180.0" layoutY="430.0" prefHeight="33.0" prefWidth="149.0" text="Mode sombre" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

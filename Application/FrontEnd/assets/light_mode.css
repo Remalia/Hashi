@@ -1,5 +1,9 @@
 .root{
-    -fx-background-color:grey;
+    -fx-background-image:url("./background_white.jpg");
+}
+
+Label{
+    -fx-text-fill: black;
 }
 
 .button {

@@ -9,7 +9,6 @@ package Application.FrontEnd.Controller;/*
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import java.io.IOException;
-import java.util.prefs.BackingStoreException;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.stage.PopupWindow;
@@ -28,7 +27,7 @@ public class ModeController extends Main{
 	@FXML private Button aventure;
 
 	@FXML
-	public void initialize() throws BackingStoreException {
+	public void initialize(){
 		Tooltip tooltipL = new Tooltip();
 		tooltipL.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_BOTTOM_LEFT);
 		tooltipL.setConsumeAutoHidingEvents(false);
@@ -40,11 +39,6 @@ public class ModeController extends Main{
 		tooltipA.setConsumeAutoHidingEvents(false);
 		tooltipA.setText("Résout les grilles avec un nombre limité d'aides et de techniques.");
 		aventure.setTooltip(tooltipA);
-
-		String[] keys = prefs.keys();
-		for (String key : keys) {
-			System.out.println(key + " : " + prefs.get(key, ""));
-		}
 	}
 
 	/**

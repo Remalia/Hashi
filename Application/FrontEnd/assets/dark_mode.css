@@ -2,6 +2,9 @@
     -fx-background-image:url("./background.jpg");
 }
 
+Label {
+    -fx-text-fill: white;
+}
 .button {
    -fx-background-radius: 20;
 }
