@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="principal" minHeight="900.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfaceGrille">
    <children>
@@ -93,15 +92,15 @@
             </ImageView>
          </children>
       </Group>
-      <Label layoutX="389.0" layoutY="59.0" prefHeight="54.0" prefWidth="429.0" text="Libre : Level 1" textFill="WHITE">
+      <Label layoutX="389.0" layoutY="59.0" prefHeight="54.0" prefWidth="429.0" text="Libre : Level 1">
          <font>
             <Font size="44.0" />
          </font>
       </Label>
-      <Text fx:id="chronometre" layoutX="514.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00">
+      <Label fx:id="chronometre" layoutX="518.0" layoutY="132.0" prefHeight="54.0" prefWidth="99.0" text="00:00">
          <font>
             <Font size="26.0" />
          </font>
-      </Text>
+      </Label>
    </children>
 </AnchorPane>

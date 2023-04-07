@@ -2,13 +2,10 @@ package Application.FrontEnd.Controller;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,7 +27,7 @@ public class Main extends Application {
 	Stage window;
 	Parent root;
 	Scene scene;
-	static final String DEFAULT_CSS = "file:/home/thibaut/Hashi2/out/production/Hashi2/Application/FrontEnd/assets/light_mode.css"; // define the default CSS value first
+	static final String DEFAULT_CSS = "../assets/light_mode.css";
 	String css = DEFAULT_CSS; // initialize the css variable
 	protected Preferences prefs = Preferences.userNodeForPackage(Main.class);
 
@@ -42,6 +39,7 @@ public class Main extends Application {
 	 * @throws IOException if the file is not found
 	 */
 	public void switchToScene(String file, Event event) throws IOException {
+		css = prefs.get("mon_css", DEFAULT_CSS);
 		window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(file)));
 		scene = new Scene(root);
@@ -87,26 +85,19 @@ public class Main extends Application {
 	 * @param window : the window of the application
 	 */
 	@Override
-	public void start(Stage window) throws BackingStoreException {
+	public void start(Stage window) {
+		css = prefs.get("mon_css", DEFAULT_CSS);
+
 		try {
 			this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../FXML/menu_p.fxml")));
 			this.scene = new Scene(root);
-			this.scene.getStylesheets().add(getClass().getResource("../assets/dark_mode.css").toExternalForm());
+			scene.getStylesheets().add(css);
 			window.setTitle("Hashi");
 			window.setScene(scene);
 			window.setResizable(false);
 			window.show();
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
-
-		css = prefs.get("mon_css", DEFAULT_CSS);
-		scene = new Scene(new Group());
-		scene.getStylesheets().add(css);
-
-		String[] keys = prefs.keys();
-		for (String key : keys) {
-			System.out.println(key + " : " + prefs.get(key, ""));
 		}
 	}
 

@@ -11,7 +11,6 @@ public class ParamController extends MenuController{
     boolean aide_text_box;
     boolean aide_visu_box;
     boolean mode_css_box;
-
     boolean aides_box;
 
     @FXML protected CheckBox mode_css;

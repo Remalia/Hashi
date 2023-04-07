@@ -9,13 +9,13 @@ import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
@@ -38,7 +38,7 @@ public class InterfaceGrille extends Main {
     private Pane panneau;
 
     @FXML
-    private Text chronometre;
+    private Label chronometre;
 
     @FXML
     private AnchorPane principal;
