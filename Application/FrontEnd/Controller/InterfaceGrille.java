@@ -167,7 +167,7 @@ public class InterfaceGrille extends Main {
             panneau.setLayoutY(newY);
         });
         Grille grille = new Grille("NiveauTest");
-        grille.getGrilleFromYAML(grille.getFileNiveau());
+        grille.getGrilleFromYAML(grille.getFileNiveau(),false);
         grille.saveGrilleToYAML();
         grilleSolution = grille.getGrilleSolution();
         System.out.println(grille);
