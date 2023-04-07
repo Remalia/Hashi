@@ -128,7 +128,7 @@ public class Grille {
         int abs = ile.getAbs();
         int ord = ile.getOrd();
         listIle.add(ile);
-        /*
+
         Element actuel = matriceGrille[abs][ord];
         Ile temp;
         //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
@@ -138,8 +138,6 @@ public class Grille {
                 ajouterPont(ile, temp, 0);
             }
         }
-
-        */
         matriceGrille[abs][ord] = ile;
     }
 
@@ -190,6 +188,8 @@ public class Grille {
      * @param nbPonts le nombre de ponts à set
      */
     public void ajouterPont(Ile ile1, Ile ile2, int nbPonts){
+        Pont pont;
+        /*
         Pont pont = chercherPont(ile1,ile2);
         if(pont != null){
             //Si il y'a déjà un pont on incrémente le nombre de ponts
@@ -197,6 +197,7 @@ public class Grille {
             pont.setNbPont(nbPonts);
             return;
         }
+        */
         // Sinon on crée un nouveau pont en fonction de l'orientation
         if(getOrientationFrom2Iles(ile1,ile2) == Orientation.HORIZONTAL){
             pont = new PontHorizontal(ile1,ile2);
@@ -212,7 +213,7 @@ public class Grille {
     public void actualiserGrille(){
         for(Ile ile : listIle){
             for(Pont p : ile.getListePont()){
-                if(p.getNbPont() != 0 && !collisionCreationPont(p)) {
+                if(!collisionCreationPont(p)) {
                     ajouterPontDansGrille(p);
                 }
             }
@@ -220,7 +221,7 @@ public class Grille {
     }
 
     public void actualiserPontDansGrille(Pont pont){
-        if(pont.getNbPont() > 0 && !collisionCreationPont(pont))
+        if(!collisionCreationPont(pont))
             ajouterPontDansGrille(pont);
     }
 
@@ -231,25 +232,30 @@ public class Grille {
     public void ajouterPontDansGrille(Pont pont){
         Ile ile1 = pont.getIle1();
         Ile ile2 = pont.getIle2();
+        Element elem;
+        if(pont.getNbPont() == 0)
+           elem = Vide.getInstance();
+        else
+            elem = pont;
         switch (getDirectionFrom2Iles(ile1, ile2)) {
             case HAUT -> {
                 for (int i = ile2.getOrd() - 1; i > ile1.getOrd(); i--) {
-                    matriceGrille[ile1.getAbs()][i] = pont;
+                    matriceGrille[ile1.getAbs()][i] = elem;
                 }
             }
             case BAS -> {
                 for (int i = ile2.getOrd() + 1; i < ile1.getOrd(); i++) {
-                    matriceGrille[ile1.getAbs()][i] = pont;
+                    matriceGrille[ile1.getAbs()][i] = elem;
                 }
             }
             case GAUCHE -> {
                 for (int i = ile2.getAbs() - 1; i > ile1.getAbs(); i--) {
-                    matriceGrille[i][ile1.getOrd()] = pont;
+                    matriceGrille[i][ile1.getOrd()] = elem;
                 }
             }
             case DROITE -> {
                 for (int i = ile2.getAbs() + 1; i < ile1.getAbs(); i++) {
-                    matriceGrille[i][ile1.getOrd()] = pont;
+                    matriceGrille[i][ile1.getOrd()] = elem;
                 }
             }
         }
@@ -382,13 +388,17 @@ public class Grille {
     /**
      * Récupère la grille et l'initialise
      * @throws FileNotFoundException Fichier non trouvé
+     * @param file le fichier à parser
+     * @param soluce true si on veut la solution
      */
-    public void getGrilleFromYAML(File file) throws FileNotFoundException {
+    public void getGrilleFromYAML(File file,boolean soluce) throws FileNotFoundException {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierNiveau")){
             difficulte = Integer.parseInt(balises.get("difficulte"));
             balises.forEach(this::setupIle);
-            balises.forEach(this::setupPont);
+            if(soluce){
+                balises.forEach(this::setupPont);
+            }
         }
         this.solution = this;
         //TODO préférence de passage par plateau A RELIER AVEC LE FRONTEND
@@ -496,7 +506,7 @@ public class Grille {
 
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauTest");
-        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
+        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau(),true);
         System.out.println(grilleTest.toString());
     }
     public static void main2(String[] args){

@@ -64,7 +64,7 @@ public class Plateau{
             file = this.grille.getFileNiveau();
         else
             file = this.grille.getFileSave();
-        this.grille.getGrilleFromYAML(file);
+        this.grille.getGrilleFromYAML(file,true);
         HashMap<String,String> balises = Parser.getAllBalise(file);
         balises.forEach(this::setupAction);
     }
