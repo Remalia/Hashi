@@ -1,7 +1,6 @@
 *.class
 *.js
 *.html
-*.css
 resources
 script-dir/
 element-list
