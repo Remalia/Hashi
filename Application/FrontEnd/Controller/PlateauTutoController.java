@@ -1,6 +1,8 @@
 package Application.FrontEnd.Controller;
 
 import java.io.IOException;
+
+import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -38,8 +40,8 @@ public class PlateauTutoController extends MainSceneController {
 	 * @param event : the event that triggers the switch
 	 */
 	@FXML
-	public void credits(MouseEvent event) throws IOException {
-		img_scene("../FXML/crédits.fxml",event);
+	public void credits(Event event) throws IOException {
+		switchToScene("../FXML/crédits.fxml",event);
 	}
 	
 	/**
@@ -48,8 +50,8 @@ public class PlateauTutoController extends MainSceneController {
 	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
-	public void menu_param_m(MouseEvent event) throws IOException{
-		img_scene("../FXML/paramètres.fxml",event);
+	public void parametres(Event event) throws IOException{
+		switchToScene("../FXML/paramètres.fxml",event);
 	}
 	
 	/**
@@ -58,8 +60,8 @@ public class PlateauTutoController extends MainSceneController {
 	 * @throws IOException Exception if the file is not found
 	 */
 	@FXML
-	public void switchtuto2(MouseEvent event) throws IOException{
-        img_scene("../FXML/tutoriel.fxml",event);
+	public void tutoriel(Event event) throws IOException{
+		switchToScene("../FXML/tutoriel.fxml",event);
 	}
 	
 	/**

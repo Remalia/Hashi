@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import java.util.Objects;
 
 /**
  * Main class of the application Hashi
@@ -16,11 +15,12 @@ import java.util.Objects;
  * @since 2023-04-02
  */
 public class Main extends Application {
-	
+
 	// Attributes
 	Parent root;
 	Scene scene;
-	    
+	private static final String CSS_PATH = "../assets/dark_mode.css";
+
 	/**
 	 * Start the application Hashi
 	 * @param window : the window of the application
@@ -28,8 +28,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage window) {
 		try {
-			root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../FXML/menu_p.fxml")));
-			scene = new Scene(root);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/menu_p.fxml"));
+			this.root = loader.load();
+			this.scene = new Scene(root);
+			this.scene.getStylesheets().add(getClass().getResource(CSS_PATH).toExternalForm());
 			window.setTitle("Hashi");
 			window.setScene(scene);
 			window.setResizable(false);
@@ -37,10 +39,8 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
-	
+
 	/**
 	 * Main method of the application
 	 * @param args : arguments of the main method
@@ -49,3 +49,4 @@ public class Main extends Application {
 		launch(args);
 	}
 }
+

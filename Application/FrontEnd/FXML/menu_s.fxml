@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.ModeController">
+<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.ModeController">
    <children>
       <GridPane layoutX="300.0" layoutY="300.0">
          <columnConstraints>
@@ -21,12 +21,12 @@
             <RowConstraints minHeight="110.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="aventure" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchaventure" text="Aventure" GridPane.rowIndex="1">
+            <Button fx:id="aventure" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#plateau" text="Aventure" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button fx:id="libre" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchlibre" text="Libre">
+            <Button fx:id="libre" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#jeulibre" text="Libre">
                <font>
                   <Font size="23.0" />
                </font>
@@ -38,7 +38,7 @@
             <Font size="68.0" />
          </font>
       </Text>
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_menu_p">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#menu_principal">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
@@ -48,7 +48,7 @@
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0" onMouseClicked="#menu_param_m">
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0" onMouseClicked="#parametres">
          <image>
             <Image url="@../assets/reglage.png" />
          </image>

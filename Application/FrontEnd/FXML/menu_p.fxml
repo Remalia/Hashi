@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
    <children>
       <GridPane layoutX="300.0" layoutY="300.0">
          <columnConstraints>
@@ -23,17 +23,17 @@
             <RowConstraints minHeight="80.0" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#menu_jouer" text="Jouer">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#menu_secondaire" text="Jouer">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#switchtuto" text="Tutoriel" GridPane.rowIndex="1">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#tutoriel" text="Tutoriel" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#menu_param" text="Paramètres" GridPane.rowIndex="2">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#parametres" text="Paramètres" GridPane.rowIndex="2">
                <font>
                   <Font size="23.0" />
                </font>

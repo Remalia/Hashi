@@ -4,6 +4,7 @@ import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import javafx.animation.Animation;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +21,6 @@ import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Optional;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -73,8 +73,8 @@ public class InterfaceGrille extends MainSceneController {
      * @throws IOException Exception thrown if the file is not found
      */
     @FXML
-    public void retour_mode(MouseEvent event) throws IOException {
-        img_scene("../FXML/jeulibre.fxml",event);
+    public void jeulibre(Event event) throws IOException {
+        switchToScene("../FXML/jeulibre.fxml",event);
     }
 
     /**
@@ -82,7 +82,7 @@ public class InterfaceGrille extends MainSceneController {
      * @param event : the event that triggers the switch
      */
     @FXML
-    public void hypothese(ActionEvent event) throws IOException {
+    public void hypothese(ActionEvent event){
         if(modehypothese == false){
             modehypothese = true;
             System.out.println("Mode hypothese activé");
@@ -117,7 +117,7 @@ public class InterfaceGrille extends MainSceneController {
      * @param event : l'évènement qui déclenche la pause
      */
     @FXML
-    public void stop_timer(ActionEvent event) throws IOException {
+    public void stop_timer(ActionEvent event){
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");

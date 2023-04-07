@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-
 import Application.BackEnd.Grille.Ile;
 import javafx.scene.text.*;
 

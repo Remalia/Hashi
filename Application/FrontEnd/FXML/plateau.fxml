@@ -10,15 +10,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="principal" minHeight="900.0" minWidth="1200.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfaceGrille">
+<AnchorPane fx:id="principal" minHeight="900.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfaceGrille">
    <children>
       <Pane fx:id="panneau" layoutX="341.0" layoutY="222.0" prefHeight="436.0" prefWidth="483.0" />
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="50.0" layoutY="59.0" onMouseClicked="#retour_mode">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="50.0" layoutY="59.0" onMouseClicked="#jeulibre">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="1089.0" layoutY="55.0">
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="1089.0" layoutY="55.0" onMouseClicked="#parametres">
          <image>
             <Image url="@../assets/reglage.png" />
          </image>

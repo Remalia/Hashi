@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
    <children>
       <GridPane layoutX="300.0" layoutY="300.0">
          <columnConstraints>
@@ -26,7 +26,7 @@
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#showplateau" text="Comment jouer ?">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#plateau" text="Comment jouer ?">
                <font>
                   <Font size="23.0" />
                </font>
@@ -43,12 +43,12 @@
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_menu_p">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#menu_principal">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0" onMouseClicked="#menu_param_m">
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="895.0" layoutY="50.0" onMouseClicked="#parametres">
          <image>
             <Image url="@../assets/reglage.png" />
          </image>
