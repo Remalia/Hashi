@@ -46,6 +46,10 @@ public class ParamController extends MenuController{
     @FXML
     public void setAides(ActionEvent event) {
         this.aides_box = aides.isSelected();
+        this.aide_text.setSelected(aides_box);
+        this.aide_visu.setSelected(aides_box);
+        setAide_text(event);
+        setAide_visu(event);
         prefs.putBoolean("aides", aides_box);
     }
 
