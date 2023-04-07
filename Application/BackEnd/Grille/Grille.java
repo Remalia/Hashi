@@ -66,7 +66,6 @@ public class Grille {
      * Constructeur de la grille
      */
     public Grille(){
-        // remplissage de la grille temporaire pour les tests */
         this.listIle = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
         int i, j;
