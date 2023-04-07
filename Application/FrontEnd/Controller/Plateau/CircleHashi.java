@@ -1,4 +1,4 @@
-package Application.FrontEnd.Controller;
+package Application.FrontEnd.Controller.Plateau;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class  CircleHashi extends Circle{
 	 * @param rayon : double : the radius
 	 * @param paint	: javafx.scene.paint.Paint : the color
 	 */
-	CircleHashi(Ile ile ,double coordX , double coordY , double rayon ,  javafx.scene.paint.Paint paint ){
+	public CircleHashi(Ile ile, double coordX, double coordY, double rayon, javafx.scene.paint.Paint paint){
 		super(coordX,coordY,rayon,paint);
 		this.listeLignes = new ArrayList();
 		this.listeLignesHypotheseSauvegarde = new ArrayList();
