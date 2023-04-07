@@ -22,7 +22,7 @@ import javafx.stage.PopupWindow;
  * @version 1.0
  * @since 2023-04-02
  */
-public class ModeController extends MainSceneController{
+public class ModeController extends Main{
 
 	@FXML private Button libre;
 	@FXML private Button aventure;

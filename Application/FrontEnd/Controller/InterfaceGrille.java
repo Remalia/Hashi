@@ -30,7 +30,7 @@ import javafx.scene.control.Alert.AlertType;
  * @version 1.0
  * @since 2023-04-02
  */
-public class InterfaceGrille extends MainSceneController {
+public class InterfaceGrille extends Main {
 
     private Timeline timer=null; // Ajouter une variable timer
     private int tempsEcoule = 0;

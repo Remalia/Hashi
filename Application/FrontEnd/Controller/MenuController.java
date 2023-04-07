@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
  * @version 1.0
  * @since 2023-04-02
  */
-public class MenuController extends MainSceneController {
+public class MenuController extends Main {
 
 	/**
 	 * Method to show the tutorial for the game board

@@ -20,7 +20,7 @@ import javafx.fxml.FXML;
  * @version 1.0
  * @since 2023-04-02
  */
-public class PlateauTutoController extends MainSceneController {
+public class PlateauTutoController extends Main {
 	
 	private int clickcount=0;
 	private ImageView arrow;
