@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 /**
  * This class is the grid of the game
@@ -58,6 +61,8 @@ public class InterfaceGrille extends Main {
 
     private Grille grilleBack;
 
+    private boolean choixhypothese = true;
+
 
     /**
      * Cette méthode permet de passer à la scène libre
@@ -78,11 +83,20 @@ public class InterfaceGrille extends Main {
         if(!modehypothese){
             modehypothese = true;
             System.out.println("Mode hypothese activé");
+            avantHypothese(this.grille.getCerclesHashi());
         }
         else{
             modehypothese = false;
             System.out.println("Mode hypothese désactivé");
-            popupHypothese();
+            this.choixhypothese = popupHypothese();
+            if(choixhypothese == false){
+                apresHypothese(this.grille.getCerclesHashi());
+                rehinitialiserhypothse(this.panneau, this.grille.getCerclesHashi());
+            }
+            else{
+                changerCouleurLignes(panneau, Color.RED);
+            }
+            choixhypothese = true;
         }
     }
 
@@ -123,7 +137,6 @@ public class InterfaceGrille extends Main {
             timer.pause();
         }
     }
-
 
     /**
      * Cette fonction permet d'initialiser la grille Hashi
@@ -182,7 +195,6 @@ public class InterfaceGrille extends Main {
         }
     }
 
-
     /**
      * Cette méthode permet de gérer les interactions avec les cercles
      * @param event : l'évènement qui déclenche l'interaction
@@ -221,8 +233,6 @@ public class InterfaceGrille extends Main {
             this.grille.setIndicePremierCercle(this.grille.trouverIndiceCercle(this.grille.getPremierCercle()));
         }
     }
-
-
 
     /**
      * Cette méthode permet de dessiner une ligne entre deux cercles
@@ -315,6 +325,59 @@ public class InterfaceGrille extends Main {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Cette méthode permet de rétablir la couleur initiale des lignes du mode hypothèse.
+     */
+    public static void changerCouleurLignes(Pane panneau, Color nouvelleCouleur) {
+        for (Node node : panneau.getChildren()) {
+            if (node instanceof Line) {
+                Line ligne = (Line) node;
+                ligne.setStroke(nouvelleCouleur);
+            }
+        }
+    }
+
+    /**
+     * Cette méthode permet de gèrer le mode hypothese dans le cas ou l'utilisateur souhaite effacer son brouillon
+     * @param panneau : la grille
+     * @param cercles : les cercles qui composent la grille de jeu
+     */
+    public void rehinitialiserhypothse(Pane panneau, CircleHashi[] cercles) {
+        panneau.getChildren().removeIf(node -> node instanceof Line);
+        for(CircleHashi c : cercles){
+            if(c != null){
+                for(Line ligne : c.getListeLignesHypotheseSauvegarde()){
+                    panneau.getChildren().addAll(ligne);
+                    ligne.toBack();
+                }
+            }
+        }
+    }
+
+    /**
+     * Cette méthode permet de sauvegarder l'état initiale de la grille avant que le joueur effectue son brouillon d'hypothèse
+     * @param cercles : les cercles qui composent la grille de jeu
+     */
+    public void avantHypothese(CircleHashi[] cercles){
+        for(CircleHashi c : cercles){
+            if(c != null){
+                c.sauvegardeInitial();
+            }
+        }
+    }
+
+    /**
+     * Cette méthode permet de revenir à l'état de sauvegarde d'avant brouillon de la grille
+     * @param cercles : les cercles qui composent la grille de jeu
+     */
+    public void apresHypothese(CircleHashi[] cercles){
+        for(CircleHashi c : cercles){
+            if(c != null){
+                c.EtablirsauvegardeInitial();
+            }
         }
     }
 

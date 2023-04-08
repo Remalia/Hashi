@@ -125,24 +125,16 @@ public class  CircleHashi extends Circle{
 	 * Cette méthode sauvegarde la liste de lignes mit en hypothèse
 	 */ 
 	public void sauvegardeInitial() {
+		listeLignesHypotheseSauvegarde.clear();
 		listeLignesHypotheseSauvegarde.addAll(listeLignes);
 	}
 
 	/**
-	 * Cette méthode permet de switcher entre la liste de lignes sauvegardée et la liste de lignes actuelle
-	 * @param modeHypothese : boolean : true si on veut switcher vers la liste de lignes sauvegardée, false si on veut switcher vers la liste de lignes actuelle
+	 * Cette méthode remplace la liste de lignes par celle d'avant action d'hypothèse
 	 */
-	public void switchSauvegarde(boolean modeHypothese) {
-		if(modeHypothese == true){
-			listeLignesHypotheseSauvegarde.clear();
-			listeLignesHypotheseSauvegarde.addAll(listeLignes);
-			System.out.println("Retour à l'initail");
-		}
-		else{
-			listeLignes.clear();
-			listeLignes.addAll(listeLignesHypotheseSauvegarde);
-			System.out.println("Validaton du mode");
-		}
+	public void EtablirsauvegardeInitial() {
+		listeLignes.clear();
+		listeLignes.addAll(listeLignesHypotheseSauvegarde);
 	}
 
 	/**
@@ -157,6 +149,13 @@ public class  CircleHashi extends Circle{
 	 */
 	public Text getText() {
 		return text;
+	}
+
+	/**
+	 * Cette méthode renvoie la liste de pont associé au cercle
+	 */
+	public List<Line> getListeLignesHypotheseSauvegarde() {
+		return listeLignesHypotheseSauvegarde;
 	}
 
 }
