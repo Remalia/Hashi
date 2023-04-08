@@ -128,7 +128,6 @@ public class Grille {
         int abs = ile.getAbs();
         int ord = ile.getOrd();
         listIle.add(ile);
-
         Element actuel = matriceGrille[abs][ord];
         Ile temp;
         //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
@@ -189,15 +188,6 @@ public class Grille {
      */
     public void ajouterPont(Ile ile1, Ile ile2, int nbPonts){
         Pont pont;
-        /*
-        Pont pont = chercherPont(ile1,ile2);
-        if(pont != null){
-            //Si il y'a déjà un pont on incrémente le nombre de ponts
-            System.out.println("ponts trouvé");
-            pont.setNbPont(nbPonts);
-            return;
-        }
-        */
         // Sinon on crée un nouveau pont en fonction de l'orientation
         if(getOrientationFrom2Iles(ile1,ile2) == Orientation.HORIZONTAL){
             pont = new PontHorizontal(ile1,ile2);
@@ -237,23 +227,23 @@ public class Grille {
            elem = Vide.getInstance();
         else
             elem = pont;
-        switch (getDirectionFrom2Iles(ile1, ile2)) {
-            case HAUT -> {
+        switch (pont.getDirectionFrom(ile1)) {
+            case BAS -> {
                 for (int i = ile2.getOrd() - 1; i > ile1.getOrd(); i--) {
                     matriceGrille[ile1.getAbs()][i] = elem;
                 }
             }
-            case BAS -> {
+            case HAUT -> {
                 for (int i = ile2.getOrd() + 1; i < ile1.getOrd(); i++) {
                     matriceGrille[ile1.getAbs()][i] = elem;
                 }
             }
-            case GAUCHE -> {
+            case DROITE -> {
                 for (int i = ile2.getAbs() - 1; i > ile1.getAbs(); i--) {
                     matriceGrille[i][ile1.getOrd()] = elem;
                 }
             }
-            case DROITE -> {
+            case GAUCHE -> {
                 for (int i = ile2.getAbs() + 1; i < ile1.getAbs(); i++) {
                     matriceGrille[i][ile1.getOrd()] = elem;
                 }
@@ -271,26 +261,26 @@ public class Grille {
             return false;
         Ile ile1 = pont.getIle1();
         Ile ile2 = pont.getIle2();
-        switch (getDirectionFrom2Iles(ile1,ile2)){
-            case HAUT :
+        switch (pont.getDirectionFrom(ile1)){
+            case BAS :
                 for (int i = ile2.getOrd() - 1; i > ile1.getOrd(); i--) {
                     if(matriceGrille[ile1.getAbs()][i].estDifferent(pont))
                         return true;
                 }
                 return false;
-            case BAS :
+            case HAUT :
                 for (int i = ile2.getOrd() + 1; i < ile1.getOrd(); i++) {
                     if(matriceGrille[ile1.getAbs()][i].estDifferent(pont))
                         return true;
                 }
                 return false;
-            case GAUCHE :
+            case DROITE :
                 for (int i = ile2.getAbs() - 1; i > ile1.getAbs(); i--) {
                     if(matriceGrille[i][ile1.getOrd()].estDifferent(pont))
                         return true;
                 }
                 return false;
-            case DROITE :
+            case GAUCHE :
                 for (int i = ile2.getAbs() + 1; i < ile1.getAbs(); i++) {
                     if(matriceGrille[i][ile1.getOrd()].estDifferent(pont)) {
                         return true;
@@ -313,6 +303,9 @@ public class Grille {
             pont.incrementerPont();
             actualiserPontDansGrille(pont);
         }
+        else{
+            System.out.println("Erreur dans incrementerPont");
+        }
     }
 
 
@@ -330,25 +323,7 @@ public class Grille {
         }
     }
 
-    /**
-     * Donne l'orientation d'un pont entre deux îles
-     * @param ile1 première ile du pont
-     * @param ile2 seconde ile du pont
-     */
-    public Direction getDirectionFrom2Iles(Ile ile1, Ile ile2){
-        Orientation orientation = getOrientationFrom2Iles(ile1, ile2);
-        if(orientation == Orientation.VERTICAL){
-            if(ile1.getOrd() < ile2.getOrd())
-                return Direction.HAUT;
-            else
-                return Direction.BAS;
-        } else {
-            if(ile1.getAbs() < ile2.getAbs())
-                return Direction.GAUCHE;
-            else
-                return Direction.DROITE;
-        }
-    }
+
 
 
     

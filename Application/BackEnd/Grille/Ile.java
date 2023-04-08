@@ -74,7 +74,11 @@ public class Ile extends Element {
     * @return true si l'île est complète, sinon false
     */
     public boolean estComplete(){
-        return (this.num == this.nbPonts);
+        int sum = 0;
+        for(Pont p : this.listePont){
+            sum += p.getNbPont();
+        }
+        return (this.num == sum);
     }
 
     /**
@@ -83,6 +87,15 @@ public class Ile extends Element {
     public void ajouterPont(Pont p){
         if(this.listePont.contains(p)){
             return;
+        }
+        Direction dir = p.getDirectionFrom(this);
+        //Si l'île possède déjà un pont de la même orientation on le remplace
+        for(Pont pont : this.listePont){
+            if(pont.getDirectionFrom(this) == dir){
+                this.listePont.remove(pont);
+                this.listePont.add(p);
+                return;
+            }
         }
         this.nbPonts += 1;
         listePont.add(p);

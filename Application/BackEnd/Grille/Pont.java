@@ -58,6 +58,12 @@ public abstract class Pont extends Element implements InterfacePont{
     }
 
     /**
+     * Méthode abstract qui retourne la direction du pont par rapport à l'île passée en paramètre
+     * @param ile l'île dont on veut connaître la direction du pont par rapport à elle
+     */
+    public abstract Direction getDirectionFrom(Ile ile);
+
+    /**
      * Redéfinition de la méthode estDifférent de Element qui retourne true si le pont est différent de l'élément passé en paramètre
      * @see {@link Element#estDifferent(Pont)}
      * @param p pont à comparer

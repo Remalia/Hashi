@@ -1,12 +1,9 @@
 type: fichierNiveau
 difficulte: 2
 grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
-  ile1: 2 | 4 | 1
-  ile2: 8 | 4 | 2
-  ile3: 6 | 1 | 3
-  ile4: 6 | 8 | 4
-  ile5: 0 | 1 | 5
-  ile6: 0 | 8 | 6
-  pont1: ile1 | ile2 | 1
-  pont2: ile3 | ile4 | 2
-  pont3: ile5 | ile6 | 2
+  ile1: 2 | 8 | 1
+  ile2: 2 | 5 | 2
+  ile3: 2 | 2 | 3
+  ile4: 9 | 2 | 4
+  ile5: 6 | 2 | 5
+  ile6: 4 | 2 | 6

@@ -174,8 +174,8 @@ public class InterfaceGrille extends Main {
         Grille grille = new Grille("NiveauTest");
         grille.getGrilleFromYAML(grille.getFileNiveau(),false);
         grille.saveGrilleToYAML();
-        grilleSolution = grille.getGrilleSolution();
-        System.out.println(grille);
+        grilleSolution = grille;
+        System.out.println(grilleSolution);
         for(Ile ile : grille.getListIle()){
             double coordX = ESPACE * (ile.getAbs()+1);
             double coordY = ESPACE * (ile.getOrd()+1);
@@ -340,7 +340,14 @@ public class InterfaceGrille extends Main {
             cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne3);
             grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
         }
-
+        if(grilleSolution.grilleCorrecte()){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Félicitation");
+            alert.setHeaderText("Vous avez réussi à compléter le puzzle");
+            alert.setContentText("Vous avez réussi à compléter le puzzle");
+            alert.showAndWait();
+        }
+        System.out.println(this.grilleSolution.grilleCorrecte());
         System.out.println(this.grilleSolution);
     }
 
