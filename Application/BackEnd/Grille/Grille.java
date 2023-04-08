@@ -131,7 +131,7 @@ public class Grille {
         listIle.add(ile);
         Element actuel = matriceGrille[abs][ord];
         Ile temp;
-        //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
+        //Une fois l'île créée, on essaye de trouver des îles dans les 4 directions
         for(Direction d : Direction.values()){
             temp = actuel.getIleFromDirection(abs, ord, d ,this.matriceGrille);
             if(temp != null){
@@ -189,7 +189,7 @@ public class Grille {
      */
     public void ajouterPont(Ile ile1, Ile ile2, int nbPonts){
         Pont pont;
-        // Sinon on crée un nouveau pont en fonction de l'orientation
+        // Sinon, on crée un nouveau pont en fonction de l'orientation
         if(getOrientationFrom2Iles(ile1,ile2) == Orientation.HORIZONTAL){
             pont = new PontHorizontal(ile1,ile2);
         }
@@ -217,7 +217,7 @@ public class Grille {
     }
 
     /**
-     * ajoute un pont dans la grille
+     * Ajoute un pont dans la grille
      * @param pont à ajouter dans la grille
      */
     public void ajouterPontDansGrille(Pont pont){
@@ -470,9 +470,9 @@ public class Grille {
     }
 
     public static void main(String[] args) throws IOException {
-        Grille grilleTest = new Grille("NiveauTest");
+        Grille grilleTest = new Grille("NiveauxFacile/Niveau10");
         grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
-        System.out.println(grilleTest.toString());
+        System.out.println(grilleTest.getGrilleSolution().toString());
     }
     public static void main2(String[] args){
         Grille grilleTest = new Grille();

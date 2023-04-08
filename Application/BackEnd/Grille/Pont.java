@@ -131,6 +131,10 @@ public abstract class Pont extends Element implements InterfacePont{
         return this;
     }
 
+    /**
+     * Donne l'ile
+     * @return ile Element est une ile
+     */
     @Override
     public Element donneIle(){
         this.setNbPont(0);
