@@ -50,7 +50,7 @@ public class  CircleHashi extends Circle{
 
 	/**
 	 * Cette méthode est utilisée pour vérifier si une ligne est dans la liste de lignes
-	 * @param clique : Line : la ligne à vérifier
+	 * @param ligne : la ligne à vérifier
 	 */
 	public boolean ligneEstDansListe(Line ligne) {
 		for (Line l : listeLignes) {
