@@ -1,0 +1,57 @@
+type: fichierNiveau
+difficulte: 1
+grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
+  ile1: 0 | 0 | 2
+  ile2: 0 | 3 | 5
+  ile3: 0 | 9 | 4
+  ile4: 7 | 9 | 1
+  ile5: 5 | 9 | 3
+  ile6: 3 | 9 | 4
+  ile7: 2 | 8 | 1
+  ile8: 4 | 8 | 4
+  ile9: 6 | 8 | 2
+  ile10: 9 | 8 | 2
+  ile11: 9 | 5 | 3
+  ile12: 9 | 3 | 4
+  ile13: 9 | 1 | 2
+  ile14: 8 | 0 | 2
+  ile15: 8 | 7 | 3
+  ile16: 5 | 7 | 4
+  ile17: 5 | 1 | 4
+  ile18: 7 | 1 | 3
+  ile19: 7 | 6 | 1
+  ile20: 7 | 4 | 2
+  ile21: 4 | 0 | 4
+  ile22: 1 | 1 | 1
+  ile23: 3 | 1 | 2
+  ile24: 3 | 3 | 4
+  ile25: 1 | 4 | 1
+  ile26: 1 | 7 | 3
+  ile27: 3 | 7 | 3
+  pont1: ile1 | ile2 | 1
+  pont2: ile1 | ile21 | 1
+  pont3: ile2 | ile3 | 2
+  pont4: ile24 | ile2 | 2
+  pont5: ile6 | ile3 | 2
+  pont6: ile4 | ile5 | 1
+  pont7: ile5 | ile6 | 2
+  pont8: ile8 | ile7 | 1
+  pont9: ile21 | ile8 | 2
+  pont10: ile9 | ile8 | 1
+  pont11: ile10 | ile9 | 1
+  pont12: ile11 | ile10 | 1
+  pont13: ile11 | ile12 | 2
+  pont14: ile12 | ile13 | 2
+  pont15: ile21 | ile14 | 1
+  pont16: ile14 | ile15 | 1
+  pont17: ile16 | ile15 | 2
+  pont18: ile16 | ile17 | 2
+  pont19: ile17 | ile18 | 2
+  pont20: ile20 | ile18 | 1
+  pont21: ile19 | ile20 | 1
+  pont22: ile22 | ile23 | 1
+  pont23: ile24 | ile27 | 1
+  pont24: ile25 | ile26 | 1
+  pont25: ile27 | ile26 | 2
+historySvg: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )
+historyRecup: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )
