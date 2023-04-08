@@ -15,6 +15,7 @@ public class Ile extends Element {
     private final int ord; /** ordonnée de l'île */
     private boolean estSelect; /** statut de sélection de l'île */
     private List<Pont> listePont;
+    private List<Pont> listePontSauvegarde;
     
     /**
      * Constructeur de la classe Application.BackEnd.Grille.Ile
@@ -31,6 +32,7 @@ public class Ile extends Element {
         this.abs = abs;
         this.ord = ord;
         this.listePont = new ArrayList<>();
+        this.listePontSauvegarde = new ArrayList<>();
         this.nbPonts = 0; // à la création il n'y a pas de ponts
         this.estSelect = false; // île non selectionée à la création
     }
@@ -49,6 +51,7 @@ public class Ile extends Element {
         this.abs = abs;
         this.ord = ord;
         this.listePont = new ArrayList<>();
+        this.listePontSauvegarde = new ArrayList<>();
         this.nbPonts = 0; // à la création il n'y a pas de ponts
         this.estSelect = false; // île non selectionée à la création
     }
@@ -254,6 +257,22 @@ public class Ile extends Element {
     public int getNbVoisins()
     {
         return this.listePont.size();
+    }
+
+    /**
+     * Cette méthode sauvegarde la liste de lignes mit en hypothèse
+     */
+    public void sauvegardeInitial(){
+        listePontSauvegarde.clear();
+        listePontSauvegarde.addAll(listePont);
+    }
+
+    /**
+     * Cette méthode remplace la liste de ponts par celle d'avant action d'hypothèse
+     */
+    public void EtablirsauvegardeInitial() {
+        listePont.clear();
+        listePont.addAll(listePontSauvegarde);
     }
 
     public static void main(String[] args){

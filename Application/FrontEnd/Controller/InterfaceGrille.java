@@ -26,8 +26,6 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 
 /**
  * This class is the grid of the game
@@ -57,11 +55,11 @@ public class InterfaceGrille extends Main {
     public static Color etatSelect = Color.GREEN;
 
 
-    private boolean modehypothese = false;
+    private boolean modeHypothese = false;
 
     private Grille grilleBack;
 
-    private boolean choixhypothese = true;
+    private boolean choixHypothese = true;
 
 
     /**
@@ -80,23 +78,25 @@ public class InterfaceGrille extends Main {
      */
     @FXML
     public void hypothese(ActionEvent event){
-        if(!modehypothese){
-            modehypothese = true;
+        if(!modeHypothese){
+            modeHypothese = true;
             System.out.println("Mode hypothese activé");
             avantHypothese(this.grille.getCerclesHashi());
+            grilleBack.avantHypothese();
         }
         else{
-            modehypothese = false;
+            modeHypothese = false;
             System.out.println("Mode hypothese désactivé");
-            this.choixhypothese = popupHypothese();
-            if(choixhypothese == false){
+            this.choixHypothese = popupHypothese();
+            if(choixHypothese == false){
                 apresHypothese(this.grille.getCerclesHashi());
-                rehinitialiserhypothse(this.panneau, this.grille.getCerclesHashi());
+                this.grilleBack.apresHypothese();
+                reinitialiserHypothse(this.panneau, this.grille.getCerclesHashi());
             }
             else{
                 changerCouleurLignes(panneau, Color.RED);
             }
-            choixhypothese = true;
+            choixHypothese = true;
         }
     }
 
@@ -251,7 +251,7 @@ public class InterfaceGrille extends Main {
         ligne1.setStrokeWidth(3);
         ligne2.setStrokeWidth(3);
         ligne3.setStrokeWidth(3);
-        if(this.modehypothese){
+        if(this.modeHypothese){
             ligne1.setStroke(Color.GREEN);
             ligne2.setStroke(Color.GREEN);
             ligne3.setStroke(Color.GREEN);
@@ -330,6 +330,8 @@ public class InterfaceGrille extends Main {
 
     /**
      * Cette méthode permet de rétablir la couleur initiale des lignes du mode hypothèse.
+     * @param panneau : la grille
+     * @param nouvelleCouleur : la nouvelle couleur à appliquer
      */
     public static void changerCouleurLignes(Pane panneau, Color nouvelleCouleur) {
         for (Node node : panneau.getChildren()) {
@@ -345,13 +347,16 @@ public class InterfaceGrille extends Main {
      * @param panneau : la grille
      * @param cercles : les cercles qui composent la grille de jeu
      */
-    public void rehinitialiserhypothse(Pane panneau, CircleHashi[] cercles) {
+    public void reinitialiserHypothse(Pane panneau, CircleHashi[] cercles) {
         panneau.getChildren().removeIf(node -> node instanceof Line);
         for(CircleHashi c : cercles){
             if(c != null){
                 for(Line ligne : c.getListeLignesHypotheseSauvegarde()){
-                    panneau.getChildren().addAll(ligne);
-                    ligne.toBack();
+                    Line ligneInverse = c.retournerLigneInverse(ligne);
+                    if(dejaPresent(cercles, ligneInverse) != true){
+                        panneau.getChildren().addAll(ligne);
+                        ligne.toBack();
+                    }
                 }
             }
         }
@@ -379,6 +384,22 @@ public class InterfaceGrille extends Main {
                 c.EtablirsauvegardeInitial();
             }
         }
+    }
+
+    /**
+     * Cette méthode permet de savoir si la ligne est déjà presente dans l'interface grille
+     * @param cercles : les cercles qui composent la grille de jeu
+     * @param ligneInverse : la ligne inversée que l'on souhaite savoir si elle est déjà prèsente.
+     */
+    public boolean dejaPresent(CircleHashi[] cercles, Line ligneInverse){
+        for(CircleHashi c : cercles){
+            if(c != null){
+                if(c.estPresent(ligneInverse)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

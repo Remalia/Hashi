@@ -3,6 +3,7 @@ package Application.BackEnd.Grille;
 import Application.BackEnd.Commandes.Action;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
+import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import javafx.geometry.Orientation;
 
 import java.awt.*;
@@ -73,6 +74,28 @@ public class Grille {
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
                 matriceGrille[i][j] = Vide.getInstance();
+            }
+        }
+    }
+
+    /**
+     * Cette méthode permet de sauvegarder l'état initiale des ponts des iles avant que le joueur effectue son brouillon d'hypothèse
+     */
+    public void avantHypothese(){
+        for(Ile ile : listIle){
+            if(ile != null){
+                ile.sauvegardeInitial();
+            }
+        }
+    }
+
+    /**
+     * Cette méthode permet de revenir à l'état de sauvegarde d'avant brouillon de la grille
+     */
+    public void apresHypothese(){
+        for(Ile ile : listIle){
+            if(ile != null){
+                ile.EtablirsauvegardeInitial();
             }
         }
     }

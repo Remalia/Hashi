@@ -138,6 +138,13 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
+	 * Cette méthode regarde si une ligne opposée lie déja un cercle.
+	 */
+	public boolean estPresent(Line ligneInverse) {
+		return listeLignes.contains(ligneInverse);
+	}
+
+	/**
 	 * Cette méthode recupère l'instance de l'île
 	 */
 	public Ile getIle() {
