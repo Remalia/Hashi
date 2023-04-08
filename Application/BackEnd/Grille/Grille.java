@@ -298,14 +298,16 @@ public class Grille {
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
      */
-    public void incrementerPont(Ile ile1, Ile ile2){
+    public boolean incrementerPont(Ile ile1, Ile ile2){
         Pont pont = chercherPont(ile1,ile2);
         if(pont != null) {
             pont.incrementerPont();
             actualiserPontDansGrille(pont);
+            return true;
         }
         else{
             System.out.println("Erreur dans incrementerPont");
+            return false;
         }
     }
 
@@ -464,12 +466,7 @@ public class Grille {
      * Vérifie si la grille est correcte
      */
     public boolean grilleCorrecte(){
-        for(Ile i: this.listIle){
-            if(!i.estComplete()){
-                return this == this.solution;
-            }
-        }
-        return true;
+        return this == this.solution;
     }
 
     public static void main(String[] args) throws IOException {

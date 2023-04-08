@@ -3,10 +3,10 @@ package Application.BackEnd.Grille;
 import java.util.ArrayList;
 
 public class Difficulte {
-    public String nomDifficute;
-    public ArrayList<Long> tempsEtoiles;
-    public Integer nbCheck;
-    public Integer nbTech;
+    private String nomDifficute;
+    private ArrayList<Long> tempsEtoiles;
+    private Integer nbCheck;
+    private Integer nbTech;
 
     /**
      * @param nom nom de la dofficulté 
@@ -16,7 +16,7 @@ public class Difficulte {
      */
     private Difficulte(String nom,ArrayList<Long> tempsEtoiles,Integer nbCheck,Integer nbTech){
         this.nomDifficute = nom;
-        this.tempsEtoiles = new ArrayList<Long>();
+        this.tempsEtoiles = new ArrayList<>();
         this.nbCheck = nbCheck;
         this.nbTech = nbTech;
     }

@@ -104,7 +104,7 @@ public abstract class Element {
     /**
      * Vérifie si le pont est différent de l'élément actuel
      * @param p pont à comparer
-     * @return  true si c'est un élément, une ile ou un pont différent
+     * @return true si c'est un élément, une ile ou un pont différent
      */
     public boolean estDifferent(Pont p){
         return true;

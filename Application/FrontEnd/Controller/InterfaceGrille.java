@@ -253,44 +253,38 @@ public class InterfaceGrille extends Main {
         }
 
         //System.out.println(ligne1);
-
-        if(!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne2) && !this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne3)) {
-
-            if((!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne1))) {
-                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne1);
-                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne1);
-                panneau.getChildren().removeAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
-                panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1));
-                panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
-                grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
+        if(grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle())){
+            if(!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne2) && !this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne3)) {
+                if((!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne1))) {
+                    this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne1);
+                    this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne1);
+                    panneau.getChildren().removeAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                    panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1));
+                    panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                }else{
+                    this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne2);
+                    this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne3);
+                    this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne2);
+                    this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne3);
+                    panneau.getChildren().removeAll(cercle1,cercle2, this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne1), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne1),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne1),this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                    this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne1);
+                    this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne1);
+                    this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne1);
+                    this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne1);
+                    panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3));
+                    panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                }
+            }else{
+                panneau.getChildren().removeAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne2),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne2),this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne3), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne3),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne3));
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne3);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne3);
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne3);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne3);
             }
-
-            else {
-                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne2);
-                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne3);
-                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne2);
-                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne3);
-                panneau.getChildren().removeAll(cercle1,cercle2, this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne1), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne1),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne1),this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
-                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne1);
-                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne1);
-                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne1);
-                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne1);
-                panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3));
-                panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
-                grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
-            }
-        }
-        else {
-            panneau.getChildren().removeAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne2),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne2),this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne3), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne3),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne3));
-            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne2);
-            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne3);
-            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne2);
-            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne3);
-            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne2);
-            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne3);
-            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne2);
-            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne3);
-            grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
         }
         if(grilleBack.grilleCorrecte()){
             Alert alert = new Alert(AlertType.INFORMATION);

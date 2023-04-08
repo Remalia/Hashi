@@ -27,7 +27,7 @@ public class Plateau{
     /**
      * Permet de Undo dans le cas ou c'est possible
      */
-    private void undo(){
+    public void undo(){
         if(!this.grille.getHistorySvg().isEmpty()){
             Action a = this.grille.getHistorySvg().pop();
             a.undo();
@@ -37,7 +37,7 @@ public class Plateau{
     /**
      * Permet de Redo dans le cas ou c'est possible
      */
-    private void redo(){
+    public void redo(){
         if(!this.grille.getHistoryRecup().isEmpty()){
             Action a = this.grille.getHistoryRecup().pop();
             a.execute();
@@ -48,7 +48,7 @@ public class Plateau{
      * Permet d'éxecuter une action, appelle /!\ à appeler directement depuis l'action
      * @param a l'action à executer
      */
-    private void executeAction(Action a){
+    public void executeAction(Action a){
         a.execute();
         this.grille.getHistorySvg().push(a);
         this.grille.getHistoryRecup().clear();
