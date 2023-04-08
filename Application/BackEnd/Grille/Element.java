@@ -92,11 +92,10 @@ public abstract class Element {
         //Si aucune île n'as été trouvée
         return null;
     }
-
+    @Deprecated
     public boolean estIncrementable(Ile ile1, Ile ile2){
         return false;
     }
-
 
     public boolean estDisponible(){
         return false;
