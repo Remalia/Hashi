@@ -60,6 +60,7 @@ public class Grille {
             for(int j = 0; j < 10; j++){
                 matriceGrille[i][j] = Vide.getInstance();
             }
+        this.solution = new Grille();
     }
 
     /**
@@ -323,9 +324,6 @@ public class Grille {
         }
     }
 
-
-
-
     
     /**
      * Méthode d'affichage de la grille
@@ -364,19 +362,15 @@ public class Grille {
      * Récupère la grille et l'initialise
      * @throws FileNotFoundException Fichier non trouvé
      * @param file le fichier à parser
-     * @param soluce true si on veut la solution
      */
-    public void getGrilleFromYAML(File file,boolean soluce) throws FileNotFoundException {
+    public void getGrilleFromYAML(File file) throws FileNotFoundException {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierNiveau")){
             difficulte = Integer.parseInt(balises.get("difficulte"));
+            balises.forEach(this.solution::setupIle);
             balises.forEach(this::setupIle);
-            if(soluce){
-                balises.forEach(this::setupPont);
-            }
+            balises.forEach(this.solution::setupPont);
         }
-        this.solution = this;
-        //TODO préférence de passage par plateau A RELIER AVEC LE FRONTEND
     }
 
     /**
@@ -385,7 +379,6 @@ public class Grille {
      * @param val la valeur de la balise
      */
     private void setupPont(String key,String val){
-
         if (key.matches("pont[0-9]+")){
             Ile ile1 = null;
             Ile ile2 = null;
@@ -473,7 +466,7 @@ public class Grille {
     public boolean grilleCorrecte(){
         for(Ile i: this.listIle){
             if(!i.estComplete()){
-                return false;
+                return this == this.solution;
             }
         }
         return true;
@@ -481,7 +474,7 @@ public class Grille {
 
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauTest");
-        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau(),true);
+        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
         System.out.println(grilleTest.toString());
     }
     public static void main2(String[] args){

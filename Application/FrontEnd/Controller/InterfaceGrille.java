@@ -56,9 +56,7 @@ public class InterfaceGrille extends Main {
 
     private boolean modehypothese = false;
 
-
-
-    private Grille grilleSolution;
+    private Grille grilleBack;
 
 
     /**
@@ -167,10 +165,10 @@ public class InterfaceGrille extends Main {
             panneau.setLayoutY(newY);
         });
         Grille grille = new Grille("NiveauTest");
-        grille.getGrilleFromYAML(grille.getFileNiveau(),false);
+        grille.getGrilleFromYAML(grille.getFileNiveau());
         grille.saveGrilleToYAML();
-        grilleSolution = grille;
-        System.out.println(grilleSolution);
+        grilleBack = grille;
+        System.out.println(grilleBack);
         for(Ile ile : grille.getListIle()){
             double coordX = this.grille.getESPACE() * (ile.getAbs()+1);
             double coordY = this.grille.getESPACE() * (ile.getOrd()+1);
@@ -233,7 +231,7 @@ public class InterfaceGrille extends Main {
      * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
-        if(this.grilleSolution.collisionCreationPont(grilleSolution.chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
+        if(this.grilleBack.collisionCreationPont(grilleBack.chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
             System.out.println("Erreur : pont impossible");
             return;
         }
@@ -264,7 +262,7 @@ public class InterfaceGrille extends Main {
                 panneau.getChildren().removeAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
                 panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1));
                 panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
-                grilleSolution.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
+                grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
             }
 
             else {
@@ -279,7 +277,7 @@ public class InterfaceGrille extends Main {
                 this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne1);
                 panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3));
                 panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
-                grilleSolution.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
+                grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
             }
         }
         else {
@@ -292,17 +290,17 @@ public class InterfaceGrille extends Main {
             this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne3);
             this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne2);
             this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne3);
-            grilleSolution.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
+            grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
         }
-        if(grilleSolution.grilleCorrecte()){
+        if(grilleBack.grilleCorrecte()){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Félicitation");
             alert.setHeaderText("Vous avez réussi à compléter le puzzle");
             alert.setContentText("Vous avez réussi à compléter le puzzle");
             alert.showAndWait();
         }
-        System.out.println(this.grilleSolution.grilleCorrecte());
-        System.out.println(this.grilleSolution);
+        System.out.println(this.grilleBack.grilleCorrecte());
+        System.out.println(this.grilleBack);
     }
 
     /**
