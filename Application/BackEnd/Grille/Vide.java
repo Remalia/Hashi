@@ -23,6 +23,7 @@ public class Vide extends Element{
 
     /**
      * Redéfinition de la méthode estDifférent de Element (Vide n'est pas considérer comme différent) qui autorise la création de ponts sur un élément Vide
+     * {@link Element#estDifferent(Pont)}
      * @param p pont à comparer
      * @return false
      */

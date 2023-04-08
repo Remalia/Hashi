@@ -65,6 +65,7 @@ public abstract class Pont extends Element implements InterfacePont{
 
     /**
      * Redéfinition de la méthode estDifférent de Element qui retourne true si le pont est différent de l'élément passé en paramètre
+     * {@link Element#estDifferent(Pont)}
      * @param p pont à comparer
      * @return false
      */

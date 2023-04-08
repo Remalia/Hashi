@@ -3,10 +3,10 @@ package Application.BackEnd.Grille;
 import java.util.ArrayList;
 
 public class Difficulte {
-    private String nomDifficute;
-    private ArrayList<Long> tempsEtoiles;
-    private Integer nbCheck;
-    private Integer nbTech;
+    private final String nomDifficute;
+    private final ArrayList<Long> tempsEtoiles;
+    private final Integer nbCheck;
+    private final Integer nbTech;
 
     /**
      * @param nom nom de la dofficulté 
@@ -21,38 +21,99 @@ public class Difficulte {
         this.nbTech = nbTech;
     }
 
+    /**
+     * Permet de récupérer la nom de la difficulté
+     * @return Le nom de la difficulté
+     */
+    public String getNomDifficute() {
+        return nomDifficute;
+    }
+
+    /**
+     * Permet de récupérer la liste du temps pour les étoiles
+     * @return La liste des temps
+     */
+    public ArrayList<Long> getTempsEtoiles() {
+        return tempsEtoiles;
+    }
+
+    /**
+     * Permet de récupérer le nombre de check disponible
+     * @return Le nombre de check dispo
+     */
+    public Integer getNbCheck() {
+        return nbCheck;
+    }
+
+    /**
+     * Permet de récupérer le nombre de technique possible
+     * @return Le nombre de technique disponible
+     */
+    public Integer getNbTech() {
+        return nbTech;
+    }
 
     /**
      * @return une difficulté Facile
      */
-    public Difficulte creerFacile(){
-        return new Difficulte("Facile",this.liste(30000L,35000L,40000L),-1,-1);
+    private static Difficulte creerFacile(){
+        ArrayList<Long> array = new ArrayList<>();
+        array.add(30000L);
+        array.add(35000L);
+        array.add(40000L);
+        return new Difficulte("Facile",array,-1,-1);
     }
+
     /**
      * @return une difficulté Moyenne
      */
-    public Difficulte creerMoyen(){
-        return new Difficulte("Moyen",this.liste(15000L,20000L,30000L),3,3);
+    private static Difficulte creerMoyen(){
+        ArrayList<Long> array = new ArrayList<>();
+        array.add(15000L);
+        array.add(20000L);
+        array.add(30000L);
+        return new Difficulte("Moyen",array,3,3);
     }
 
     /**
      * @return une difficulté Difficile
      */
-    public Difficulte creerDifficile(){
-        return new Difficulte("Difficile",this.liste(10000L,12500L,15000L),0,0);
+    private static Difficulte creerDifficile(){
+        ArrayList<Long> array = new ArrayList<>();
+        array.add(10000L);
+        array.add(12500L);
+        array.add(15000L);
+        return new Difficulte("Difficile",array,0,0);
     }
 
     /**
-     * @param l1 temps pour la première étoile
-     * @param l2 temps pour la deuxième étoile
-     * @param l3 temps pour la troisième étoile
-     * @return une liste contenant les temps pour les étoiles
+     * Récupère la bonne difficulté en fonction de l'entier de difficulté
+     * @param i la grandeur de la difficulté
+     * @return la difficulté adéquate
      */
-    private ArrayList<Long> liste(Long l1,Long l2,Long l3){
-        ArrayList<Long> liste = new ArrayList<>();
-        liste.add(l1);
-        liste.add(l2);
-        liste.add(l3);
-        return liste;
+    public static Difficulte getDifficulteFromInt(int i){
+        switch (i) {
+            case 1 -> {
+                return Difficulte.creerFacile();
+            }
+            case 2 -> {
+                return Difficulte.creerMoyen();
+            }
+            case 3 -> {
+                return Difficulte.creerDifficile();
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
+
+    public String getDifficulteToString(){
+        return switch (this.nomDifficute) {
+            case "Facile" -> "1";
+            case "Moyen" -> "2";
+            case "Difficile" -> "3";
+            default -> null;
+        };
     }
 }

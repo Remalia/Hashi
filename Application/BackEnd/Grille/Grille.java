@@ -28,7 +28,7 @@ public class Grille {
     private File fileSave;
     private String name;
     private boolean modeHyp;
-    private int difficulte;
+    private Difficulte difficulte;
 
     private Grille solution;
 
@@ -368,7 +368,7 @@ public class Grille {
     public void getGrilleFromYAML(File file) throws FileNotFoundException {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (balises.get("type").equals("fichierNiveau")){
-            difficulte = Integer.parseInt(balises.get("difficulte"));
+            difficulte = Difficulte.getDifficulteFromInt(Integer.parseInt(String.valueOf(balises.get("difficulte").charAt(0))));
             balises.forEach(this.solution::setupIle);
             balises.forEach(this::setupIle);
             balises.forEach(this.solution::setupPont);
@@ -420,7 +420,7 @@ public class Grille {
     public void saveGrilleToYAML() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileSave));
         writer.write("type: fichierNiveau\n" + "difficulte: ");
-        writer.write(String.valueOf(this.difficulte));
+        writer.write(this.difficulte.getDifficulteToString() + " #( 1 --> facile | 2 --> Moyen | 3 --> Difficile )");
         writer.write("\ngrille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )\n");
         int idPont = 1;
         List<Pont> listTemp = new ArrayList<>();
@@ -481,8 +481,5 @@ public class Grille {
         grilleTest.ajouterIle(ile1);
         grilleTest.ajouterIle(ile2);
         System.out.println(grilleTest.toString());
-
-
-        
     }
 }
