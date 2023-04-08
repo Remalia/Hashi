@@ -2,6 +2,8 @@ package Application.FrontEnd.Controller;
 
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
+import Application.FrontEnd.Controller.Plateau.CircleHashi;
+import Application.FrontEnd.Controller.Plateau.GrilleF;
 import javafx.animation.Animation;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -32,6 +34,7 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class InterfaceGrille extends Main {
 
+    private GrilleF grille;
     private Timeline timer=null; // Ajouter une variable timer
     private int tempsEcoule = 0;
     @FXML
@@ -50,19 +53,10 @@ public class InterfaceGrille extends Main {
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
-    private int NB_CERCLES;
-    private int RAYON;
-    private double ESPACE;
-
-    private CircleHashi[] cerclesHashi;
-
-    private CircleHashi premierCercle = null;
-    private CircleHashi deuxiemeCercle = null;
-    private boolean premierCercleClique = false;
-    private Integer indicePremierCercle;
-    private Integer indiceSecondCercle;
 
     private boolean modehypothese = false;
+
+
 
     private Grille grilleSolution;
 
@@ -83,7 +77,7 @@ public class InterfaceGrille extends Main {
      */
     @FXML
     public void hypothese(ActionEvent event){
-        if(modehypothese == false){
+        if(!modehypothese){
             modehypothese = true;
             System.out.println("Mode hypothese activé");
         }
@@ -122,32 +116,33 @@ public class InterfaceGrille extends Main {
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
-            changement_pause(this.cerclesHashi, Color.YELLOW, Color.ORANGE, Color.BLACK, false);
+            changement_pause(this.grille.getCerclesHashi(), Color.YELLOW, Color.ORANGE, Color.BLACK, false);
             timer.play();
         }else{
             newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
             switch_timer.setImage(newImage);
-            changement_pause(this.cerclesHashi, Color.GREY, Color.GREY, Color.WHITE, true);
+            changement_pause(this.grille.getCerclesHashi(), Color.GREY, Color.GREY, Color.WHITE, true);
             timer.pause();
         }
     }
 
 
     /**
-     * Cette fonction permet d'initialiser la grille
+     * Cette fonction permet d'initialiser la grille Hashi
      * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
      */
     @FXML
     public void initialize() throws IOException {
-        this.NB_CERCLES = 10;
-        this.RAYON = 20;
-        this.ESPACE = RAYON * 2.5;
+        this.grille = new GrilleF();
+        this.grille.setNB_CERCLES(10);
+        this.grille.setRAYON(20);
+        this.grille.setESPACE(this.grille.getRAYON()*2.5);
 
         // Calcul de la taille du panneau pour afficher correctement la grille
-        double panneauWidth = NB_CERCLES * ESPACE + RAYON;
-        double panneauHeight = NB_CERCLES * ESPACE + RAYON;
+        double panneauWidth = this.grille.getNB_CERCLES() * this.grille.getESPACE() + this.grille.getRAYON();
+        double panneauHeight = this.grille.getNB_CERCLES() * this.grille.getESPACE() + this.grille.getRAYON();
 
-        this.cerclesHashi = new CircleHashi[this.NB_CERCLES * this.NB_CERCLES];
+        this.grille.setCirclesHashi(new CircleHashi[this.grille.getNB_CERCLES() * this.grille.getNB_CERCLES()]);
 
 
         this.timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -177,15 +172,15 @@ public class InterfaceGrille extends Main {
         grilleSolution = grille;
         System.out.println(grilleSolution);
         for(Ile ile : grille.getListIle()){
-            double coordX = ESPACE * (ile.getAbs()+1);
-            double coordY = ESPACE * (ile.getOrd()+1);
-            CircleHashi cercle = new CircleHashi(ile,coordX,coordY , RAYON, etatNormal); // Ici, les coordonnées des cercles ne sont pas initialisé
+            double coordX = this.grille.getESPACE() * (ile.getAbs()+1);
+            double coordY = this.grille.getESPACE() * (ile.getOrd()+1);
+            CircleHashi cercle = new CircleHashi(ile,coordX,coordY , this.grille.getRAYON(), etatNormal); // Ici, les coordonnées des cercles ne sont pas initialisé
             cercle.setStrokeWidth(6.0);
             cercle.setStroke(Color.ORANGE);
-            cerclesHashi[ile.getAbs() * NB_CERCLES + ile.getOrd()] = cercle;
+            this.grille.setCircleHashi(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd(),cercle);
             cercle.setOnMouseClicked(this::interactionCouleur);
             panneau.getChildren().add(cercle);
-            panneau.getChildren().add(cerclesHashi[ile.getAbs() * NB_CERCLES + ile.getOrd()].getText());
+            panneau.getChildren().add(this.grille.getVal_cercles(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd()).getText());
         }
     }
 
@@ -204,73 +199,32 @@ public class InterfaceGrille extends Main {
         }
 
         // Case of renitialisation of the circle
-        if(cercle == premierCercle) {
-            reinitialiserCercles();
+        if(cercle == this.grille.getPremierCercle()) {
+            this.grille.reinitialiserCercles();
         }
 
         // Case where 2 circles are clicked
-        else if (premierCercleClique && cercle != premierCercle) {
-            deuxiemeCercle = cercle;
-            if (memeLigneOuColonne(premierCercle, deuxiemeCercle)) {
-                indiceSecondCercle = trouverIndiceCercle(deuxiemeCercle);
-                dessinerLigne(premierCercle, deuxiemeCercle, panneau);
-                reinitialiserCercles();
+        else if (this.grille.isPremierCercleClique() && cercle != this.grille.getPremierCercle()) {
+            this.grille.setDeuxiemeCercle(cercle);
+            if (this.grille.memeLigneOuColonne(this.grille.getPremierCercle(), this.grille.getDeuxiemeCercle())) {
+                this.grille.setIndiceSecondCercle(this.grille.trouverIndiceCercle(this.grille.getDeuxiemeCercle()));
+                dessinerLigne(this.grille.getPremierCercle(), this.grille.getDeuxiemeCercle(), panneau);
+                this.grille.reinitialiserCercles();
             } else {
-                reinitialiserCercles();
+                this.grille.reinitialiserCercles();
             }
         }
 
         // Case where 1 circle is clicked
         else {
-            premierCercle = cercle;
-            premierCercle.setFill(Color.GREEN);
-            premierCercleClique = true;
-            indicePremierCercle = trouverIndiceCercle(premierCercle);
+            this.grille.setPremierCercle(cercle);
+            this.grille.getPremierCercle().setFill(Color.GREEN);
+            this.grille.setPremierCercleClique(true);
+            this.grille.setIndicePremierCercle(this.grille.trouverIndiceCercle(this.grille.getPremierCercle()));
         }
     }
 
-    /**
-     * Cette méthode permet de vérifier si deux cercles sont sur la même ligne ou la même colonne
-     * @param cercle1 : le premier cercle
-     * @param cercle2 : le deuxième cercle
-     * @return true si les deux cercles sont sur la même ligne ou la même colonne, false sinon
-     */
-    private boolean memeLigneOuColonne(CircleHashi cercle1, CircleHashi cercle2) {
-        double c1x = cercle1.getCenterX();
-        double c2x = cercle2.getCenterX();
-        double c1y = cercle1.getCenterY();
-        double c2y = cercle2.getCenterY();
 
-        return (c1x == c2x || c1y == c2y);
-    }
-
-    /**
-     * Cette méthode permet de réinitialiser les cercles
-     */
-    private void reinitialiserCercles(){
-        premierCercle.setFill(Color.YELLOW);
-        premierCercle = null;
-        deuxiemeCercle = null;
-        premierCercleClique = false;
-        indicePremierCercle = null;
-        indiceSecondCercle = null;
-    }
-
-    /**
-     * Cette méthode permet de trouver l'indice d'un cercle dans le tableau de cercles
-     * @param cercle : le cercle dont on cherche l'indice
-     * @return l'indice du cercle dans le tableau de cercles
-     */
-    private int trouverIndiceCercle(CircleHashi cercle) {
-        for (int i = 0; i < cerclesHashi.length; i++) {
-            if (cerclesHashi[i] != null) {
-                if((cerclesHashi[i].getCenterX() == cercle.getCenterX()) && (cerclesHashi[i].getCenterY() == cercle.getCenterY())) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
 
     /**
      * Cette méthode permet de dessiner une ligne entre deux cercles
@@ -279,7 +233,7 @@ public class InterfaceGrille extends Main {
      * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
-        if(this.grilleSolution.collisionCreationPont(grilleSolution.chercherPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle()))){
+        if(this.grilleSolution.collisionCreationPont(grilleSolution.chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
             System.out.println("Erreur : pont impossible");
             return;
         }
@@ -302,43 +256,43 @@ public class InterfaceGrille extends Main {
 
         //System.out.println(ligne1);
 
-        if(!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne2) && !cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne3)) {
+        if(!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne2) && !this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne3)) {
 
-            if((!cerclesHashi[indicePremierCercle].ligneEstDansListe(ligne1))) {
-                cerclesHashi[indicePremierCercle].ajouterLigne(ligne1);
-                cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne1);
-                panneau.getChildren().removeAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne1));
-                panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
+            if((!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne1))) {
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne1);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne1);
+                panneau.getChildren().removeAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1));
+                panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                grilleSolution.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
             }
 
             else {
-                cerclesHashi[indicePremierCercle].ajouterLigne(ligne2);
-                cerclesHashi[indicePremierCercle].ajouterLigne(ligne3);
-                cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne2);
-                cerclesHashi[indiceSecondCercle].ajouterLigneInverse(ligne3);
-                panneau.getChildren().removeAll(cercle1,cercle2, cerclesHashi[indicePremierCercle].retournerLigne(ligne1), cerclesHashi[indiceSecondCercle].retournerLigne(ligne1), cerclesHashi[indicePremierCercle].retournerLigneInverse(ligne1),cerclesHashi[indiceSecondCercle].retournerLigneInverse(ligne1),cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                cerclesHashi[indicePremierCercle].supprimerLigne(ligne1);
-                cerclesHashi[indiceSecondCercle].supprimerLigne(ligne1);
-                cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne1);
-                cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne1);
-                panneau.getChildren().addAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne2), cerclesHashi[indicePremierCercle].retournerLigne(ligne3));
-                panneau.getChildren().addAll(cercle1,cercle2,cerclesHashi[indicePremierCercle].getText(),cerclesHashi[indiceSecondCercle].getText());
-                grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne3);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne3);
+                panneau.getChildren().removeAll(cercle1,cercle2, this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne1), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne1), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne1),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne1),this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne1);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne1);
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne1);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne1);
+                panneau.getChildren().addAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3));
+                panneau.getChildren().addAll(cercle1,cercle2,this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getText(),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getText());
+                grilleSolution.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
             }
         }
         else {
-            panneau.getChildren().removeAll(cerclesHashi[indicePremierCercle].retournerLigne(ligne2), cerclesHashi[indiceSecondCercle].retournerLigne(ligne2), cerclesHashi[indicePremierCercle].retournerLigneInverse(ligne2),cerclesHashi[indiceSecondCercle].retournerLigneInverse(ligne2),cerclesHashi[indicePremierCercle].retournerLigne(ligne3), cerclesHashi[indiceSecondCercle].retournerLigne(ligne3), cerclesHashi[indicePremierCercle].retournerLigneInverse(ligne3),cerclesHashi[indiceSecondCercle].retournerLigneInverse(ligne3));
-            cerclesHashi[indicePremierCercle].supprimerLigne(ligne2);
-            cerclesHashi[indicePremierCercle].supprimerLigne(ligne3);
-            cerclesHashi[indiceSecondCercle].supprimerLigne(ligne2);
-            cerclesHashi[indiceSecondCercle].supprimerLigne(ligne3);
-            cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne2);
-            cerclesHashi[indicePremierCercle].supprimerLigneInverse(ligne3);
-            cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne2);
-            cerclesHashi[indiceSecondCercle].supprimerLigneInverse(ligne3);
-            grilleSolution.incrementerPont(cerclesHashi[indicePremierCercle].getIle(), cerclesHashi[indiceSecondCercle].getIle());
+            panneau.getChildren().removeAll(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne2), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne2),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne2),this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigne(ligne3), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigne(ligne3), this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).retournerLigneInverse(ligne3),this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).retournerLigneInverse(ligne3));
+            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne2);
+            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigne(ligne3);
+            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne2);
+            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigne(ligne3);
+            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne2);
+            this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).supprimerLigneInverse(ligne3);
+            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne2);
+            this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne3);
+            grilleSolution.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle());
         }
         if(grilleSolution.grilleCorrecte()){
             Alert alert = new Alert(AlertType.INFORMATION);

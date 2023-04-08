@@ -12,13 +12,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.fxml.FXML;
+
 /**
- * This class is the controller of the main scene
- * It allows to switch between the different scenes of the application
- * It also allows to quit the application
+ * Class PlateauTutoController
+ * Cette classe permet de gérer le plateau de jeu du tutoriel
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
- * @since 2023-04-02
+ * @since 2023-04-07
  */
 public class PlateauTutoController extends Main {
 	
@@ -37,8 +37,9 @@ public class PlateauTutoController extends Main {
 
 
 	/**
-	 * method to switch to the credits scene
-	 * @param event : the event that triggers the switch
+	 * Cette méthode permet d'accéder aux crédits
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
 	public void credits(Event event) throws IOException {
@@ -46,9 +47,9 @@ public class PlateauTutoController extends Main {
 	}
 	
 	/**
-	 * method to go to the settings menu
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
+	 * Cette méthode permet d'accéder aux paramètres
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
 	public void parametres(Event event) throws IOException{
@@ -56,9 +57,9 @@ public class PlateauTutoController extends Main {
 	}
 	
 	/**
-	 * method to switch to the tutorial scene
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
+	 * Cette méthode permet d'accéder au menu du tutoriel
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
 	public void tutoriel(Event event) throws IOException{
@@ -66,8 +67,8 @@ public class PlateauTutoController extends Main {
 	}
 	
 	/**
-	 * method to switch to add a line to the tutorial
-	 * @param event : the event that triggers the switch
+	 * Cette méthode permet d'ajouter une ligne entre les deux cercles
+	 * @param event : Event
 	 */
 	@FXML
 	public void clic(MouseEvent event){
@@ -113,8 +114,8 @@ public class PlateauTutoController extends Main {
 	}
 	
 	/**
-	 * method to switch to add a line to the tutorial
-	 * @param event : the event that triggers the switch
+	 * Cette méthode permet d'ajouter une ligne entre les deux cercles
+	 * @param event : Event
 	 */
 	@FXML
 	public void clic2(MouseEvent event){
@@ -168,7 +169,7 @@ public class PlateauTutoController extends Main {
 	}
 	
 	/**
-	 * method to explain the game to the player with a tutorial
+	 * Cette méthode permet d'initialiser le tutoriel
 	 */
 	@FXML 
 	public void initialize () {
