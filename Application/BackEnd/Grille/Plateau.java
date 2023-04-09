@@ -53,6 +53,11 @@ public class Plateau{
         if(result){
             this.grille.getHistorySvg().push(a);
             this.grille.getHistoryRecup().clear();
+            try {
+                this.grille.saveGrilleToYAML();
+            }catch (IOException e){
+                System.out.println(e);
+            }
         }
         return result;
     }
@@ -67,14 +72,13 @@ public class Plateau{
      * @param isNew Définit si on prends une nouvelle grille ou une grille sauvegarder
      */
     public void getPlateauFromYAML(boolean isNew) throws FileNotFoundException {
-        File file;
-        if(isNew)
-            file = this.grille.getFileNiveau();
-        else
-            file = this.grille.getFileSave();
-        this.grille.getGrilleFromYAML(file);
-        HashMap<String,String> balises = Parser.getAllBalise(file);
-        balises.forEach(this::setupAction);
+        if(isNew){
+            this.grille.getGrilleFromYAML(false);
+        }else{
+            this.grille.getGrilleFromYAML(true);
+            HashMap<String,String> balises = Parser.getAllBalise(this.grille.getFileSave());
+            balises.forEach(this::setupAction);
+        }
     }
 
     /**
@@ -84,10 +88,10 @@ public class Plateau{
      */
     private void setupAction(String key,String val){
         if (key.matches("actionSvg[0-9]+")){
-            this.grille.getHistorySvg().push(new ActionAjouterPont(this.grille,this.grille.getHistorySvg().length()+1,val));
+            this.grille.getHistorySvg().push(new ActionAjouterPont(this.grille,this.grille.getHistorySvg().length(),val));
         }
         if (key.matches("actionRecup[0-9]+")){
-            this.grille.getHistoryRecup().push(new ActionAjouterPont(this.grille,this.grille.getHistorySvg().length()+1,val));
+            this.grille.getHistoryRecup().push(new ActionAjouterPont(this.grille,this.grille.getHistorySvg().length(),val));
         }
     }
 

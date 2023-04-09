@@ -78,7 +78,7 @@ public class ActionAjouterPont extends Action{
     public String ecrireAction(boolean svg){
         String result = super.ecrireAction(svg);
         result += " ile" + this.ile1.getId() + " | ile" + this.ile2.getId() + " | ";
-        result += (this.hypo ? "T" : "F");
+        result += (this.hypo ? "T" : "F") + "\n";
         return result;
     }
 

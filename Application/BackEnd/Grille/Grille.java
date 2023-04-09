@@ -373,15 +373,29 @@ public class Grille {
     /**
      * Récupère la grille et l'initialise
      * @throws FileNotFoundException Fichier non trouvé
-     * @param file le fichier à parser
+     * @param isItSave Si c'est une sauvegarde ou non
      */
-    public void getGrilleFromYAML(File file) throws FileNotFoundException {
-        HashMap<String,String> balises = Parser.getAllBalise(file);
-        if (balises.get("type").equals("fichierNiveau")){
-            difficulte = Difficulte.getDifficulteFromInt(Integer.parseInt(String.valueOf(balises.get("difficulte").charAt(0))));
-            balises.forEach(this.solution::setupIle);
-            balises.forEach(this::setupIle);
-            balises.forEach(this.solution::setupPont);
+    public void getGrilleFromYAML(Boolean isItSave) throws FileNotFoundException {
+        if (!isItSave){
+            HashMap<String,String> balises = Parser.getAllBalise(this.fileNiveau);
+            if (balises.get("type").equals("fichierNiveau")){
+                difficulte = Difficulte.getDifficulteFromInt(Integer.parseInt(String.valueOf(balises.get("difficulte").charAt(0))));
+                balises.forEach(this.solution::setupIle);
+                balises.forEach(this.solution::setupPont);
+                balises.forEach(this::setupIle);
+            }
+        }else{
+            HashMap<String,String> balisesNiveau = Parser.getAllBalise(this.fileNiveau);
+            HashMap<String,String> balisesSave = Parser.getAllBalise(this.fileSave);
+            if (balisesNiveau.get("type").equals("fichierNiveau")){
+                difficulte = Difficulte.getDifficulteFromInt(Integer.parseInt(String.valueOf(balisesNiveau.get("difficulte").charAt(0))));
+                balisesNiveau.forEach(this.solution::setupIle);
+                balisesNiveau.forEach(this.solution::setupPont);
+                balisesNiveau.forEach(this::setupIle);
+            }
+            if (!balisesSave.isEmpty() && balisesSave.get("type").equals("fichierNiveau")){
+                balisesSave.forEach(this::setupPont);
+            }
         }
     }
 
@@ -481,7 +495,7 @@ public class Grille {
 
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauxFacile/Niveau10");
-        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
+        grilleTest.getGrilleFromYAML(false);
         System.out.println(grilleTest.getGrilleSolution().toString());
     }
     public static void main2(String[] args){

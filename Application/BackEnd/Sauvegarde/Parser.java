@@ -18,12 +18,14 @@ public class Parser {
         HashMap<String, String> balises = new HashMap<>();
         try {
             List<String> lines = Files.readAllLines(file.toPath());
-            String key;
-            for (String line: lines) {
-                line = deleteStartSpace(line);
-                key = line.substring(0,line.indexOf(":"));
-                if((line.indexOf(":") + 2) < line.length())
-                    balises.put(key,line.substring(line.indexOf(":") + 2));
+            if (!lines.isEmpty()){
+                String key;
+                for (String line: lines) {
+                    line = deleteStartSpace(line);
+                    key = line.substring(0,line.indexOf(":"));
+                    if((line.indexOf(":") + 2) < line.length())
+                        balises.put(key,line.substring(line.indexOf(":") + 2));
+                }
             }
         } catch (IOException e){
             throw new FileNotFoundException("Fichier Introuvable");
