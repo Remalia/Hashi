@@ -20,9 +20,51 @@ grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
   ile13: 5 | 1 | 1
   ile14: 2 | 3 | 2
   pont1: ile2 | ile3 | 2
-  pont2: ile1 | ile2 | 1
+  pont2: ile8 | ile2 | 2
+  pont3: ile1 | ile2 | 1
+  pont4: ile6 | ile4 | 1
+  pont5: ile6 | ile7 | 2
+  pont6: ile13 | ile6 | 1
+  pont7: ile12 | ile8 | 2
+  pont8: ile18 | ile17 | 2
+  pont9: ile13 | ile12 | 1
 historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
   actionSvg0:  ile1 | ile2 | F
   actionSvg1:  ile2 | ile3 | F
   actionSvg2:  ile3 | ile2 | F
+  actionSvg3:  ile13 | ile6 | F
+  actionSvg4:  ile6 | ile13 | F
+  actionSvg5:  ile15 | ile14 | F
+  actionSvg6:  ile14 | ile15 | F
+  actionSvg7:  ile7 | ile6 | F
+  actionSvg8:  ile17 | ile18 | F
+  actionSvg9:  ile7 | ile6 | F
+  actionSvg10:  ile6 | ile7 | F
+  actionSvg11:  ile10 | ile12 | F
+  actionSvg12:  ile12 | ile10 | F
+  actionSvg13:  ile18 | ile17 | F
+  actionSvg14:  ile12 | ile10 | F
+  actionSvg15:  ile8 | ile12 | F
+  actionSvg16:  ile8 | ile12 | F
+  actionSvg17:  ile12 | ile8 | F
+  actionSvg18:  ile13 | ile6 | F
+  actionSvg19:  ile6 | ile13 | F
+  actionSvg20:  ile13 | ile12 | F
+  actionSvg21:  ile8 | ile12 | F
+  actionSvg22:  ile12 | ile8 | F
+  actionSvg23:  ile2 | ile8 | F
+  actionSvg24:  ile8 | ile2 | F
+  actionSvg25:  ile7 | ile6 | F
+  actionSvg26:  ile6 | ile4 | F
+  actionSvg27:  ile6 | ile7 | F
+  actionSvg28:  ile6 | ile13 | F
+  actionSvg29:  ile6 | ile13 | F
+  actionSvg30:  ile13 | ile6 | F
+  actionSvg31:  ile14 | ile15 | F
+  actionSvg32:  ile15 | ile14 | F
+  actionSvg33:  ile6 | ile4 | F
+  actionSvg34:  ile4 | ile6 | F
+  actionSvg35:  ile6 | ile4 | F
+  actionSvg36:  ile14 | ile15 | F
+  actionSvg37:  ile15 | ile14 | F
 historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )

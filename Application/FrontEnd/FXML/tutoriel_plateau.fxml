@@ -9,15 +9,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.PlateauTutoController">
+<AnchorPane minHeight="750.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.PlateauTutoController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="450.0" layoutX="47.0" layoutY="196.0" stroke="BLACK" strokeType="INSIDE" width="302.0" />
-      <Text layoutX="191.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel" textAlignment="CENTER" wrappingWidth="618.36572265625">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="450.0" layoutX="47.0" layoutY="150.0" stroke="BLACK" strokeType="INSIDE" width="302.0" />
+      <Text layoutX="340.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutoriel" textAlignment="CENTER" wrappingWidth="269.565673828125">
          <font>
             <Font size="68.0" />
          </font>
       </Text>
-      <Pane fx:id="pane" layoutX="401.0" layoutY="208.0" prefHeight="458.0" prefWidth="506.0">
+      <Pane fx:id="pane" layoutX="356.0" layoutY="146.0" prefHeight="458.0" prefWidth="506.0">
          <children>
             <Circle fx:id="circle1" layoutX="120.0" layoutY="86.0" onMouseClicked="#clic" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fx:id="circle2" layoutX="354.0" layoutY="86.0" onMouseClicked="#clic" radius="34.0" stroke="BLACK" strokeType="INSIDE" />
@@ -65,17 +65,17 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="56.0" layoutY="54.0" onMouseClicked="#tutoriel">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#tutoriel">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="66.0" layoutY="720.0" onMouseClicked="#credits">
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0" onMouseClicked="#credits">
          <image>
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="905.0" layoutY="60.0" onMouseClicked="#parametres">
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="800.0" layoutY="55.0" onMouseClicked="#parametres">
          <image>
             <Image url="@../assets/reglage.png" />
          </image>

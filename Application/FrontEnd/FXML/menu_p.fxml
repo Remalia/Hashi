@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+<AnchorPane minHeight="750.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
    <children>
-      <GridPane layoutX="300.0" layoutY="300.0">
+      <GridPane layoutX="265.0" layoutY="260.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" />
          </columnConstraints>
@@ -45,15 +45,16 @@
             </Button>
          </children>
       </GridPane>
-      <Label layoutX="401.0" layoutY="123.0" prefHeight="82.0" prefWidth="198.0" text="Hashi" textAlignment="CENTER">
+      <Label layoutX="375.0" layoutY="120.0" prefHeight="100.0" prefWidth="170.0" text="Hashi" textAlignment="CENTER">
          <font>
             <Font size="68.0" />
          </font>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="56.0" layoutY="710.0" onMouseClicked="#credits">
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0" onMouseClicked="#credits">
          <image>
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
    </children>
 </AnchorPane>
+

@@ -8,24 +8,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+<AnchorPane minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
    <children>
-      <Text layoutX="352.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crédits" textAlignment="CENTER" wrappingWidth="295.36572265625">
+      <Text layoutX="302.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crédits" textAlignment="CENTER" wrappingWidth="295.36572265625">
          <font>
             <Font size="68.0" />
          </font>
       </Text>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="56.0" layoutY="710.0">
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0">
          <image>
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#menu_principal">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#menu_principal">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <VBox layoutX="213.0" layoutY="249.0" minHeight="339.0" minWidth="564.0">
+      <VBox layoutX="181.0" layoutY="251.0" minHeight="339.0" minWidth="564.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ILANGO Rémi (chef de groupe)" textAlignment="CENTER" wrappingWidth="572.08203125">
                <font>
@@ -74,3 +74,4 @@
       </VBox>
    </children>
 </AnchorPane>
+
