@@ -82,7 +82,6 @@ public class InterfacePlateau extends Main {
     }
 
 
-
     /**
      * Cette méthode permet de passer à la scène libre
      * @param event : l'évènement qui déclenche le passage à la scène aventure
