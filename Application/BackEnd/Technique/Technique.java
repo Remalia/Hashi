@@ -1,10 +1,11 @@
 package Application.BackEnd.Technique;
 
 import Application.BackEnd.Grille.*;
-//import Application.BackEnd.Grille.Ile;
 
 import java.util.ArrayList;
-import java.awt.Color;
+
+import javafx.scene.paint.Color;
+
 import java.util.Arrays;
 import java.util.List;
 import java.lang.Math;
@@ -37,22 +38,22 @@ public class Technique{
         this.setIleCour(null);
     }
 
-    void setDescription(String description)
+    public void setDescription(String description)
     {
         this.description = description;
     }
 
-    void setIleCour(Ile ile)
+    public void setIleCour(Ile ile)
     {
         this.ileCour = ile;
     }
 
-    String getDescription()
+    public String getDescription()
     {
         return(this.description);
     }
 
-    Ile getIleCour()
+    public Ile getIleCour()
     {
         return(this.ileCour);
     }
@@ -415,7 +416,7 @@ public class Technique{
                 }
                 break;
             case 2:
-                if( (premVois.getNum() == 1 && premVois.getNbVois() == 1) || (scdVois.getNum() == 1 && scdVois.getNbVois() == 1) )
+                if( (premVois.getNum() == 1 && premVois.getNbVoisins() == 1) || (scdVois.getNum() == 1 && scdVois.getNbVoisins() == 1) )
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins (qui a pour unique voisin l'île en question) ne peut accepter qu'un pont au maximum, il faut donc relier l'île aux 2 autres îles par un pont simple");
@@ -1126,14 +1127,15 @@ public class Technique{
     // V2
     static Technique trouverTechniqueGrilleV2(Grille uneGrille)
     {
-        List<Ile> iles    = uneGrille.getListIle();
-        List<Ile> voisins = new ArrayList<Ile>();
-        int nbVois;
+        ArrayList<Ile> iles    = uneGrille.getListIle();
+        ArrayList<Ile> voisins = new ArrayList<Ile>();
+        int nbVoisins;
 
         Technique t;
 
         // On randomize pour pas parcourir de haut gauche vers bas droite
-        for(Ile i: Collections.shuffle(iles))
+        Collections.shuffle(iles);
+        for(Ile i: iles)
         {
 
             // On vérifie que l'île n'est pas complète
@@ -1475,7 +1477,7 @@ public class Technique{
 
     public static void main(String[] args){
         
-        Color c = new Color(0,0,255);
+        Color c = Color.rgb(0,0,255);
 
         Grille grilleTest = new Grille();
         
@@ -1508,12 +1510,12 @@ public class Technique{
         grilleTest.ajouterIle(ile3);
         grilleTest.ajouterIle(ile4);
         grilleTest.ajouterIle(ile5);
-
+        grilleTest.ajouterPont(ile1,ile2,1);
         System.out.println("On affiche la grille");
         
         System.out.println(grilleTest);
         
-        Technique t = new Technique();
+        //Technique t = new Technique();
 
         if(Technique.trouverTechniqueGrille(grilleTest) == null)
         {

@@ -230,10 +230,10 @@ public class Ile extends Element {
     /**
      * Retourne la liste des îles voisines de l'instance
      */
-    public List<Ile> getIlesVoisines()
+    public ArrayList<Ile> getIlesVoisines()
     {
         Ile i;
-        List<Ile> voisins = new ArrayList<Ile>();
+        ArrayList<Ile> voisins = new ArrayList<Ile>();
         for(Pont p: this.listePont)
         {
             i = p.getIle1();
