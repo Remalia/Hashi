@@ -54,7 +54,7 @@
       </Group>
       <Group layoutX="568.0" layoutY="753.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
+            <Button mnemonicParsing="false" onAction="#undoBouton" prefHeight="60.0" prefWidth="60.0" />
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
                <image>
                   <Image url="@../assets/undo.png" />

@@ -64,6 +64,15 @@ public class InterfacePlateau extends Main {
 
 
     /**
+     * Cette méthode permet revenir à l'état précédent
+     * @param event : Event
+     */
+    @FXML
+    public void undoBouton(ActionEvent event){
+            this.plateau.undo();
+    }
+
+    /**
      * Cette méthode permet de passer à la scène libre
      * @param event : l'évènement qui déclenche le passage à la scène aventure
      * @throws IOException Exception thrown if the file is not found
