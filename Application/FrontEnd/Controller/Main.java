@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -95,6 +96,8 @@ public class Main extends Application {
 			window.setTitle("Hashi");
 			window.setScene(scene);
 			window.setResizable(false);
+			Image iconPrincipale = new Image("Application/FrontEnd/assets/IconHashi.png");
+			window.getIcons().add(iconPrincipale);
 			window.show();
 		} catch(Exception e) {
 			e.printStackTrace();
