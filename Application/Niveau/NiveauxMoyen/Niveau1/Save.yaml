@@ -22,49 +22,52 @@ grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
   pont1: ile2 | ile3 | 2
   pont2: ile8 | ile2 | 2
   pont3: ile1 | ile2 | 1
-  pont4: ile6 | ile4 | 1
-  pont5: ile6 | ile7 | 2
+  pont4: ile6 | ile4 | 2
+  pont5: ile6 | ile7 | 1
   pont6: ile13 | ile6 | 1
   pont7: ile12 | ile8 | 2
   pont8: ile18 | ile17 | 2
   pont9: ile13 | ile12 | 1
 historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
-  actionSvg0:  ile1 | ile2 | F
-  actionSvg1:  ile2 | ile3 | F
-  actionSvg2:  ile3 | ile2 | F
-  actionSvg3:  ile13 | ile6 | F
-  actionSvg4:  ile6 | ile13 | F
-  actionSvg5:  ile15 | ile14 | F
-  actionSvg6:  ile14 | ile15 | F
-  actionSvg7:  ile7 | ile6 | F
-  actionSvg8:  ile17 | ile18 | F
-  actionSvg9:  ile7 | ile6 | F
-  actionSvg10:  ile6 | ile7 | F
-  actionSvg11:  ile10 | ile12 | F
-  actionSvg12:  ile12 | ile10 | F
-  actionSvg13:  ile18 | ile17 | F
-  actionSvg14:  ile12 | ile10 | F
-  actionSvg15:  ile8 | ile12 | F
-  actionSvg16:  ile8 | ile12 | F
-  actionSvg17:  ile12 | ile8 | F
-  actionSvg18:  ile13 | ile6 | F
+  actionSvg0:  ile6 | ile4 | F
+  actionSvg1:  ile12 | ile10 | F
+  actionSvg2:  ile6 | ile7 | F
+  actionSvg3:  ile6 | ile7 | F
+  actionSvg4:  ile10 | ile12 | F
+  actionSvg5:  ile18 | ile17 | F
+  actionSvg6:  ile12 | ile10 | F
+  actionSvg7:  ile8 | ile12 | F
+  actionSvg8:  ile8 | ile12 | F
+  actionSvg9:  ile6 | ile13 | F
+  actionSvg10:  ile7 | ile6 | F
+  actionSvg11:  ile17 | ile18 | F
+  actionSvg12:  ile13 | ile6 | F
+  actionSvg13:  ile14 | ile15 | F
+  actionSvg14:  ile12 | ile8 | F
+  actionSvg15:  ile7 | ile6 | F
+  actionSvg16:  ile13 | ile6 | F
+  actionSvg17:  ile3 | ile2 | F
+  actionSvg18:  ile15 | ile14 | F
   actionSvg19:  ile6 | ile13 | F
-  actionSvg20:  ile13 | ile12 | F
-  actionSvg21:  ile8 | ile12 | F
-  actionSvg22:  ile12 | ile8 | F
-  actionSvg23:  ile2 | ile8 | F
-  actionSvg24:  ile8 | ile2 | F
-  actionSvg25:  ile7 | ile6 | F
+  actionSvg20:  ile14 | ile15 | F
+  actionSvg21:  ile6 | ile4 | F
+  actionSvg22:  ile15 | ile14 | F
+  actionSvg23:  ile15 | ile14 | F
+  actionSvg24:  ile14 | ile15 | F
+  actionSvg25:  ile4 | ile6 | F
   actionSvg26:  ile6 | ile4 | F
-  actionSvg27:  ile6 | ile7 | F
-  actionSvg28:  ile6 | ile13 | F
-  actionSvg29:  ile6 | ile13 | F
-  actionSvg30:  ile13 | ile6 | F
-  actionSvg31:  ile14 | ile15 | F
-  actionSvg32:  ile15 | ile14 | F
-  actionSvg33:  ile6 | ile4 | F
-  actionSvg34:  ile4 | ile6 | F
-  actionSvg35:  ile6 | ile4 | F
-  actionSvg36:  ile14 | ile15 | F
-  actionSvg37:  ile15 | ile14 | F
+  actionSvg27:  ile1 | ile2 | F
+  actionSvg28:  ile13 | ile6 | F
+  actionSvg29:  ile12 | ile8 | F
+  actionSvg30:  ile6 | ile13 | F
+  actionSvg31:  ile6 | ile13 | F
+  actionSvg32:  ile2 | ile3 | F
+  actionSvg33:  ile8 | ile12 | F
+  actionSvg34:  ile6 | ile4 | F
+  actionSvg35:  ile2 | ile8 | F
+  actionSvg36:  ile13 | ile12 | F
+  actionSvg37:  ile7 | ile6 | F
+  actionSvg38:  ile6 | ile7 | F
+  actionSvg39:  ile8 | ile2 | F
+  actionSvg40:  ile7 | ile6 | F
 historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
