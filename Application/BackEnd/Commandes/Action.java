@@ -1,29 +1,37 @@
 package Application.BackEnd.Commandes;
-import Application.BackEnd.Grille.Plateau;
+import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Pont;
 
 public abstract class Action {
-    private Plateau plateau;
+    private Grille grille;
     private int id;
 
     /**
      * Créer une Action
-     * @param plateau Le plateau sur lequel elle s'éxecute
+     * @param grille La grille sur laquel elle s'éxecute
      */
-    Action(Plateau plateau,int id){
-        this.plateau = plateau;
+    Action(Grille grille,int id){
+        this.grille = grille;
         this.id = id;
+    }
+
+    public Grille getGrille() {
+        return grille;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**
      * Execute l'action
      */
-    public abstract void execute();
+    public abstract boolean execute();
 
     /**
      * Annule l'action
      */
-    public abstract void undo();
+    public abstract boolean undo();
 
     /**
      * Permet d'écrire l'action dans un fichier YAML
@@ -35,5 +43,5 @@ public abstract class Action {
     /**
      * Permet de lire l'action dans un fichier YAML
      */
-    public abstract void lireAction(Plateau p,int id,String ligne);
+    public abstract void lireAction(Grille p,int id,String ligne);
 }

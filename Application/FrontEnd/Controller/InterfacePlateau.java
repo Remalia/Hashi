@@ -2,6 +2,7 @@ package Application.FrontEnd.Controller;
 
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
+import Application.BackEnd.Grille.Plateau;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import Application.FrontEnd.Controller.Plateau.GrilleF;
 import javafx.animation.Animation;
@@ -33,7 +34,7 @@ import javafx.scene.Node;
  * @version 1.0
  * @since 2023-04-02
  */
-public class InterfaceGrille extends Main {
+public class InterfacePlateau extends Main {
 
     private GrilleF grille;
     private Timeline timer=null; // Ajouter une variable timer
@@ -57,7 +58,7 @@ public class InterfaceGrille extends Main {
 
     private boolean modeHypothese = false;
 
-    private Grille grilleBack;
+    private Plateau plateau;
 
     private boolean choixHypothese = true;
 
@@ -82,7 +83,7 @@ public class InterfaceGrille extends Main {
             modeHypothese = true;
             System.out.println("Mode hypothese activé");
             avantHypothese(this.grille.getCerclesHashi());
-            grilleBack.avantHypothese();
+            plateau.getGrille().avantHypothese();
         }
         else{
             modeHypothese = false;
@@ -90,7 +91,7 @@ public class InterfaceGrille extends Main {
             this.choixHypothese = popupHypothese();
             if(choixHypothese == false){
                 apresHypothese(this.grille.getCerclesHashi());
-                this.grilleBack.apresHypothese();
+                this.plateau.getGrille().apresHypothese();
                 reinitialiserHypothse(this.panneau, this.grille.getCerclesHashi());
             }
             else{
@@ -138,6 +139,7 @@ public class InterfaceGrille extends Main {
         }
     }
 
+
     /**
      * Cette fonction permet d'initialiser la grille Hashi
      * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
@@ -177,12 +179,10 @@ public class InterfaceGrille extends Main {
             double newY = (newVal.doubleValue() - panneauHeight) / 2;
             panneau.setLayoutY(newY);
         });
-        Grille grille = new Grille("NiveauxFacile/Niveau10");
-        grille.getGrilleFromYAML(grille.getFileNiveau());
-        grille.saveGrilleToYAML();
-        grilleBack = grille;
-        System.out.println(grilleBack);
-        for(Ile ile : grille.getListIle()){
+        plateau = new Plateau(new Grille("NiveauxMoyen/Niveau1"));
+        plateau.getPlateauFromYAML(false);
+        System.out.println(plateau.getGrille());
+        for(Ile ile : plateau.getGrille().getListIle()){
             double coordX = this.grille.getESPACE() * (ile.getAbs()+1);
             double coordY = this.grille.getESPACE() * (ile.getOrd()+1);
             CircleHashi cercle = new CircleHashi(ile,coordX,coordY , this.grille.getRAYON(), etatNormal); // Ici, les coordonnées des cercles ne sont pas initialisé
@@ -194,6 +194,7 @@ public class InterfaceGrille extends Main {
             panneau.getChildren().add(this.grille.getVal_cercles(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd()).getText());
         }
     }
+
 
     /**
      * Cette méthode permet de gérer les interactions avec les cercles
@@ -234,6 +235,8 @@ public class InterfaceGrille extends Main {
         }
     }
 
+
+
     /**
      * Cette méthode permet de dessiner une ligne entre deux cercles
      * @param cercle1 : le premier cercle
@@ -241,7 +244,7 @@ public class InterfaceGrille extends Main {
      * @param panneau : la grille
      */
     private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
-        if(this.grilleBack.collisionCreationPont(grilleBack.chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
+        if(this.plateau.getGrille().collisionCreationPont(plateau.getGrille().chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
             System.out.println("Erreur : pont impossible");
             return;
         }
@@ -263,7 +266,7 @@ public class InterfaceGrille extends Main {
         }
 
         //System.out.println(ligne1);
-        if(grilleBack.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle())){
+        if(plateau.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle())){
             if(!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne2) && !this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne3)) {
                 if((!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne1))) {
                     this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne1);
@@ -296,15 +299,15 @@ public class InterfaceGrille extends Main {
                 this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).supprimerLigneInverse(ligne3);
             }
         }
-        if(grilleBack.grilleCorrecte()){
+        if(plateau.getGrille().grilleCorrecte()){
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Félicitation");
             alert.setHeaderText("Vous avez réussi à compléter le puzzle");
             alert.setContentText("Vous avez réussi à compléter le puzzle");
             alert.showAndWait();
         }
-        System.out.println(this.grilleBack.grilleCorrecte());
-        System.out.println(this.grilleBack);
+        System.out.println(this.plateau.getGrille().grilleCorrecte());
+        System.out.println(this.plateau.getGrille());
     }
 
     /**

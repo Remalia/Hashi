@@ -1,6 +1,7 @@
 package Application.BackEnd.Grille;
 
 import Application.BackEnd.Commandes.Action;
+import Application.BackEnd.Commandes.ActionAjouterPont;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
@@ -142,6 +143,10 @@ public class Grille {
      */
     public ArrayList<Ile> getListIle() {
         return listIle;
+    }
+
+    public boolean isModeHyp() {
+        return modeHyp;
     }
 
     /**
@@ -316,24 +321,6 @@ public class Grille {
         return true;
     }
 
-    /**
-     * Incrémente la valeur d'un pont
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
-     */
-    public boolean incrementerPont(Ile ile1, Ile ile2){
-        Pont pont = chercherPont(ile1,ile2);
-        if(pont != null) {
-            pont.incrementerPont();
-            actualiserPontDansGrille(pont);
-            return true;
-        }
-        else{
-            System.out.println("Erreur dans incrementerPont");
-            return false;
-        }
-    }
-
 
     /**
      * Donne l'orientation d'un pont entre deux îles
@@ -459,11 +446,11 @@ public class Grille {
                 }
             }
         }
-        writer.write("historySvg: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        writer.write("historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )\n");
         for (Action a: this.historySvg ) {
             writer.write(a.ecrireAction(true));
         }
-        writer.write("historyRecup: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        writer.write("historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )\n");
         for (Action a: this.historyRecup ) {
             writer.write(a.ecrireAction(false));
         }

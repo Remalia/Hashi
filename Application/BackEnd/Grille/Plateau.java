@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Plateau{
     private Grille grille;
 
-    Plateau(Grille grille){
+    public Plateau(Grille grille){
         this.grille = grille;
     }
 
@@ -48,10 +48,18 @@ public class Plateau{
      * Permet d'éxecuter une action, appelle /!\ à appeler directement depuis l'action
      * @param a l'action à executer
      */
-    public void executeAction(Action a){
-        a.execute();
-        this.grille.getHistorySvg().push(a);
-        this.grille.getHistoryRecup().clear();
+    public boolean executeAction(Action a){
+        boolean result = a.execute();
+        if(result){
+            this.grille.getHistorySvg().push(a);
+            this.grille.getHistoryRecup().clear();
+        }
+        return result;
+    }
+
+    public boolean incrementerPont(Ile ile1, Ile ile2){
+        Action a = new ActionAjouterPont(this.getGrille(), this.getGrille().getHistorySvg().length(),ile1,ile2,this.getGrille().isModeHyp());
+        return executeAction(a);
     }
 
     /**
@@ -76,10 +84,10 @@ public class Plateau{
      */
     private void setupAction(String key,String val){
         if (key.matches("actionSvg[0-9]+")){
-            this.grille.getHistorySvg().push(new ActionAjouterPont(this,this.grille.getHistorySvg().length()+1,val));
+            this.grille.getHistorySvg().push(new ActionAjouterPont(this.grille,this.grille.getHistorySvg().length()+1,val));
         }
         if (key.matches("actionRecup[0-9]+")){
-            this.grille.getHistoryRecup().push(new ActionAjouterPont(this,this.grille.getHistorySvg().length()+1,val));
+            this.grille.getHistoryRecup().push(new ActionAjouterPont(this.grille,this.grille.getHistorySvg().length()+1,val));
         }
     }
 

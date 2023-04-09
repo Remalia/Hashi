@@ -91,6 +91,11 @@ public abstract class Pont extends Element implements InterfacePont{
         this.nbPont = (this.nbPont + 1) % 3;
     }
 
+    public void decrementerPont(){
+        this.nbPont = (this.nbPont - 1);
+        if(this.nbPont == -1) this.nbPont = 2;
+    }
+
     /**
      * Affecte un nombre de ponts
      * @param nbPont nombre de ponts
