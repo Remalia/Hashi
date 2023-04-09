@@ -1,6 +1,5 @@
 package Application.BackEnd.Grille;
 
-import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 
 
@@ -23,7 +22,7 @@ public abstract class Pont extends Element implements InterfacePont{
      * @param orientation L'orientation du pont
      */
     public Pont(Ile i1, Ile i2,Orientation orientation){
-        super(new Color(0, 0, 255));
+        super(Color.rgb(0, 0, 255));
         this.ile1 = i1;
         this.ile2 = i2;
         this.ile1.ajouterPont(this);
@@ -59,6 +58,23 @@ public abstract class Pont extends Element implements InterfacePont{
     }
 
     /**
+     * Méthode abstract qui retourne la direction du pont par rapport à l'île passée en paramètre
+     * @param ile l'île dont on veut connaître la direction du pont par rapport à elle
+     */
+    public abstract Direction getDirectionFrom(Ile ile);
+
+    /**
+     * Redéfinition de la méthode estDifférent de Element qui retourne true si le pont est différent de l'élément passé en paramètre
+     * {@link Element#estDifferent(Pont)}
+     * @param p pont à comparer
+     * @return false
+     */
+    @Override
+    public boolean estDifferent(Pont p){
+        return this.ile1 != p.ile1 && this.ile1 != p.ile2 && this.ile2 != p.ile1 && this.ile2 != p.ile2;
+    }
+
+    /**
      * Retourne le nombre de ponts
      * @return si 1 ce pont est simple et 2 si il est double
      */
@@ -72,10 +88,12 @@ public abstract class Pont extends Element implements InterfacePont{
      */
     public void incrementerPont(){
         // si le pont est simple on le passe en double
-        if(++this.nbPont == 2){
-            // si le pont est double on le supprime
-            this.nbPont = 0;
-        }
+        this.nbPont = (this.nbPont + 1) % 3;
+    }
+
+    public void decrementerPont(){
+        this.nbPont = (this.nbPont - 1);
+        if(this.nbPont == -1) this.nbPont = 2;
     }
 
     /**
@@ -84,16 +102,6 @@ public abstract class Pont extends Element implements InterfacePont{
      */
     public void setNbPont(int nbPont) {
         this.nbPont = nbPont;
-    }
-
-    
-    /**
-     * Retire le pont des lists de ponts des îles
-     */
-    @Override
-    public void nettoyerCase(){
-        this.ile1.getListePont().remove(this);
-        this.ile2.getListePont().remove(this);                                                                                  
     }
 
     /**
@@ -128,6 +136,10 @@ public abstract class Pont extends Element implements InterfacePont{
         return this;
     }
 
+    /**
+     * Donne l'ile
+     * @return ile Element est une ile
+     */
     @Override
     public Element donneIle(){
         this.setNbPont(0);
@@ -135,9 +147,8 @@ public abstract class Pont extends Element implements InterfacePont{
     }
 
     @Override
-    public boolean estIncrementable(Ile ile1, Ile ile2){
-        return true;
+    public boolean estDisponible(){
+        return nbPont == 0;
     }
-
 
 }

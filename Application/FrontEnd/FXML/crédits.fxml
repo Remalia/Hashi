@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="800.0" minWidth="1000.0" stylesheets="@../assets/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+<AnchorPane minHeight="800.0" minWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
    <children>
-      <Text fill="WHITE" layoutX="352.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crédits" textAlignment="CENTER" wrappingWidth="295.36572265625">
+      <Text layoutX="352.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crédits" textAlignment="CENTER" wrappingWidth="295.36572265625">
          <font>
             <Font size="68.0" />
          </font>
@@ -20,19 +20,19 @@
             <Image url="@../assets/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#retour_menu_p">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#menu_principal">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
       <VBox layoutX="213.0" layoutY="249.0" minHeight="339.0" minWidth="564.0">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ILANGO Rémi (chef de groupe)" textAlignment="CENTER" wrappingWidth="572.08203125">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ILANGO Rémi (chef de groupe)" textAlignment="CENTER" wrappingWidth="572.08203125">
                <font>
                   <Font size="35.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CHOUX Alex (documentaliste)" textAlignment="CENTER" wrappingWidth="572.7587890625" VBox.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CHOUX Alex (documentaliste)" textAlignment="CENTER" wrappingWidth="572.7587890625" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="35.0" />
                </font>
@@ -40,32 +40,32 @@
                   <Insets />
                </VBox.margin>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="DUCHESNE Thibaut" textAlignment="CENTER" wrappingWidth="571.26123046875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DUCHESNE Thibaut" textAlignment="CENTER" wrappingWidth="571.26123046875">
                <font>
                   <Font size="35.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="AL AFTAN Mohamed" textAlignment="CENTER" wrappingWidth="566.35791015625">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AL AFTAN Mohamed" textAlignment="CENTER" wrappingWidth="566.35791015625">
                <font>
                   <Font size="35.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BERANGER Anna" textAlignment="CENTER" wrappingWidth="569.0048828125">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="BERANGER Anna" textAlignment="CENTER" wrappingWidth="569.0048828125">
                <font>
                   <Font size="35.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="BOULLIER Arthur" textAlignment="CENTER" wrappingWidth="570.8681640625">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="BOULLIER Arthur" textAlignment="CENTER" wrappingWidth="570.8681640625">
                <font>
                   <Font size="35.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GUIMBERT Alexis" textAlignment="CENTER" wrappingWidth="570.08056640625">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GUIMBERT Alexis" textAlignment="CENTER" wrappingWidth="570.08056640625">
                <font>
                   <Font size="35.0" />
                </font>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="JARRIER Allan" textAlignment="CENTER" wrappingWidth="570.80517578125">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="JARRIER Allan" textAlignment="CENTER" wrappingWidth="570.80517578125">
                <font>
                   <Font size="35.0" />
                </font>

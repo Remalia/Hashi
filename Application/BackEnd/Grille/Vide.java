@@ -20,4 +20,21 @@ public class Vide extends Element{
         }
         return instance;
     }
+
+    /**
+     * Redéfinition de la méthode estDifférent de Element (Vide n'est pas considérer comme différent) qui autorise la création de ponts sur un élément Vide
+     * {@link Element#estDifferent(Pont)}
+     * @param p pont à comparer
+     * @return false
+     */
+    @Override
+    public boolean estDifferent(Pont p){
+        return false;
+    }
+
+    @Override
+    public boolean estDisponible(){
+        return true;
+    }
+
 }

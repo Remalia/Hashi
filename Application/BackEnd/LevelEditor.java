@@ -274,7 +274,7 @@ public class LevelEditor extends JPanel{
         this.grille.saveGrilleToYAML();
     }
     public static void main(String args[]) throws IOException {
-        JFrame jframe =  new JFrame("Application.BackEnd.LevelEditor");
+        JFrame jframe =  new JFrame("LevelEditor");
         LevelEditor level = new LevelEditor();
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.getContentPane().add(level);

@@ -6,13 +6,12 @@ package Application.FrontEnd.Controller;/*
  * @since 2023-04-02
  */
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import java.io.IOException;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.stage.PopupWindow;
-import javafx.util.Duration;
 
 /**
  * This class is the controller of the main scene
@@ -22,14 +21,13 @@ import javafx.util.Duration;
  * @version 1.0
  * @since 2023-04-02
  */
-public class ModeController extends MenuController{
+public class ModeController extends Main{
 
 	@FXML private Button libre;
 	@FXML private Button aventure;
 
 	@FXML
 	public void initialize(){
-
 		Tooltip tooltipL = new Tooltip();
 		tooltipL.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_BOTTOM_LEFT);
 		tooltipL.setConsumeAutoHidingEvents(false);
@@ -41,16 +39,16 @@ public class ModeController extends MenuController{
 		tooltipA.setConsumeAutoHidingEvents(false);
 		tooltipA.setText("Résout les grilles avec un nombre limité d'aides et de techniques.");
 		aventure.setTooltip(tooltipA);
-
 	}
+
 	/**
 	 * method to switch to the mode libre scene
 	 * @param event : the event that triggers the switch
 	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
-	public void switchlibre(ActionEvent event) throws IOException{
-		scene("../FXML/jeulibre.fxml",event);
+	public void jeulibre(Event event) throws IOException{
+		switchToScene("../FXML/jeulibre.fxml",event);
 	}
 	
 	/**
@@ -59,8 +57,8 @@ public class ModeController extends MenuController{
 	 * @throws IOException Exception thrown if the file is not found
 	 */
 	@FXML
-	public void switchaventure(ActionEvent event) throws IOException{
-		scene("../FXML/plateau.fxml",event);
+	public void plateau(Event event) throws IOException{
+		switchToScene("../FXML/plateau.fxml",event);
 	}
 
 

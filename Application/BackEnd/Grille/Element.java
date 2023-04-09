@@ -1,6 +1,6 @@
 package Application.BackEnd.Grille;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 /**
  * Classe abstraite représentant un élément du jeu
@@ -19,7 +19,7 @@ public abstract class Element {
      * Constructeur de la classe Application.BackEnd.Grille.Element
      */
     Element(){
-        this.couleur = new Color(0, 0, 255);
+        this.couleur =  Color.rgb(0, 0, 255);
     }
 
     /**
@@ -92,8 +92,22 @@ public abstract class Element {
         //Si aucune île n'as été trouvée
         return null;
     }
-
+    @Deprecated
     public boolean estIncrementable(Ile ile1, Ile ile2){
         return false;
     }
+
+    public boolean estDisponible(){
+        return false;
+    }
+
+    /**
+     * Vérifie si le pont est différent de l'élément actuel
+     * @param p pont à comparer
+     * @return true si c'est un élément, une ile ou un pont différent
+     */
+    public boolean estDifferent(Pont p){
+        return true;
+    }
+
 }

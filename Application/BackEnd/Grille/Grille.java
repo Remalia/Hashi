@@ -1,13 +1,19 @@
 package Application.BackEnd.Grille;
 
 import Application.BackEnd.Commandes.Action;
+import Application.BackEnd.Commandes.ActionAjouterPont;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
+import Application.FrontEnd.Controller.Plateau.CircleHashi;
+import javafx.geometry.Orientation;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
-import java.awt.Color;
+import javafx.scene.paint.Color;
+
+import java.util.List;
 import java.util.regex.*;
 
 /**
@@ -15,7 +21,7 @@ import java.util.regex.*;
  */
 public class Grille {
 
-    Color c = new Color(0, 0, 255);
+    Color c = Color.rgb(0, 0, 255);
     private final ActionHistory historySvg = new ActionHistory();
     private final ActionHistory historyRecup = new ActionHistory();
     private Element[][] matriceGrille;
@@ -24,7 +30,9 @@ public class Grille {
     private File fileSave;
     private String name;
     private boolean modeHyp;
-    private int difficulte;
+    private Difficulte difficulte;
+
+    private Grille solution;
 
     /**
      * Constructeur de la grille avec un nom de niveau
@@ -54,13 +62,13 @@ public class Grille {
             for(int j = 0; j < 10; j++){
                 matriceGrille[i][j] = Vide.getInstance();
             }
+        this.solution = new Grille();
     }
 
     /**
      * Constructeur de la grille
      */
     public Grille(){
-        // remplissage de la grille temporaire pour les tests */
         this.listIle = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
         int i, j;
@@ -71,17 +79,30 @@ public class Grille {
         }
     }
 
-    public Grille (Grille grilleSolution){
-        //TODO A SUPPRIMER CTE MERDE --> Changer par Allan
-        this.listIle = grilleSolution.getListIle();
-        this.matriceGrille = new Element[10][10];
-        int i, j;
-        for(i = 0; i < 10; i++){
-            for(j = 0; j < 10; j++){
-                matriceGrille[i][j] = grilleSolution.getMatriceGrille()[i][j].donneIle();
+    /**
+     * Cette méthode permet de sauvegarder l'état initiale des ponts des iles avant que le joueur effectue son brouillon d'hypothèse
+     */
+    public void avantHypothese(){
+        for(Ile ile : listIle){
+            if(ile != null){
+                ile.sauvegardeInitial();
             }
         }
+    }
 
+    /**
+     * Cette méthode permet de revenir à l'état de sauvegarde d'avant brouillon de la grille
+     */
+    public void apresHypothese(){
+        for(Ile ile : listIle){
+            if(ile != null){
+                ile.EtablirsauvegardeInitial();
+            }
+        }
+    }
+
+    public Grille getGrilleSolution(){
+        return this.solution;
     }
 
     /**
@@ -124,6 +145,10 @@ public class Grille {
         return listIle;
     }
 
+    public boolean isModeHyp() {
+        return modeHyp;
+    }
+
     /**
      * Méthode d'ajout d'une nouvelle ile dans la matrice
      * @param ile L'ile a ajouter
@@ -134,7 +159,7 @@ public class Grille {
         listIle.add(ile);
         Element actuel = matriceGrille[abs][ord];
         Ile temp;
-        //Une fois l'île créée on éssaye de trouver des îles dans les 4 directions
+        //Une fois l'île créée, on essaye de trouver des îles dans les 4 directions
         for(Direction d : Direction.values()){
             temp = actuel.getIleFromDirection(abs, ord, d ,this.matriceGrille);
             if(temp != null){
@@ -175,20 +200,9 @@ public class Grille {
      * @return le pont entre les deux îles null si rien
      */
     public Pont chercherPont(Ile ile1, Ile ile2){
-        //Si on peut on vérifie si le pont est horizontal ou vertical
-        //TODO Passer a partir des orientations pour check + HashMap au lieu de list dans les Ponts
-        if(ile1.getAbs() == ile2.getAbs()){
-            if(ile1.getOrd() < ile2.getOrd()){
-                return matriceGrille[ile1.getAbs()][ile1.getOrd() + 1].donnePont(ile1, ile2);
-            }else{
-                return matriceGrille[ile1.getAbs()][ile1.getOrd() - 1].donnePont(ile1, ile2);
-            }
-        }else if(ile1.getOrd() == ile2.getOrd()){
-            if(ile1.getAbs() < ile2.getAbs()){
-                return matriceGrille[ile1.getAbs() + 1][ile1.getOrd()].donnePont(ile1, ile2);
-            }else{
-                return matriceGrille[ile1.getAbs() - 1][ile1.getOrd()].donnePont(ile1, ile2);
-            }
+        for(Pont p : ile1.getListePont()){
+            if(p.getIle1() == ile1 && p.getIle2() == ile2 || p.getIle1() == ile2 && p.getIle2() == ile1)
+                return p;
         }
         return null;
     }
@@ -196,95 +210,131 @@ public class Grille {
 
 
     /** 
-     * Ajoute un pont à la grille
+     * Ajoute un pont à la grille ( utilisé SEULEMENT lors de la CREATION de la grille avec le YAML )
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
      * @param nbPonts le nombre de ponts à set
      */
-    public void  ajouterPont(Ile ile1, Ile ile2, int nbPonts){
-        int i;
-        Pont pont = chercherPont(ile1,ile2);
-
-        if(pont != null){
-            //Si il y'a déjà un pont on incrémente le nombre de ponts
-            System.out.println("pont trouvé entre"+ile1.getAbs()+","+ile1.getOrd()+" et "+ile2.getAbs()+","+ile2.getOrd());
-            pont.setNbPont(nbPonts);
-            return;
+    public void ajouterPont(Ile ile1, Ile ile2, int nbPonts){
+        Pont pont;
+        // Sinon, on crée un nouveau pont en fonction de l'orientation
+        if(getOrientationFrom2Iles(ile1,ile2) == Orientation.HORIZONTAL){
+            pont = new PontHorizontal(ile1,ile2);
         }
+        else {
+            pont = new PontVertical(ile1, ile2);
+        }
+        pont.setNbPont(nbPonts);
+        actualiserGrille();
 
-        //Si il n'existe pas de pont on en créé un
-        //pont = new Pont(ile1,ile2,nbPonts);
-        //TODO /!\ Création pont horizontal ou vertical
-        //Si on peut on vérifie si le pont est horizontal ou vertical
-        if(ile1.getAbs() == ile2.getAbs()){
-            if(ile1.getOrd() < ile2.getOrd()){
-                for(i = ile1.getOrd() + 1; i < ile2.getOrd() ; i++)
-                    //Si il y'a déjà un pont on crée une intersection
-                    if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
-                        matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
-                    }
-                    else if(matriceGrille[ile1.getAbs()][i] instanceof Intersection){
-                        ((Intersection)matriceGrille[ile1.getAbs()][i]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[ile1.getAbs()][i] = pont;
-                    }
+    }
 
-            }else{
-                for(i = ile2.getOrd() + 1; i < ile1.getOrd(); i++)
-                    if(matriceGrille[ile1.getAbs()][i] instanceof Pont){
-                        matriceGrille[ile1.getAbs()][i] = new Intersection((Pont)matriceGrille[ile1.getAbs()][i], pont);
-                    }
-                    else if(matriceGrille[ile1.getAbs()][i] instanceof Intersection){
-                        ((Intersection)matriceGrille[ile1.getAbs()][i]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[ile1.getAbs()][i] = pont;
-                    }
-
-            }
-        } else if(ile1.getOrd() == ile2.getOrd()){
-            if(ile1.getAbs() < ile2.getAbs()){
-                for(i = ile1.getAbs() + 1; i < ile2.getAbs(); i++)
-
-                    if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
-                        matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
-                    }
-                    else if(matriceGrille[i][ile2.getOrd()] instanceof Intersection){
-                        ((Intersection)matriceGrille[i][ile2.getOrd()]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[i][ile2.getOrd()] = pont;
-                    }
-
-            }else{
-                for(i = ile2.getAbs() + 1; i < ile1.getAbs(); i++)
-                    if(matriceGrille[i][ile2.getOrd()] instanceof Pont){
-                        matriceGrille[i][ile2.getOrd()] = new Intersection((Pont)matriceGrille[i][ile2.getOrd()] , pont);
-                    }
-                    else if(matriceGrille[i][ile2.getOrd()] instanceof Intersection){
-                        ((Intersection)matriceGrille[i][ile2.getOrd()]).setPont(ile1, ile2, pont);
-                    }
-                    else{
-                        matriceGrille[i][ile2.getOrd()] = pont;
-                    }
+    public void actualiserGrille(){
+        for(Ile ile : listIle){
+            for(Pont p : ile.getListePont()){
+                if(!collisionCreationPont(p)) {
+                    ajouterPontDansGrille(p);
+                }
             }
         }
+    }
 
+    public void actualiserPontDansGrille(Pont pont){
+        if(!collisionCreationPont(pont))
+            ajouterPontDansGrille(pont);
+    }
+
+    /**
+     * Ajoute un pont dans la grille
+     * @param pont à ajouter dans la grille
+     */
+    public void ajouterPontDansGrille(Pont pont){
+        Ile ile1 = pont.getIle1();
+        Ile ile2 = pont.getIle2();
+        Element elem;
+        if(pont.getNbPont() == 0)
+           elem = Vide.getInstance();
+        else
+            elem = pont;
+        switch (pont.getDirectionFrom(ile1)) {
+            case BAS -> {
+                for (int i = ile2.getOrd() - 1; i > ile1.getOrd(); i--) {
+                    matriceGrille[ile1.getAbs()][i] = elem;
+                }
+            }
+            case HAUT -> {
+                for (int i = ile2.getOrd() + 1; i < ile1.getOrd(); i++) {
+                    matriceGrille[ile1.getAbs()][i] = elem;
+                }
+            }
+            case DROITE -> {
+                for (int i = ile2.getAbs() - 1; i > ile1.getAbs(); i--) {
+                    matriceGrille[i][ile1.getOrd()] = elem;
+                }
+            }
+            case GAUCHE -> {
+                for (int i = ile2.getAbs() + 1; i < ile1.getAbs(); i++) {
+                    matriceGrille[i][ile1.getOrd()] = elem;
+                }
+            }
+        }
+    }
+
+    /**
+     * Fonction qui vérifie si il y a déjà un pont entre deux îles autre que celui passé en paramètre
+     * @param pont pont à vérifier
+     * @return true si il y a déjà un pont entre les deux îles avec nbPont > 0
+     */
+    public boolean collisionCreationPont(Pont pont){
+        if(pont == null)
+            return false;
+        Ile ile1 = pont.getIle1();
+        Ile ile2 = pont.getIle2();
+        switch (pont.getDirectionFrom(ile1)){
+            case BAS :
+                for (int i = ile2.getOrd() - 1; i > ile1.getOrd(); i--) {
+                    if(matriceGrille[ile1.getAbs()][i].estDifferent(pont))
+                        return true;
+                }
+                return false;
+            case HAUT :
+                for (int i = ile2.getOrd() + 1; i < ile1.getOrd(); i++) {
+                    if(matriceGrille[ile1.getAbs()][i].estDifferent(pont))
+                        return true;
+                }
+                return false;
+            case DROITE :
+                for (int i = ile2.getAbs() - 1; i > ile1.getAbs(); i--) {
+                    if(matriceGrille[i][ile1.getOrd()].estDifferent(pont))
+                        return true;
+                }
+                return false;
+            case GAUCHE :
+                for (int i = ile2.getAbs() + 1; i < ile1.getAbs(); i++) {
+                    if(matriceGrille[i][ile1.getOrd()].estDifferent(pont)) {
+                        return true;
+                    }
+                }
+                return false;
+        }
+        System.out.println("Erreur quelque part dans collisionCreationPont");
+        return true;
     }
 
 
     /**
-     * Incrémente la valeur d'un pont
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
+     * Donne l'orientation d'un pont entre deux îles
+     * @param ile1 première ile du pont
+     * @param ile2 seconde ile du pont
+     * @return l'orientation du pont
      */
-    public void incrementerPont(Ile ile1, Ile ile2){
-        Pont pont = chercherPont(ile1,ile2);
-        pont.incrementerPont();
+    public Orientation getOrientationFrom2Iles(Ile ile1, Ile ile2){
+        if(ile1.getOrd() == ile2.getOrd()){
+            return Orientation.HORIZONTAL;
+        } else {
+            return Orientation.VERTICAL;
+        }
     }
-
-
 
     
     /**
@@ -320,78 +370,33 @@ public class Grille {
         return matriceGrille;
     }
 
-
-    /**
-     * Vérifie si la création d'un pont est possible
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
-     * @return boolean
-     */
-    public boolean verifCreationPont(Ile ile1, Ile ile2){
-        //TODO A FAIRE --> Horizontal / Vertical
-        return true;
-    }
-
-    /**
-     * Vérifie si l'incrémentation d'un pont est possible
-     * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont
-     * @return true si l'incrémentation est possible, false sinon
-     */
-    public boolean estIncrementable(Ile ile1,Ile ile2) {
-        int i;
-        // si pont vertical
-        if (ile1.getAbs() == ile2.getAbs()) {
-            if (ile1.getOrd() < ile2.getOrd()) { // si ile1 est en haut
-                for (i = ile1.getOrd() + 1; i < ile2.getOrd() - 1; i++) {
-                    if (!matriceGrille[ile1.getAbs()][i].estIncrementable(ile1, ile2)) {
-                        System.out.println("1Incrementation impossible sur la case " + ile1.getAbs() + " " + i + " car " + matriceGrille[ile1.getAbs()][i].getClass().getName());
-                        return false;
-                    }
-                }
-            } else { // si ile2 est en haut
-                for (i = ile2.getOrd() + 1; i < ile1.getOrd() - 1; i++) {
-                    if (matriceGrille[ile1.getAbs()][i].estIncrementable(ile1,ile2) == false) {
-                        System.out.println("2Incrementation impossible sur la case " + ile2.getAbs() + " " + i + " car " + matriceGrille[ile2.getAbs()][i].getClass().getName());
-                        return false;
-                    }
-                }
-            }
-        }
-        // si horizontal
-        else if (ile1.getOrd() == ile2.getOrd()) {
-            if (ile1.getAbs() < ile2.getAbs()) { //  si ile1 est à gauche
-                for (i = ile1.getAbs() + 1; i < ile2.getAbs() - 1; i++) {
-                    if (matriceGrille[i][ile1.getOrd()].estIncrementable(ile1,ile2) == false) {
-                        System.out.println("3Incrementation impossible sur la case " + i + " " + ile1.getOrd() + " car " + matriceGrille[i][ile1.getOrd()].getClass().getName());
-                        return false;
-                    }
-                }
-
-            } else { // si ile2 est à gauche
-                for (i = ile2.getAbs() + 1; i < ile1.getAbs() - 1; i++) {
-                    if (matriceGrille[i][ile1.getOrd()].estIncrementable(ile1,ile2) == false) {
-                        System.out.println("4Incrementation impossible sur la case " + i + " " + ile1.getOrd() + " car " + matriceGrille[i][ile1.getOrd()].getClass().getName());
-                        return false;
-                    }
-                }
-            }
-        } // traitement si null
-        return true;
-    }
-
     /**
      * Récupère la grille et l'initialise
      * @throws FileNotFoundException Fichier non trouvé
+     * @param isItSave Si c'est une sauvegarde ou non
      */
-    public void getGrilleFromYAML(File file) throws FileNotFoundException {
-        HashMap<String,String> balises = Parser.getAllBalise(file);
-        if (balises.get("type").equals("fichierNiveau")){
-            difficulte = Integer.parseInt(balises.get("difficulte"));
-            balises.forEach(this::setupIle);
-            balises.forEach(this::setupPont);
+    public void getGrilleFromYAML(Boolean isItSave) throws FileNotFoundException {
+        if (!isItSave){
+            HashMap<String,String> balises = Parser.getAllBalise(this.fileNiveau);
+            if (balises.get("type").equals("fichierNiveau")){
+                difficulte = Difficulte.getDifficulteFromInt(Integer.parseInt(String.valueOf(balises.get("difficulte").charAt(0))));
+                balises.forEach(this.solution::setupIle);
+                balises.forEach(this.solution::setupPont);
+                balises.forEach(this::setupIle);
+            }
+        }else{
+            HashMap<String,String> balisesNiveau = Parser.getAllBalise(this.fileNiveau);
+            HashMap<String,String> balisesSave = Parser.getAllBalise(this.fileSave);
+            if (balisesNiveau.get("type").equals("fichierNiveau")){
+                difficulte = Difficulte.getDifficulteFromInt(Integer.parseInt(String.valueOf(balisesNiveau.get("difficulte").charAt(0))));
+                balisesNiveau.forEach(this.solution::setupIle);
+                balisesNiveau.forEach(this.solution::setupPont);
+                balisesNiveau.forEach(this::setupIle);
+            }
+            if (!balisesSave.isEmpty() && balisesSave.get("type").equals("fichierNiveau")){
+                balisesSave.forEach(this::setupPont);
+            }
         }
-        //TODO préférence de passage par plateau A RELIER AVEC LE FRONTEND
     }
 
     /**
@@ -439,7 +444,7 @@ public class Grille {
     public void saveGrilleToYAML() throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileSave));
         writer.write("type: fichierNiveau\n" + "difficulte: ");
-        writer.write(String.valueOf(this.difficulte));
+        writer.write(this.difficulte.getDifficulteToString() + " #( 1 --> facile | 2 --> Moyen | 3 --> Difficile )");
         writer.write("\ngrille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )\n");
         int idPont = 1;
         List<Pont> listTemp = new ArrayList<>();
@@ -455,11 +460,11 @@ public class Grille {
                 }
             }
         }
-        writer.write("historySvg: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        writer.write("historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )\n");
         for (Action a: this.historySvg ) {
             writer.write(a.ecrireAction(true));
         }
-        writer.write("historyRecup: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )\n");
+        writer.write("historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )\n");
         for (Action a: this.historyRecup ) {
             writer.write(a.ecrireAction(false));
         }
@@ -485,37 +490,20 @@ public class Grille {
      * Vérifie si la grille est correcte
      */
     public boolean grilleCorrecte(){
-        for(Ile i: this.listIle){
-            if(!i.estComplete()){
-                return false;
-            }
-        }
-        return true;
+        return this == this.solution;
     }
 
     public static void main(String[] args) throws IOException {
-        Grille grilleTest = new Grille("NiveauTest");
-        grilleTest.getGrilleFromYAML(grilleTest.getFileNiveau());
+        Grille grilleTest = new Grille("NiveauxFacile/Niveau10");
+        grilleTest.getGrilleFromYAML(false);
+        System.out.println(grilleTest.getGrilleSolution().toString());
     }
     public static void main2(String[] args){
         Grille grilleTest = new Grille();
-        Color c = new Color(0, 0, 255);
-        Ile ile1 = new Ile(1,1,4,1,c);
-        Ile ile2 = new Ile(2,2,4,9,c);
-        Ile ile3 = new Ile(3,3,1,5,c);
-        Ile ile4 = new Ile(4,4,9,5,c);
-        Ile ile5 = new Ile(5,5,4,3);
+        Ile ile1 = new Ile(1,1,4,1);
+        Ile ile2 = new Ile(2,2,4,9);
         grilleTest.ajouterIle(ile1);
-        grilleTest.ajouterIle(ile3);
-        System.out.println("nb ponts de l'ile 1 : "+ile1.getListePont().size());
-        System.out.println("nb ponts de l'ile 5 : "+ile2.getListePont().size());
-        System.out.println(grilleTest.toString());
         grilleTest.ajouterIle(ile2);
-        grilleTest.ajouterIle(ile4);
-        grilleTest.ajouterIle(ile5);
-        System.out.println("nb ponts de l'ile 1 : "+ile1.getListePont().size());
-        System.out.println("nb ponts de l'ile 3 : "+ile3.getListePont().size());
         System.out.println(grilleTest.toString());
-        
     }
 }

@@ -1,4 +1,4 @@
-package Application.FrontEnd.Controller;
+package Application.FrontEnd.Controller.Plateau;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,12 @@ import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-
 import Application.BackEnd.Grille.Ile;
 import javafx.scene.text.*;
-
 /**
  * Classe CircleHashi
- * This class is used to create a circle with a number in it
- * It is used to represent an island
+ * Cette classe permet de créer un cercle avec un nombre à l'intérieur
+ * Elle est utilisée pour représenter une île
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
  * @since 2023-04-02
@@ -26,13 +24,13 @@ public class  CircleHashi extends Circle{
 
 	/**
 	 * Constructeur
-	 * @param ile : Ile : the island
-	 * @param coordX : double : the x coordinate
-	 * @param coordY : double : the y coordinate
-	 * @param rayon : double : the radius
-	 * @param paint	: javafx.scene.paint.Paint : the color
+	 * @param ile : Ile : l'île associée au cercle
+	 * @param coordX : double : la coordonnée x
+	 * @param coordY : double : la coordonnée y
+	 * @param rayon : double : le rayon
+	 * @param paint	: javafx.scene.paint.Paint : la couleur
 	 */
-	CircleHashi(Ile ile ,double coordX , double coordY , double rayon ,  javafx.scene.paint.Paint paint ){
+	public CircleHashi(Ile ile, double coordX, double coordY, double rayon, javafx.scene.paint.Paint paint){
 		super(coordX,coordY,rayon,paint);
 		this.listeLignes = new ArrayList();
 		this.listeLignesHypotheseSauvegarde = new ArrayList();
@@ -43,17 +41,16 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * This method is used to change the color of the text
+	 * Cette méthode permet de changer la couleur du texte
 	 * @param couleur : Color
 	 */
 	public void changerCouleurTexte(Color couleur) {
 		this.text.setFill(couleur);
 	}
 
-
 	/**
-	 * This method is used to check if a line is in the list of lines
-	 * @param ligne : Line : the line to check
+	 * Cette méthode est utilisée pour vérifier si une ligne est dans la liste de lignes
+	 * @param ligne : la ligne à vérifier
 	 */
 	public boolean ligneEstDansListe(Line ligne) {
 		for (Line l : listeLignes) {
@@ -64,10 +61,9 @@ public class  CircleHashi extends Circle{
 		return false;
 	}
 
-
 	/**
-	 * This method returns the line
-	 * @param ligne : Line : the line to reverse
+	 * Cette méthode retourne une ligne
+	 * @param ligne : Line : la ligne à retourner
 	 * @return Line
 	 */
 	public Line retournerLigne(Line ligne) {
@@ -80,8 +76,8 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * This method returns the reverse of a line
-	 * @param ligne : Line : the line to reverse
+	 * Cette méthode retourne la ligne inverse
+	 * @param ligne : Line : la ligne à retourner
 	 * @return Line
 	 */
 	public Line retournerLigneInverse(Line ligne) {
@@ -90,33 +86,35 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * This method is used to add a line to the list of lines
-	 * @param ligne : Line : the line to add
+	 * Cette méthode ajoute une ligne à la liste de lignes
+	 * @param ligne : Line : la ligne à ajouter
+	 * @return void
 	 */
 	public void ajouterLigne(Line ligne) {
 		listeLignes.add(ligne);
 	}
 
 	/**
-	 * This method is used to add the reverse of a line to the list of lines
-	 * @param ligne : Line : the line to add
+	 * Cette méthode ajoute la ligne inverse à la liste de lignes
+	 * @param ligne : Line : la ligne à ajouter
 	 */
 	public void ajouterLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
 		listeLignes.add(x);
 	}
 
+
 	/**
-	 * This method is used to remove a line from the list of lines
-	 * @param ligne : Line : the line to remove
+	 * Cette méthode supprime une ligne de la liste de lignes
+	 * @param ligne : Line : la ligne à supprimer
 	 */
 	public void supprimerLigne(Line ligne) {
 		listeLignes.removeIf(l -> ligne.getStartX() == l.getStartX() && ligne.getStartY() == l.getStartY() && ligne.getEndX() == l.getEndX() && ligne.getEndY() == l.getEndY());
 	}
 
 	/**
-	 * This method is used to remove the reverse of a line from the list of lines
-	 * @param ligne : Line : the line to remove
+	 * Cette méthode supprime la ligne inverse de la liste de lignes
+	 * @param ligne : Line : la ligne à supprimer
 	 */
 	public void supprimerLigneInverse(Line ligne) {
 		Line x = new Line(ligne.getEndX(), ligne.getEndY(), ligne.getStartX(), ligne.getStartY());
@@ -124,43 +122,47 @@ public class  CircleHashi extends Circle{
 	}
 
 	/**
-	 * This method is used to save the initial list of bridges associate to the island
-	 * @param
-	 */
+	 * Cette méthode sauvegarde la liste de lignes mit en hypothèse
+	 */ 
 	public void sauvegardeInitial() {
+		listeLignesHypotheseSauvegarde.clear();
 		listeLignesHypotheseSauvegarde.addAll(listeLignes);
 	}
 
 	/**
-	 * This method is used to switch between the new list or the old list
-	 * @param
+	 * Cette méthode remplace la liste de lignes par celle d'avant action d'hypothèse
 	 */
-	public void switchSauvegarde(boolean modeHypothese) {
-		if(modeHypothese == true){
-			listeLignesHypotheseSauvegarde.clear();
-			listeLignesHypotheseSauvegarde.addAll(listeLignes);
-			System.out.println("Retour à l'initail");
-		}
-		else{
-			listeLignes.clear();
-			listeLignes.addAll(listeLignesHypotheseSauvegarde);
-			System.out.println("Validaton du mode");
-		}
+	public void EtablirsauvegardeInitial() {
+		listeLignes.clear();
+		listeLignes.addAll(listeLignesHypotheseSauvegarde);
 	}
 
-	// Getters et Setters
 	/**
-	 * @return the island of the circle
+	 * Cette méthode regarde si une ligne opposée lie déja un cercle.
+	 */
+	public boolean estPresent(Line ligneInverse) {
+		return listeLignes.contains(ligneInverse);
+	}
+
+	/**
+	 * Cette méthode recupère l'instance de l'île
 	 */
 	public Ile getIle() {
 		return ile;
 	}
 
 	/**
-	 * @return the text of the circle
+	 * Cette méthode recupère l'instance du texte
 	 */
 	public Text getText() {
 		return text;
+	}
+
+	/**
+	 * Cette méthode renvoie la liste de pont associé au cercle
+	 */
+	public List<Line> getListeLignesHypotheseSauvegarde() {
+		return listeLignesHypotheseSauvegarde;
 	}
 
 }

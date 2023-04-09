@@ -51,7 +51,7 @@ public class Intersection extends Element {
      * @param ile2 une ile de l'intersection
      * @return true si le pont p de l'intersection peut etre incrementé
      */
-    @Override
+    @Deprecated
     public boolean estIncrementable(Ile ile1, Ile ile2){
         // si on est sur le pont 1
         System.out.println("ile1 : " + ile1 + " ile2 : " + ile2);

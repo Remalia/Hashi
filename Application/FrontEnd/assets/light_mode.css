@@ -1,0 +1,11 @@
+.root{
+    -fx-background-image:url("./background_white.jpg");
+}
+
+Label{
+    -fx-text-fill: black;
+}
+
+.button {
+   -fx-background-radius: 20;
+}

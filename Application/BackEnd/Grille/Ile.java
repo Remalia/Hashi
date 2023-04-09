@@ -15,6 +15,7 @@ public class Ile extends Element {
     private final int ord; /** ordonnée de l'île */
     private boolean estSelect; /** statut de sélection de l'île */
     private List<Pont> listePont;
+    private List<Pont> listePontSauvegarde;
     
     /**
      * Constructeur de la classe Application.BackEnd.Grille.Ile
@@ -31,6 +32,7 @@ public class Ile extends Element {
         this.abs = abs;
         this.ord = ord;
         this.listePont = new ArrayList<>();
+        this.listePontSauvegarde = new ArrayList<>();
         this.nbPonts = 0; // à la création il n'y a pas de ponts
         this.estSelect = false; // île non selectionée à la création
     }
@@ -49,6 +51,7 @@ public class Ile extends Element {
         this.abs = abs;
         this.ord = ord;
         this.listePont = new ArrayList<>();
+        this.listePontSauvegarde = new ArrayList<>();
         this.nbPonts = 0; // à la création il n'y a pas de ponts
         this.estSelect = false; // île non selectionée à la création
     }
@@ -74,13 +77,29 @@ public class Ile extends Element {
     * @return true si l'île est complète, sinon false
     */
     public boolean estComplete(){
-        return (this.num == this.nbPonts);
+        int sum = 0;
+        for(Pont p : this.listePont){
+            sum += p.getNbPont();
+        }
+        return (this.num == sum);
     }
 
     /**
     * Incrémente de 1 le nombre de ponts attachés à l'île
     */
     public void ajouterPont(Pont p){
+        if(this.listePont.contains(p)){
+            return;
+        }
+        Direction dir = p.getDirectionFrom(this);
+        //Si l'île possède déjà un pont de la même orientation on le remplace
+        for(Pont pont : this.listePont){
+            if(pont.getDirectionFrom(this) == dir){
+                this.listePont.remove(pont);
+                this.listePont.add(p);
+                return;
+            }
+        }
         this.nbPonts += 1;
         listePont.add(p);
     }
@@ -180,7 +199,7 @@ public class Ile extends Element {
     }
 
     public String toStringConsole(){
-        String s = "Application.BackEnd.Grille.Ile" + this.id + "\n";
+        String s = "Ile" + this.id + "\n";
         s += "numéro : " + this.num + "\n";
         s += "(" + this.abs + "," + this.ord + ")\n";
         s += this.getCouleur().toString() + "\n";
@@ -232,11 +251,6 @@ public class Ile extends Element {
         return voisins;
     }
 
-    @Override
-    public void nettoyerCase()
-    {
-        
-    }
     /**
      * Retourne le nombre de voisins de l'île même s'ils ne sont pas accessibles
      */
@@ -245,9 +259,25 @@ public class Ile extends Element {
         return this.listePont.size();
     }
 
+    /**
+     * Cette méthode sauvegarde la liste de lignes mit en hypothèse
+     */
+    public void sauvegardeInitial(){
+        listePontSauvegarde.clear();
+        listePontSauvegarde.addAll(listePont);
+    }
+
+    /**
+     * Cette méthode remplace la liste de ponts par celle d'avant action d'hypothèse
+     */
+    public void EtablirsauvegardeInitial() {
+        listePont.clear();
+        listePont.addAll(listePontSauvegarde);
+    }
+
     public static void main(String[] args){
         try {
-            Color c = new Color(100, 0, 0);
+            Color c = Color.rgb(100, 0, 0);
             Ile ileTest = new Ile(1, 5, 4, 2, c);
             System.out.println(ileTest.toStringConsole());
             System.out.println(ileTest.toStringConsole());

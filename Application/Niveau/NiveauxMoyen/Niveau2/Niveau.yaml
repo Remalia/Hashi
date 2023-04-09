@@ -1,0 +1,36 @@
+type: fichierNiveau
+difficulte: 2
+grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
+  ile1: 0 | 0 | 3
+  ile2: 0 | 3 | 3
+  ile3: 0 | 6 | 3
+  ile4: 0 | 9 | 3
+  ile5: 2 | 9 | 1
+  ile6: 1 | 8 | 3
+  ile7: 1 | 2 | 2
+  ile8: 3 | 8 | 4
+  ile9: 3 | 0 | 3
+  ile10: 9 | 0 | 3
+  ile11: 4 | 1 | 2
+  ile12: 4 | 7 | 3
+  ile13: 4 | 5 | 5
+  ile14: 7 | 7 | 1
+  ile15: 9 | 8 | 3
+  ile16: 9 | 5 | 4
+  pont1: ile1 | ile2 | 2
+  pont2: ile9 | ile1 | 1
+  pont3: ile3 | ile2 | 1
+  pont4: ile3 | ile4 | 2
+  pont5: ile5 | ile4 | 1
+  pont6: ile6 | ile7 | 2
+  pont7: ile6 | ile8 | 1
+  pont8: ile8 | ile15 | 2
+  pont9: ile10 | ile9 | 1
+  pont10: ile16 | ile10 | 2
+  pont11: ile11 | ile13 | 2
+  pont12: ile13 | ile12 | 2
+  pont13: ile12 | ile14 | 1
+  pont14: ile16 | ile13 | 1
+  pont15: ile16 | ile15 | 1
+historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
+historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )

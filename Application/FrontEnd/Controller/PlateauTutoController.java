@@ -1,6 +1,9 @@
 package Application.FrontEnd.Controller;
 
 import java.io.IOException;
+import java.util.Objects;
+
+import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -9,15 +12,15 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.fxml.FXML;
+
 /**
- * This class is the controller of the main scene
- * It allows to switch between the different scenes of the application
- * It also allows to quit the application
+ * Class PlateauTutoController
+ * Cette classe permet de gérer le plateau de jeu du tutoriel
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
- * @since 2023-04-02
+ * @since 2023-04-07
  */
-public class PlateauTutoController extends MainSceneController {
+public class PlateauTutoController extends Main {
 	
 	private int clickcount=0;
 	private ImageView arrow;
@@ -34,41 +37,41 @@ public class PlateauTutoController extends MainSceneController {
 
 
 	/**
-	 * method to switch to the credits scene
-	 * @param event : the event that triggers the switch
+	 * Cette méthode permet d'accéder aux crédits
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
-	public void credits(MouseEvent event) throws IOException {
-		img_scene("../FXML/crédits.fxml",event);
+	public void credits(Event event) throws IOException {
+		switchToScene("../FXML/crédits.fxml",event);
 	}
 	
 	/**
-	 * method to go to the settings menu
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
+	 * Cette méthode permet d'accéder aux paramètres
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
-	public void menu_param_m(MouseEvent event) throws IOException{
-		img_scene("../FXML/paramètres.fxml",event);
+	public void parametres(Event event) throws IOException{
+		switchToScene("../FXML/paramètres.fxml",event);
 	}
 	
 	/**
-	 * method to switch to the tutorial scene
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
+	 * Cette méthode permet d'accéder au menu du tutoriel
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
-	public void switchtuto2(MouseEvent event) throws IOException{
-        img_scene("../FXML/tutoriel.fxml",event);
+	public void tutoriel(Event event) throws IOException{
+		switchToScene("../FXML/tutoriel.fxml",event);
 	}
 	
 	/**
-	 * method to switch to add a line to the tutorial
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
+	 * Cette méthode permet d'ajouter une ligne entre les deux cercles
+	 * @param event : Event
 	 */
 	@FXML
-	public void clic(MouseEvent event) throws IOException{
+	public void clic(MouseEvent event){
 		Line line;
 		Line lineR1;
 		Line lineR2;
@@ -111,12 +114,11 @@ public class PlateauTutoController extends MainSceneController {
 	}
 	
 	/**
-	 * method to switch to add a line to the tutorial
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception if the file is not found
+	 * Cette méthode permet d'ajouter une ligne entre les deux cercles
+	 * @param event : Event
 	 */
 	@FXML
-	public void clic2(MouseEvent event) throws IOException{
+	public void clic2(MouseEvent event){
 		Line line2;
 		Line line1;
 		Line lineR3;
@@ -167,7 +169,7 @@ public class PlateauTutoController extends MainSceneController {
 	}
 	
 	/**
-	 * method to explain the game to the player with a tutorial
+	 * Cette méthode permet d'initialiser le tutoriel
 	 */
 	@FXML 
 	public void initialize () {
@@ -177,7 +179,7 @@ public class PlateauTutoController extends MainSceneController {
 	        circle2.setDisable(true);
 	    }
 		if(circle1 != null) {
-			  Image image = new Image(getClass().getResourceAsStream("background/arrow.png"));
+			  Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("background/arrow.png")));
 		        arrow = new ImageView(image);
 		        arrow.setLayoutX(circle1.getLayoutX() - 110); // Coordonnée X de l'image
 		        arrow.setLayoutY(circle1.getLayoutY() + 31); // Coordonnée Y de l'image

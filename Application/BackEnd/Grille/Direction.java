@@ -1,7 +1,5 @@
 package Application.BackEnd.Grille;
 
-import javafx.geometry.Orientation;
-
 public enum Direction {
     HAUT,BAS,GAUCHE,DROITE;
 
