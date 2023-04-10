@@ -408,7 +408,9 @@ public class InterfacePlateau extends Main {
             if(c != null){
                 for(Line ligne : c.getListeLignesHypotheseSauvegarde()){
                     Line ligneInverse = c.retournerLigneInverse(ligne);
-                    if(dejaPresent(cercles, ligneInverse) != true){
+                    ligne.setStrokeWidth(3);
+                    ligne.setStroke(Color.RED);
+                    if((panneau.getChildren().contains(ligneInverse) != true) && (panneau.getChildren().contains(ligne) != true)){
                         panneau.getChildren().addAll(ligne);
                         ligne.toBack();
                     }
@@ -439,22 +441,6 @@ public class InterfacePlateau extends Main {
                 c.EtablirsauvegardeInitial();
             }
         }
-    }
-
-    /**
-     * Cette méthode permet de savoir si la ligne est déjà presente dans l'interface grille
-     * @param cercles : les cercles qui composent la grille de jeu
-     * @param ligneInverse : la ligne inversée que l'on souhaite savoir si elle est déjà prèsente.
-     */
-    public boolean dejaPresent(CircleHashi[] cercles, Line ligneInverse){
-        for(CircleHashi c : cercles){
-            if(c != null){
-                if(c.estPresent(ligneInverse)){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
