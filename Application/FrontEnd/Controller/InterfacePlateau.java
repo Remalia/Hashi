@@ -87,14 +87,13 @@ public class InterfacePlateau extends Main {
         }
     }
 
-
     /**
      * Cette méthode permet revenir à l'état précédent
      * @param event : Event
      */
     @FXML
     public void undoBouton(ActionEvent event){
-            this.plateau.undo();
+        this.plateau.undo();
     }
 
     /**
@@ -106,6 +105,19 @@ public class InterfacePlateau extends Main {
         this.plateau.redo();
     }
 
+    /**
+     * Cette méthode permet d'effacer toute les précédentes données de la partie précédente
+     * @param event : Event
+     */
+    @FXML
+    public void reinitialisationAZero(ActionEvent event){
+        System.out.println("Effacement des données !");
+        plateau.getGrille().reinitialiserSauvegarde(plateau.getGrille().fileSave);
+        reinitialiserTout(panneau, this.grille.getCerclesHashi());
+        plateau.getGrille().suppression();
+        System.out.println(plateau.getGrille());
+
+    }
 
     /**
      * Cette méthode permet de passer à la scène libre
@@ -137,6 +149,7 @@ public class InterfacePlateau extends Main {
                 apresHypothese(this.grille.getCerclesHashi());
                 this.plateau.getGrille().apresHypothese();
                 reinitialiserHypothse(this.panneau, this.grille.getCerclesHashi());
+                System.out.println(plateau.getGrille());
             }
             else{
                 changerCouleurLignes(panneau, Color.RED);
@@ -190,7 +203,6 @@ public class InterfacePlateau extends Main {
      */
     @FXML
     public void initialize() throws IOException {
-
         this.grille = new GrilleF();
         this.grille.setNB_CERCLES(10);
         this.grille.setRAYON(20);
@@ -201,7 +213,6 @@ public class InterfacePlateau extends Main {
         double panneauHeight = this.grille.getNB_CERCLES() * this.grille.getESPACE() + this.grille.getRAYON();
 
         this.grille.setCirclesHashi(new CircleHashi[this.grille.getNB_CERCLES() * this.grille.getNB_CERCLES()]);
-
 
         this.timer = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             tempsEcoule++;
@@ -224,7 +235,7 @@ public class InterfacePlateau extends Main {
             double newY = (newVal.doubleValue() - panneauHeight) / 2;
             panneau.setLayoutY(newY);
         });
-        plateau = new Plateau(new Grille("NiveauxFacile/Niveau6"));
+        plateau = new Plateau(new Grille("NiveauxMoyen/Niveau1"));
         plateau.getPlateauFromYAML(false);
         System.out.println(plateau.getGrille());
         for(Ile ile : plateau.getGrille().getListIle()){
@@ -238,8 +249,8 @@ public class InterfacePlateau extends Main {
             panneau.getChildren().add(cercle);
             panneau.getChildren().add(this.grille.getVal_cercles(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd()).getText());
         }
+        dessinerPontSauvegarde(plateau.getGrille(), this.grille.getCerclesHashi());
     }
-
 
     /**
      * Cette méthode permet de gérer les interactions avec les cercles
@@ -279,8 +290,6 @@ public class InterfacePlateau extends Main {
             this.grille.setIndicePremierCercle(this.grille.trouverIndiceCercle(this.grille.getPremierCercle()));
         }
     }
-
-
 
     /**
      * Cette méthode permet de dessiner une ligne entre deux cercles
@@ -450,4 +459,62 @@ public class InterfacePlateau extends Main {
         return false;
     }
 
+    /**
+     * Cette méthode permet de restaurer la dernière sauvegarde du jeu
+     * @param grille : la grille du jeu en question coté backend
+     * @param cercles : les cercles qui compose l'interface de la grille
+     */
+    public void dessinerPontSauvegarde(Grille grille , CircleHashi[] cercles){
+        for (String nomPont : grille.sauvegardeNomListPont) {
+            int cordonnee1erIleAbscisse = grille.retournerAbscisseIle(grille.fileSave, grille.retournerLienPont1(grille.fileSave, nomPont));
+            int cordonnee1erIleOrdonnee = grille.retournerOrdonneeIle(grille.fileSave, grille.retournerLienPont1(grille.fileSave, nomPont));
+            int cordonnee2ndIleAbscisse = grille.retournerAbscisseIle(grille.fileSave, grille.retournerLienPont2(grille.fileSave, nomPont));
+            int cordonnee2ndIleOrdonnee = grille.retournerOrdonneeIle(grille.fileSave, grille.retournerLienPont2(grille.fileSave, nomPont));
+            int typePont = grille.retournerTypeLienPont(grille.fileSave, nomPont);
+            Circle cercle1 = cercles[cordonnee1erIleAbscisse * this.grille.getNB_CERCLES() +  cordonnee1erIleOrdonnee];
+            Circle cercle2 = cercles[cordonnee2ndIleAbscisse * this.grille.getNB_CERCLES() + cordonnee2ndIleOrdonnee];
+            this.grille.setIndicePremierCercle(cordonnee1erIleAbscisse * this.grille.getNB_CERCLES() +  cordonnee1erIleOrdonnee);
+            this.grille.setIndiceSecondCercle(cordonnee2ndIleAbscisse * this.grille.getNB_CERCLES() + cordonnee2ndIleOrdonnee);
+
+            Line ligne1 = new Line(cercle1.getCenterX(), cercle1.getCenterY(), cercle2.getCenterX(), cercle2.getCenterY());
+            Line ligne2 = new Line(cercle1.getCenterX()+5, cercle1.getCenterY()+5, cercle2.getCenterX()+5, cercle2.getCenterY()+5);
+            Line ligne3 = new Line(cercle1.getCenterX()-5, cercle1.getCenterY()-5, cercle2.getCenterX()-5, cercle2.getCenterY()-5);
+            ligne1.setStrokeWidth(3);
+            ligne2.setStrokeWidth(3);
+            ligne3.setStrokeWidth(3);
+            ligne1.setStroke(Color.RED);
+            ligne2.setStroke(Color.RED);
+            ligne3.setStroke(Color.RED);
+
+            if(typePont == 2){
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne3);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne2);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne3);
+                panneau.getChildren().addAll(ligne2, ligne3);
+                ligne2.toBack();
+                ligne3.toBack();
+            }
+            else{
+                this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne1);
+                this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).ajouterLigneInverse(ligne1);
+                panneau.getChildren().addAll(ligne1);
+                ligne1.toBack();
+            }
+        }
+    }
+
+    /**
+     * Cette méthode permet d'effacer les contenux des lignes attribué à chaque cercle
+     * @param panneau : la grille
+     * @param cercles : les cercles qui composent la grille de jeu
+     */
+    public void reinitialiserTout(Pane panneau, CircleHashi[] cercles) {
+        panneau.getChildren().removeIf(node -> node instanceof Line);
+        for(CircleHashi c : cercles){
+            if(c != null) {
+                c.listeLignes.clear();
+            }
+        }
+    }
 }

@@ -36,7 +36,7 @@
          <children>
             <Group layoutX="10.0" layoutY="10.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
+                  <Button mnemonicParsing="false" onAction="#reinitialisationAZero" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/traverser.png" />

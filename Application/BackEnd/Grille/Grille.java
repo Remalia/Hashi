@@ -1,20 +1,23 @@
 package Application.BackEnd.Grille;
 
 import Application.BackEnd.Commandes.Action;
-import Application.BackEnd.Commandes.ActionAjouterPont;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Parser;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import javafx.geometry.Orientation;
 
-import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 import java.util.List;
 import java.util.regex.*;
+
+
 
 /**
  * Classe représentant la grille du jeu
@@ -25,12 +28,16 @@ public class Grille {
     private final ActionHistory historySvg = new ActionHistory();
     private final ActionHistory historyRecup = new ActionHistory();
     private Element[][] matriceGrille;
-    private final ArrayList<Ile> listIle;
+    private ArrayList<Ile> listIle;
     private File fileNiveau;
-    private File fileSave;
+    public File fileSave;
     private String name;
     private boolean modeHyp;
     private Difficulte difficulte;
+    public ArrayList<String> sauvegardeNomListPont;
+    public ArrayList<String> sauvegardeNomListPontHypothese;
+
+    public ArrayList<Integer> listeNbPontsHypothese;
 
     private Grille solution;
 
@@ -41,6 +48,9 @@ public class Grille {
      */
     public Grille(String name) throws IOException {
         this.listIle = new ArrayList<>();
+        this.listeNbPontsHypothese = new ArrayList<>();
+        this.sauvegardeNomListPont = new ArrayList<>();
+        this.sauvegardeNomListPontHypothese = new ArrayList<>();
         this.modeHyp = false;
         this.name = name;
         Files.createDirectories(Paths.get("Application/Niveau"));
@@ -57,6 +67,7 @@ public class Grille {
         }
         this.fileNiveau = new File("Application/Niveau/"+this.name+"/Niveau.yaml");
         this.fileSave = new File("Application/Niveau/"+this.name+"/Save.yaml");
+        sauvegardeListPont(fileSave, sauvegardeNomListPont);
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -65,11 +76,14 @@ public class Grille {
         this.solution = new Grille();
     }
 
+
+
     /**
      * Constructeur de la grille
      */
     public Grille(){
         this.listIle = new ArrayList<>();
+        this.listeNbPontsHypothese = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
         int i, j;
         for(i = 0; i < 10; i++){
@@ -80,14 +94,28 @@ public class Grille {
     }
 
     /**
+     * Cette méthode permet de restaurer tout le jeu à son point d'initiale
+     */
+    public void suppression(){
+        for(Ile ile : listIle){
+            for(Pont pont : ile.getListePont()){
+                pont.setNbPont(0);
+                actualiserPontDansGrille(pont);
+            }
+        }
+        reinitialiserSauvegarde(fileSave);
+    }
+
+    /**
      * Cette méthode permet de sauvegarder l'état initiale des ponts des iles avant que le joueur effectue son brouillon d'hypothèse
      */
     public void avantHypothese(){
         for(Ile ile : listIle){
-            if(ile != null){
-                ile.sauvegardeInitial();
+            for(Pont pont : ile.getListePont()){
+                listeNbPontsHypothese.add(pont.getNbPont());
             }
         }
+        sauvegardeHypothese(fileSave, sauvegardeNomListPontHypothese, "pont");
     }
 
     /**
@@ -95,10 +123,13 @@ public class Grille {
      */
     public void apresHypothese(){
         for(Ile ile : listIle){
-            if(ile != null){
-                ile.EtablirsauvegardeInitial();
+            for(Pont pont : ile.getListePont()){
+                pont.setNbPont(listeNbPontsHypothese.get(0));
+                listeNbPontsHypothese.remove(0);
             }
         }
+        reinitialiserSauvegarde(fileSave);
+        restaurationHypotheseInitiale(fileSave, sauvegardeNomListPontHypothese);
     }
 
     public Grille getGrilleSolution(){
@@ -196,7 +227,7 @@ public class Grille {
     /**
      * Donne le pont entre deux iles
      * @param ile1 l'île de départ du pont
-     * @param ile2 l'île d'arrivée du pont 
+     * @param ile2 l'île d'arrivée du pont
      * @return le pont entre les deux îles null si rien
      */
     public Pont chercherPont(Ile ile1, Ile ile2){
@@ -209,7 +240,7 @@ public class Grille {
 
 
 
-    /** 
+    /**
      * Ajoute un pont à la grille ( utilisé SEULEMENT lors de la CREATION de la grille avec le YAML )
      * @param ile1 l'île de départ du pont
      * @param ile2 l'île d'arrivée du pont
@@ -253,7 +284,7 @@ public class Grille {
         Ile ile2 = pont.getIle2();
         Element elem;
         if(pont.getNbPont() == 0)
-           elem = Vide.getInstance();
+            elem = Vide.getInstance();
         else
             elem = pont;
         switch (pont.getDirectionFrom(ile1)) {
@@ -336,7 +367,7 @@ public class Grille {
         }
     }
 
-    
+
     /**
      * Méthode d'affichage de la grille
      * @return la grille sous forme de String
@@ -485,13 +516,330 @@ public class Grille {
         }
         return result;
     }
-    
+
     /**
      * Vérifie si la grille est correcte
      */
     public boolean grilleCorrecte(){
         return this == this.solution;
     }
+
+    /**
+     * Methode qui permet à chaque début de jeu, de supprimer tout les sauvegardes de ponts de la précédente jeu.
+     * @param file le fichier sauvegarde à restaurer
+     */
+    public static void reinitialiserSauvegarde(File file) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Création d'un fichier temporaire pour stocker les données sans les lignes commençant par "pont"
+            File tempFile = new File("temp.txt");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (!line.trim().startsWith("pont")) { // Vérifie si la ligne ne commence pas par "pont"
+                    writer.write(line + System.getProperty("line.separator")); // Écriture de la ligne dans le fichier temporaire
+                }
+                line = reader.readLine();
+            }
+
+            // Fermeture des flux de lecture et d'écriture
+            reader.close();
+            writer.close();
+
+            // Remplacement du fichier original par le fichier temporaire
+            file.delete();
+            tempFile.renameTo(file);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Methode qui permet de retourner l'abscisse d'une île qui est stocké dans un fichier yaml.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param name le nom de l'île recherché
+     */
+    public static int retournerAbscisseIle(File file, String name) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith(name)) { // Vérifie si la ligne commence par le nom donné en paramètre
+                    // Récupération du premier numéro après le nom
+                    String[] words = line.split("\\s+");
+                    for (String word : words) {
+                        try {
+                            int number = Integer.parseInt(word);
+                            reader.close();
+                            return number;
+                        } catch (NumberFormatException e) {
+                            // La chaîne n'est pas un nombre, on passe au mot suivant
+                        }
+                    }
+                }
+                line = reader.readLine();
+            }
+
+            // Fermeture du flux de lecture
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Si aucun numéro n'a été trouvé, on retourne -1
+        return -1;
+    }
+
+    /**
+     * Methode qui permet de retourner l'ordonnée d'une île qui est stocké dans un fichier yaml.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param name le nom de l'île recherché
+     */
+    public static int retournerOrdonneeIle(File file, String name) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith(name)) { // Vérifie si la ligne commence par le nom donné en paramètre
+                    // Récupération du deuxième numéro après le nom
+                    String[] words = line.split("\\s+");
+                    int count = 0;
+                    for (String word : words) {
+                        try {
+                            int number = Integer.parseInt(word);
+                            count++;
+                            if (count == 2) { // Si c'est le deuxième nombre, on le retourne
+                                reader.close();
+                                return number;
+                            }
+                        } catch (NumberFormatException e) {
+                            // La chaîne n'est pas un nombre, on passe au mot suivant
+                        }
+                    }
+                }
+                line = reader.readLine();
+            }
+
+            // Fermeture du flux de lecture
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Si aucun deuxième numéro n'a été trouvé, on retourne -1
+        return -1;
+    }
+
+    /**
+     * Methode qui permet de retourner le 1er sommet du pont.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param nomPont le nom de du pont en question recherché
+     */
+    public static String retournerLienPont1(File file, String nomPont) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith(nomPont)) { // Vérifie si la ligne commence par le nom du pont donné en paramètre
+                    // Récupération des deux premières chaînes après le nom du pont
+                    String[] words = line.split("\\s+");
+                    if (words.length > 2) { // Vérifie si au moins deux chaînes sont présentes après le nom du pont
+                        reader.close();
+                        return words[2];
+                    }
+                }
+                line = reader.readLine();
+            }
+
+            // Fermeture du flux de lecture
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Si aucune seconde chaîne n'a été trouvée, on retourne une chaîne vide
+        return "";
+    }
+
+    /**
+     * Methode qui permet de retourner le 2nd sommet du pont.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param nomPont le nom de du pont en question recherché
+     */
+    public static String retournerLienPont2(File file, String nomPont) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith(nomPont)) {
+                    String[] words = line.trim().split("\\s+");
+                    if (words.length > 3) { // Vérifie qu'il y ait au moins 3 chaînes après le nom de pont
+                        reader.close();
+                        return words[3];
+                    }
+                }
+                line = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Si le nom de pont n'a pas été trouvé ou s'il n'y a pas de troisième chaîne après le nom, on retourne null
+    }
+
+    /**
+     * Methode qui permet de un numero qui represente le type de pont qui relie les 2 iles (1 = pont classique ; 2 = double pont).
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param nomPont le nom de du pont en question recherché
+     */
+    public static int retournerTypeLienPont(File file, String nomPont) {
+        int lastNumber = -1;
+
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith(nomPont)) { // Vérifie si la ligne commence par le nom du pont donné en paramètre
+                    // Récupération des nombres présents sur la ligne
+                    String[] words = line.split("\\s+");
+                    for (String word : words) {
+                        try {
+                            int number = Integer.parseInt(word);
+                            lastNumber = number;
+                        } catch (NumberFormatException e) {
+                            // Ignorer les chaînes qui ne sont pas des nombres
+                        }
+                    }
+                }
+                line = reader.readLine();
+            }
+
+            // Fermeture du flux de lecture
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Si aucun nombre n'a été trouvé, on retourne -1
+        return lastNumber;
+    }
+
+    /**
+     * Methode qui permet d'extraire tout les ponts sauvegarder dans le fichier yaml.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param list la liste des ponts à sauvegarder
+     */
+    public static void sauvegardeListPont(File file, ArrayList<String> list) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith("pont")) { // Vérifie si la ligne commence par "pont"
+                    // Récupération de la deuxième chaîne de caractères de la ligne
+                    String[] words = line.split("\\s+");
+                    if (words.length > 1) {
+                        String pontName = words[1];
+                        if (pontName.length() > 1) {
+                            pontName = pontName.substring(0, pontName.length() - 1); // Supprime le dernier caractère de la chaîne
+                            list.add(pontName);
+                        }
+                    }
+                }
+                line = reader.readLine();
+            }
+
+            // Fermeture du flux de lecture
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Methode qui permet d'extraire tout les ponts sauvegarder dans le fichier yaml et de les stocker dans une arraylist en fonction du début de la ligne.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param ligne la liste de ligne avant que le mode hypothèse est lancée
+     * @param nom Le debut de la ligne
+     */
+    public static void sauvegardeHypothese(File file, ArrayList<String> ligne, String nom) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith(nom)) { // Vérifie si la ligne commence par le nom recherché
+                    ligne.add(line); // Ajoute la ligne dans l'ArrayList
+                }
+                line = reader.readLine(); // Passe à la ligne suivante
+            }
+            reader.close(); // Fermeture du fichier
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Methode qui permet d'ajouter tout le contnu de l'ArrayList dans le fichier yaml.
+     * @param file le fichier yaml auquel on souhaite extraire l'information
+     * @param lignes la liste de ligne avant que le mode hypothèse est lancée
+     */
+    public static void restaurationHypotheseInitiale(File file, ArrayList<String> lignes) {
+        try {
+            // Ouverture du fichier en mode lecture
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String contenu = ""; // Variable qui contiendra le contenu du fichier
+
+            // Lecture et traitement du fichier ligne par ligne
+            String line = reader.readLine();
+            while (line != null) {
+                if (line.trim().startsWith("historySvg")) { // Vérifie si la ligne commence par "historySvg"
+                    // Ajoute tout le contenu de l'ArrayList avant la ligne correspondante
+                    for (String l : lignes) {
+                        contenu += l + "\n";
+                    }
+                }
+                contenu += line + "\n"; // Ajoute la ligne actuelle dans le contenu
+                line = reader.readLine(); // Passe à la ligne suivante
+            }
+            reader.close(); // Fermeture du fichier
+
+            // Écriture du contenu dans le fichier
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(contenu);
+            writer.close(); // Fermeture du fichier
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauxFacile/Niveau10");

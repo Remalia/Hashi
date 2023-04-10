@@ -19,7 +19,7 @@ import javafx.scene.text.*;
 public class  CircleHashi extends Circle{
 	private Text text;
 	private Ile ile;
-	private List<Line> listeLignes;
+	public List<Line> listeLignes;
 	private List<Line> listeLignesHypotheseSauvegarde;
 
 	/**
@@ -123,7 +123,7 @@ public class  CircleHashi extends Circle{
 
 	/**
 	 * Cette méthode sauvegarde la liste de lignes mit en hypothèse
-	 */ 
+	 */
 	public void sauvegardeInitial() {
 		listeLignesHypotheseSauvegarde.clear();
 		listeLignesHypotheseSauvegarde.addAll(listeLignes);
