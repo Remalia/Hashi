@@ -28,9 +28,9 @@ public class Grille {
     private final ActionHistory historySvg = new ActionHistory();
     private final ActionHistory historyRecup = new ActionHistory();
     private Element[][] matriceGrille;
-    private ArrayList<Ile> listIle;
+    private final ArrayList<Ile> listIle;
     private File fileNiveau;
-    public File fileSave;
+    private File fileSave;
     private String name;
     private boolean modeHyp;
     private Difficulte difficulte;

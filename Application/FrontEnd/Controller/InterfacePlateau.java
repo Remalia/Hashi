@@ -112,7 +112,7 @@ public class InterfacePlateau extends Main {
     @FXML
     public void reinitialisationAZero(ActionEvent event){
         System.out.println("Effacement des données !");
-        plateau.getGrille().reinitialiserSauvegarde(plateau.getGrille().fileSave);
+        Grille.reinitialiserSauvegarde(plateau.getGrille().getFileSave());
         reinitialiserTout(panneau, this.grille.getCerclesHashi());
         plateau.getGrille().suppression();
         System.out.println(plateau.getGrille());
@@ -236,7 +236,8 @@ public class InterfacePlateau extends Main {
             panneau.setLayoutY(newY);
         });
         plateau = new Plateau(new Grille("NiveauxMoyen/Niveau1"));
-        plateau.getPlateauFromYAML(false);
+        boolean isNew = true;
+        plateau.getPlateauFromYAML(isNew);
         System.out.println(plateau.getGrille());
         for(Ile ile : plateau.getGrille().getListIle()){
             double coordX = this.grille.getESPACE() * (ile.getAbs()+1);
@@ -249,7 +250,8 @@ public class InterfacePlateau extends Main {
             panneau.getChildren().add(cercle);
             panneau.getChildren().add(this.grille.getVal_cercles(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd()).getText());
         }
-        dessinerPontSauvegarde(plateau.getGrille(), this.grille.getCerclesHashi());
+        if(!isNew)
+            dessinerPontSauvegarde(plateau.getGrille(), this.grille.getCerclesHashi());
     }
 
     /**
@@ -466,11 +468,11 @@ public class InterfacePlateau extends Main {
      */
     public void dessinerPontSauvegarde(Grille grille , CircleHashi[] cercles){
         for (String nomPont : grille.sauvegardeNomListPont) {
-            int cordonnee1erIleAbscisse = grille.retournerAbscisseIle(grille.fileSave, grille.retournerLienPont1(grille.fileSave, nomPont));
-            int cordonnee1erIleOrdonnee = grille.retournerOrdonneeIle(grille.fileSave, grille.retournerLienPont1(grille.fileSave, nomPont));
-            int cordonnee2ndIleAbscisse = grille.retournerAbscisseIle(grille.fileSave, grille.retournerLienPont2(grille.fileSave, nomPont));
-            int cordonnee2ndIleOrdonnee = grille.retournerOrdonneeIle(grille.fileSave, grille.retournerLienPont2(grille.fileSave, nomPont));
-            int typePont = grille.retournerTypeLienPont(grille.fileSave, nomPont);
+            int cordonnee1erIleAbscisse = Grille.retournerAbscisseIle(grille.getFileSave(), Grille.retournerLienPont1(grille.getFileSave(), nomPont));
+            int cordonnee1erIleOrdonnee = Grille.retournerOrdonneeIle(grille.getFileSave(), Grille.retournerLienPont1(grille.getFileSave(), nomPont));
+            int cordonnee2ndIleAbscisse = Grille.retournerAbscisseIle(grille.getFileSave(), Grille.retournerLienPont2(grille.getFileSave(), nomPont));
+            int cordonnee2ndIleOrdonnee = Grille.retournerOrdonneeIle(grille.getFileSave(), Grille.retournerLienPont2(grille.getFileSave(), nomPont));
+            int typePont = Grille.retournerTypeLienPont(grille.getFileSave(), nomPont);
             Circle cercle1 = cercles[cordonnee1erIleAbscisse * this.grille.getNB_CERCLES() +  cordonnee1erIleOrdonnee];
             Circle cercle2 = cercles[cordonnee2ndIleAbscisse * this.grille.getNB_CERCLES() + cordonnee2ndIleOrdonnee];
             this.grille.setIndicePremierCercle(cordonnee1erIleAbscisse * this.grille.getNB_CERCLES() +  cordonnee1erIleOrdonnee);
