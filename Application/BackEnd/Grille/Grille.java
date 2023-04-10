@@ -126,6 +126,7 @@ public class Grille {
             for(Pont pont : ile.getListePont()){
                 pont.setNbPont(listeNbPontsHypothese.get(0));
                 listeNbPontsHypothese.remove(0);
+                actualiserPontDansGrille(pont);
             }
         }
         reinitialiserSauvegarde(fileSave);
