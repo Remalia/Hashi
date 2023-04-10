@@ -37,7 +37,7 @@
             <Group layoutX="10.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/traverser.png" />
                      </image>
@@ -47,7 +47,7 @@
             <Group layoutX="360.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#hypothese" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/pense.png" />
                      </image>
@@ -57,7 +57,7 @@
             <Group layoutX="150.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#stop_timer" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fx:id="switch_timer" fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <ImageView fx:id="switch_timer" fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/bouton-jouer.png" />
                      </image>
@@ -66,8 +66,8 @@
             </Group>
             <Group layoutX="220.0" layoutY="10.0">
                <children>
-                  <Button mnemonicParsing="false"  onAction="#undoBouton" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <Button mnemonicParsing="false" onAction="#undoBouton" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/undo.png" />
                      </image>
@@ -77,7 +77,7 @@
             <Group layoutX="290.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#redoBouton" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/redo.png" />
                      </image>
@@ -87,7 +87,7 @@
             <Group layoutX="80.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#checkBouton" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/correct.png" />
                      </image>
@@ -97,7 +97,7 @@
             <Group layoutX="430.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
-                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/idee.png" />
                      </image>

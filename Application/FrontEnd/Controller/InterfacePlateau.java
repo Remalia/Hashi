@@ -36,6 +36,9 @@ import javafx.scene.Node;
  */
 public class InterfacePlateau extends Main {
 
+    @FXML
+    private ImageView switch_timer;
+
     private GrilleF grille;
     private Timeline timer=null; // Ajouter une variable timer
     private int tempsEcoule = 0;
@@ -47,8 +50,6 @@ public class InterfacePlateau extends Main {
 
     @FXML
     private AnchorPane principal;
-
-    @FXML private ImageView switch_timer;
 
     private Image newImage;
 
@@ -189,6 +190,7 @@ public class InterfacePlateau extends Main {
      */
     @FXML
     public void initialize() throws IOException {
+
         this.grille = new GrilleF();
         this.grille.setNB_CERCLES(10);
         this.grille.setRAYON(20);
@@ -222,7 +224,7 @@ public class InterfacePlateau extends Main {
             double newY = (newVal.doubleValue() - panneauHeight) / 2;
             panneau.setLayoutY(newY);
         });
-        plateau = new Plateau(new Grille("NiveauxMoyen/Niveau1"));
+        plateau = new Plateau(new Grille("NiveauxFacile/Niveau6"));
         plateau.getPlateauFromYAML(false);
         System.out.println(plateau.getGrille());
         for(Ile ile : plateau.getGrille().getListIle()){
