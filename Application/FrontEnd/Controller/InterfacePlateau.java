@@ -62,6 +62,30 @@ public class InterfacePlateau extends Main {
 
     private boolean choixHypothese = true;
 
+    /**
+     * Cette méthode permet de vérifier si la grille est correcte en appuyant sur le bouton
+     * @param event
+     */
+    @FXML
+    public void checkBouton(ActionEvent event){
+        ButtonType ouiButton = new ButtonType("Oui");
+        ButtonType nonButton = new ButtonType("Non");
+
+        if (plateau.getGrille().grilleCorrecte()){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Hashi");
+            alert.setHeaderText("La grille est correcte !");
+            Optional<ButtonType> result = alert.showAndWait();
+
+        }else{
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Hashi");
+            alert.setHeaderText("Voulez-vous retourner à l’état précédant votre première erreur ?");
+            alert.getButtonTypes().setAll(ouiButton, nonButton);
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+    }
+
 
     /**
      * Cette méthode permet revenir à l'état précédent
