@@ -44,7 +44,6 @@ public class ActionAjouterPont extends Action{
         if(pont != null) {
             pont.incrementerPont();
             this.getGrille().actualiserPontDansGrille(pont);
-            this.ecrireAction(true);
             return true;
         }else{
             System.out.println("Erreur dans l'action d'ajout de pont : Pont non trouvé");
@@ -62,7 +61,6 @@ public class ActionAjouterPont extends Action{
         if(pont != null) {
             pont.decrementerPont();
             this.getGrille().actualiserPontDansGrille(pont);
-            this.ecrireAction(false);
             return true;
         }else{
             System.out.println("Erreur dans l'undo d'ajout de pont : Pont non trouvé");

@@ -31,6 +31,13 @@ public class Plateau{
         if(!this.grille.getHistorySvg().isEmpty()){
             Action a = this.grille.getHistorySvg().pop();
             a.undo();
+            this.grille.getHistoryRecup().push(a);
+            try {
+                this.grille.saveGrilleToYAML();
+            }catch (IOException e){
+                System.out.println(e);
+            }
+            System.out.println(this.grille);
         }
     }
 
@@ -41,6 +48,13 @@ public class Plateau{
         if(!this.grille.getHistoryRecup().isEmpty()){
             Action a = this.grille.getHistoryRecup().pop();
             a.execute();
+            this.grille.getHistorySvg().push(a);
+            try {
+                this.grille.saveGrilleToYAML();
+            }catch (IOException e){
+                System.out.println(e);
+            }
+            System.out.println(this.grille);
         }
     }
 
