@@ -71,20 +71,16 @@ public class InterfacePlateau extends Main {
     public void checkBouton(ActionEvent event){
         ButtonType ouiButton = new ButtonType("Oui");
         ButtonType nonButton = new ButtonType("Non");
-
-        if (plateau.getGrille().grilleCorrecte()){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Hashi");
+        int nbError = this.plateau.getGrille().getNbError() / 2;
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Hashi");
+        if (nbError == 0){
             alert.setHeaderText("La grille est correcte !");
-            Optional<ButtonType> result = alert.showAndWait();
-
         }else{
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Hashi");
             alert.setHeaderText("Voulez-vous retourner à l’état précédant votre première erreur ?");
             alert.getButtonTypes().setAll(ouiButton, nonButton);
-            Optional<ButtonType> result = alert.showAndWait();
         }
+        Optional<ButtonType> result = alert.showAndWait();
     }
 
     /**

@@ -840,6 +840,31 @@ public class Grille {
         }
     }
 
+    public int getNbError() {
+        int result = 0;
+        for (Ile ile: listIle) {
+            Ile ileSolution = getIleSolution(ile);
+            for (Pont p: ile.getListePont()) {
+                if(p.getNbPont() != 0)
+                    for (Pont pSoluce : ileSolution.getListePont()) {
+                        if(p.estSimilaire(pSoluce))
+                            result += (p.getNbPont() == pSoluce.getNbPont() ? 0 : 1);
+                    }
+            }
+        }
+        return result;
+    }
+
+    private Ile getIleSolution(Ile ile){
+        Ile solution = null;
+        for (Ile ileSoluce: this.solution.getListIle()) {
+            if (ile.equals(ileSoluce)){
+                solution = ileSoluce;
+            }
+        }
+        return solution;
+    }
+
 
     public static void main(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauxFacile/Niveau10");

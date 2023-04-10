@@ -74,6 +74,11 @@ public abstract class Pont extends Element implements InterfacePont{
         return this.ile1 != p.ile1 && this.ile1 != p.ile2 && this.ile2 != p.ile1 && this.ile2 != p.ile2;
     }
 
+    public boolean estSimilaire(Pont p){
+        boolean result = this.getIle1().equals(p.getIle1()) && this.getIle2().equals(p.getIle2());
+        return result;
+    }
+
     /**
      * Retourne le nombre de ponts
      * @return si 1 ce pont est simple et 2 si il est double
