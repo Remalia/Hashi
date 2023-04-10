@@ -77,11 +77,7 @@ public class Ile extends Element {
     * @return true si l'île est complète, sinon false
     */
     public boolean estComplete(){
-        int sum = 0;
-        for(Pont p : this.listePont){
-            sum += p.getNbPont();
-        }
-        return (this.num == sum);
+        return (this.num == sommeValPont());
     }
 
     /**
@@ -275,6 +271,20 @@ public class Ile extends Element {
         listePont.addAll(listePontSauvegarde);
     }
 
+    /**
+     * Cette méthode retourne la somme de la valeur de tous les ponts reliés à une île
+     */
+    public int sommeValPont()
+    {
+        int valPonts = 0;
+
+        for(Pont p: this.listePont)
+        {
+            valPonts += p.getNbPont();
+        }
+
+        return valPonts;
+    }
     public static void main(String[] args){
         try {
             Color c = Color.rgb(100, 0, 0);
