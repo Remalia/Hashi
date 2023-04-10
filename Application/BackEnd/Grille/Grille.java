@@ -840,6 +840,10 @@ public class Grille {
         }
     }
 
+    /**
+     * Récupère le nombre d'erreur dans la grille
+     * @return le nombre d'erreur
+     */
     public int getNbError() {
         int result = 0;
         for (Ile ile: listIle) {
@@ -855,6 +859,11 @@ public class Grille {
         return result;
     }
 
+    /**
+     * Récupère la solution d'une ile recherchée
+     * @param ile L'ile chercher
+     * @return la solution de l'ile chercher
+     */
     private Ile getIleSolution(Ile ile){
         Ile solution = null;
         for (Ile ileSoluce: this.solution.getListIle()) {
