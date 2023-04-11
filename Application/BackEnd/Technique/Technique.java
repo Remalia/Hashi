@@ -4,6 +4,7 @@ import Application.BackEnd.Grille.*;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Orientation;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
@@ -32,7 +33,7 @@ public class Technique{
     private static int [] listeDirections = {HAUT, GAUCHE, BAS, DROITE};
 
 
-    Technique() // Peut-être créer un autre constructeur qui permettrait d'ajouter une description et une île cour
+    public Technique() // Peut-être créer un autre constructeur qui permettrait d'ajouter une description et une île cour
     {
         this.setDescription("");
         this.setIleCour(null);
@@ -230,6 +231,96 @@ public class Technique{
         Méthode qui indique si une île peut accepter un pont simple ou s'il en existe déjà un
         Vrai si c'est le cas, faux sino,
     */
+    public boolean ajoutPontSimpleV2(Ile ileDest, Ile ileOrigine, Grille uneGrille)
+    {
+        // On cherche le pont
+        Pont p = uneGrille.chercherPont(ileDest, ileOrigine);
+
+        if(p != null)
+        {
+            // S'il y a déjà un pont tangible entre les 2 îles on retourne faux
+            if(uneGrille.collisionCreationPont(p))
+            {
+                return false;
+            }
+
+            int valeurPont = p.getNbPont();
+            switch(valeurPont)
+            {
+                case 0:
+                    return(!ileDest.estComplete() && !ileOrigine.estComplete());
+
+                case 1:
+                    // Il y a déjà un pont qui existe on considère qu'on peut artficiellement l'ajouter
+                    return true;
+
+                case 2:
+                    // on peut transformer un pont double en pont simple
+                    return true;
+            }
+        }
+
+        else{
+            if(!ileDest.estComplete() && !ileOrigine.estComplete())
+            {
+                // il faut regarder si le pont entre les 2 îles doit être horizontal ou vertical
+                // On regarde via les coordonnnées
+                if(uneGrille.getOrientationFrom2Iles(ileOrigine,ileDest) == Orientation.HORIZONTAL)
+                {
+                    return uneGrille.collisionCreationPont(new PontHorizontal(ileDest, ileOrigine));
+                }
+                else
+                {
+                    return uneGrille.collisionCreationPont(new PontVertical(ileDest, ileOrigine));
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean ajoutPontDoubleV2(Ile ileDest, Ile ileOrigine, Grille uneGrille)
+    {
+        Pont p = uneGrille.chercherPont(ileDest, ileOrigine);
+        if(p != null)
+        {
+            if(uneGrille.collisionCreationPont(p))
+            {
+                return false;
+            }
+
+            int valeurPont = p.getNbPont();
+            switch(valeurPont)
+            {
+                case 0:
+                    // On regarde si les 2 îles peuvent accepter un pont
+                    return( (ileDest.getNum() - ileDest.sommeValPont()) >= 2 && (ileOrigine.getNum() - ileOrigine.sommeValPont()) >= 2);
+
+                case 1:
+                    // On regarde si on peut transformer le pont simple en pont double ==> vérifier si les îles sont complètes
+                    return(!ileDest.estComplete() && !ileOrigine.estComplete());
+
+                case 2:
+                    // pont double déjà existant --> Vrai
+                    return true;
+            }
+        }
+        else
+        {
+            if((ileDest.getNum() - ileDest.sommeValPont()) >= 2 && (ileOrigine.getNum() - ileOrigine.sommeValPont()) >= 2)
+            {
+                if(uneGrille.getOrientationFrom2Iles(ileOrigine, ileDest) == Orientation.HORIZONTAL)
+                {
+                    return uneGrille.collisionCreationPont(new PontHorizontal(ileOrigine, ileDest));
+                }
+                else
+                {
+                    return uneGrille.collisionCreationPont(new PontVertical(ileOrigine, ileDest));
+                }
+            }
+        }
+
+        return false;
+    }
 
     static boolean ajoutPontSimple(Ile ileDest, Ile ileCour)
     {
@@ -249,7 +340,7 @@ public class Technique{
                 switch(valeurPont)
                 {
                     case 0:
-                        return(ileDest.getNum() > ileDest.getNbPonts() && ileCour.getNum() > ileCour.getNbPonts());
+                        return(ileDest.getNum() > ileDest.sommeValPont() && ileCour.getNum() > ileCour.sommeValPont());
                     
                     case 1:
                         // Il y a déjà un pont qui existe on considère qu'on peut artficiellement l'ajouter
@@ -321,23 +412,80 @@ public class Technique{
     /**
         Méthode qui vérifie si entre une île et son unique voisin on peut créer un pont 
     */
-    static boolean unVoisinRejoignable(Ile ileOrigine, Ile ileDestination, Grille uneGrille)
+    public boolean unVoisinRejoignable(Ile ileOrigine, Ile ileDestination, Grille uneGrille)
     {
-        /**
-            On vérifie juste que l'île d'arrivée est libre et qu'il n'y a pas de ponts entre les 2 îles
-        */
-
-        return( !ileDestination.estComplete() && Technique.verifCreationPont(ileOrigine, ileDestination, uneGrille) == true);
+        //En fonction de la valeur de l'île qui n'a qu'un seul voisin on regarde si on peut ajouter un pont
+        switch(ileOrigine.getNum())
+        {
+            case 1:
+                return ajoutPontSimpleV2(ileOrigine, ileDestination, uneGrille);
+            case 2:
+                return ajoutPontDoubleV2(ileOrigine, ileDestination, uneGrille);
+        }
+        return false;
     }
+
+
+    /**
+     * Méthode qui en fonction du nombre de voisins passé en paramètres cherche une technique applicable
+     *
+     * */
+    public Technique checkVoisins(ArrayList<Ile> listeIles, Grille uneGrille, int nbVoisins)
+    {
+        Technique t;
+
+        for(Ile i: listeIles)
+        {
+            //On vérifie que l'île n'est pas complète sinon on ne peut plus ajouter de ponts donc pas de technique applicable
+            if(i.getNbVoisins() == nbVoisins && !i.estComplete())
+            {
+                switch(nbVoisins)
+                {
+                    case 1:
+                        if( (t = unVoisinBis(i, i.getIlesVoisines(), uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    case 2:
+                        if( (t = deuxVoisinsBis(i, i.getIlesVoisines(), uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    case 3:
+                        if( (t = troisVoisinsBis(i, i.getIlesVoisines(), uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                    case 4:
+                        if( (t = quatreVoisinsBis(i, i.getIlesVoisines(), uneGrille)) != null)
+                        {
+                            return t;
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                System.out.println("\n----------\n");
+                System.out.println(i.toStringConsole());
+            }
+        }
+
+        return null;
+    }
+
 
     /**
         Méthode qui retourne une Application.BackEnd.Technique.Technique
-        Prend en paramètres une liste d'îles composée d'une seule île car il n'y a qu'un seul voisin 
+        Prend en paramètres une liste d'îles composée d'une seule île car il n'y a qu'un seul voisin
         Prend en paramètres l'île d'origine
         Effectue des vérifications sur cette liste d'îles
         Retourne une technique appliquable sur cette liste d'îles
     */
-    static Technique unVoisinBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
+    public Technique unVoisinBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
     {
         Technique t = new Technique();
 
@@ -349,14 +497,14 @@ public class Technique{
         /**
             On vérifie juste que l'île d'arrivée est libre et qu'il n'y a pas de ponts entre les 2 îles
         */
-        if(Technique.unVoisinRejoignable(ileOrigine, premVois, uneGrille))
+        if(unVoisinRejoignable(ileOrigine, premVois, uneGrille))
         {
             t.setDescription("Il y a une île qui n'a qu'un seul voisin, vous devriez les rejoindre !");
             t.setIleCour(ileOrigine);
             return(t);
         }
 
-        return(null); 
+        return(null);
     }
 
     /**
@@ -366,8 +514,12 @@ public class Technique{
         Effectue des vérifications sur cette liste d'îles pour voir quelle technique est appliquable
         Retourne une technique appliquable sur cette liste d'îles
     */
-    static Technique deuxVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
+    public Technique deuxVoisinsBis(Ile ileOrigine, ArrayList<Ile> voisins, Grille uneGrille)
     {
+        System.out.println("\n----------------\nMéthode deux voisins bis");
+        System.out.println(ileOrigine.toStringConsole());
+        //System.out.println("valeur ="+ileOrigine.getNum()+", abs ="+ileOrigine.getAbs()+", ord ="+ileOrigine.getOrd()+", nb de voisins="+ileOrigine.getNbVoisins()+"\n\n");
+
         Technique t = new Technique();
 
         /**
@@ -380,8 +532,12 @@ public class Technique{
         /**
             On vérifie en premier lieu que toutes les îles de la liste sont accessibles à partir de l'île d'origine
         */
+
+
+        // Je sais pas si je garde
         if(!ilesAccessibles(ileOrigine, voisins, uneGrille))
         {
+            System.out.println("Les îles ne sont pas accessibles\n\n");
             return(null);
         }
 
@@ -408,12 +564,19 @@ public class Technique{
         switch(ileOrigine.getNum())
         {
             case 1:
-                if( (premVois.getNum() == 1 && !premVois.estComplete() && Technique.ajoutPontSimple(scdVois, ileOrigine)) || (scdVois.getNum() == 1 && !scdVois.estComplete() && Technique.ajoutPontSimple(premVois, ileOrigine)) )
+                // Si une île qui accepte un pont a deux voisins, si une des deux îles voisines accepte un pont seulement, il faut regarder si on peut créer un pont simple avec l'autre île voisine
+                if( (premVois.getNum() == 1 && !premVois.estComplete() && ajoutPontSimpleV2(scdVois, ileOrigine, uneGrille) && scdVois.getNum() >= 2) || (scdVois.getNum() == 1 && !scdVois.estComplete() && ajoutPontSimpleV2(premVois, ileOrigine, uneGrille) && premVois.getNum() >= 2))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui ne peut créer qu'un pont au maximum. Cependant un de ses voisins ne peut accepter qu'un pont, il faut donc la relier à l'autre île par un pont simple.");
                     return t;
-                }
+                }/*
+                if( (premVois.getNum() == 1 && !premVois.estComplete() && ajoutPontSimpleV2(scdVois, ileOrigine, uneGrille)) || (scdVois.getNum() == 1 && !scdVois.estComplete() && ajoutPontSimpleV2(premVois, ileOrigine, uneGrille)) )
+                {
+                    t.setIleCour(ileOrigine);
+                    t.setDescription("Il y a une île qui a exactement deux voisins qui ne peut créer qu'un pont au maximum. Cependant un de ses voisins ne peut accepter qu'un pont, il faut donc la relier à l'autre île par un pont simple.");
+                    return t;
+                }*/
                 break;
             case 2:
                 if( (premVois.getNum() == 1 && premVois.getNbVoisins() == 1) || (scdVois.getNum() == 1 && scdVois.getNbVoisins() == 1) )
@@ -422,13 +585,14 @@ public class Technique{
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins (qui a pour unique voisin l'île en question) ne peut accepter qu'un pont au maximum, il faut donc relier l'île aux 2 autres îles par un pont simple");
                     return t;
                 }
-                else if( (premVois.getNum() == 2 && Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontSimple(scdVois, ileOrigine) ) || (scdVois.getNum() == 2 && Technique.ajoutPontSimple(scdVois, ileOrigine) && Technique.ajoutPontSimple(premVois, ileOrigine)))
+                // du sens ?
+                else if( (premVois.getNum() == 2 && ajoutPontSimpleV2(premVois, ileOrigine, uneGrille) && ajoutPontSimpleV2(scdVois, ileOrigine, uneGrille) ) || (scdVois.getNum() == 2 && ajoutPontSimpleV2(scdVois, ileOrigine, uneGrille) && ajoutPontSimpleV2(premVois, ileOrigine, uneGrille)))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins ne peut accepter que deux ponts au maximum, il faut donc relier l'île à l'autre île par un pont simple");
                     return t;
                 }
-                else if( (premVois.getNum() == 1 && Technique.ajoutPontSimple(scdVois,ileOrigine)) || (scdVois.getNum() == 1 && Technique.ajoutPontSimple(premVois, ileOrigine)) )
+                else if( (premVois.getNum() == 1 && ajoutPontSimpleV2(scdVois,ileOrigine, uneGrille)) || (scdVois.getNum() == 1 && ajoutPontSimpleV2(premVois, ileOrigine, uneGrille)) )
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer deux ponts au maximum. Cependant un de ses voisins ne peut accepter qu'un pont au maximum, il faut donc relier l'île à l'autre île par un pont simple");
@@ -436,15 +600,27 @@ public class Technique{
                 }
                 break;
             case 3:
-                if(Technique.ajoutPontSimple(premVois, ileOrigine) && Technique.ajoutPontSimple(scdVois, ileOrigine))
+                if(ajoutPontSimpleV2(premVois, ileOrigine, uneGrille) && ajoutPontSimpleV2(scdVois, ileOrigine, uneGrille))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer trois ponts au maximum. Il faut donc relier cette île à ses 2 voisines par des ponts simples.");
                     return t;
                 }
+                else
+                {
+                    System.out.println("Pas de technique à 2 voisins et 3 ponts");
+                    if(Technique.ajoutPontSimple(premVois, ileOrigine))
+                    {
+                        System.out.println("La première île est accessible");
+                    }
+                    if(Technique.ajoutPontSimple(scdVois, ileOrigine))
+                    {
+                        System.out.println("La seconde île est accessible");
+                    }
+                }
                 break;
             case 4:
-                if(Technique.ajoutPontDouble(premVois, ileOrigine) && Technique.ajoutPontDouble(scdVois, ileOrigine))
+                if(ajoutPontDoubleV2(premVois, ileOrigine, uneGrille) && ajoutPontDoubleV2(scdVois, ileOrigine, uneGrille))
                 {
                     t.setIleCour(ileOrigine);
                     t.setDescription("Il y a une île qui a exactement deux voisins qui peut créer quatre ponts au maximum. Il faut donc relier cette île à ses 2 voisines par des ponts double.");
@@ -1003,7 +1179,7 @@ public class Technique{
         Si aucune technique n'est applicable alors on retourne une technique qui indique que la grille actuelle ne permet pas d'appliquer de techniques simples
     */
     
-    static Technique trouverTechniqueGrille(Grille uneGrille)
+    public Technique trouverTechniqueGrille(Grille uneGrille)
     {
         ArrayList<Ile> voisins = new ArrayList<Ile>();
         Element[][] matrice = uneGrille.getMatriceGrille();
@@ -1044,7 +1220,7 @@ public class Technique{
                                 // on retourne la technique seulement si elle existe, on ne retourne pas une technique null
 
                                 System.out.println("L'île aux coordonnées ("+i+","+j+") a un voisin");
-                                t = Technique.unVoisinBis((Ile) elem, voisins, uneGrille);
+                                t = unVoisinBis((Ile) elem, voisins, uneGrille);
                                 
                                 if(t != null) return(t);
                                 
@@ -1074,7 +1250,7 @@ public class Technique{
                                 
                             case 2:
                                 System.out.println("L'île aux coordonnées ("+i+","+j+") a deux voisins");
-                                t = Technique.deuxVoisinsBis((Ile) elem, voisins, uneGrille);
+                                t = deuxVoisinsBis((Ile) elem, voisins, uneGrille);
 
                                 if(t != null) return t;
 
@@ -1125,7 +1301,7 @@ public class Technique{
     }
 
     // V2
-    static Technique trouverTechniqueGrilleV2(Grille uneGrille)
+    public Technique trouverTechniqueGrilleV2(Grille uneGrille)
     {
         ArrayList<Ile> iles    = uneGrille.getListIle();
         ArrayList<Ile> voisins = new ArrayList<Ile>();
@@ -1149,13 +1325,13 @@ public class Technique{
                 {
                     case 1:
                         // Si on trouve une technique
-                        if( (t = Technique.unVoisinBis(i, voisins, uneGrille)) != null)
+                        if( (t = unVoisinBis(i, voisins, uneGrille)) != null)
                         {
                             return t;
                         }
                         break;
                     case 2:
-                        if( (t = Technique.deuxVoisinsBis(i, voisins, uneGrille)) != null)
+                        if( (t = deuxVoisinsBis(i, voisins, uneGrille)) != null)
                         {
                             return t;
                         }
@@ -1181,6 +1357,32 @@ public class Technique{
         return null;
     }
 
+    // V3
+    public Technique trouverTechniqueGrilleV3(Grille uneGrille)
+    {
+        ArrayList<Ile> iles = uneGrille.getListIle();
+
+        Technique t;
+
+        // On randomize pour pas parcourir de haut gauche vers bas droite
+        Collections.shuffle(iles);
+
+        // Recherche d'une technique simple sur la grille
+        for(int nbVoisins=1; nbVoisins <= 4; nbVoisins++){
+            if( (t = checkVoisins(iles, uneGrille, nbVoisins)) != null)
+            {
+                return t;
+            }
+        }
+
+        // On teste de trouver un réseau en bloquant la direction à partir d'une île
+        if( (t = Technique.bloquagePont(uneGrille)) != null)
+        {
+            return t;
+        }
+
+        return null;
+    }
     /** 
         Méthode qui copie une matrice d'élément
     */
@@ -1484,8 +1686,8 @@ public class Technique{
         System.out.println("On affiche la grille");
 
         System.out.println(grilleTest);
-
-        if(Technique.trouverTechniqueGrille(grilleTest) == null)
+        Technique t = new Technique();
+        if(t.trouverTechniqueGrille(grilleTest) == null)
         {
             System.out.println("Il n'y a pas de technique appliquable");
         }
@@ -1517,7 +1719,7 @@ public class Technique{
         
         //Technique t = new Technique();
 
-        if(Technique.trouverTechniqueGrille(grilleTest) == null)
+        if(t.trouverTechniqueGrille(grilleTest) == null)
         {
             System.out.println("Il n'y a pas de technique appliquable après ajout des îles");
         }
