@@ -155,24 +155,6 @@ public class InterfacePlateau extends Main {
     }
 
     /**
-     * Cette méthode permet de changer l'état d'un cercle
-     * @param cercles : les cercles de la grille
-     * @param colorFill : la couleur de remplissage du cercle
-     * @param colorBord : la couleur du bord du cercle
-     * @param text : la couleur du texte
-     * @param disable : si le cercle est désactivé ou non
-     */
-    public void changement_pause(CircleHashi[] cercles, Color colorFill, Color colorBord, Color text, Boolean disable){
-        for(CircleHashi c : cercles)
-            if(c != null) {
-                c.setFill(colorFill);
-                c.getText().setFill(text);
-                c.setStroke(colorBord);
-                c.setDisable(disable);
-            }
-    }
-
-    /**
      * Cette méthode permet de mettre en pause le chronometre
      * @param event : l'évènement qui déclenche la pause
      */
@@ -180,14 +162,14 @@ public class InterfacePlateau extends Main {
     public void stop_timer(ActionEvent event){
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
+            panneau.setVisible(true);
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
-            changement_pause(this.grille.getCerclesHashi(), Color.YELLOW, Color.ORANGE, Color.BLACK, false);
             timer.play();
         }else{
+            panneau.setVisible(false);
             newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
             switch_timer.setImage(newImage);
-            changement_pause(this.grille.getCerclesHashi(), Color.GREY, Color.GREY, Color.WHITE, true);
             timer.pause();
         }
     }
