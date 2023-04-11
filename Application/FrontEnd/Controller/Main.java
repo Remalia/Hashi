@@ -29,7 +29,7 @@ public class Main extends Application {
 	Stage window;
 	Parent root;
 	Scene scene;
-	String css = Main.class.getResource("../assets/light_mode.css").toExternalForm(); // initialize the css variable
+	String css = Main.class.getResource("../assets/light_mode.css").toExternalForm(); // CSS par défaut lors de la première connexion
 	protected Preferences prefs = Preferences.userNodeForPackage(Main.class);
 
 	/**
