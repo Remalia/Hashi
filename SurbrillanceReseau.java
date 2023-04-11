@@ -3,14 +3,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import Application.BackEnd.Grille.*;
+import javafx.scene.paint.Color;
 
 public class SurbrillanceReseau extends Surbrillance implements Iterable<List<Element>>{
 	
 	/** 
      * Constructeur de SurbrillanceReseau
+	 * @param grille la grille sur laquelle on applique la surbrillance
+	 * @param base couleur de base sans la surbrillance activée
+	 * @param surbri couleur de la surbrillance
      */
-	public SurbrillanceReseau(Grille grille) {
-		super(grille);
+	public SurbrillanceReseau(Grille grille, Color base, Color surbri) {
+		super(grille, base, surbri);
 	}
 	
 	/** 
@@ -25,7 +29,7 @@ public class SurbrillanceReseau extends Surbrillance implements Iterable<List<El
 		while(itr.hasNext()) {
 			for(Element e: itr.next()) {
 				e.toString();
-				e.setCouleur(c);
+				e.setCouleur(cSurbri);
 			}
 		}
     }
@@ -40,7 +44,7 @@ public class SurbrillanceReseau extends Surbrillance implements Iterable<List<El
 			Iterator<List<Element>> itr = iterator();
 			while (itr.hasNext()) {
 				for (Element e : itr.next()) {
-					e.setCouleur(couleurNormale);
+					e.setCouleur(cBase);
 				}
 			}
 		}

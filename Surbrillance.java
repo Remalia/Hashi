@@ -7,17 +7,22 @@ import Application.BackEnd.Grille.*;
 
 public abstract class Surbrillance {
 
-    Color c = Color.rgb(255,200,200); /* Couleur de la surbrillance */
-    Color couleurNormale = Color.rgb(255,255,255); /* Couleur normale */
+    Color cSurbri ; /* Couleur de la surbrillance */
+    Color cBase = Color.rgb(255,255,255); /* Couleur normale */
     Grille grille; /* Grille du jeu */
     Ile ile; /* Ile source de la surbrillance */
 
     /** 
      * Constructeur de Surbrillance
+     * @param grille la grille sur laquelle on applique la surbrillance
+     * @param base couleur de base sans la surbrillance activée
+     * @param surbri couleur de la surbrillance
      */
-    public Surbrillance(Grille grille){
+    public Surbrillance(Grille grille, Color base, Color surbri ){
     	this.ile = null;
         this.grille = grille;
+        this.cBase = base;
+        this.cSurbri = surbri;
     }
 
     /** 

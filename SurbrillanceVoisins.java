@@ -3,13 +3,18 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import Application.BackEnd.Grille.*;
+import javafx.scene.paint.Color;
 
 public class SurbrillanceVoisins extends Surbrillance {
 	/** 
      * Constructeur de SurbrillanceVoisins
+	 * @param grille la grille sur laquelle on applique la surbrillance
+	 * @param base couleur de base sans la surbrillance activée
+	 * @param surbri couleur de la surbrillance
      */
-	public SurbrillanceVoisins(Grille grille) {
-		super(grille);
+	public SurbrillanceVoisins(Grille grille, Color base, Color surbri) {
+
+		super(grille, base, surbri);
 	}
 	
 	/** 
@@ -24,7 +29,7 @@ public class SurbrillanceVoisins extends Surbrillance {
 		/*for(Direction d: Direction.values()){
 			Ile i = ile.grille.getIleFromDirection(ile.getAbs(), ile.getOrd(), d);
 			if(i != null) {
-				i.setCouleur(c);
+				i.setCouleur(cSurbri);
 			}
 		}*/
     }
@@ -39,7 +44,7 @@ public class SurbrillanceVoisins extends Surbrillance {
 			/*for(Direction d: Arrays.asList(Direction.values()){
 				Ile i = grille.parcoursMatrice(ile.getAbs(), ile.getOrd(), d);
 				if(i != null) {
-					i.setCouleur(couleurNormale);
+					i.setCouleur(cBase);
 				}
 			}*/
 		}
