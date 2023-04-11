@@ -1,0 +1,43 @@
+type: fichierNiveau
+difficulte: 3
+grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
+  ile1: 2 | 9 | 4
+  ile2: 2 | 1 | 1
+  ile3: 2 | 3 | 4
+  ile4: 5 | 3 | 2
+  ile5: 5 | 1 | 1
+  ile6: 7 | 0 | 6
+  ile7: 9 | 0 | 4
+  ile8: 6 | 4 | 2
+  ile9: 3 | 4 | 4
+  ile10: 3 | 6 | 5
+  ile11: 3 | 8 | 2
+  ile12: 7 | 6 | 3
+  ile13: 9 | 5 | 3
+  ile14: 9 | 7 | 5
+  ile15: 9 | 9 | 4
+  ile16: 7 | 9 | 2
+  ile17: 5 | 7 | 4
+  ile18: 5 | 9 | 2
+  ile19: 0 | 0 | 3
+  ile20: 0 | 9 | 3
+  pont1: ile1 | ile1 | 2
+  pont2: ile3 | ile1 | 2
+  pont3: ile2 | ile3 | 1
+  pont4: ile4 | ile5 | 1
+  pont5: ile12 | ile6 | 2
+  pont6: ile6 | ile7 | 2
+  pont7: ile6 | ile1 | 2
+  pont8: ile7 | ile13 | 2
+  pont9: ile9 | ile8 | 2
+  pont10: ile9 | ile10 | 2
+  pont11: ile10 | ile11 | 2
+  pont12: ile12 | ile10 | 1
+  pont13: ile13 | ile14 | 1
+  pont14: ile17 | ile14 | 2
+  pont15: ile15 | ile14 | 2
+  pont16: ile16 | ile15 | 2
+  pont17: ile17 | ile18 | 2
+  pont18: ile19 | ile20 | 1
+historySvg: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )
+historyRecup: #( actionAjouterPont --> { ileUn } { ileDeux } nbPonts | oldNbPonts | modeHyp )

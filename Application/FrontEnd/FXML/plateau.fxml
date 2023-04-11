@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="principal" minHeight="750.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfacePlateau">
+   <children>
+      <Pane fx:id="panneau" layoutX="234.0" layoutY="147.0" prefHeight="483.0" prefWidth="557.0" />
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#jeulibre">
+         <image>
+            <Image url="@../assets/retour.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="800.0" layoutY="55.0" onMouseClicked="#parametres">
+         <image>
+            <Image url="@../assets/reglage.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="322.0" layoutY="45.0" prefHeight="38.0" prefWidth="270.0" text="Libre : Level 1">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Label>
+      <Label fx:id="chronometre" layoutX="422.0" layoutY="93.0" prefHeight="54.0" prefWidth="70.0" text="00:00">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="198.0" layoutY="648.0" prefHeight="77.0" prefWidth="503.0">
+         <children>
+            <Group layoutX="10.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#reinitialisationAZero" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/traverser.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="360.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#hypothese" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/pense.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="150.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#stop_timer" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fx:id="switch_timer" fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/bouton-jouer.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="220.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#undoBouton" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/undo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="290.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#redoBouton" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/redo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="80.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#checkBouton" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/correct.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="430.0" layoutY="10.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
+                  <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
+                     <image>
+                        <Image url="@../assets/idee.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

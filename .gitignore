@@ -1,7 +1,10 @@
 *.class
 *.js
 *.html
-*.css
 resources
 script-dir/
 element-list
+.vscode
+out/
+.idea
+*.iml

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+   <children>
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0">
+         <image>
+            <Image url="@../assets/Logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#menu_principal">
+         <image>
+            <Image url="@../assets/retour.png" />
+         </image>
+      </ImageView>
+      <VBox layoutX="181.0" layoutY="251.0" minHeight="339.0" minWidth="564.0">
+         <children>
+            <Label prefHeight="28.0" prefWidth="572.0" text="ILANGO Rémi (chef de groupe)" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="CHOUX Alex (documentaliste)" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="DUCHESNE Thibaut" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="AL AFTAN Mohamed" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="BERANGER Anna" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="BOULLIER Arthur" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="GUIMBERT Alexis" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="572.0" text="JARRIER Allan" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Label layoutX="329.0" layoutY="93.0" prefHeight="100.0" prefWidth="264.0" text="Crédits" textAlignment="CENTER">
+         <font>
+            <Font size="68.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
