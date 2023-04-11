@@ -1376,7 +1376,7 @@ public class Technique{
         }
 
         // On teste de trouver un réseau en bloquant la direction à partir d'une île
-        if( (t = Technique.bloquagePont(uneGrille)) != null)
+        if( (t = bloquagePontV2(uneGrille)) != null)
         {
             return t;
         }
@@ -1403,6 +1403,45 @@ public class Technique{
         return m;
     }
 
+
+    public Technique bloquagePontV2(Grille uneGrille)
+    {
+        ArrayList<Ile> iles = uneGrille.getListIle();
+        ArrayList<Ile> voisins;
+        // Liste des îles que la récursion a ajouté
+        //ArrayList<Ile> ilesParcourues = new ArrayList<>();
+
+        Technique t = new Technique();
+
+        for(Ile i: iles)
+        {
+            if(!i.estComplete())
+            {
+                voisins = i.getIlesVoisines();
+
+                if(voisins.size() > 1)
+                {
+                    // On ajoute l'île valable
+                    //ilesParcourues.add(i);
+
+                    if(parcoursBloquageRecursifV2(i, null, uneGrille, voisins/*, ilesParcourues*/))
+                    {
+                        t.setIleCour(i);
+                        t.setDescription("On peut créer un réseau entier en bloquant une direction à partir d'une île");
+                        return t;
+                    }
+
+                    // On l'enlève car lors des autres appels récursifs on n'aura pas encore parcouru cette île
+                    //ilesParcourues.remove(i);
+                }
+            }
+        }
+
+        // On n'a pas trouvé de technique
+        t.setIleCour(null);
+        t.setDescription("Il n'y a pas d'île à partir de laquelle on peut créer un réseau stable en bloquant une des directions");
+        return t;
+    }
 
     /** 
         Méthode qui retourne une tecnique appliquable sur la grille
@@ -1478,6 +1517,63 @@ public class Technique{
         return null;
     }
 
+
+    public boolean parcoursBloquageRecursifV2(Ile ileCour, Ile ileOrigine, Grille uneGrille, ArrayList<Ile> voisins/*, ArrayList<Ile> ilesParcourues*/)
+    {
+        Grille grilleBis; // grille qui va copier
+
+        if(uneGrille.grilleCorrecte())
+        {
+            return true;
+        }
+        // Si la liste des îles parcourues est égale à la liste des îles de la grille et qu'on n'a pas une configuration correcte cela signifie que la grille est fausse et qu'il faut s'arrêter
+        /*if(ilesParcourues == uneGrille.getListIle())
+        {
+            return false;
+        }
+
+        // On ajoute les îles que nous n'avons pas encore parcouru
+        // Si on trouve une île qu'on a déjà parcouru on retourne faux
+        for(Ile v: voisins)
+        {
+            if(!ilesParcourues.contains(v))
+            {
+                ilesParcourues.add(v);
+            }
+            else
+            {
+                return false;
+            }
+        }*/
+
+        for(Ile i: voisins)
+        {
+            //grilleBis = uneGrille;
+
+            for(int indiceConfig = 0; indiceConfig < (int) Math.pow(3, (voisins.size() - 1)); indiceConfig++)
+            {
+                // Si on n'a pas encore bloqué une direction ==> premier appel de la fonction: ileOrigine est null
+                // On doit appeler récursivement sur chacune des îles voisines
+
+                // Par contre si ileOrigine est non null ==> on a déjà appelé au moins une fois la méthode précedemment
+                // On ne doit pas appeler récursivement la méthode
+                if(ileOrigine != null || i != ileOrigine)
+                {
+                    grilleBis = simulationReseauV2(uneGrille, ileCour, voisins, i, indiceConfig);
+
+                    if(grilleBis != null)
+                    {
+                        if(parcoursBloquageRecursifV2(i, ileCour, grilleBis, i.getIlesVoisines()/*, ilesParcourues*/))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
     /**
         Méthode récursive qui parcourt une matrice d'élément afin de regarder s'il est possible de relier toutes les îles 
         La particularité de cette méthode est qu'au premier appel de celle-ci on décide de bloquer une direction
@@ -1525,6 +1621,104 @@ public class Technique{
 
 
         return false;
+    }
+
+    public Grille simulationReseauV2(Grille g, Ile ileCour, ArrayList<Ile> voisins, Ile ileBloquee, int indiceConfig)
+    {
+        Pont p;
+        Ile v;
+        int nbPontsCreables = 0;
+        int valIteration = 0;
+
+        int valeurPontUn    = indiceConfig % 3;
+
+        int x = indiceConfig%9;
+
+        int valeurPontDeux = (x < 3 ? 0 : (x < 6 ? 1 : 2));
+
+        valeurPontDeux = x/3;
+
+        int valeurPontTrois = indiceConfig / 9;
+
+        for(Ile i: voisins)
+        {
+            // Si c'est l'île bloquée il n'y a pas de traitement
+            if(ileBloquee != i)
+            {
+                // on regarde sur quelle ile on se trouve
+                switch(valIteration)
+                {
+                    case 0:
+                        // On fait une fonction qui effectue un traitement sur l'île passée en paramètres à partir du nombre de ponts passés en paramètres
+                        if((p = g.chercherPont(i, ileCour)) != null)
+                        {
+                            if(simulationPontV2(valeurPontUn, ileCour, i, g))
+                            {
+                                g.ajouterPont(ileCour, i, valeurPontUn);
+                                nbPontsCreables += valeurPontUn;
+                            }
+                        }
+                        else
+                        {
+                            // Si la valeur existante du pont est différente de la valeur théorique du pont dans la configuration on retourne null
+                            if(p.getNbPont() != valeurPontUn)
+                            {
+                                return null;
+                            }
+                            nbPontsCreables += p.getNbPont();
+                        }
+                        break;
+                    case 1:
+                        if((p = g.chercherPont(i, ileCour)) != null)
+                        {
+                            if(simulationPontV2(valeurPontDeux, ileCour, i, g))
+                            {
+                                g.ajouterPont(ileCour, i, valeurPontDeux);
+                                nbPontsCreables += valeurPontDeux;
+                            }
+                        }
+                        else
+                        {
+                            if(p.getNbPont() != valeurPontDeux)
+                            {
+                                return null;
+                            }
+                            nbPontsCreables += p.getNbPont();
+                        }
+                        break;
+                    case 2:
+                        if((p = g.chercherPont(i, ileCour)) != null)
+                        {
+                            if(simulationPontV2(valeurPontTrois, ileCour, i, g))
+                            {
+                                g.ajouterPont(ileCour, i, valeurPontTrois);
+                                nbPontsCreables += valeurPontTrois;
+                            }
+                        }
+                        else
+                        {
+                            if(p.getNbPont() != valeurPontTrois)
+                            {
+                                return null;
+                            }
+                            nbPontsCreables += p.getNbPont();
+                        }
+                        break;
+                }
+
+                // On a itéré sur une île non bloquée on incrémente le compteur
+                valIteration++;
+            }
+        }
+
+        // Si à la fin l'île courrante a autant de ponts qu'elle doit en avoir alors on retourne la grille modifiée afin de continuer à partir d'elle
+        // Sinon on arrête le parcours de cette possibilité
+        if(nbPontsCreables == ileCour.getNum())
+        {
+            return g;
+        }
+
+        return null;
     }
 
     /**
@@ -1647,6 +1841,21 @@ public class Technique{
     }
     
     static boolean simulationPont(int valeurPont, Ile ileCour, Ile ileDest, Grille g)
+    {
+        switch(valeurPont)
+        {
+            case 0:
+                return true;
+            case 1:
+                return(Technique.ajoutPontSimple(ileDest, ileCour));
+            case 2:
+                return(Technique.ajoutPontDouble(ileDest, ileCour));
+        }
+
+        return false;
+    }
+
+    public boolean simulationPontV2(int valeurPont, Ile ileCour, Ile ileDest, Grille g)
     {
         switch(valeurPont)
         {

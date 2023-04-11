@@ -429,5 +429,37 @@ public class TestTechnique {
         System.out.println("\n-----------\nIle :");
         System.out.println(t.getIleCour().toStringConsole());
         System.out.println("\n---------------\n");
+
+        System.out.println("\n---------------\n");
+        System.out.println("Version 5");
+        System.out.println("\n---------------\n");
+
+
+        Grille grille5 = new Grille();
+
+        grille5.ajouterIle(ile1);
+        grille5.ajouterIle(ile2);
+        grille5.ajouterIle(ile3);
+        grille5.ajouterIle(ile4);
+        grille5.ajouterIle(ile5);
+        grille5.ajouterIle(ile6);
+        grille5.ajouterIle(ile7);
+
+        System.out.println("\n-----------\n");
+        System.out.println("On affiche la grille");
+        System.out.println("\n-----------\n");
+        System.out.println("On cherche une technique");
+        System.out.println("\n-----------\n");
+
+        if((t = t.bloquagePontV2(grille5)) != null)
+        {
+            System.out.println("Il y a une technique applicable");
+        }
+        else{
+            System.out.println("Il n'y a pas de technique applicable");
+        }
+        System.out.println("\n-----------\n");
+        System.out.println(t.getDescription());
+        System.out.println(t.getIleCour());
     }
 }
