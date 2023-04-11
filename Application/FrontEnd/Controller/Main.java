@@ -2,6 +2,7 @@ package Application.FrontEnd.Controller;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
 import javafx.event.Event;
@@ -28,8 +29,7 @@ public class Main extends Application {
 	Stage window;
 	Parent root;
 	Scene scene;
-	static final String DEFAULT_CSS = "../assets/light_mode.css";
-	String css = DEFAULT_CSS; // initialize the css variable
+	String css = Main.class.getResource("../assets/light_mode.css").toExternalForm(); // initialize the css variable
 	protected Preferences prefs = Preferences.userNodeForPackage(Main.class);
 
 	/**
@@ -40,7 +40,7 @@ public class Main extends Application {
 	 * @throws IOException if the file is not found
 	 */
 	public void switchToScene(String file, Event event) throws IOException {
-		css = prefs.get("mon_css", DEFAULT_CSS);
+		css = prefs.get("mon_css", css);
 		window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(file)));
 		scene = new Scene(root);
@@ -87,7 +87,7 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage window) {
-		css = prefs.get("mon_css", DEFAULT_CSS);
+		css = prefs.get("mon_css", css);
 
 		try {
 			this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../FXML/menu_p.fxml")));
