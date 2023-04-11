@@ -15,16 +15,17 @@ public abstract class Surbrillance {
     /** 
      * Constructeur de Surbrillance
      */
-    public Surbrillance(Grille grille, Ile i){
-    	this.ile = i;
+    public Surbrillance(Grille grille){
+    	this.ile = null;
         this.grille = grille;
     }
 
     /** 
      * Active la surbrillance
+     * @param i l'île source de la surbrillance
      * @return void
      */ 
-    public abstract void activer();
+    public abstract void activer(Ile i);
     
     /** 
      * Desactive la surbrillance

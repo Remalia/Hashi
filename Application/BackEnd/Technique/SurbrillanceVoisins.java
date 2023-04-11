@@ -8,22 +8,25 @@ public class SurbrillanceVoisins extends Surbrillance {
 	/** 
      * Constructeur de SurbrillanceVoisins
      */
-	public SurbrillanceVoisins(Grille grille, Ile i) {
-		super(grille, i);
+	public SurbrillanceVoisins(Grille grille) {
+		super(grille);
 	}
 	
 	/** 
      * Active la surbrillance des voisins de l'île source
+	 * @param ile île source
      * @return void
      */ 
 	@Override
-    public void activer(){
-		/*for(Direction d: Arrays.asList(Direction.values()){
-			Ile i = grille.parcoursMatrice(ile.getAbs(), ile.getOrd(), d);
+    public void activer(Ile ile){
+		desactiver(); /* deux surbrillances des voisins ne doivent pas s'afficher en même temps */
+		this.ile = ile;
+		/*for(Direction d: Direction.values()){
+			Ile i = ile.grille.getIleFromDirection(ile.getAbs(), ile.getOrd(), d);
 			if(i != null) {
 				i.setCouleur(c);
 			}
-		} */
+		}*/
     }
 	
 	/** 
@@ -32,11 +35,13 @@ public class SurbrillanceVoisins extends Surbrillance {
      */ 
 	@Override
     public void desactiver(){
-		/*for(Direction d: Arrays.asList(Direction.values()){
-			Ile i = grille.parcoursMatrice(ile.getAbs(), ile.getOrd(), d);
-			if(i != null) {
-				i.setCouleur(couleurNormale);
-			}
-		}*/
+		if(ile != null){
+			/*for(Direction d: Arrays.asList(Direction.values()){
+				Ile i = grille.parcoursMatrice(ile.getAbs(), ile.getOrd(), d);
+				if(i != null) {
+					i.setCouleur(couleurNormale);
+				}
+			}*/
+		}
     }
 }
