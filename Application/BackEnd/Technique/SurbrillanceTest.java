@@ -38,8 +38,8 @@ public class SurbrillanceTest {
         grilleTest.ajouterPont(ile4, ile2, 1);
         System.out.println(grilleTest);
 
-        SurbrillanceReseau surbriR = new SurbrillanceReseau(grilleTest);
-        SurbrillanceVoisins surbriV = new SurbrillanceVoisins(grilleTest);
+        SurbrillanceReseau surbriR = new SurbrillanceReseau(grilleTest, Color.rgb(0,0,255), Color.rgb(0,255,255));
+        SurbrillanceVoisins surbriV = new SurbrillanceVoisins(grilleTest, Color.rgb(0,0,255), Color.rgb(0,255,255));
 
         /* ile1 ile source pour tester la surbrillance reseau */
         surbriR.activer(ile1);
