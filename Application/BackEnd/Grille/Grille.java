@@ -73,6 +73,7 @@ public class Grille {
             for(int j = 0; j < 10; j++){
                 matriceGrille[i][j] = Vide.getInstance();
             }
+        this.difficulte = Difficulte.getDifficulteFromInt(1);
         this.solution = new Grille();
     }
 
@@ -85,6 +86,7 @@ public class Grille {
         this.listIle = new ArrayList<>();
         this.listeNbPontsHypothese = new ArrayList<>();
         this.matriceGrille = new Element[10][10];
+
         int i, j;
         for(i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
