@@ -119,6 +119,10 @@ public class TutorielController extends InterfacePlateau {
         this.pause.setVisible(true);
     }
 
+    /**
+     * hypothese
+     * @param event : the event that triggers the switch
+     */
     @Override
     @FXML
     public void hypothese(ActionEvent event){
