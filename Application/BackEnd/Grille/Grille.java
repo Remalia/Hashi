@@ -36,10 +36,9 @@ public class Grille {
     private Difficulte difficulte;
     public ArrayList<String> sauvegardeNomListPont;
     public ArrayList<String> sauvegardeNomListPontHypothese;
-
     public ArrayList<Integer> listeNbPontsHypothese;
-
     private Grille solution;
+
     /**
      * Constructeur de la grille qui copie une grille passée en paramètres
      * @param g la grille à copier
