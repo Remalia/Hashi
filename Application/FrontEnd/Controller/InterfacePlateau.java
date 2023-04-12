@@ -13,6 +13,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -342,11 +343,15 @@ public class InterfacePlateau extends Main {
             }
         }
         if(plateau.getGrille().grilleCorrecte()){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Félicitation");
-            alert.setHeaderText("Vous avez réussi à compléter le puzzle");
-            alert.setContentText("Vous avez réussi à compléter le puzzle");
-            alert.showAndWait();
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Félicitation");
+            dialog.setHeaderText("Entrez votre pseudo:");
+            dialog.setContentText("Pseudo:");
+            String pseudo;
+            Optional<String> resultat = dialog.showAndWait();
+            pseudo = resultat.get();
+            System.out.println(pseudo);
+
         }
         System.out.println(this.plateau.getGrille().grilleCorrecte());
         System.out.println(this.plateau.getGrille());
