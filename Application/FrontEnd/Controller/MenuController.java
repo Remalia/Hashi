@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
  * @since 2023-04-02
  */
 public class MenuController extends Main {
-
 	/**
 	 * Method to show the tutorial for the game board
 	 *

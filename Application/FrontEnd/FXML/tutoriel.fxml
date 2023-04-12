@@ -27,7 +27,7 @@
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#plateau" text="Comment jouer ?">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#tutoriel_plateau" text="Comment jouer ?">
                <font>
                   <Font size="23.0" />
                </font>

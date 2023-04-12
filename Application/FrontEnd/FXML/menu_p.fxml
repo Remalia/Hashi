@@ -45,7 +45,7 @@
             </Button>
          </children>
       </GridPane>
-      <Label layoutX="375.0" layoutY="120.0" prefHeight="100.0" prefWidth="170.0" text="Hashi" textAlignment="CENTER">
+      <Label layoutX="375.0" layoutY="120.0" prefHeight="100.0" prefWidth="203.0" text="Hashi" textAlignment="CENTER" textOverrun="CLIP">
          <font>
             <Font size="68.0" />
          </font>
@@ -57,4 +57,3 @@
       </ImageView>
    </children>
 </AnchorPane>
-
