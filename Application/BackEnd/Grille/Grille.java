@@ -69,6 +69,7 @@ public class Grille {
         this.sauvegardeNomListPontHypothese = new ArrayList<>();
         this.modeHyp = false;
         this.name = name;
+        this.difficulte = Difficulte.getDifficulteFromInt(1);
         Files.createDirectories(Paths.get("Application/Niveau"));
         Files.createDirectories(Paths.get("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name));
         try{
@@ -88,7 +89,6 @@ public class Grille {
             for(int j = 0; j < 10; j++){
                 matriceGrille[i][j] = Vide.getInstance();
             }
-        this.difficulte = Difficulte.getDifficulteFromInt(1);
         this.solution = new Grille();
     }
 
@@ -938,8 +938,8 @@ public class Grille {
         System.out.println(grilleTest);
     }
 
-    public static void main(String[] args){
-        Grille grilleTest = new Grille();
+    public static void main(String[] args) throws IOException {
+        Grille grilleTest = new Grille("test");
         Ile ile1 = new Ile(1,1,4,1);
         Ile ile2 = new Ile(2,2,4,9);
         grilleTest.ajouterIle(ile1);
