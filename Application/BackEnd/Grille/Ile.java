@@ -38,6 +38,25 @@ public class Ile extends Element {
     }
 
     /**
+     * Constructeur de copy d'une ile
+     * @param ile L'ile à copier
+     */
+    public Ile(Ile ile){
+        this.id = ile.id;
+        this.num = ile.num;
+        this.abs = ile.abs;
+        this.ord = ile.ord;
+        this.nbPonts = ile.nbPonts;
+        this.estSelect = ile.estSelect;
+        this.listePont = new ArrayList<>();
+        for (Pont p: ile.listePont) {
+            Pont temp = null;
+            temp = p.getClass().getSimpleName().equals("PontHorizontal") ? new PontHorizontal(p) : new PontVertical(p);
+            this.ajouterPont(temp);
+        }
+    }
+
+    /**
      * Constructeur de la classe Application.BackEnd.Grille.Ile sans la couleur
      * @param id l'identifiant de l'île
      * @param num le numéro de l'île

@@ -77,4 +77,8 @@ public class Score {
     public String toString() {
         return "Score : " + name + ", " + pts + " pts en " + timer + " ";
     }
+
+    public String yamlInfo(){
+        return name + " | " + timer + " | " + pts;
+    }
 }

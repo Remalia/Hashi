@@ -11,6 +11,10 @@ public class PontHorizontal extends Pont{
         super(i1, i2,Orientation.HORIZONTAL);
     }
 
+    public PontHorizontal(Pont p){
+        super(p.getIle1(),p.getIle2(),Orientation.HORIZONTAL);
+    }
+
     @Override
     public int getNbPont() {
         return super.getNbPont();

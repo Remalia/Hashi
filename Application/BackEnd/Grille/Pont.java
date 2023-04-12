@@ -75,8 +75,7 @@ public abstract class Pont extends Element implements InterfacePont{
     }
 
     public boolean estSimilaire(Pont p){
-        boolean result = this.getIle1().equals(p.getIle1()) && this.getIle2().equals(p.getIle2());
-        return result;
+        return this.getIle1().equals(p.getIle1()) && this.getIle2().equals(p.getIle2());
     }
 
     /**

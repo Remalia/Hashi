@@ -110,7 +110,7 @@ public class Plateau{
     }
 
     public static void main(String[] args) throws IOException {
-        Grille grilleTest = new Grille("NiveauTest");
+        Grille grilleTest = new Grille("NiveauTest",Difficulte.Facile());
         Plateau plateau = new Plateau(grilleTest);
         plateau.getPlateauFromYAML(false);
         System.out.println(plateau);
