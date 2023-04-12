@@ -23,11 +23,9 @@ import java.util.regex.*;
  * Classe représentant la grille du jeu
  */
 public class Grille {
-
-    Color c = Color.rgb(0, 0, 255);
     private ActionHistory historySvg = new ActionHistory();
     private ActionHistory historyRecup = new ActionHistory();
-    private Element[][] matriceGrille;
+    private final Element[][] matriceGrille;
     private final ArrayList<Ile> listIle;
     private File fileNiveau;
     private File fileSave;
@@ -57,6 +55,7 @@ public class Grille {
         this.sauvegardeNomListPont = g.sauvegardeNomListPont;
         this.sauvegardeNomListPontHypothese = g.sauvegardeNomListPontHypothese;
         this.listeNbPontsHypothese = g.listeNbPontsHypothese;
+        this.solution = g.solution;
     }
     /**
      * Constructeur de la grille avec un nom de niveau
@@ -71,19 +70,19 @@ public class Grille {
         this.modeHyp = false;
         this.name = name;
         Files.createDirectories(Paths.get("Application/Niveau"));
-        Files.createDirectories(Paths.get("Application/Niveau/"+this.name));
+        Files.createDirectories(Paths.get("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name));
         try{
-            Files.createFile(Path.of("Application/Niveau/" + this.name + "/Niveau.yaml"));
+            Files.createFile(Path.of("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name + "/Niveau.yaml"));
         } catch (IOException e) {
             System.out.println("Fichier de niveau déja créé : " + e.getMessage());
         }
         try {
-            Files.createFile(Path.of("Application/Niveau/" + this.name + "/Save.yaml"));
+            Files.createFile(Path.of("Application/Niveau/Niveau"+ this.difficulte.getNomDifficute()+ "/"+this.name + "/Save.yaml"));
         } catch (IOException e) {
             System.out.println("Fichier de sauvegarde déja créé : " + e.getMessage());
         }
-        this.fileNiveau = new File("Application/Niveau/"+this.name+"/Niveau.yaml");
-        this.fileSave = new File("Application/Niveau/"+this.name+"/Save.yaml");
+        this.fileNiveau = new File("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Niveau.yaml");
+        this.fileSave = new File("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Save.yaml");
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
