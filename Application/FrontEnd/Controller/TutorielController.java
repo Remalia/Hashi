@@ -79,7 +79,7 @@ public class TutorielController extends InterfacePlateau {
         if (compteur == 1){
             active=true;
             placer_arrow(centerX - 60,centerY-60);
-            text1.setText("Répetez cette action encore une fois");
+            text1.setText("Répètes cette action encore une fois.");
             panneau.getChildren().add(arrow);
         }else if(compteur == 2) {
             Point2D point = undo.localToScene(0.0, 0.0);
