@@ -85,7 +85,6 @@ public class Grille {
         }
         this.fileNiveau = new File("Application/Niveau/"+this.name+"/Niveau.yaml");
         this.fileSave = new File("Application/Niveau/"+this.name+"/Save.yaml");
-        sauvegardeListPont(fileSave, sauvegardeNomListPont);
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -151,6 +150,11 @@ public class Grille {
         }
         reinitialiserSauvegarde(fileSave);
         restaurationHypotheseInitiale(fileSave, sauvegardeNomListPontHypothese);
+    }
+
+    public void undoRedoSauvegarde(){
+        sauvegardeNomListPont.clear();
+        sauvegardeListPont(fileSave, sauvegardeNomListPont);
     }
 
     /**
@@ -290,7 +294,6 @@ public class Grille {
         }
         pont.setNbPont(nbPonts);
         actualiserGrille();
-
     }
 
     public void actualiserGrille(){
@@ -498,6 +501,7 @@ public class Grille {
             int num = Integer.parseInt(val.substring(val.lastIndexOf("|")+2));
             Ile ile = new Ile(id,num,abs,ord);
             ajouterIle(ile);
+
         }
     }
 
@@ -884,6 +888,8 @@ public class Grille {
             e.printStackTrace();
         }
     }
+
+
 
     /**
      * Récupère le nombre d'erreur dans la grille

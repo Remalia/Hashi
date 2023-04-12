@@ -89,6 +89,7 @@ public class InterfacePlateau extends Main {
     @FXML
     public void undoBouton(ActionEvent event){
         this.plateau.undo();
+        this.traitementundoRedo();
     }
 
     /**
@@ -98,6 +99,14 @@ public class InterfacePlateau extends Main {
     @FXML
     public void redoBouton(ActionEvent event){
         this.plateau.redo();
+        this.traitementundoRedo();
+    }
+
+    public void traitementundoRedo(){
+        reinitialiserTout(panneau, this.grille.getCerclesHashi());
+        plateau.getGrille().sauvegardeNomListPont.clear();
+        plateau.getGrille().undoRedoSauvegarde();
+        dessinerPontSauvegarde(plateau.getGrille(), this.grille.getCerclesHashi());
     }
 
     /**
@@ -298,7 +307,6 @@ public class InterfacePlateau extends Main {
             ligne2.setStroke(Color.RED);
             ligne3.setStroke(Color.RED);
         }
-
         //System.out.println(ligne1);
         if(plateau.incrementerPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle())){
             if(!this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne2) && !this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ligneEstDansListe(ligne3)) {
@@ -431,6 +439,7 @@ public class InterfacePlateau extends Main {
      * @param cercles : les cercles qui compose l'interface de la grille
      */
     public void dessinerPontSauvegarde(Grille grille , CircleHashi[] cercles){
+        System.out.println(grille.sauvegardeNomListPont);
         for (String nomPont : grille.sauvegardeNomListPont) {
             int cordonnee1erIleAbscisse = Grille.retournerAbscisseIle(grille.getFileSave(), Grille.retournerLienPont1(grille.getFileSave(), nomPont));
             int cordonnee1erIleOrdonnee = Grille.retournerOrdonneeIle(grille.getFileSave(), Grille.retournerLienPont1(grille.getFileSave(), nomPont));
@@ -448,9 +457,16 @@ public class InterfacePlateau extends Main {
             ligne1.setStrokeWidth(3);
             ligne2.setStrokeWidth(3);
             ligne3.setStrokeWidth(3);
-            ligne1.setStroke(Color.RED);
-            ligne2.setStroke(Color.RED);
-            ligne3.setStroke(Color.RED);
+            if(modeHypothese == true){
+                ligne1.setStroke(Color.GREEN);
+                ligne2.setStroke(Color.GREEN);
+                ligne3.setStroke(Color.GREEN);
+            }
+            else{
+                ligne1.setStroke(Color.RED);
+                ligne2.setStroke(Color.RED);
+                ligne3.setStroke(Color.RED);
+            }
 
             if(typePont == 2){
                 this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).ajouterLigne(ligne2);
@@ -469,6 +485,8 @@ public class InterfacePlateau extends Main {
             }
         }
     }
+
+
 
     /**
      * Cette méthode permet d'effacer les contenux des lignes attribué à chaque cercle
