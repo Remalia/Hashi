@@ -53,7 +53,7 @@ public class Grille {
         this.difficulte = g.getDifficulte();
         this.solution = g.solution;
         this.listIle = new ArrayList<>();
-        for (Ile ile: getListIle()) {
+        for (Ile ile: g.getListIle()) {
             this.ajouterIle(new Ile(ile));
         }
     }
@@ -240,8 +240,8 @@ public class Grille {
      * @param ile L'ile a retirer
      */
     public void removeIle(Ile ile){
-        listIle.remove(ile);
-        matriceGrille[ile.getAbs()][ile.getOrd()] = Vide.getInstance();
+        this.listIle.remove(ile);
+        this.matriceGrille[ile.getAbs()][ile.getOrd()] = Vide.getInstance();
     }
 
     /**
@@ -947,6 +947,7 @@ public class Grille {
         System.out.println(grilleTest);
         Grille grilleCopy = new Grille(grilleTest);
         grilleCopy.removeIle(ile1);
+        System.out.println(grilleCopy);
         System.out.println(grilleTest);
     }
 }
