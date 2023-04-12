@@ -56,7 +56,7 @@ public class Difficulte {
     /**
      * @return une difficulté Facile
      */
-    private static Difficulte creerFacile(){
+    public static Difficulte Facile(){
         ArrayList<Long> array = new ArrayList<>();
         array.add(30000L);
         array.add(35000L);
@@ -67,7 +67,7 @@ public class Difficulte {
     /**
      * @return une difficulté Moyenne
      */
-    private static Difficulte creerMoyen(){
+    public static Difficulte Moyen(){
         ArrayList<Long> array = new ArrayList<>();
         array.add(15000L);
         array.add(20000L);
@@ -78,7 +78,7 @@ public class Difficulte {
     /**
      * @return une difficulté Difficile
      */
-    private static Difficulte creerDifficile(){
+    public static Difficulte Difficile(){
         ArrayList<Long> array = new ArrayList<>();
         array.add(10000L);
         array.add(12500L);
@@ -94,13 +94,13 @@ public class Difficulte {
     public static Difficulte getDifficulteFromInt(int i){
         switch (i) {
             case 1 -> {
-                return Difficulte.creerFacile();
+                return Difficulte.Facile();
             }
             case 2 -> {
-                return Difficulte.creerMoyen();
+                return Difficulte.Moyen();
             }
             case 3 -> {
-                return Difficulte.creerDifficile();
+                return Difficulte.Difficile();
             }
             default -> {
                 return null;

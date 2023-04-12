@@ -62,6 +62,36 @@ public class Grille {
      * @param name le nom du niveau
      * @throws IOException Fichier/dossier déja créer
      */
+    public Grille(String name,Difficulte diff) throws IOException {
+        this.listIle = new ArrayList<>();
+        this.listeNbPontsHypothese = new ArrayList<>();
+        this.sauvegardeNomListPont = new ArrayList<>();
+        this.sauvegardeNomListPontHypothese = new ArrayList<>();
+        this.modeHyp = false;
+        this.name = name;
+        this.difficulte = diff;
+        Files.createDirectories(Paths.get("Application/Niveau"));
+        Files.createDirectories(Paths.get("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name));
+        try{
+            Files.createFile(Path.of("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name + "/Niveau.yaml"));
+        } catch (IOException e) {
+            System.out.println("Fichier de niveau déja créé : " + e.getMessage());
+        }
+        try {
+            Files.createFile(Path.of("Application/Niveau/Niveaux"+ this.difficulte.getNomDifficute()+ "/"+this.name + "/Save.yaml"));
+        } catch (IOException e) {
+            System.out.println("Fichier de sauvegarde déja créé : " + e.getMessage());
+        }
+        this.fileNiveau = new File("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Niveau.yaml");
+        this.fileSave = new File("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Save.yaml");
+        this.matriceGrille = new Element[10][10];
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++){
+                matriceGrille[i][j] = Vide.getInstance();
+            }
+        this.solution = new Grille();
+    }
+
     public Grille(String name) throws IOException {
         this.listIle = new ArrayList<>();
         this.listeNbPontsHypothese = new ArrayList<>();
@@ -71,19 +101,19 @@ public class Grille {
         this.name = name;
         this.difficulte = Difficulte.getDifficulteFromInt(1);
         Files.createDirectories(Paths.get("Application/Niveau"));
-        Files.createDirectories(Paths.get("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name));
+        Files.createDirectories(Paths.get("Application/Niveau/"+this.name));
         try{
-            Files.createFile(Path.of("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name + "/Niveau.yaml"));
+            Files.createFile(Path.of("Application/Niveau/"+this.name + "/Niveau.yaml"));
         } catch (IOException e) {
             System.out.println("Fichier de niveau déja créé : " + e.getMessage());
         }
         try {
-            Files.createFile(Path.of("Application/Niveau/Niveau"+ this.difficulte.getNomDifficute()+ "/"+this.name + "/Save.yaml"));
+            Files.createFile(Path.of("Application/Niveau/"+this.name + "/Save.yaml"));
         } catch (IOException e) {
             System.out.println("Fichier de sauvegarde déja créé : " + e.getMessage());
         }
-        this.fileNiveau = new File("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Niveau.yaml");
-        this.fileSave = new File("Application/Niveau/Niveau"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Save.yaml");
+        this.fileNiveau = new File("Application/Niveau/"+this.name +"/Niveau.yaml");
+        this.fileSave = new File("Application/Niveau/"+this.name +"/Save.yaml");
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -924,8 +954,8 @@ public class Grille {
     }
 
 
-    public static void main3(String[] args) throws IOException {
-        Grille grilleTest = new Grille("NiveauxFacile/Niveau10");
+    public static void main(String[] args) throws IOException {
+        Grille grilleTest = new Grille("Niveau10",Difficulte.Facile());
         grilleTest.getGrilleFromYAML(false);
         System.out.println(grilleTest.getGrilleSolution().toString());
     }
@@ -938,8 +968,8 @@ public class Grille {
         System.out.println(grilleTest);
     }
 
-    public static void main(String[] args) throws IOException {
-        Grille grilleTest = new Grille("test");
+    public static void main3(String[] args) throws IOException {
+        Grille grilleTest = new Grille("test",Difficulte.Facile());
         Ile ile1 = new Ile(1,1,4,1);
         Ile ile2 = new Ile(2,2,4,9);
         grilleTest.ajouterIle(ile1);

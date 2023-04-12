@@ -1,5 +1,6 @@
 package Application.FrontEnd.Controller;
 
+import Application.BackEnd.Grille.Difficulte;
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import Application.BackEnd.Grille.Plateau;
@@ -222,7 +223,7 @@ public class InterfacePlateau extends Main {
             double newY = (newVal.doubleValue() - panneauHeight) / 2;
             panneau.setLayoutY(newY);
         });
-        plateau = new Plateau(new Grille("NiveauxMoyen/Niveau1"));
+        plateau = new Plateau(new Grille("Niveau1", Difficulte.Moyen()));
         boolean isNew = true;
         plateau.getPlateauFromYAML(isNew);
         System.out.println(plateau.getGrille());
