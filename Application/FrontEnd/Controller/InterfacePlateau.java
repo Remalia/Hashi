@@ -35,13 +35,12 @@ import javafx.scene.Node;
  * @since 2023-04-02
  */
 public class InterfacePlateau extends Main {
-
+    public Timeline timer=null; // Ajouter une variable timer
     @FXML
     private ImageView switch_timer;
 
-    private GrilleF grille;
-    private Timeline timer=null; // Ajouter une variable timer
-    private int tempsEcoule = 0;
+    protected GrilleF grille;
+    protected int tempsEcoule = 0;
     @FXML
     private Pane panneau;
 
@@ -51,17 +50,17 @@ public class InterfacePlateau extends Main {
     @FXML
     private AnchorPane principal;
 
-    private Image newImage;
+    protected Image newImage;
 
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
 
-    private boolean modeHypothese = false;
+    protected boolean modeHypothese = false;
 
-    private Plateau plateau;
+    protected Plateau plateau;
 
-    private boolean choixHypothese = true;
+    protected boolean choixHypothese = true;
 
     /**
      * Cette méthode permet de vérifier si la grille est correcte en appuyant sur le bouton
@@ -155,24 +154,6 @@ public class InterfacePlateau extends Main {
     }
 
     /**
-     * Cette méthode permet de changer l'état d'un cercle
-     * @param cercles : les cercles de la grille
-     * @param colorFill : la couleur de remplissage du cercle
-     * @param colorBord : la couleur du bord du cercle
-     * @param text : la couleur du texte
-     * @param disable : si le cercle est désactivé ou non
-     */
-    public void changement_pause(CircleHashi[] cercles, Color colorFill, Color colorBord, Color text, Boolean disable){
-        for(CircleHashi c : cercles)
-            if(c != null) {
-                c.setFill(colorFill);
-                c.getText().setFill(text);
-                c.setStroke(colorBord);
-                c.setDisable(disable);
-            }
-    }
-
-    /**
      * Cette méthode permet de mettre en pause le chronometre
      * @param event : l'évènement qui déclenche la pause
      */
@@ -180,14 +161,14 @@ public class InterfacePlateau extends Main {
     public void stop_timer(ActionEvent event){
         Image newImage;
         if (timer.getStatus() == Animation.Status.PAUSED || !(timer.getStatus() == Animation.Status.RUNNING)) {
+            panneau.setVisible(true);
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
-            changement_pause(this.grille.getCerclesHashi(), Color.YELLOW, Color.ORANGE, Color.BLACK, false);
             timer.play();
         }else{
+            panneau.setVisible(false);
             newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
             switch_timer.setImage(newImage);
-            changement_pause(this.grille.getCerclesHashi(), Color.GREY, Color.GREY, Color.WHITE, true);
             timer.pause();
         }
     }
@@ -245,6 +226,7 @@ public class InterfacePlateau extends Main {
             cercle.setOnMouseClicked(this::interactionCouleur);
             panneau.getChildren().add(cercle);
             panneau.getChildren().add(this.grille.getVal_cercles(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd()).getText());
+
         }
         if(!isNew)
             dessinerPontSauvegarde(plateau.getGrille(), this.grille.getCerclesHashi());
@@ -254,7 +236,7 @@ public class InterfacePlateau extends Main {
      * Cette méthode permet de gérer les interactions avec les cercles
      * @param event : l'évènement qui déclenche l'interaction
      */
-    private void interactionCouleur(MouseEvent event) {
+    protected void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
 
         if (!(timer.getStatus() == Animation.Status.RUNNING)) {
@@ -295,7 +277,7 @@ public class InterfacePlateau extends Main {
      * @param cercle2 : le deuxième cercle
      * @param panneau : la grille
      */
-    private void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
+    protected void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         if(this.plateau.getGrille().collisionCreationPont(plateau.getGrille().chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
             System.out.println("Erreur : pont impossible");
             return;

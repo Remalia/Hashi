@@ -65,7 +65,7 @@ public class ParamController extends MenuController{
     }
 
     @FXML
-    public void initialize() {
+    public void initialize(){
         this.aides.setSelected(prefs.getBoolean("aides", aides_box));
         this.aide_text.setSelected(prefs.getBoolean("aide_text", aide_text_box));
         this.aide_visu.setSelected(prefs.getBoolean("aide_visu", aide_visu_box));

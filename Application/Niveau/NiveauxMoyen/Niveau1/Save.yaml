@@ -19,32 +19,7 @@ grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
   ile1: 9 | 9 | 1
   ile13: 5 | 1 | 1
   ile14: 2 | 3 | 2
-  pont1: ile13 | ile6 | 2
-  pont2: ile8 | ile9 | 1
-  pont3: ile11 | ile9 | 2
-  pont4: ile12 | ile8 | 1
-  pont5: ile16 | ile17 | 1
-  pont6: ile10 | ile12 | 2
-  pont7: ile13 | ile12 | 1
-  pont8: ile16 | ile15 | 1
-  pont9: ile14 | ile15 | 1
+  pont1: ile14 | ile15 | 1
 historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
-  actionSvg0:  ile8 | ile12 | F
-  actionSvg1:  ile12 | ile10 | F
-  actionSvg2:  ile10 | ile12 | F
-  actionSvg3:  ile12 | ile13 | F
-  actionSvg4:  ile13 | ile6 | F
-  actionSvg5:  ile14 | ile15 | F
-  actionSvg6:  ile15 | ile16 | F
-  actionSvg7:  ile16 | ile17 | F
-  actionSvg8:  ile8 | ile9 | F
-  actionSvg9:  ile9 | ile11 | F
-  actionSvg10:  ile11 | ile9 | F
-  actionSvg11:  ile6 | ile4 | F
-  actionSvg12:  ile4 | ile3 | F
-  actionSvg13:  ile3 | ile2 | F
-  actionSvg14:  ile2 | ile8 | F
-  actionSvg15:  ile8 | ile2 | F
-  actionSvg16:  ile12 | ile13 | F
-  actionSvg17:  ile6 | ile13 | F
+  actionSvg0:  ile14 | ile15 | F
 historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
