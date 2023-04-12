@@ -25,8 +25,8 @@ import java.util.regex.*;
 public class Grille {
 
     Color c = Color.rgb(0, 0, 255);
-    private final ActionHistory historySvg = new ActionHistory();
-    private final ActionHistory historyRecup = new ActionHistory();
+    private ActionHistory historySvg = new ActionHistory();
+    private ActionHistory historyRecup = new ActionHistory();
     private Element[][] matriceGrille;
     private final ArrayList<Ile> listIle;
     private File fileNiveau;
@@ -40,7 +40,25 @@ public class Grille {
     public ArrayList<Integer> listeNbPontsHypothese;
 
     private Grille solution;
-
+    /**
+     * Constructeur de la grille qui copie une grille passée en paramètres
+     * @param g la grille à copier
+     * */
+    public Grille(Grille g)
+    {
+        this.historySvg = g.getHistorySvg();
+        this.historyRecup = g.getHistoryRecup();
+        this.matriceGrille = g.getMatriceGrille();
+        this.listIle = g.getListIle();
+        this.fileNiveau = g.getFileNiveau();
+        this.fileSave = g.getFileSave();
+        this.name = g.getName();
+        this.modeHyp = g.isModeHyp();
+        this.difficulte = g.getDifficulte();
+        this.sauvegardeNomListPont = g.sauvegardeNomListPont;
+        this.sauvegardeNomListPontHypothese = g.sauvegardeNomListPontHypothese;
+        this.listeNbPontsHypothese = g.listeNbPontsHypothese;
+    }
     /**
      * Constructeur de la grille avec un nom de niveau
      * @param name le nom du niveau
@@ -132,6 +150,18 @@ public class Grille {
         reinitialiserSauvegarde(fileSave);
         restaurationHypotheseInitiale(fileSave, sauvegardeNomListPontHypothese);
     }
+
+    /**
+     * Retourne le nom de la grille
+     * @return le nom de la grille
+     * */
+    public String getName() { return this.name; }
+
+    /**
+     * Retourne la difficulté de la grille
+     * @return la difficulté de la grille
+     * */
+    public Difficulte getDifficulte() { return this.difficulte; }
 
     public Grille getGrilleSolution(){
         return this.solution;
