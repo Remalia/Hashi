@@ -49,8 +49,11 @@ public class Ile extends Element {
         this.nbPonts = ile.nbPonts;
         this.estSelect = ile.estSelect;
         this.listePont = new ArrayList<>();
-
-
+        for (Pont p: ile.listePont) {
+            Pont temp = null;
+            temp = p.getClass().getSimpleName().equals("PontHorizontal") ? new PontHorizontal(p) : new PontVertical(p);
+            this.ajouterPont(temp);
+        }
     }
 
     /**

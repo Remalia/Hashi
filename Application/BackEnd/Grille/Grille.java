@@ -46,16 +46,16 @@ public class Grille {
         this.historySvg = g.getHistorySvg();
         this.historyRecup = g.getHistoryRecup();
         this.matriceGrille = g.getMatriceGrille();
-        this.listIle = g.getListIle();
         this.fileNiveau = g.getFileNiveau();
         this.fileSave = g.getFileSave();
         this.name = g.getName();
         this.modeHyp = g.isModeHyp();
         this.difficulte = g.getDifficulte();
-        this.sauvegardeNomListPont = g.sauvegardeNomListPont;
-        this.sauvegardeNomListPontHypothese = g.sauvegardeNomListPontHypothese;
-        this.listeNbPontsHypothese = g.listeNbPontsHypothese;
         this.solution = g.solution;
+        this.listIle = new ArrayList<>();
+        for (Ile ile: getListIle()) {
+            this.ajouterIle(new Ile(ile));
+        }
     }
     /**
      * Constructeur de la grille avec un nom de niveau
@@ -924,7 +924,7 @@ public class Grille {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main3(String[] args) throws IOException {
         Grille grilleTest = new Grille("NiveauxFacile/Niveau10");
         grilleTest.getGrilleFromYAML(false);
         System.out.println(grilleTest.getGrilleSolution().toString());
@@ -935,6 +935,18 @@ public class Grille {
         Ile ile2 = new Ile(2,2,4,9);
         grilleTest.ajouterIle(ile1);
         grilleTest.ajouterIle(ile2);
-        System.out.println(grilleTest.toString());
+        System.out.println(grilleTest);
+    }
+
+    public static void main(String[] args){
+        Grille grilleTest = new Grille();
+        Ile ile1 = new Ile(1,1,4,1);
+        Ile ile2 = new Ile(2,2,4,9);
+        grilleTest.ajouterIle(ile1);
+        grilleTest.ajouterIle(ile2);
+        System.out.println(grilleTest);
+        Grille grilleCopy = new Grille(grilleTest);
+        grilleCopy.removeIle(ile1);
+        System.out.println(grilleTest);
     }
 }

@@ -11,6 +11,10 @@ public class PontVertical extends Pont{
         super(i1, i2,Orientation.VERTICAL);
     }
 
+    public PontVertical(Pont p){
+        super(p.getIle1(),p.getIle2(),Orientation.VERTICAL);
+    }
+
     @Override
     public int getNbPont() {
         return super.getNbPont();
