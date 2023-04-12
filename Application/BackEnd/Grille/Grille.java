@@ -519,10 +519,22 @@ public class Grille {
     }
 
     /**
-     * Vérifie si la grille est correcte
+     * Vérifie si la grille est terminée ou non
+     * @return true si la grille est terminée.
      */
     public boolean grilleCorrecte(){
-        return this == this.solution;
+        boolean result = true;
+        for (Ile ileActuel: listIle) {
+            Ile ileSolution = this.getIleSolution(ileActuel);
+            for (Pont pActuel: ileActuel.getListePont()) {
+                for (Pont pSoluce: ileSolution.getListePont()) {
+                    if(pActuel.estSimilaire(pSoluce))
+                        if (pActuel.getNbPont() != pSoluce.getNbPont())
+                            return false;
+                }
+            }
+        }
+        return result;
     }
 
     /**
