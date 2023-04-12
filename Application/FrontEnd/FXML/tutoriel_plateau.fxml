@@ -7,9 +7,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="principal" minHeight="750.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.TutorielController">
+<AnchorPane fx:id="principal" minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="957.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.TutorielController">
    <children>
       <Pane fx:id="panneau" layoutX="256.0" layoutY="189.0" prefHeight="334.0" prefWidth="372.0" />
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="65.0" layoutY="65.0" onMouseClicked="#jeulibre">
@@ -29,7 +31,7 @@
       </Label>
       <AnchorPane layoutX="208.0" layoutY="658.0" prefHeight="77.0" prefWidth="503.0">
          <children>
-            <Group layoutX="10.0" layoutY="10.0">
+            <Group fx:id="croix" layoutX="10.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#reinitialisationAZero" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -39,7 +41,7 @@
                   </ImageView>
                </children>
             </Group>
-            <Group layoutX="360.0" layoutY="10.0">
+            <Group fx:id="hypo" layoutX="360.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#hypothese" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -49,7 +51,7 @@
                   </ImageView>
                </children>
             </Group>
-            <Group layoutX="150.0" layoutY="10.0">
+            <Group fx:id="pause" layoutX="150.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#stop_timer" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fx:id="switch_timer" fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -59,7 +61,7 @@
                   </ImageView>
                </children>
             </Group>
-            <Group layoutX="220.0" layoutY="10.0">
+            <Group fx:id="undo" layoutX="220.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#undoBouton" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -69,7 +71,7 @@
                   </ImageView>
                </children>
             </Group>
-            <Group layoutX="290.0" layoutY="10.0">
+            <Group fx:id="redo" layoutX="290.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#redoBouton" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -79,7 +81,7 @@
                   </ImageView>
                </children>
             </Group>
-            <Group layoutX="80.0" layoutY="10.0">
+            <Group fx:id="check" layoutX="80.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#checkBouton" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -89,7 +91,7 @@
                   </ImageView>
                </children>
             </Group>
-            <Group layoutX="430.0" layoutY="10.0">
+            <Group fx:id="aides" layoutX="430.0" layoutY="10.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
@@ -101,5 +103,7 @@
             </Group>
          </children>
       </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="454.0" layoutX="653.0" layoutY="157.0" stroke="BLACK" strokeType="INSIDE" width="283.0" />
+      <TextFlow fx:id="instructions" layoutX="663.0" layoutY="164.0" prefHeight="441.0" prefWidth="264.0" />
    </children>
 </AnchorPane>

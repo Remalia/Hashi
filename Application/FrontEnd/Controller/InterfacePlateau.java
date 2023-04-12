@@ -37,7 +37,7 @@ import javafx.scene.Node;
 public class InterfacePlateau extends Main {
     public Timeline timer=null; // Ajouter une variable timer
     @FXML
-    private ImageView switch_timer;
+    protected ImageView switch_timer;
 
     protected GrilleF grille;
     protected int tempsEcoule = 0;
@@ -179,7 +179,7 @@ public class InterfacePlateau extends Main {
      * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
      */
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, Exception {
         this.grille = new GrilleF();
         this.grille.setNB_CERCLES(10);
         this.grille.setRAYON(20);
