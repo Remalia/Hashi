@@ -140,4 +140,6 @@ public class GrilleF {
         this.cerclesHashi[i]=cercle;
     }
 
+    public CircleHashi getCircleHashi(int position){ return this.cerclesHashi[position]; }
+
 }
