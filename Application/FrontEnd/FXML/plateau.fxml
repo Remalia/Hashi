@@ -7,27 +7,28 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="principal" minHeight="750.0" minWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfacePlateau">
+<AnchorPane fx:id="principal" minHeight="750.0" minWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfacePlateau">
    <children>
-      <Pane fx:id="panneau" layoutX="234.0" layoutY="147.0" prefHeight="483.0" prefWidth="557.0" />
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#jeulibre">
+      <Pane fx:id="panneau" layoutX="444.0" layoutY="162.0" prefHeight="483.0" prefWidth="557.0" />
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="211.0" layoutY="56.0" onMouseClicked="#jeulibre">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <Label layoutX="322.0" layoutY="45.0" prefHeight="54.0" prefWidth="326.0" text="Libre : Level 1">
+      <Label layoutX="537.0" layoutY="48.0" prefHeight="54.0" prefWidth="326.0" text="Libre : Level 1">
          <font>
             <Font size="44.0" />
          </font>
       </Label>
-      <Label fx:id="chronometre" layoutX="422.0" layoutY="93.0" prefHeight="54.0" prefWidth="102.0" text="00:00">
+      <Label fx:id="chronometre" layoutX="658.0" layoutY="102.0" prefHeight="54.0" prefWidth="85.0" text="00:00">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="198.0" layoutY="648.0" prefHeight="77.0" prefWidth="503.0">
+      <AnchorPane layoutX="492.0" layoutY="645.0" prefHeight="77.0" prefWidth="503.0">
          <children>
             <Group layoutX="10.0" layoutY="10.0">
                <children>
@@ -91,7 +92,7 @@
             </Group>
             <Group layoutX="430.0" layoutY="10.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" />
+                  <Button mnemonicParsing="false" onAction="#donner_technique" prefHeight="60.0" prefWidth="60.0" />
                   <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="6.0" layoutY="6.0" mouseTransparent="true">
                      <image>
                         <Image url="@../assets/idee.png" />
@@ -101,5 +102,6 @@
             </Group>
          </children>
       </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="443.0" layoutX="1065.0" layoutY="172.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
    </children>
 </AnchorPane>

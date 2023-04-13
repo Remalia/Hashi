@@ -21,6 +21,5 @@ grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
   ile14: 2 | 3 | 2
   pont1: ile1 | ile2 | 1
 historySvg: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
-  actionSvg0:  ile1 | ile2 | F
+  actionSvg0:  ile2 | ile1 | F
 historyRecup: #( actionAjouterPont --> ileUn | ileDeux | modeHyp )
-  actionRecup1:  ile2 | ile3 | F

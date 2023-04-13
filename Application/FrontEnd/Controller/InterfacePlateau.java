@@ -13,9 +13,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,10 +22,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Optional;
-import javafx.scene.control.Alert;
+
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Node;
 
@@ -57,6 +59,10 @@ public class InterfacePlateau extends MenuController {
 
     private Technique technique;
 
+    @FXML
+    private Button aides;
+
+
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
@@ -67,10 +73,36 @@ public class InterfacePlateau extends MenuController {
 
     protected boolean choixHypothese = true;
 
-    /**
-     * Cette méthode permet de vérifier si la grille est correcte en appuyant sur le bouton
-     * @param event
-     */
+    public void donner_technique(ActionEvent event){
+        Rectangle bulle = new Rectangle(315, 445, Color.WHITE);
+        bulle.setLayoutX(50);
+        bulle.setLayoutY(170);
+
+        TextFlow trouver_technique = new TextFlow();
+        trouver_technique.setLayoutX(60);
+        trouver_technique.setLayoutY(180);
+        trouver_technique.setPrefHeight(425);
+        trouver_technique.setPrefWidth(295);
+
+        if((technique = technique.trouverTechniqueGrilleV3(this.plateau.getGrille())) == null)
+        {
+            System.out.println("Il n'y a pas de technique appliquable après ajout des îles");
+        }
+        else
+        {
+            System.out.println("Il y a bien une technique appliquable après ajout des îles");
+        }
+
+        Text descriptif = new Text(technique.getDescription());
+        descriptif.setFont(new Font(25));
+
+        trouver_technique.getChildren().add(descriptif);
+        principal.getChildren().addAll(bulle, trouver_technique);
+    }
+        /**
+         * Cette méthode permet de vérifier si la grille est correcte en appuyant sur le bouton
+         * @param event
+         */
     @FXML
     public void checkBouton(ActionEvent event){
         ButtonType ouiButton = new ButtonType("Oui");
@@ -193,7 +225,8 @@ public class InterfacePlateau extends MenuController {
      * @throws IOException Cette exception est levée si le fichier n'est pas trouvé
      */
     @FXML
-    public void initialize() throws IOException, Exception {
+    public void initialize() throws Exception {
+        technique = new Technique();
         this.grille = new GrilleF();
         this.grille.setNB_CERCLES(10);
         this.grille.setRAYON(20);
