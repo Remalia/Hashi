@@ -18,7 +18,7 @@
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <Label layoutX="268.0" layoutY="86.0" prefHeight="100.0" prefWidth="362.0" text="Classement" textAlignment="CENTER">
+      <Label layoutX="274.0" layoutY="87.0" prefHeight="100.0" prefWidth="352.0" text="Classement" textAlignment="CENTER">
          <font>
             <Font size="68.0" />
          </font>
