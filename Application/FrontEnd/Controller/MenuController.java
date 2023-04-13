@@ -6,19 +6,17 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 /**
- * This class is the controller of the main scene
- * It allows to switch between the different scenes of the application
- * It also allows to quit the application
+ * Cette classe représente le controller du menu
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
  * @since 2023-04-02
  */
 public class MenuController extends Main {
 	/**
-	 * Method to show the tutorial for the game board
+	 * Méthode permettant d'aller dans le menu du tutoriel
 	 *
-	 * @param event the event that triggers the switch
-	 * @throws IOException if the file is not found
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void tutoriel_plateau(Event event) throws IOException {
@@ -26,10 +24,9 @@ public class MenuController extends Main {
 	}
 
 	/**
-	 * Method to start the game
-	 *
-	 * @param event the event that triggers the switch
-	 * @throws IOException if the file is not found
+	 * Méthode permettant d'aller dans le menu du plateau
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void plateau(Event event) throws IOException {
@@ -37,10 +34,10 @@ public class MenuController extends Main {
 	}
 
 	/**
-	 * Method to go to the second menu
+	 * Méthode permettant d'aller dans le menu secondaire
 	 *
-	 * @param event the event that triggers the switch
-	 * @throws IOException if the file is not found
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void menu_secondaire(Event event) throws IOException {
@@ -48,31 +45,30 @@ public class MenuController extends Main {
 	}
 
 	/**
-	 * Method to go to the settings menu
+	 * Méthode permettant d'aller dans le menu des paramètres
 	 *
-	 * @param event the event that triggers the switch
-	 * @throws IOException if the file is not found
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void parametres(Event event) throws IOException {
 		switchToScene("../FXML/paramètres.fxml", event);
 	}
 
-	/**
-	 * Cette méthode permet d'accéder au menu du tutoriel
-	 * @param event : Event
-	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
-	 */
+		/**
+		 * Cette méthode permet d'accéder à la liste des techniques
+		 * @param event : Event
+		 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
+		 */
 	@FXML
 	public void techniqueInterface(Event event) throws IOException{
 		switchToScene("../FXML/technique.fxml",event);
 	}
 
 	/**
-	 * Method to switch to the tutorial scene
-	 *
-	 * @param event the event that triggers the switch
-	 * @throws IOException if the file is not found
+	 * Cette méthode permet d'accéder au menu tutoriel
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
 	public void tutoriel(Event event) throws IOException {
@@ -81,9 +77,9 @@ public class MenuController extends Main {
 
 
 	/**
-	 * Method to quit the application
+	 * Méthode permettant de quitter le jeu
 	 *
-	 * @param event the event that triggers the quit
+	 * @param event déclenche l'évènement
 	 */
 	@FXML
 	public void quitter(Event event) {

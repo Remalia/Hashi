@@ -34,7 +34,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Node;
 
 /**
- * This class is the grid of the game
+ * Cette classe représente l'interface du plateau
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
  * @since 2023-04-02
@@ -162,8 +162,8 @@ public class InterfacePlateau extends MenuController {
 
     /**
      * Cette méthode permet de passer à la scène libre
-     * @param event : l'évènement qui déclenche le passage à la scène aventure
-     * @throws IOException Exception thrown if the file is not found
+     * @param event : l'évènement qui déclenche le passage à la scène libre
+     * @throws IOException lève une exception si on ne trouve pas de fichier
      */
     @FXML
     public void jeulibre(Event event) throws IOException {
@@ -171,8 +171,8 @@ public class InterfacePlateau extends MenuController {
     }
 
     /**
-     * method to switch to the mode libre/aventure
-     * @param event : the event that triggers the switch
+     * méthode permettant d'activer ou de désactiver le mode hypothèse
+     * @param event : représente l'évènement qui active le mode hypothèse
      */
     @FXML
     public void hypothese(ActionEvent event){
@@ -322,7 +322,7 @@ public class InterfacePlateau extends MenuController {
      * Cette méthode permet de dessiner une ligne entre deux cercles
      * @param cercle1 : le premier cercle
      * @param cercle2 : le deuxième cercle
-     * @param panneau : la grille
+     * @param panneau : le panneau
      */
     protected void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         if(this.plateau.getGrille().collisionCreationPont(plateau.getGrille().chercherPont(this.grille.getVal_cercles(this.grille.getIndicePremierCercle()).getIle(), this.grille.getVal_cercles(this.grille.getIndiceSecondCercle()).getIle()))){
@@ -400,7 +400,7 @@ public class InterfacePlateau extends MenuController {
     }
 
     /**
-     * Cette méthode permet de d'afficher un pop-up qui donne le choix à l'utilisateur de soit revenir à l'état d'origine, soit confirmer son hypothèse.
+     * Cette méthode permet d'afficher un pop-up qui donne le choix à l'utilisateur de soit revenir à l'état d'origine, soit confirmer son hypothèse.
      */
     public boolean popupHypothese() {
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -422,7 +422,7 @@ public class InterfacePlateau extends MenuController {
 
     /**
      * Cette méthode permet de rétablir la couleur initiale des lignes du mode hypothèse.
-     * @param panneau : la grille
+     * @param panneau : le panneau
      * @param nouvelleCouleur : la nouvelle couleur à appliquer
      */
     public static void changerCouleurLignes(Pane panneau, Color nouvelleCouleur) {
@@ -436,7 +436,7 @@ public class InterfacePlateau extends MenuController {
 
     /**
      * Cette méthode permet de gèrer le mode hypothese dans le cas ou l'utilisateur souhaite effacer son brouillon
-     * @param panneau : la grille
+     * @param panneau : le panneau
      * @param cercles : les cercles qui composent la grille de jeu
      */
     public void reinitialiserHypothse(Pane panneau, CircleHashi[] cercles) {
@@ -536,8 +536,8 @@ public class InterfacePlateau extends MenuController {
 
 
     /**
-     * Cette méthode permet d'effacer les contenux des lignes attribué à chaque cercle
-     * @param panneau : la grille
+     * Cette méthode permet d'effacer les contenus des lignes attribué à chaque cercle
+     * @param panneau : le panneau
      * @param cercles : les cercles qui composent la grille de jeu
      */
     public void reinitialiserTout(Pane panneau, CircleHashi[] cercles) {

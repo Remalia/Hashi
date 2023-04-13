@@ -14,9 +14,7 @@ import javafx.scene.control.Tooltip;
 import javafx.stage.PopupWindow;
 
 /**
- * This class is the controller of the main scene
- * It allows to switch between the different scenes of the application
- * It also allows to quit the application
+ * Cette classe représente le controller du mode
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
  * @since 2023-04-02
@@ -26,6 +24,9 @@ public class ModeController extends Main{
 	@FXML private Button libre;
 	@FXML private Button aventure;
 
+	/**
+	 * Méthode permettant d'initialiser une popup
+	 */
 	@FXML
 	public void initialize(){
 		Tooltip tooltipL = new Tooltip();
@@ -42,19 +43,19 @@ public class ModeController extends Main{
 	}
 
 	/**
-	 * method to switch to the mode libre scene
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception thrown if the file is not found
+	 * Cette méthode permet d'accéder au niveaux du mode jeu libre
+	 * @param event : déclenche l'évènement
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
 	 */
 	@FXML
 	public void jeulibre(Event event) throws IOException{
 		switchToScene("../FXML/jeulibre.fxml",event);
 	}
-	
+
 	/**
-	 * method to switch to the mode aventure scene
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception thrown if the file is not found
+	 * Méthode permettant d'aller dans le menu du plateau
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void plateau(Event event) throws IOException{

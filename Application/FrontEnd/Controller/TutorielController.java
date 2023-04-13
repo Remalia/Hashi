@@ -26,6 +26,9 @@ import javafx.scene.text.TextFlow;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Cette classe représente le controller du tutoriel
+ */
 public class TutorielController extends InterfacePlateau {
 
     @FXML
@@ -64,11 +67,22 @@ public class TutorielController extends InterfacePlateau {
 
     private int compteur=0;
 
+    /**
+     * Méthode permettant de placer une flèche
+     * @param x
+     * @param y
+     */
     public void placer_arrow(double x, double y){
         arrow.setLayoutX(x);
         arrow.setLayoutY(y);
     }
 
+    /**
+     * Méthode permettant de dessiner une ligne
+     * @param cercle1 : le premier cercle
+     * @param cercle2 : le deuxième cercle
+     * @param panneau : le panneau
+     */
     @Override
     protected void dessinerLigne(Circle cercle1, Circle cercle2, Pane panneau) {
         compteur++;
@@ -120,7 +134,7 @@ public class TutorielController extends InterfacePlateau {
     }
 
     /**
-     * hypothese
+     * Cette méthode permet d'apprendre d'utiliser le mode hypothèse
      * @param event : the event that triggers the switch
      */
     @Override
@@ -133,6 +147,10 @@ public class TutorielController extends InterfacePlateau {
         this.hypo.setVisible(true);
     }
 
+    /**
+     * Méthode permettant d'arrêter le chrono
+     * @param event : l'évènement qui déclenche la pause
+     */
     @Override
     @FXML
     public void stop_timer(ActionEvent event) {
@@ -155,6 +173,10 @@ public class TutorielController extends InterfacePlateau {
         this.croix.setVisible(true);
     }
 
+    /**
+     * Méthode permettant de réinitialiser à 0
+     * @param event : Event
+     */
     @Override
     @FXML
     public void reinitialisationAZero(ActionEvent event){
@@ -179,6 +201,10 @@ public class TutorielController extends InterfacePlateau {
         this.hypo.setVisible(true);
     }
 
+    /**
+     * Méthode permettant de gérer des cercles d'une grille
+     * @param event : l'évènement qui déclenche l'interaction
+     */
     @FXML
     protected void interactionCouleur(MouseEvent event) {
         CircleHashi cercle = (CircleHashi) event.getSource();
@@ -188,7 +214,7 @@ public class TutorielController extends InterfacePlateau {
             this.grille.reinitialiserCercles();
         }
 
-        // Case where 2 circles are clicked
+
         else if (this.grille.isPremierCercleClique() && cercle != this.grille.getPremierCercle()) {
             this.grille.setDeuxiemeCercle(cercle);
             if (this.grille.memeLigneOuColonne(this.grille.getPremierCercle(), this.grille.getDeuxiemeCercle())) {
@@ -200,7 +226,6 @@ public class TutorielController extends InterfacePlateau {
             }
         }
 
-        // Case where 1 circle is clicked
         else {
             this.grille.setPremierCercle(cercle);
             this.grille.getPremierCercle().setFill(Color.GREEN);

@@ -17,9 +17,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
 /**
- * This class is the controller of the main scene
- * It allows to switch between the different scenes of the application
- * It also allows to quit the application
+ * Cette classe représente le controller du Main
  * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
  * @version 1.0
  * @since 2023-04-02
@@ -32,11 +30,11 @@ public class Main extends Application {
 	protected Preferences prefs = Preferences.userNodeForPackage(Main.class);
 
 	/**
-	 * Method to switch to a new scene
+	 * Méthode permettant de de changer de scène
 	 *
-	 * @param file  the file of the scene to switch to
-	 * @param event the event that triggers the switch
-	 * @throws IOException if the file is not found
+	 * @param file  le fichier de la scène à changer
+	 * @param event l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	public void switchToScene(String file, Event event) throws IOException {
 		css = prefs.get("mon_css", css);
@@ -49,11 +47,27 @@ public class Main extends Application {
 		window.show();
 	}
 
+
+	@FXML
+	public void niveauxDifficiles(Event event) throws IOException {
+		switchToScene("../FXML/jeuLibreNiveauDifficile.fxml", event);
+	}
+
+	@FXML
+	public void niveauxMoyens(Event event) throws IOException {
+		switchToScene("../FXML/jeuLibreNiveauMoyen.fxml", event);
+	}
+
+	@FXML
+	public void niveauxFaciles(Event event) throws IOException {
+		switchToScene("../FXML/jeuLibreNiveauFacile.fxml", event);
+	}
+
 	/**
-	 * Method to go to the settings menu
+	 * Méthode permettant d'aller dans le menu des paramètres
 	 *
-	 * @param event : the event that triggers the switch
-	 * @throws IOException Exception thrown if the file is not found
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void parametres(MouseEvent event) throws IOException {
@@ -61,9 +75,10 @@ public class Main extends Application {
 	}
 
 	/**
-	 * Method to switch to the credits scene
+	 * Méthode permettant d'aller dans le menu des crédits
 	 *
-	 * @param event : the event that triggers the switch
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void credits(Event event) throws IOException {
@@ -71,9 +86,10 @@ public class Main extends Application {
 	}
 
 	/**
-	 * Method to switch to the menu scene
+	 * Méthode permettant d'aller dans le menu principal
 	 *
-	 * @param event : the event that triggers the switch
+	 * @param event : l'évènement qui déclenche le changement
+	 * @throws IOException lève une exception si on ne trouve pas le fichier
 	 */
 	@FXML
 	public void menu_principal(Event event) throws IOException {
@@ -81,8 +97,8 @@ public class Main extends Application {
 	}
 
 	/**
-	 * Start the application Hashi
-	 * @param window : the window of the application
+	 * Commence l'application Hashi
+	 * @param window : la fenêtre de l'application
 	 */
 	@Override
 	public void start(Stage window) {
@@ -103,8 +119,8 @@ public class Main extends Application {
 	}
 
 	/**
-	 * Main method of the application
-	 * @param args : arguments of the main method
+	 * Méthode main
+	 * @param args : arguments du main
 	 */
 	public static void main(String[] args) {
 		launch(args);

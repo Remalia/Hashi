@@ -5,6 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import java.util.prefs.BackingStoreException;
 
+/**
+ * Cette classe représente le controller des paramètres
+ * @author Remi Ilango Allan Jarrier Alex Choux Anna Beranger Arthur Boullier Alexis Guimbert Mohamed Al Aftan Thibaut Duchesne
+ * @version 1.0
+ * @since 2023-04-02
+ */
+
 // ...
 
 public class ParamController extends MenuController{
@@ -18,6 +25,11 @@ public class ParamController extends MenuController{
     @FXML private CheckBox aide_text;
     @FXML private CheckBox aide_visu;
 
+    /**
+     * Méthode setter de mode_ss
+     * @param event
+     * @throws BackingStoreException
+     */
     @FXML
     public void set_mode_css(ActionEvent event) throws BackingStoreException {
         this.scene = this.mode_css.getScene();
@@ -42,6 +54,10 @@ public class ParamController extends MenuController{
 
     }
 
+    /**
+     * Méthode setter de Aides
+     * @param event
+     */
     @FXML
     public void setAides(ActionEvent event) {
         this.aides_box = aides.isSelected();
@@ -52,18 +68,29 @@ public class ParamController extends MenuController{
         prefs.putBoolean("aides", aides_box);
     }
 
+    /**
+     * Méthode setter de Aide_text
+     * @param event
+     */
     @FXML
     public void setAide_text(ActionEvent event) {
         this.aide_text_box = aide_text.isSelected();
         prefs.putBoolean("aide_text", aide_text_box);
     }
 
+    /**
+     * Méthode setter de Aide_visu
+     * @param event
+     */
     @FXML
     public void setAide_visu(ActionEvent event) {
         this.aide_visu_box = aide_visu.isSelected();
         prefs.putBoolean("aide_visu", aide_visu_box);
     }
 
+    /**
+     * Méthode permettant d'initialiser le mode sombre et le mode clair
+     */
     @FXML
     public void initialize(){
         this.aides.setSelected(prefs.getBoolean("aides", aides_box));
