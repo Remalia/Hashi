@@ -5,6 +5,7 @@ import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import Application.BackEnd.Grille.Plateau;
 import Application.BackEnd.Sauvegarde.Score;
+import Application.BackEnd.Technique.SurbrillanceVoisins;
 import Application.BackEnd.Technique.Technique;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import Application.FrontEnd.Controller.Plateau.GrilleF;
@@ -68,6 +69,8 @@ public class InterfacePlateau extends MenuController {
     protected Plateau plateau;
 
     protected boolean choixHypothese = true;
+
+    protected SurbrillanceVoisins surbrillanceVoisins;
 
     public void donner_technique(ActionEvent event){
         Rectangle bulle = new Rectangle(315, 445, Color.TRANSPARENT);
@@ -274,12 +277,42 @@ public class InterfacePlateau extends MenuController {
             cercle.setStroke(Color.ORANGE);
             this.grille.setCircleHashi(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd(),cercle);
             cercle.setOnMouseClicked(this::interactionCouleur);
+            cercle.setOnMouseEntered(this::interactionSurbrillance);
+            cercle.setOnMouseExited(this::interactionSurbrillanceReset);
             panneau.getChildren().add(cercle);
             panneau.getChildren().add(this.grille.getVal_cercles(ile.getAbs() * this.grille.getNB_CERCLES() + ile.getOrd()).getText());
 
         }
+        this.surbrillanceVoisins = new SurbrillanceVoisins(plateau.getGrille(), Color.ORANGE, Color.WHITE);
         if(!isNew)
             dessinerPontSauvegarde(plateau.getGrille(), this.grille.getCerclesHashi());
+    }
+
+    /**
+     * Cette méthode permet d'afficher la surbrillance des îles lorsque la souris s'enlève de l'île
+     * @param event : l'évènement qui déclenche l'interaction
+     */
+    protected void interactionSurbrillance(MouseEvent event) {
+        CircleHashi cercle = (CircleHashi) event.getSource();
+        cercle.setFill(Color.WHITE);
+        surbrillanceVoisins.activer(cercle.getIle());
+        while (!surbrillanceVoisins.abscisseIle.isEmpty() && !surbrillanceVoisins.ordonneeIle.isEmpty()) {
+            int abscisseIleX = surbrillanceVoisins.abscisseIle.remove(0);
+            int ordonneeIleX = surbrillanceVoisins.ordonneeIle.remove(0);
+            this.grille.getCircleHashi(abscisseIleX * grille.getNB_CERCLES() + ordonneeIleX).setFill(Color.WHITE);
+        }
+    }
+
+    /**
+     * Cette méthode permet d'effacer la surbrillance des îles lorsque la souris s'enlève de l'île
+     * @param event : l'évènement qui déclenche l'interaction
+     */
+    protected void interactionSurbrillanceReset(MouseEvent event) {
+        for(CircleHashi c : grille.getCerclesHashi()){
+            if(c != null){
+                c.setFill(Color.YELLOW);
+            }
+        }
     }
 
     /**
