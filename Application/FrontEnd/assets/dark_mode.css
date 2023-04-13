@@ -12,3 +12,8 @@ Label {
 Rectangle {
    -fx-background-radius: 20;
 }
+
+.tooltip {
+    -fx-background-image:url("./background.jpg");
+    -fx-text-fill: white;
+}
