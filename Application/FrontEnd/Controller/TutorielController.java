@@ -239,7 +239,7 @@ public class TutorielController extends InterfacePlateau {
             this.panneau.setPrefWidth(panneauWidth);
             this.panneau.setPrefHeight(panneauHeight);
 
-            // Centrage du panneau dans la fenêtre
+            // Centrage du panneau dans la fenêtr
             this.principal.widthProperty().addListener((obs, oldVal, newVal) -> {
                 double newX = (newVal.doubleValue() - panneauWidth) / 2;
                 this.panneau.setLayoutX(newX);
