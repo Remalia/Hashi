@@ -18,13 +18,12 @@ import javafx.fxml.FXML;
  */
 public class MenuController extends Main {
 	private static int niveau;
-
 	private static String difficulte;
 
 	public void lancer_classement(Event event) throws IOException {
 		Button button = (Button) event.getSource();
 		String id = button.getId();
-		niveau = id.charAt(id.length() - 1);
+		niveau = Integer.parseInt(id.substring(id.length() - 1));
 		Scene scene = button.getScene();
 		// je récupère le fichier FXML correspondant à la difficulté
 		this.difficulte = scene.getRoot().getId() ;
