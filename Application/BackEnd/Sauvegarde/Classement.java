@@ -34,7 +34,7 @@ public class Classement {
         writer.write("type: fichierScore\n");
         writer.write("nb: "+idScore+"\n");
         for (Score s: this.scores) {
-            writer.write(s.yamlInfo());
+            writer.write("Score"+idScore+": "+s.yamlInfo()+"\n");
             idScore++;
         }
         writer.close();

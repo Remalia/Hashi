@@ -401,7 +401,7 @@ public class InterfacePlateau extends MenuController {
                     resultat = dialog.showAndWait();
             }
             pseudo = resultat.get();
-            int score = ((int)timer.getCurrentTime().toSeconds() * 10);
+            int score = (int)(timer.getCurrentTime().toSeconds() * 10000);
             plateau.getGrille().getClassement().addScore(new Score(score,pseudo,timer.getCurrentTime().toString()));
 
         }
