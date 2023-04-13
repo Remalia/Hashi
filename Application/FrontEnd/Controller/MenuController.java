@@ -59,6 +59,16 @@ public class MenuController extends Main {
 	}
 
 	/**
+	 * Cette méthode permet d'accéder au menu du tutoriel
+	 * @param event : Event
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
+	 */
+	@FXML
+	public void techniqueInterface(Event event) throws IOException{
+		switchToScene("../FXML/technique.fxml",event);
+	}
+
+	/**
 	 * Method to switch to the tutorial scene
 	 *
 	 * @param event the event that triggers the switch
@@ -68,6 +78,7 @@ public class MenuController extends Main {
 	public void tutoriel(Event event) throws IOException {
 		switchToScene("../FXML/tutoriel.fxml", event);
 	}
+
 
 	/**
 	 * Method to quit the application

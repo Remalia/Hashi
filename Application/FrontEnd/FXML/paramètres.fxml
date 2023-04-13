@@ -30,12 +30,7 @@
       <CheckBox fx:id="aide_text" layoutX="246.0" layoutY="239.0" mnemonicParsing="false" onAction="#setAide_text" />
       <CheckBox fx:id="aide_visu" layoutX="247.0" layoutY="285.0" mnemonicParsing="false" onAction="#setAide_visu" />
       <CheckBox fx:id="mode_css" layoutX="279.0" layoutY="447.0" mnemonicParsing="false" onAction="#set_mode_css" />
-      <SplitMenuButton layoutX="247.0" layoutY="401.0" mnemonicParsing="false" text="1980x1080">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
-         </items>
-      </SplitMenuButton>
+
       <GridPane layoutX="280.0" layoutY="542.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="400.0" />
@@ -96,11 +91,6 @@
       <Label layoutX="85.0" layoutY="481.0" prefHeight="44.0" prefWidth="184.0" text="Données" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="136.0" layoutY="397.0" prefHeight="33.0" prefWidth="119.0" text="Résolution" textAlignment="CENTER">
-         <font>
-            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="138.0" layoutY="439.0" prefHeight="33.0" prefWidth="149.0" text="Mode sombre" textAlignment="CENTER">
