@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="principal" minHeight="750.0" minWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.InterfacePlateau">
@@ -102,6 +101,5 @@
             </Group>
          </children>
       </AnchorPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="443.0" layoutX="1065.0" layoutY="172.0" stroke="BLACK" strokeType="INSIDE" width="312.0" />
    </children>
 </AnchorPane>

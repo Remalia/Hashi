@@ -9,3 +9,7 @@ Label{
 .button {
    -fx-background-radius: 20;
 }
+
+Rectangle {
+   -fx-background-radius: 20;
+}

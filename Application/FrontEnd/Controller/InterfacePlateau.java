@@ -70,7 +70,11 @@ public class InterfacePlateau extends MenuController {
     protected boolean choixHypothese = true;
 
     public void donner_technique(ActionEvent event){
-        Rectangle bulle = new Rectangle(315, 445, Color.WHITE);
+        Rectangle bulle = new Rectangle(315, 445, Color.TRANSPARENT);
+        bulle.setStroke(Color.BLACK);
+        bulle.setStrokeWidth(2);
+        bulle.setArcHeight(10);
+        bulle.setArcWidth(10);
         bulle.setLayoutX(50);
         bulle.setLayoutY(170);
 
