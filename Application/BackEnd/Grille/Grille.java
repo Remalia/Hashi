@@ -596,13 +596,17 @@ public class Grille {
     public boolean grilleCorrecte(){
         boolean result = true;
         for (Ile ileActuel: listIle) {
-            Ile ileSolution = this.getIleSolution(ileActuel);
-            for (Pont pActuel: ileActuel.getListePont()) {
+            if(ileActuel.estComplete()){
+                Ile ileSolution = this.getIleSolution(ileActuel);
                 for (Pont pSoluce: ileSolution.getListePont()) {
-                    if(pActuel.estSimilaire(pSoluce))
-                        if (pActuel.getNbPont() != pSoluce.getNbPont())
-                            return false;
+                    for (Pont pActuel: ileActuel.getListePont()) {
+                        if(pActuel.estSimilaire(pSoluce))
+                            if (pActuel.getNbPont() != pSoluce.getNbPont())
+                                result = false;
+                    }
                 }
+            }else{
+                result = false;
             }
         }
         return result;
