@@ -13,3 +13,8 @@ Label{
 Rectangle {
    -fx-background-radius: 20;
 }
+
+.tooltip {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
