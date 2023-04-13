@@ -9,3 +9,17 @@ Label{
 .button {
    -fx-background-radius: 20;
 }
+
+Rectangle {
+   -fx-background-radius: 20;
+    -fx-stroke: black;
+}
+
+#myText {
+    -fx-fill: black;
+}
+
+.tooltip {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}

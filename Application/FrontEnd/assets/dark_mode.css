@@ -8,3 +8,17 @@ Label {
 .button {
    -fx-background-radius: 20;
 }
+
+Rectangle {
+   -fx-background-radius: 20;
+   -fx-stroke: white;
+}
+
+#myText {
+    -fx-fill: white;
+}
+
+.tooltip {
+    -fx-background-image:url("./background.jpg");
+    -fx-text-fill: white;
+}
