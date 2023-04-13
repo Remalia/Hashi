@@ -60,10 +60,6 @@ public class InterfacePlateau extends MenuController {
 
     private Technique technique;
 
-    @FXML
-    private Button aides;
-
-
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
@@ -118,6 +114,12 @@ public class InterfacePlateau extends MenuController {
             alert.getButtonTypes().setAll(ouiButton, nonButton);
         }
         Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ouiButton){
+            while (this.plateau.getGrille().getNbError() != 0){
+                this.plateau.undo();
+                this.traitementundoRedo();
+            }
+        }
     }
 
     /**

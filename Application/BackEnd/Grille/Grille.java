@@ -4,7 +4,6 @@ import Application.BackEnd.Commandes.Action;
 import Application.BackEnd.Commandes.ActionHistory;
 import Application.BackEnd.Sauvegarde.Classement;
 import Application.BackEnd.Sauvegarde.Parser;
-import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import javafx.geometry.Orientation;
 
 import java.io.*;
@@ -939,7 +938,7 @@ public class Grille {
                 if(p.getNbPont() != 0)
                     for (Pont pSoluce : ileSolution.getListePont()) {
                         if(p.estSimilaire(pSoluce))
-                            result += (p.getNbPont() == pSoluce.getNbPont() ? 0 : 1);
+                            result += (p.getNbPont() <= pSoluce.getNbPont() ? 0 : 1);
                     }
             }
         }
