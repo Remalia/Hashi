@@ -2,6 +2,7 @@ package Application.BackEnd.Grille;
 
 import Application.BackEnd.Commandes.Action;
 import Application.BackEnd.Commandes.ActionHistory;
+import Application.BackEnd.Sauvegarde.Classement;
 import Application.BackEnd.Sauvegarde.Parser;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import javafx.geometry.Orientation;
@@ -31,6 +32,7 @@ public class Grille {
     public ArrayList<String> sauvegardeNomListPontHypothese;
     public ArrayList<Integer> listeNbPontsHypothese;
     private Grille solution;
+    private Classement classement;
 
     /**
      * Constructeur de la grille qui copie une grille passée en paramètres
@@ -47,6 +49,7 @@ public class Grille {
         this.modeHyp = g.isModeHyp();
         this.difficulte = g.getDifficulte();
         this.solution = g.solution;
+        this.classement = g.classement;
         this.listIle = new ArrayList<>();
         for (Ile ile: g.getListIle()) {
             this.ajouterIle(new Ile(ile));
@@ -79,6 +82,7 @@ public class Grille {
         }
         this.fileNiveau = new File("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Niveau.yaml");
         this.fileSave = new File("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Save.yaml");
+        this.classement = new Classement("Application/Niveau/"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Score.yaml");
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -109,6 +113,7 @@ public class Grille {
         }
         this.fileNiveau = new File("Application/Niveau/"+this.name +"/Niveau.yaml");
         this.fileSave = new File("Application/Niveau/"+this.name +"/Save.yaml");
+        this.classement = new Classement("Application/Niveau/"+this.name +"/Score.yaml");
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -238,6 +243,14 @@ public class Grille {
 
     public boolean isModeHyp() {
         return modeHyp;
+    }
+
+    /**
+     * Retourne le classment de la grille
+     * @return le classement de la grille
+     */
+    public Classement getClassement() {
+        return classement;
     }
 
     /**

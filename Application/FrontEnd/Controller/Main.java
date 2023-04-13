@@ -30,7 +30,7 @@ public class Main extends Application {
 	protected Preferences prefs = Preferences.userNodeForPackage(Main.class);
 
 	/**
-	 * Méthode permettant de de changer de scène
+	 * Méthode permettant de changer de scène
 	 *
 	 * @param file  le fichier de la scène à changer
 	 * @param event l'évènement qui déclenche le changement

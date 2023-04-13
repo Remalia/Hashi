@@ -1,9 +1,5 @@
 package Application.BackEnd.Sauvegarde;
 
-import Application.BackEnd.Commandes.Action;
-import Application.BackEnd.Grille.Ile;
-import Application.BackEnd.Grille.Pont;
-
 import java.io.*;
 import java.util.*;
 
@@ -28,6 +24,10 @@ public class Classement {
             });
     }
 
+    /**
+     * Sauvegarde le classement dans le fichier
+     * @throws IOException Erreur d'écriture
+     */
     public void saveClassementToYAML()throws IOException{
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.file));
         int idScore = 1;
@@ -38,6 +38,37 @@ public class Classement {
             idScore++;
         }
         writer.close();
+    }
+
+    /**
+     * Ajoute un score au classement
+     * @param score Score à ajouter
+     */
+    public void addScore(Score score){
+        this.scores.add(score);
+        this.scores.sort(Comparator.comparing(Score::getPts));
+        try{
+            saveClassementToYAML();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Récupère le classement sous forme de String
+     * @return Classement sous forme de String
+     */
+    public String getClassement(){
+        String classement = "";
+        for (int i = 0; i<3;i++) {
+            if(scores.size() < i)
+                classement += "Score : --- , --- pts en 0:00 \n";
+            else{
+                classement += scores.get(i).toString()+"\n";
+            }
+        }
+        return classement;
     }
 
 

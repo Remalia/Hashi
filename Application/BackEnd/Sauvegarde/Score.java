@@ -14,7 +14,7 @@ public class Score {
      * @param name Nom du joueur
      * @param timer Temps réalisé
      */
-    Score(int pts,String name, String timer){
+    public Score(int pts,String name, String timer){
         this.pts = pts;
         this.name = name;
         this.timer = timer;

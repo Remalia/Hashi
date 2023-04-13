@@ -4,6 +4,7 @@ import Application.BackEnd.Grille.Difficulte;
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import Application.BackEnd.Grille.Plateau;
+import Application.BackEnd.Sauvegarde.Score;
 import Application.BackEnd.Technique.Technique;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import Application.FrontEnd.Controller.Plateau.GrilleF;
@@ -384,6 +385,7 @@ public class InterfacePlateau extends MenuController {
                return;
             }
 
+
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Félicitation");
             dialog.setHeaderText("Entrez votre pseudo:");
@@ -393,6 +395,9 @@ public class InterfacePlateau extends MenuController {
             while (resultat.get().length() != 3) {
                     resultat = dialog.showAndWait();
             }
+            pseudo = resultat.get();
+            int score = ((int)timer.getCurrentTime().toSeconds() * 10);
+            plateau.getGrille().getClassement().addScore(new Score(score,pseudo,timer.getCurrentTime().toString()));
 
         }
         System.out.println(this.plateau.getGrille().grilleCorrecte());
