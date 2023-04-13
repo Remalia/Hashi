@@ -1,5 +1,5 @@
 type: fichierNiveau
-difficulte: 1 #( 1 --> facile | 2 --> Moyen | 3 --> Difficile )
+difficulte: 0 #( 1 --> facile | 2 --> Moyen | 3 --> Difficile )
 grille: #( ile --> abs | ord | num ) ( pont --> ileUn | ileDeux | nbPont )
   ile1: 2 | 3 | 1
   ile2: 2 | 6 | 2

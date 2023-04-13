@@ -87,12 +87,27 @@ public class Difficulte {
     }
 
     /**
+     * @return une difficulté Tutoriel
+     */
+    public static Difficulte Tutoriel(){
+        ArrayList<Long> array = new ArrayList<>();
+        array.add(0L);
+        array.add(0L);
+        array.add(0L);
+        return new Difficulte("Tutoriel",array,10,10);
+    }
+
+
+    /**
      * Récupère la bonne difficulté en fonction de l'entier de difficulté
      * @param i la grandeur de la difficulté
      * @return la difficulté adéquate
      */
     public static Difficulte getDifficulteFromInt(int i){
         switch (i) {
+            case 0 -> {
+                return Difficulte.Tutoriel();
+            }
             case 1 -> {
                 return Difficulte.Facile();
             }
@@ -110,6 +125,7 @@ public class Difficulte {
 
     public String getDifficulteToString(){
         return switch (this.nomDifficute) {
+            case "Tutoriel" -> "0";
             case "Facile" -> "1";
             case "Moyen" -> "2";
             case "Difficile" -> "3";
