@@ -1,5 +1,9 @@
 package Application.BackEnd.Sauvegarde;
 
+import Application.BackEnd.Commandes.Action;
+import Application.BackEnd.Grille.Ile;
+import Application.BackEnd.Grille.Pont;
+
 import java.io.*;
 import java.util.*;
 
@@ -24,18 +28,31 @@ public class Classement {
             });
     }
 
+    public void saveClassementToYAML()throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter(this.file));
+        int idScore = 1;
+        writer.write("type: fichierScore\n");
+        writer.write("nb: "+idScore+"\n");
+        for (Score s: this.scores) {
+            writer.write(s.yamlInfo());
+            idScore++;
+        }
+        writer.close();
+    }
+
+
     /**
      * Construit un Classement
      * @param path Emplacement où le classement sera écrit et stocké.
      */
-    Classement(String path) throws FileNotFoundException {
+    public Classement(String path) throws FileNotFoundException {
         this.scores = new ArrayList<>();
         this.file = new File(path);
         this.getScoresFromYAML();
     }
 
     /**
-     * testeur de classement
+     * Testeur de classement
      * @param args arguments
      * @throws FileNotFoundException Fichier Introuvable
      */

@@ -344,14 +344,19 @@ public class InterfacePlateau extends Main {
             }
         }
         if(plateau.getGrille().grilleCorrecte()){
+            if(plateau.getGrille().getDifficulte().getDifficulteToString() == "0"){
+               return;
+            }
+
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("Félicitation");
             dialog.setHeaderText("Entrez votre pseudo:");
             dialog.setContentText("Pseudo:");
             String pseudo;
             Optional<String> resultat = dialog.showAndWait();
-            pseudo = resultat.get();
-            System.out.println(pseudo);
+            while (resultat.get().length() != 3) {
+                    resultat = dialog.showAndWait();
+            }
 
         }
         System.out.println(this.plateau.getGrille().grilleCorrecte());
