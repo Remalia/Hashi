@@ -81,7 +81,7 @@ public class Grille {
         }
         this.fileNiveau = new File("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Niveau.yaml");
         this.fileSave = new File("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Save.yaml");
-        this.classement = new Classement("Application/Niveau/"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Score.yaml");
+        this.classement = new Classement("Application/Niveau/Niveaux"+this.difficulte.getNomDifficute()+ "/"+this.name +"/Score.yaml");
         this.matriceGrille = new Element[10][10];
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){

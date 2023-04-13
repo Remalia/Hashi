@@ -63,7 +63,6 @@ public class InterfacePlateau extends MenuController {
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;
 
-
     protected boolean modeHypothese = false;
 
     protected Plateau plateau;
