@@ -59,7 +59,7 @@
             </Button>
             <Group GridPane.columnIndex="1">
                <children>
-                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                  <Button fx:id="Niveau1" minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#lancer_classement" prefHeight="50.0" prefWidth="80.0">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -73,7 +73,7 @@
             </Group>
             <Group GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                  <Button fx:id="Niveau2" minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#lancer_classement" prefHeight="50.0" prefWidth="80.0">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -87,7 +87,7 @@
             </Group>
             <Group GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                  <Button fx:id="Niveau3" minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#lancer_classement" prefHeight="50.0" prefWidth="80.0">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -101,7 +101,7 @@
             </Group>
             <Group GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                  <Button fx:id="Niveau4" minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#lancer_classement" prefHeight="50.0" prefWidth="80.0">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -115,7 +115,7 @@
             </Group>
             <Group GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                  <Button fx:id="Niveau5" minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#lancer_classement" prefHeight="50.0" prefWidth="80.0">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -129,7 +129,7 @@
             </Group>
             <Group GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                  <Button fx:id="Niveau6" minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
                      <font>
                         <Font size="23.0" />
                      </font>

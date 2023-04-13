@@ -1,8 +1,13 @@
 package Application.FrontEnd.Controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 /**
@@ -12,6 +17,29 @@ import javafx.fxml.FXML;
  * @since 2023-04-02
  */
 public class MenuController extends Main {
+	private static int niveau;
+
+	private static String difficulte;
+
+	public void lancer_classement(Event event) throws IOException {
+		Button button = (Button) event.getSource();
+		String id = button.getId();
+		niveau = id.charAt(id.length() - 1);
+		Scene scene = button.getScene();
+		// je récupère le fichier FXML correspondant à la difficulté
+		this.difficulte = scene.getRoot().getId() ;
+		switchToScene("../FXML/classement.fxml", event);
+	}
+
+
+	public int getNiveau() {
+		return niveau;
+	}
+	public String getDifficulte() {
+		return difficulte;
+	}
+
+
 	/**
 	 * Méthode permettant d'aller dans le menu du tutoriel
 	 *
@@ -74,7 +102,6 @@ public class MenuController extends Main {
 	public void tutoriel(Event event) throws IOException {
 		switchToScene("../FXML/tutoriel.fxml", event);
 	}
-
 
 	/**
 	 * Méthode permettant de quitter le jeu

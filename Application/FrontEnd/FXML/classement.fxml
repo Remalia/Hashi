@@ -5,8 +5,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+<AnchorPane fx:id="principal" minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.ClassementController">
    <children>
       <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0">
          <image>
@@ -23,6 +24,9 @@
             <Font size="68.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="135.0" layoutY="193.0" prefHeight="426.0" prefWidth="630.0" />
+      <AnchorPane layoutX="135.0" layoutY="193.0" prefHeight="426.0" prefWidth="630.0">
+         <children>
+            <TextFlow fx:id="classement" layoutX="-60.0" prefHeight="200.0" prefWidth="200.0" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>
