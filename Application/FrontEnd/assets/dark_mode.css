@@ -11,6 +11,11 @@ Label {
 
 Rectangle {
    -fx-background-radius: 20;
+   -fx-stroke: white;
+}
+
+#myText {
+    -fx-fill: white;
 }
 
 .tooltip {

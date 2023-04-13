@@ -71,7 +71,6 @@ public class InterfacePlateau extends MenuController {
 
     public void donner_technique(ActionEvent event){
         Rectangle bulle = new Rectangle(315, 445, Color.TRANSPARENT);
-        bulle.setStroke(Color.BLACK);
         bulle.setStrokeWidth(2);
         bulle.setArcHeight(10);
         bulle.setArcWidth(10);
@@ -84,16 +83,14 @@ public class InterfacePlateau extends MenuController {
         trouver_technique.setPrefHeight(425);
         trouver_technique.setPrefWidth(295);
 
-        if((technique = technique.trouverTechniqueGrille(this.plateau.getGrille())) == null)
-        {
+        if((technique = technique.trouverTechniqueGrille(this.plateau.getGrille())) == null) {
             System.out.println("Il n'y a pas de technique appliquable après ajout des îles");
-        }
-        else
-        {
+        } else {
             System.out.println("Il y a bien une technique appliquable après ajout des îles");
         }
 
         Text descriptif = new Text(technique.getDescription());
+        descriptif.setId("myText");
         descriptif.setFont(new Font(25));
 
         trouver_technique.getChildren().add(descriptif);
