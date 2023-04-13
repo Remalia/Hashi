@@ -84,7 +84,7 @@ public class InterfacePlateau extends MenuController {
         trouver_technique.setPrefHeight(425);
         trouver_technique.setPrefWidth(295);
 
-        if((technique = technique.trouverTechniqueGrilleV3(this.plateau.getGrille())) == null)
+        if((technique = technique.trouverTechniqueGrille(this.plateau.getGrille())) == null)
         {
             System.out.println("Il n'y a pas de technique appliquable après ajout des îles");
         }
