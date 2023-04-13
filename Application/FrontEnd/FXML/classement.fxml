@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+   <children>
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0">
+         <image>
+            <Image url="@../assets/Logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#menu_principal">
+         <image>
+            <Image url="@../assets/retour.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="268.0" layoutY="86.0" prefHeight="100.0" prefWidth="362.0" text="Classement" textAlignment="CENTER">
+         <font>
+            <Font size="68.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="135.0" layoutY="193.0" prefHeight="426.0" prefWidth="630.0" />
+   </children>
+</AnchorPane>

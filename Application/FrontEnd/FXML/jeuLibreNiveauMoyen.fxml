@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.MenuController">
+   <children>
+      <GridPane layoutX="179.0" layoutY="249.0" prefHeight="394.0" prefWidth="578.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="498.2865966796875" minWidth="400.0" prefWidth="498.2865966796875" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="80.1134033203125" prefWidth="80.1134033203125" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="102.92127075195313" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="139.06851806640626" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="161.50476684570313" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="152.77957763671878" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="183.94101562500003" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="183.94101562500003" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Niveau 2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="355.0" text="Niveau 1">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Niveau 3" GridPane.rowIndex="2">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Niveau 4" GridPane.rowIndex="3">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button minHeight="48.0" minWidth="400.0" mnemonicParsing="false" prefWidth="400.0" text="Niveau 5" GridPane.rowIndex="4">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button minHeight="48.0" minWidth="400.0" mnemonicParsing="false" prefWidth="400.0" text="Niveau 6" GridPane.rowIndex="5">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Group GridPane.columnIndex="1">
+               <children>
+                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Couronne.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Couronne.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Couronne.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Couronne.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Couronne.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <Button minHeight="50.0" minWidth="30.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="80.0">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Couronne.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+         </children>
+      </GridPane>
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#menu_secondaire">
+         <image>
+            <Image url="@../assets/retour.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="22.0" layoutY="134.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <Label layoutX="180.0" layoutY="80.0" prefHeight="68.0" prefWidth="567.0" text="Choix du niveau cathégorie" textAlignment="CENTER">
+         <font>
+            <Font size="46.0" />
+         </font>
+      </Label>
+      <Label layoutX="326.0" layoutY="135.0" prefHeight="68.0" prefWidth="276.0" text="Intermédiaire" textAlignment="CENTER">
+         <font>
+            <Font size="46.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="65.0" layoutY="660.0">
+         <image>
+            <Image url="@../assets/Logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
