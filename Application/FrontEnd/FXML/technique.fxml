@@ -14,11 +14,6 @@
             <Font size="68.0" />
          </font>
       </Text>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="56.0" layoutY="710.0">
-         <image>
-            <Image url="@../assets/Logo.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="46.0" layoutY="44.0" onMouseClicked="#tutoriel">
          <image>
             <Image url="@../assets/retour.png" />

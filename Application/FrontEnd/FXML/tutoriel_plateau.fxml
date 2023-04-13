@@ -19,11 +19,6 @@
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="810.0" layoutY="65.0" onMouseClicked="#parametres">
-         <image>
-            <Image url="@../assets/reglage.png" />
-         </image>
-      </ImageView>
       <Label layoutX="332.0" layoutY="55.0" prefHeight="76.0" prefWidth="264.0" text="Tutoriel">
          <font>
             <Font size="63.0" />

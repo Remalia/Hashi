@@ -38,21 +38,10 @@
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0" onMouseClicked="#credits">
-         <image>
-            <Image url="@../assets/Logo.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="800.0" layoutY="55.0" onMouseClicked="#parametres">
-         <image>
-            <Image url="@../assets/reglage.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="254.0" layoutY="120.0" prefHeight="100.0" prefWidth="410.0" text="Modes de jeu" textAlignment="CENTER">
+      <Label layoutX="254.0" layoutY="120.0" prefHeight="100.0" prefWidth="454.0" text="Modes de jeu" textAlignment="CENTER">
          <font>
             <Font size="68.0" />
          </font>
       </Label>
    </children>
 </AnchorPane>
-

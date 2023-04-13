@@ -21,7 +21,7 @@
             <RowConstraints minHeight="110.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false"   onAction="#techniqueInterface" text="Techniques" GridPane.rowIndex="1">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#techniqueInterface" text="Techniques" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
@@ -33,19 +33,9 @@
             </Button>
          </children>
       </GridPane>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="55.0" layoutY="650.0" onMouseClicked="#credits">
-         <image>
-            <Image url="@../assets/Logo.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="55.0" layoutY="55.0" onMouseClicked="#menu_principal">
          <image>
             <Image url="@../assets/retour.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="800.0" layoutY="55.0" onMouseClicked="#parametres">
-         <image>
-            <Image url="@../assets/reglage.png" />
          </image>
       </ImageView>
       <Label layoutX="338.0" layoutY="145.0" prefHeight="100.0" prefWidth="269.0" text="Tutoriel" textAlignment="CENTER">

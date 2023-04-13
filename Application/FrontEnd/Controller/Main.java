@@ -2,6 +2,7 @@ package Application.FrontEnd.Controller;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Stack;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
@@ -24,8 +25,6 @@ import javafx.fxml.FXMLLoader;
  * @since 2023-04-02
  */
 public class Main extends Application {
-
-	// Attributes
 	Stage window;
 	Parent root;
 	Scene scene;
@@ -88,11 +87,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage window) {
 		css = prefs.get("mon_css", css);
-
 		try {
 			this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../FXML/menu_p.fxml")));
 			this.scene = new Scene(root);
-			scene.getStylesheets().add(css);
+			this.scene.getStylesheets().add(css);
 			window.setTitle("Hashi");
 			window.setScene(scene);
 			window.setResizable(false);

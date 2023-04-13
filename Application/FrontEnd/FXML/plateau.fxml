@@ -17,17 +17,12 @@
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="800.0" layoutY="55.0" onMouseClicked="#parametres">
-         <image>
-            <Image url="@../assets/reglage.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="322.0" layoutY="45.0" prefHeight="38.0" prefWidth="270.0" text="Libre : Level 1">
+      <Label layoutX="322.0" layoutY="45.0" prefHeight="54.0" prefWidth="326.0" text="Libre : Level 1">
          <font>
             <Font size="44.0" />
          </font>
       </Label>
-      <Label fx:id="chronometre" layoutX="422.0" layoutY="93.0" prefHeight="54.0" prefWidth="70.0" text="00:00">
+      <Label fx:id="chronometre" layoutX="422.0" layoutY="93.0" prefHeight="54.0" prefWidth="102.0" text="00:00">
          <font>
             <Font size="26.0" />
          </font>
