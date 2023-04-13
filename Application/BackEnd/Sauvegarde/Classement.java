@@ -59,7 +59,7 @@ public class Classement {
      * Récupère le classement sous forme de String
      * @return Classement sous forme de String
      */
-    public String getClassement(){
+    public String getClassementToS(){
         String classement = "";
         for (int i = 0; i<3;i++) {
             if(scores.size() < i)
