@@ -4,6 +4,7 @@ import Application.BackEnd.Grille.Difficulte;
 import Application.BackEnd.Grille.Grille;
 import Application.BackEnd.Grille.Ile;
 import Application.BackEnd.Grille.Plateau;
+import Application.BackEnd.Technique.Technique;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import Application.FrontEnd.Controller.Plateau.GrilleF;
 import javafx.animation.Animation;
@@ -36,7 +37,7 @@ import javafx.scene.Node;
  * @version 1.0
  * @since 2023-04-02
  */
-public class InterfacePlateau extends Main {
+public class InterfacePlateau extends MenuController {
     public Timeline timer=null; // Ajouter une variable timer
     @FXML
     protected ImageView switch_timer;
@@ -53,6 +54,8 @@ public class InterfacePlateau extends Main {
     private AnchorPane principal;
 
     protected Image newImage;
+
+    private Technique technique;
 
     public static Color etatNormal = Color.YELLOW;
     public static Color etatSelect = Color.GREEN;

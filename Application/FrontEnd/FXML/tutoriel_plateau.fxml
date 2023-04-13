@@ -14,7 +14,7 @@
 <AnchorPane fx:id="principal" minHeight="750.0" minWidth="900.0" prefHeight="750.0" prefWidth="957.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.FrontEnd.Controller.TutorielController">
    <children>
       <Pane fx:id="panneau" layoutX="256.0" layoutY="189.0" prefHeight="334.0" prefWidth="372.0" />
-      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="65.0" layoutY="65.0" onMouseClicked="#jeulibre">
+      <ImageView fitHeight="38.0" fitWidth="60.0" layoutX="65.0" layoutY="65.0" onMouseClicked="#tutoriel">
          <image>
             <Image url="@../assets/retour.png" />
          </image>
