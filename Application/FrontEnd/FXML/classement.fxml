@@ -26,7 +26,7 @@
       </Label>
       <AnchorPane layoutX="135.0" layoutY="193.0" prefHeight="426.0" prefWidth="630.0">
          <children>
-            <TextFlow fx:id="classement" layoutX="-60.0" prefHeight="200.0" prefWidth="200.0" />
+            <TextFlow fx:id="classement" layoutX="-60.0" prefHeight="200.0" prefWidth="600.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

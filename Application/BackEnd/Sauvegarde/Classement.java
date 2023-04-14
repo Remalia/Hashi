@@ -18,7 +18,7 @@ public class Classement {
         HashMap<String,String> balises = Parser.getAllBalise(file);
         if (!balises.isEmpty() && balises.get("type").equals("fichierScore"))
             balises.forEach((key, val) -> {
-                if (key.matches("score[0-9]+")){
+                if (key.matches("Score[0-9]+")){
                     scores.add(new Score(Integer.parseInt(val.substring(val.lastIndexOf("|")+2)),val.substring(0,val.indexOf("|")-1),val.substring(val.indexOf("|")+2,val.lastIndexOf("|")-1)));
                 }
             });
@@ -46,7 +46,7 @@ public class Classement {
      */
     public void addScore(Score score){
         this.scores.add(score);
-        this.scores.sort(Comparator.comparing(Score::getPts));
+        this.scores.sort(Comparator.comparing(Score::getPts).reversed());
         try{
             saveClassementToYAML();
         }
@@ -62,9 +62,9 @@ public class Classement {
     public String getClassementToS(){
         String classement = "";
         for (int i = 0; i<3;i++) {
-            if(scores.size() < i)
+            if(scores.size() < i || scores.size() == 0) {
                 classement += "Score : --- , --- pts en 0:00 \n";
-            else{
+            }else{
                 classement += scores.get(i).toString()+"\n";
             }
         }

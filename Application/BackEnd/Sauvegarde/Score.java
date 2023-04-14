@@ -75,9 +75,9 @@ public class Score {
      */
     @Override
     public String toString() {
-        return "Score : " + name + ", " + pts + " pts en " + timer + " ";
+        int limit =timer.length()>5 ? 5 : timer.length() -2;
+        return name + ", " + pts + " pts en " + timer.substring(0, limit) + " s ";
     }
-
     public String yamlInfo(){
         return name + " | " + timer + " | " + pts;
     }
