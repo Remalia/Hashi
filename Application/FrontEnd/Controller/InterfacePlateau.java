@@ -72,19 +72,18 @@ public class InterfacePlateau extends MenuController {
 
     protected SurbrillanceVoisins surbrillanceVoisins;
 
+    TextFlow trouver_technique = new TextFlow();
+
+    Text descriptif= new Text();
+
+    @FXML
+    private Rectangle bulle;
+
     public void donner_technique(ActionEvent event){
-        Rectangle bulle = new Rectangle(315, 445, Color.TRANSPARENT);
+        bulle.setVisible(true);
         bulle.setStrokeWidth(2);
         bulle.setArcHeight(10);
         bulle.setArcWidth(10);
-        bulle.setLayoutX(50);
-        bulle.setLayoutY(170);
-
-        TextFlow trouver_technique = new TextFlow();
-        trouver_technique.setLayoutX(60);
-        trouver_technique.setLayoutY(180);
-        trouver_technique.setPrefHeight(425);
-        trouver_technique.setPrefWidth(295);
 
         if((technique = technique.trouverTechniqueGrille(this.plateau.getGrille())) == null) {
             System.out.println("Il n'y a pas de technique appliquable après ajout des îles");
@@ -92,12 +91,9 @@ public class InterfacePlateau extends MenuController {
             System.out.println("Il y a bien une technique appliquable après ajout des îles");
         }
 
-        Text descriptif = new Text(technique.getDescription());
+        descriptif.setText(technique.getDescription());
         descriptif.setId("myText");
         descriptif.setFont(new Font(25));
-
-        trouver_technique.getChildren().add(descriptif);
-        principal.getChildren().addAll(bulle, trouver_technique);
     }
         /**
          * Cette méthode permet de vérifier si la grille est correcte en appuyant sur le bouton
@@ -237,6 +233,15 @@ public class InterfacePlateau extends MenuController {
         this.grille.setNB_CERCLES(10);
         this.grille.setRAYON(20);
         this.grille.setESPACE(this.grille.getRAYON()*2.5);
+
+        bulle.setVisible(false);
+        trouver_technique.setLayoutX(60);
+        trouver_technique.setLayoutY(180);
+        trouver_technique.setPrefHeight(425);
+        trouver_technique.setPrefWidth(295);
+        trouver_technique.getChildren().add(descriptif);
+        principal.getChildren().add(trouver_technique);
+
 
         // Calcul de la taille du panneau pour afficher correctement la grille
         double panneauWidth = this.grille.getNB_CERCLES() * this.grille.getESPACE() + this.grille.getRAYON();
