@@ -74,10 +74,13 @@ public class InterfacePlateau extends MenuController {
 
     TextFlow trouver_technique = new TextFlow();
 
-    Text descriptif= new Text();
+    Text descriptif = new Text();
 
     @FXML
     private Rectangle bulle;
+
+    @FXML
+    private Label titre;
 
     public void donner_technique(ActionEvent event){
         bulle.setVisible(true);
@@ -233,6 +236,7 @@ public class InterfacePlateau extends MenuController {
         this.grille.setNB_CERCLES(10);
         this.grille.setRAYON(20);
         this.grille.setESPACE(this.grille.getRAYON()*2.5);
+        this.titre.setText("Level : "+this.getNomNiveau());
 
         bulle.setVisible(false);
         trouver_technique.setLayoutX(60);
@@ -270,7 +274,7 @@ public class InterfacePlateau extends MenuController {
             double newY = (newVal.doubleValue() - panneauHeight) / 2;
             panneau.setLayoutY(newY);
         });
-        plateau = new Plateau(new Grille("Niveau1", Difficulte.Moyen()));
+        plateau = new Plateau(new Grille(getNomNiveau(),getDifNiveau()));
         boolean isNew = true;
         plateau.getPlateauFromYAML(isNew);
         System.out.println(plateau.getGrille());

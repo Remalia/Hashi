@@ -21,7 +21,7 @@
             <RowConstraints minHeight="110.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="aventure" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#plateau" text="Aventure" GridPane.rowIndex="1">
+            <Button fx:id="aventure" minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#aventure" text="Aventure" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>

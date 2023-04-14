@@ -1,3 +1,6 @@
 type: fichierScore
-nb: 1
-Score1: tas | 971.1666666666666 ms | 9711
+nb: 4
+Score1: cas | 80 ms | 18000
+Score2: ses | 418.6666666666667 ms | 4186
+Score3: kae | 78 ms | 4000
+Score4: kak | 30.5 ms | 305

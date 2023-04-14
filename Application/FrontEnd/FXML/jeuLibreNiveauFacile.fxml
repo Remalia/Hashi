@@ -27,32 +27,32 @@
             <RowConstraints maxHeight="183.94101562500003" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Niveau 2" GridPane.rowIndex="1">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#lancer_niveau_fac" text="Niveau2" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#plateau" prefHeight="50.0" prefWidth="355.0" text="Niveau 1">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#lancer_niveau_fac" prefHeight="50.0" prefWidth="355.0" text="Niveau1">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Niveau 3" GridPane.rowIndex="2">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#lancer_niveau_fac" text="Niveau3" GridPane.rowIndex="2">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" text="Niveau 4" GridPane.rowIndex="3">
+            <Button minHeight="50.0" minWidth="400.0" mnemonicParsing="false" onAction="#lancer_niveau_fac" text="Niveau4" GridPane.rowIndex="3">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="48.0" minWidth="400.0" mnemonicParsing="false" prefWidth="400.0" text="Niveau 5" GridPane.rowIndex="4">
+            <Button minHeight="48.0" minWidth="400.0" mnemonicParsing="false" onAction="#lancer_niveau_fac" prefWidth="400.0" text="Niveau5" GridPane.rowIndex="4">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button minHeight="48.0" minWidth="400.0" mnemonicParsing="false" prefWidth="400.0" text="Niveau 6" GridPane.rowIndex="5">
+            <Button minHeight="48.0" minWidth="400.0" mnemonicParsing="false" onAction="#lancer_niveau_fac" prefWidth="400.0" text="Niveau6" GridPane.rowIndex="5">
                <font>
                   <Font size="23.0" />
                </font>
@@ -159,7 +159,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Label layoutX="180.0" layoutY="80.0" prefHeight="68.0" prefWidth="567.0" text="Choix du niveau cathégorie" textAlignment="CENTER">
+      <Label layoutX="180.0" layoutY="80.0" prefHeight="68.0" prefWidth="567.0" text="Choix du niveau catégorie" textAlignment="CENTER">
          <font>
             <Font size="46.0" />
          </font>

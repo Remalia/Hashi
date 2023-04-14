@@ -53,6 +53,16 @@ public class ModeController extends Main{
 	}
 
 	/**
+	 * Cette méthode permet d'accéder au niveaux du mode aventure
+	 * @param event : déclenche l'évènement
+	 * @throws IOException Une exception est levée si le fichier n'est pas trouvé
+	 */
+	@FXML
+	public void aventure(Event event) throws IOException{
+		switchToScene("../FXML/plateau.fxml",event);
+	}
+
+	/**
 	 * Méthode permettant d'aller dans le menu du plateau
 	 * @param event : l'évènement qui déclenche le changement
 	 * @throws IOException lève une exception si on ne trouve pas le fichier

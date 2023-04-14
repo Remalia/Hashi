@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import Application.BackEnd.Grille.Difficulte;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,6 +19,10 @@ import javafx.fxml.FXML;
  */
 public class MenuController extends Main {
 	private static int niveau;
+
+	private static String nomNiveau;
+	private static Difficulte difNiveau;
+
 	private static String difficulte;
 
 	public void lancer_classement(Event event) throws IOException {
@@ -30,6 +35,33 @@ public class MenuController extends Main {
 		switchToScene("../FXML/classement.fxml", event);
 	}
 
+	public void lancer_niveau_dif(Event event) throws IOException {
+		Button button = (Button) event.getSource();
+		nomNiveau  = button.getText();
+		Scene scene = button.getScene();
+		// je récupère le fichier FXML correspondant à la difficulté
+		difNiveau = Difficulte.Difficile() ;
+		switchToScene("../FXML/plateau.fxml", event);
+	}
+
+	public void lancer_niveau_moy(Event event) throws IOException {
+		Button button = (Button) event.getSource();
+		nomNiveau  = button.getText();
+		Scene scene = button.getScene();
+		// je récupère le fichier FXML correspondant à la difficulté
+		difNiveau = Difficulte.Moyen() ;
+		switchToScene("../FXML/plateau.fxml", event);
+	}
+
+	public void lancer_niveau_fac(Event event) throws IOException {
+		Button button = (Button) event.getSource();
+		nomNiveau  = button.getText();
+		Scene scene = button.getScene();
+		// je récupère le fichier FXML correspondant à la difficulté
+		difNiveau = Difficulte.Facile() ;
+		switchToScene("../FXML/plateau.fxml", event);
+	}
+
 
 	public int getNiveau() {
 		return niveau;
@@ -38,6 +70,12 @@ public class MenuController extends Main {
 		return difficulte;
 	}
 
+	public String getNomNiveau() {
+		return nomNiveau;
+	}
+	 public Difficulte getDifNiveau() {
+		return difNiveau;
+	 }
 
 	/**
 	 * Méthode permettant d'aller dans le menu du tutoriel

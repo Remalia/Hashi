@@ -18,7 +18,7 @@
             <Image url="@../assets/retour.png" />
          </image>
       </ImageView>
-      <Label layoutX="537.0" layoutY="48.0" prefHeight="54.0" prefWidth="326.0" text="Libre : Level 1">
+      <Label fx:id="titre" layoutX="537.0" layoutY="48.0" prefHeight="54.0" prefWidth="326.0" text="Libre : ">
          <font>
             <Font size="44.0" />
          </font>
