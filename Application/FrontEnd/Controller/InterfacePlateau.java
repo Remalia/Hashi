@@ -7,6 +7,7 @@ import Application.BackEnd.Grille.Plateau;
 import Application.BackEnd.Sauvegarde.Score;
 import Application.BackEnd.Technique.SurbrillanceVoisins;
 import Application.BackEnd.Technique.Technique;
+import Application.BackEnd.Technique.TestTechnique;
 import Application.FrontEnd.Controller.Plateau.CircleHashi;
 import Application.FrontEnd.Controller.Plateau.GrilleF;
 import javafx.animation.Animation;
@@ -216,6 +217,7 @@ public class InterfacePlateau extends MenuController {
             newImage = new Image("Application/FrontEnd/assets/bouton-pause.png");
             switch_timer.setImage(newImage);
             timer.play();
+
         }else{
             panneau.setVisible(false);
             newImage = new Image("Application/FrontEnd/assets/bouton-jouer.png");
@@ -456,7 +458,7 @@ public class InterfacePlateau extends MenuController {
         alert.setTitle("Choix option de la fonctionalité hypothèse");
         alert.setHeaderText("Voulez-vous appliquer votre hypothèse sur le jeu ou revenir sur le point initiale ?");
 
-        ButtonType ouiButton = new ButtonType("Nouveau état");
+        ButtonType ouiButton = new ButtonType("Nouvel état");
         ButtonType nonButton = new ButtonType("État d'origine");
 
         alert.getButtonTypes().setAll(ouiButton, nonButton);

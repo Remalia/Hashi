@@ -25,6 +25,7 @@ public class MenuController extends Main {
 
 	private static String difficulte;
 
+
 	public void lancer_classement(Event event) throws IOException {
 		Button button = (Button) event.getSource();
 		String id = button.getId();

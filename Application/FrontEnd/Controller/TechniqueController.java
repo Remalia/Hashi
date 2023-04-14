@@ -4,12 +4,13 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.web.WebView;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
  * Cette classe représente  le controller de technique
  */
-public class TechniqueController extends Main{
+public class TechniqueController extends MenuController {
     @FXML
     private WebView webView;
 
