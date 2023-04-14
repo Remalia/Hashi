@@ -64,7 +64,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/Couronne.png" />
                      </image>
@@ -78,7 +78,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/Couronne.png" />
                      </image>
@@ -92,7 +92,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/Couronne.png" />
                      </image>
@@ -106,7 +106,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/Couronne.png" />
                      </image>
@@ -120,7 +120,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/Couronne.png" />
                      </image>
@@ -134,7 +134,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="3.0" layoutY="-9.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/Couronne.png" />
                      </image>
@@ -169,10 +169,5 @@
             <Font size="46.0" />
          </font>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="157.0" layoutX="65.0" layoutY="660.0">
-         <image>
-            <Image url="@../assets/Logo.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>
